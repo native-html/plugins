@@ -1,4 +1,4 @@
-# Table support for react-native-html-renderer
+# Table support for react-native-render-html
 
 **Features**:
 
