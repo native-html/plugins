@@ -1,5 +1,15 @@
 # Table support for react-native-render-html
 
+![npm](https://img.shields.io/npm/v/react-native-render-html-table-bridge.svg)
+
+```bash
+npm add --save react-native-render-html-table-bridge
+```
+
+```bash
+yarn add react-native-render-html-table-bridge
+```
+
 **Features**:
 
 - Render HTML tables with a `WebView` component you provide
@@ -18,11 +28,17 @@
 
 *[Full example](examples/simple)*
 
-You need 3 mandatory steps to get to a working example:
+You need 3 conditions to get to a working example:
 
-1. If you're not using Expo, install and link `react-native-webview` if you havent't yet
+1. If you're not using Expo, install and link `react-native-webview`
+
+```bash
+npm add --save react-native-webview
+react-native link react-native-webview
+```
+
 2. inject `alterNode` and `ignoredTags` props to `HTML` component
-3. `makeTableRenderer` and inject `renderers` prop `HTML` component
+3. `makeTableRenderer` and inject `renderers` prop to `HTML` component
 
 ```javascript
 import React, {PureComponent} from 'react';
