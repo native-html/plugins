@@ -1,0 +1,19 @@
+{
+    "extends": ["tslint-config-airbnb", "tslint-react-recommended"],
+    "rules": {
+        "semicolon": [true, "never"],
+        "no-implicit-dependencies": false,
+        "no-submodule-imports": false,
+        "import-name": false,
+        "array-type": false,
+        "no-object-literal-type-assertion": false,
+        "no-require-imports": true,
+        "jsx-no-bind": true,
+        "jsx-no-lambda": true,
+        "no-floating-promises": true,
+        "no-unused-variable": [true, {"ignore-pattern": "^_"}],
+        "prefer-object-spread": false,
+        "ter-prefer-arrow-callback": [true, {"allowNamedFunctions": true}]
+
+    }
+}

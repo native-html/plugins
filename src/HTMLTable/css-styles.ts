@@ -1,22 +1,22 @@
-import { TableStyleSpecs } from "./types"
+import { TableStyleSpecs } from './table-specs'
 
 const defaultTableStylesSpecs: TableStyleSpecs = {
-    defaultBackground : '#FFFFFF',
-    defaultColor : '#333333',
-    thBorderColor : '#3f5c7a',
-    tdBorderColor : '#b5b5b5',
-    thBackground : '#253546',
-    thColor : '#FFFFFF',
-    trOddBackground : '#e2e2e2',
-    trOddColor : '#FFFFFF',
-    trEvenBackground : '',
-    trEvenColor : '#FFFFFF'
+  linkColor: '#3498DB',
+  fontFamily: 'sans-serif',
+  thBorderColor : '#3f5c7a',
+  tdBorderColor : '#b5b5b5',
+  thBackground : '#253546',
+  thColor : '#FFFFFF',
+  trOddBackground : '#e2e2e2',
+  trOddColor : '#333333',
+  trEvenBackground : '#FFFFFF',
+  trEvenColor : '#333333'
 }
 
 export default function cssStylesFromSpecs(specs: TableStyleSpecs = defaultTableStylesSpecs) {
-    const {
-        defaultBackground,
-        defaultColor,
+  const {
+        linkColor,
+        fontFamily,
         tdBorderColor,
         thBorderColor,
         thBackground,
@@ -26,21 +26,20 @@ export default function cssStylesFromSpecs(specs: TableStyleSpecs = defaultTable
         trEvenBackground,
         trEvenColor
     } = specs
-    return `
+  return `
     :root {
-      color: ${defaultColor};
+      font-family: ${fontFamily};
       background-color: transparent;
     }
     body, html {
       margin: 0;
-      background-color: 'transparent';
+      background-color: transparent;
     }
     table {
       min-height: 100vh;
       min-width: 100vw;
       margin: 0;
       padding: 0;
-      background-color: ${defaultBackground};
     }
     th, td {
       padding: 0.25em;
@@ -74,6 +73,9 @@ export default function cssStylesFromSpecs(specs: TableStyleSpecs = defaultTable
     tr:nth-child(even), tr:nth-child(1) {
       background-color: ${trEvenBackground};
       color: ${trEvenColor};
+    },
+    a, a:visited {
+      color: ${linkColor};
     }
     `
 }
