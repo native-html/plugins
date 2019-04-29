@@ -1,0 +1,20 @@
+{
+    "compilerOptions": {
+      "target": "es2016",
+      "module": "commonjs",
+      "declaration": true,
+      "outDir": "./lib",
+      "strict": true,
+      "jsx": "react",
+      "lib": ["es5", "es6"],
+      "allowSyntheticDefaultImports": true,
+      "esModuleInterop": true,
+      "downlevelIteration": true,
+      "baseUrl": "./src",
+      "paths": {
+        "@src/*": ["*"]
+      }
+    },
+    "include": ["src"],
+    "exclude": ["node_modules"]
+  }

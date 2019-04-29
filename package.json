@@ -1,0 +1,40 @@
+{
+  "name": "react-native-render-html-table-bridge",
+  "version": "0.1.0",
+  "description": "A bridge to render tables with render-html library",
+  "main": "lib/index.js",
+  "files": [
+    "lib/**/*"
+  ],
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "build": "rimraf lib; tsc --project ./tsconfig.json"
+  },
+  "keywords": [
+    "react native",
+    "html",
+    "table"
+  ],
+  "author": "Jules Sam. Randolph",
+  "license": "MIT",
+  "repository": "git@github.com:jsamr/react-native-render-html-table-bridge.git",
+  "devDependencies": {
+    "@types/ramda": "github:types/npm-ramda#dist",
+    "@types/react": "^16.8.14",
+    "@types/react-native": "^0.57.50",
+    "react": "^16.8.6",
+    "react-native": "^0.59.5",
+    "react-native-render-html": "^4.1.2",
+    "rimraf": "^2.6.3",
+    "typescript": "^3.4.5"
+  },
+  "dependencies": {
+    "ramda": "^0.26.1",
+    "stringify-entities": "^2.0.0"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*",
+    "react-native-render-html": "*"
+  }
+}
