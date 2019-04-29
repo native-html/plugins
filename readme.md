@@ -30,13 +30,7 @@ yarn add react-native-render-html-table-bridge
 
 You need 3 conditions to get to a working example:
 
-1. If you're not using Expo, install and link `react-native-webview`
-
-```bash
-npm add --save react-native-webview
-react-native link react-native-webview
-```
-
+1. If you're not using Expo, install (`npm add --save react-native-webview`) and link (`react-native link react-native-webview`) `react-native-webview`
 2. inject `alterNode` and `ignoredTags` props to `HTML` component
 3. `makeTableRenderer` and inject `renderers` prop to `HTML` component
 
