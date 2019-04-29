@@ -1,0 +1,10 @@
+.idea
+.vscode
+.jest
+.watchmanconfig
+src/
+examples/
+tsconfig.json
+tslint.json
+
+

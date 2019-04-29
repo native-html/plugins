@@ -8,7 +8,8 @@
   ],
   "types": "lib/index.d.ts",
   "scripts": {
-    "build": "rimraf lib; tsc --project ./tsconfig.json"
+    "build": "rimraf lib; tsc --project ./tsconfig.json",
+    "prepublish": "npm run build"
   },
   "keywords": [
     "react native",
