@@ -1,6 +1,6 @@
 import { ComponentType } from 'react'
 import { StyleProp, ViewStyle } from 'react-native'
-import { TableStyleSpecs } from './table-specs'
+import { TableStyleSpecs } from './table-specs.d'
 
 export interface TableConfig<WebViewProps = any> {
   /**

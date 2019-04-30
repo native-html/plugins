@@ -2,11 +2,23 @@ import React, { PureComponent, ComponentType } from 'react'
 import PropTypes from 'prop-types'
 import { Platform, StyleSheet, NativeSyntheticEvent, WebViewMessageEventData, Dimensions, LayoutAnimation, Animated } from 'react-native'
 import cssRulesFromSpecs from './css-rules'
-import { TableProps } from './types'
 import script from './script'
+import { TableConfig } from './table-config.d'
 export { IGNORED_TAGS, TABLE_TAGS } from './tags'
 
-export { TableProps } from './types'
+export interface TableProps<WebViewProps = any> extends TableConfig<WebViewProps> {
+  /**
+   * The outerHtml of <table> tag.
+   */
+  rawHtml: string
+
+  /**
+   * Intercept links press.
+   * 
+   * **Info**: `makeTableRenderer` uses `<HTML>onLinkPress` prop.
+   */
+  onLinkPress?: (url: string) => void
+}
 
 interface PostMessage {
   type: 'heightUpdate' | 'navigateEvent',
