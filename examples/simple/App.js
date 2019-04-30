@@ -7,11 +7,19 @@
  */
 
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, SafeAreaView} from 'react-native';
+import {StyleSheet, Text, View, SafeAreaView, UIManager, Platform} from 'react-native';
 import Example from './Example'
 
 type Props = {};
 export default class App extends Component<Props> {
+
+
+  componentWillMount() {
+    if (Platform.OS === 'android') {
+      UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
+    }
+  }
+
   render() {
     return (
       <SafeAreaView style={styles.container}>

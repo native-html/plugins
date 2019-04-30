@@ -1,7 +1,7 @@
 import React, { PureComponent, ComponentType } from 'react'
 import PropTypes from 'prop-types'
-import { Platform, View, StyleSheet, NativeSyntheticEvent, WebViewMessageEventData, Dimensions, LayoutAnimation } from 'react-native'
-import cssStylesFromSpecs from './css-styles'
+import { Platform, StyleSheet, NativeSyntheticEvent, WebViewMessageEventData, Dimensions, LayoutAnimation, Animated } from 'react-native'
+import cssRulesFromSpecs from './css-rules'
 import { TableProps } from './types'
 import script from './script'
 export { IGNORED_TAGS, TABLE_TAGS } from './tags'
@@ -23,6 +23,7 @@ const styles = StyleSheet.create({
 
 interface State {
   containerHeight: number
+  animatedHeight: Animated.Value
 }
 
 const defaultInsets = {
@@ -32,13 +33,11 @@ const defaultInsets = {
   right: 0
 }
 
-function animateNextFrames() {
+const DEFAULT_TRANSITION_DURATION = 120
+
+function animateNextFrames(duration?: number) {
   LayoutAnimation.configureNext({
-    duration: 300,
-    create: {
-      type: LayoutAnimation.Types.easeInEaseOut,
-      property: LayoutAnimation.Properties.opacity
-    },
+    duration: duration || DEFAULT_TRANSITION_DURATION,
     update: {
       type: LayoutAnimation.Types.easeInEaseOut
     }
@@ -49,10 +48,12 @@ const DEFAULT_CONTAINER_HEIGHT = Math.max(
   Dimensions.get('window').height,
   Dimensions.get('window').width) / 2
 
-export default class HTMLTable<WVP = any> extends PureComponent<TableProps<WVP>, State> {
+export default class HTMLTable<WVP extends Record<string, any>> extends PureComponent<TableProps<WVP>, State> {
 
   static defaultProps = {
-    autoheight: true
+    autoheight: true,
+    useLayoutAnimations: false,
+    transitionDuration: DEFAULT_TRANSITION_DURATION
   }
 
   static propTypes = {
@@ -76,11 +77,21 @@ export default class HTMLTable<WVP = any> extends PureComponent<TableProps<WVP>,
       trEvenColor: PropTypes.string.isRequired
     }),
     cssRules: PropTypes.string,
-    webViewProps: PropTypes.object
+    webViewProps: PropTypes.object,
+    useLayoutAnimations: PropTypes.bool,
+    transitionDuration: PropTypes.number
   }
 
-  state: State = {
-    containerHeight: 0
+  private oldContainerHeight: number = 0
+
+  constructor(props: TableProps) {
+    super(props)
+    const state = {
+      containerHeight: 0,
+      animatedHeight: new Animated.Value(0)
+    }
+    this.state = state
+    this.oldContainerHeight = this.findHeight(this.props, this.state) || 0
   }
 
   private handleOnMessage = ({ nativeEvent }: NativeSyntheticEvent<WebViewMessageEventData>) => {
@@ -104,7 +115,7 @@ export default class HTMLTable<WVP = any> extends PureComponent<TableProps<WVP>,
         cssRules,
         rawHtml
       } = this.props
-    const tableCssStyle = cssRules ? cssRules : cssStylesFromSpecs(styleSpecs)
+    const tableCssStyle = cssRules ? cssRules : cssRulesFromSpecs(styleSpecs)
     return `
       <!DOCTYPE html>
       <html>
@@ -121,9 +132,9 @@ export default class HTMLTable<WVP = any> extends PureComponent<TableProps<WVP>,
       `
   }
 
-  private findHeight() {
-    const { containerHeight } = this.state
-    const { autoheight, defaultHeight, maxHeight } = this.props
+  private findHeight(props: TableProps, state: State) {
+    const { containerHeight } = state
+    const { autoheight, defaultHeight, maxHeight } = props
     const computedHeight = autoheight ?
                                containerHeight ? containerHeight : DEFAULT_CONTAINER_HEIGHT :
                                defaultHeight
@@ -134,38 +145,62 @@ export default class HTMLTable<WVP = any> extends PureComponent<TableProps<WVP>,
   }
 
   componentWillUpdate(_nextProps: TableProps, nextState: State) {
-    if (nextState.containerHeight !== this.state.containerHeight) {
-      animateNextFrames()
+    const { autoheight, useLayoutAnimations, transitionDuration } = this.props
+    const shouldAnimate = nextState.containerHeight !== this.state.containerHeight &&
+                          autoheight && useLayoutAnimations
+    if (shouldAnimate) {
+      animateNextFrames(transitionDuration)
+    }
+  }
+
+  componentDidUpdate(_oldProps: TableProps, oldState: State) {
+    const { autoheight, useLayoutAnimations, transitionDuration } = this.props
+    const shouldAnimate = oldState.containerHeight !== this.state.containerHeight &&
+                          autoheight && !useLayoutAnimations
+    if (shouldAnimate) {
+      this.oldContainerHeight = oldState.containerHeight
+      Animated.timing(this.state.animatedHeight, {
+        toValue: 1,
+        duration: transitionDuration
+      }).start()
     }
   }
 
   render() {
     const {
-          style,
-          WebViewComponent,
-          webViewProps
-        } = this.props
+        autoheight,
+        style,
+        WebViewComponent,
+        webViewProps,
+        useLayoutAnimations
+      } = this.props
     const html = this.buildHTML()
     const source = {
       html
     }
+    const containerHeight = this.findHeight(this.props, this.state)
     const WebView = WebViewComponent as ComponentType<any>
-    const containerStyle = {
-      height: this.findHeight()
+    const containerStyle = autoheight && !useLayoutAnimations ? {
+      height: this.state.animatedHeight.interpolate({
+        inputRange: [0, 1],
+        outputRange: [this.oldContainerHeight, containerHeight as number]
+      })
+    } : {
+      height: containerHeight
     }
     return (
-          <View style={[containerStyle, styles.container, style]}>
+          <Animated.View style={[containerStyle, styles.container, style]}>
             <WebView scalesPageToFit={Platform.select({ android: false, ios: undefined })}
                     automaticallyAdjustContentInsets={false}
                     scrollEnabled={true}
-                    style={StyleSheet.absoluteFill}
+                    style={[StyleSheet.absoluteFill, webViewProps && webViewProps.style]}
                     contentInset={defaultInsets}
                     {...webViewProps}
                     injectedJavaScript={script}
                     javaScriptEnabled={true}
                     onMessage={this.handleOnMessage}
                     source={source}/>
-          </View>
+          </Animated.View>
     )
   }
 }

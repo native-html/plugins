@@ -1,6 +1,6 @@
 {
   "name": "react-native-render-html-table-bridge",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "A bridge to render tables with render-html library",
   "main": "lib/index.js",
   "files": [
@@ -9,7 +9,8 @@
   "types": "lib/index.d.ts",
   "scripts": {
     "build": "rimraf lib; tsc --project ./tsconfig.json",
-    "prepublish": "npm run build"
+    "prepare": "npm run build",
+    "lint": "tslint 'src/**/*?(.d).ts?(x)' --fix"
   },
   "keywords": [
     "react native",

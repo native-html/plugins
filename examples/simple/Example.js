@@ -4,6 +4,7 @@ import {View, Dimensions, ScrollView} from 'react-native';
 import HTML from 'react-native-render-html';
 import { IGNORED_TAGS, alterNode, makeTableRenderer } from 'react-native-render-html-table-bridge';
 import WebView from 'react-native-webview';
+import Snackbar from 'react-native-snackbar';
 
 type Props = {};
 const table1 = `
@@ -16,89 +17,94 @@ const table1 = `
     <th>Country</th>
   </tr>
   <tr>
-    <td>Alfreds Futterkiste</td>
+    <td>Alfreds Futterkiste website</td>
     <td>Maria Anders</td>
-    <td>Germany</td>
+    <td><a class="a" href="https://en.wikipedia.org/wiki/germany">Germany</a></td>
   </tr>
   <tr>
     <td>Centro comercial Moctezuma</td>
     <td>Francisco Chang</td>
-    <td>Mexico</td>
+    <td><a href="https://en.wikipedia.org/wiki/mexico">Mexico</a></td>
   </tr>
   <tr>
     <td>Ernst Handel</td>
     <td>Roland Mendel</td>
-    <td>Austria</td>
+    <td><a href="https://en.wikipedia.org/wiki/austria">Austria</a></td>
   </tr>
   <tr>
     <td>Island Trading</td>
     <td>Helen Bennett</td>
-    <td>UK</td>
+    <td><a href="https://en.wikipedia.org/wiki/united_kingdom">UK</td>
   </tr>
   <tr>
     <td>Laughing Bacchus Winecellars</td>
     <td>Yoshi Tannamuri</td>
-    <td>Canada</td>
+    <td><a href="https://en.wikipedia.org/wiki/canada">Canada</a></td>
   </tr>
   <tr>
     <td>Magazzini Alimentari Riuniti</td>
     <td>Giovanni Rovelli</td>
-    <td>Italy</td>
+    <td><a href="https://en.wikipedia.org/wiki/italy">Italy</a></td>
+  </tr>
+  <tr>
+    <td>Alfreds Futterkiste website</td>
+    <td>Maria Anders</td>
+    <td><a href="https://en.wikipedia.org/wiki/germany">Germany</a></td>
   </tr>
   <tr>
     <td>Centro comercial Moctezuma</td>
     <td>Francisco Chang</td>
-    <td>Mexico</td>
+    <td><a href="https://en.wikipedia.org/wiki/mexico">Mexico</a></td>
   </tr>
   <tr>
     <td>Ernst Handel</td>
     <td>Roland Mendel</td>
-    <td>Austria</td>
+    <td><a href="https://en.wikipedia.org/wiki/austria">Austria</a></td>
   </tr>
   <tr>
     <td>Island Trading</td>
     <td>Helen Bennett</td>
-    <td>UK</td>
+    <td><a href="https://en.wikipedia.org/wiki/united_kingdom">UK</td>
   </tr>
   <tr>
     <td>Laughing Bacchus Winecellars</td>
     <td>Yoshi Tannamuri</td>
-    <td>Canada</td>
+    <td><a href="https://en.wikipedia.org/wiki/canada">Canada</a></td>
   </tr>
   <tr>
     <td>Magazzini Alimentari Riuniti</td>
     <td>Giovanni Rovelli</td>
-    <td>Italy</td>
+    <td><a href="https://en.wikipedia.org/wiki/italy">Italy</a></td>
   </tr>
-  <tr>
-    <td>Magazzini Alimentari Riuniti</td>
-    <td>Giovanni Rovelli</td>
-    <td>Italy</td>
+    <tr>
+    <td>Alfreds Futterkiste website</td>
+    <td>Maria Anders</td>
+    <td><a href="https://en.wikipedia.org/wiki/germany">Germany</a></td>
   </tr>
   <tr>
     <td>Centro comercial Moctezuma</td>
     <td>Francisco Chang</td>
-    <td>Mexico</td>
+    <td><a href="https://en.wikipedia.org/wiki/mexico">Mexico</a></td>
   </tr>
   <tr>
     <td>Ernst Handel</td>
     <td>Roland Mendel</td>
-    <td>Austria</td>
+    <td><a href="https://en.wikipedia.org/wiki/austria">Austria</a></td>
   </tr>
   <tr>
     <td>Island Trading</td>
     <td>Helen Bennett</td>
-    <td>UK</td>
+    <td><a href="https://en.wikipedia.org/wiki/united_kingdom">UK</td>
   </tr>
   <tr>
     <td>Laughing Bacchus Winecellars</td>
     <td>Yoshi Tannamuri</td>
-    <td>Canada</td>
+    <td><a href="https://en.wikipedia.org/wiki/canada">Canada</a></td>
   </tr>
   <tr>
     <td>Magazzini Alimentari Riuniti</td>
     <td>Giovanni Rovelli</td>
-    <td>Italy</td>
+    <td><a href="https://en.wikipedia.org/wiki/italy">Italy</a></td>
   </tr>
 </table>
 
@@ -111,20 +117,26 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 
 const renderers = {
     table: makeTableRenderer({
-        WebViewComponent: WebView
+        WebViewComponent: WebView,
+        useLayoutAnimations: true // <-- You must activate animation at the root of your app in android, see App.js
     })
 };
 
 const htmlConfig = {
     alterNode,
     renderers,
-    ignoredTags: IGNORED_TAGS
+    ignoredTags: IGNORED_TAGS,
+    onLinkPress: (e, url) => {
+      Snackbar.show({
+        title: url
+      })
+    }
 };
 
 export default class Example extends PureComponent<Props> {
   render() {
     return (
-      <ScrollView style={{ backgroundColor: 'white' }}>
+      <ScrollView contentContainerStyle={{ paddingHorizontal: 20 }} style={{ backgroundColor: 'white' }}>
         <HTML html={table1} {...htmlConfig}/>
       </ScrollView>
     )

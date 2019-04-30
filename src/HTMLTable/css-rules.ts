@@ -13,7 +13,7 @@ const defaultTableStylesSpecs: TableStyleSpecs = {
   trEvenColor : '#333333'
 }
 
-export default function cssStylesFromSpecs(specs: TableStyleSpecs = defaultTableStylesSpecs) {
+export default function cssRulesFromSpecs(specs: TableStyleSpecs = defaultTableStylesSpecs) {
   const {
         linkColor,
         fontFamily,
@@ -35,6 +35,9 @@ export default function cssStylesFromSpecs(specs: TableStyleSpecs = defaultTable
       margin: 0;
       background-color: transparent;
     }
+    a:link, a:visited {
+      color: ${linkColor};
+    }
     table {
       min-height: 100vh;
       min-width: 100vw;
@@ -54,6 +57,8 @@ export default function cssStylesFromSpecs(specs: TableStyleSpecs = defaultTable
     th {
       border-bottom: 0.25px solid ${thBorderColor};
       border-right: 0.25px solid ${thBorderColor};
+      background-color: ${thBackground};
+      color: ${thColor};
     }
     td {
       border-bottom: 0.25px solid ${tdBorderColor};
@@ -62,10 +67,6 @@ export default function cssStylesFromSpecs(specs: TableStyleSpecs = defaultTable
     thead {
       background-color: ${thBackground};
     }
-    th {
-      background-color: ${thBackground};
-      color: ${thColor};
-    }
     tr:nth-child(odd) {
       background-color: ${trOddBackground};
       color: ${trOddColor}
@@ -73,9 +74,6 @@ export default function cssStylesFromSpecs(specs: TableStyleSpecs = defaultTable
     tr:nth-child(even), tr:nth-child(1) {
       background-color: ${trEvenBackground};
       color: ${trEvenColor};
-    },
-    a, a:visited {
-      color: ${linkColor};
     }
     `
 }
