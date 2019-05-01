@@ -82,7 +82,6 @@ export default class Example extends PureComponent<Props> {
 ## `makeTableRenderer` config
 
 This config object will be passed to the [`HTMLTable`](src/HTMLTable/index.ts) component as props.
-[Read through typescript definitions](src/HTMLTable/table-config.d.ts) to discover available config options.
 
 ### `WebViewComponent`
 

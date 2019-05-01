@@ -1,4 +1,15 @@
-import { TableStyleSpecs } from './table-specs'
+export interface TableStyleSpecs {
+  linkColor: string
+  fontFamily: string
+  tdBorderColor: string
+  thBorderColor: string
+  thBackground: string
+  thColor: string
+  trOddBackground: string
+  trOddColor: string
+  trEvenBackground: string
+  trEvenColor: string
+}
 
 const defaultTableStylesSpecs: TableStyleSpecs = {
   linkColor: '#3498DB',
