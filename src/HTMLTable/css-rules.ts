@@ -1,4 +1,5 @@
 export interface TableStyleSpecs {
+  selectableText: boolean
   linkColor: string
   fontFamily: string
   tdBorderColor: string
@@ -12,6 +13,7 @@ export interface TableStyleSpecs {
 }
 
 const defaultTableStylesSpecs: TableStyleSpecs = {
+  selectableText: false,
   linkColor: '#3498DB',
   fontFamily: 'sans-serif',
   thBorderColor : '#3f5c7a',
@@ -26,6 +28,7 @@ const defaultTableStylesSpecs: TableStyleSpecs = {
 
 export default function cssRulesFromSpecs(specs: TableStyleSpecs = defaultTableStylesSpecs) {
   const {
+        selectableText,
         linkColor,
         fontFamily,
         tdBorderColor,
@@ -37,6 +40,11 @@ export default function cssRulesFromSpecs(specs: TableStyleSpecs = defaultTableS
         trEvenBackground,
         trEvenColor
     } = specs
+  const selectTextRule = selectableText ? '' : `
+    user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+  `
   return `
     :root {
       font-family: ${fontFamily};
@@ -45,6 +53,7 @@ export default function cssRulesFromSpecs(specs: TableStyleSpecs = defaultTableS
     body, html {
       margin: 0;
       background-color: transparent;
+      ${selectTextRule}
     }
     a:link, a:visited {
       color: ${linkColor};
