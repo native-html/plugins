@@ -12,7 +12,7 @@ export interface TableStyleSpecs {
   trEvenColor: string
 }
 
-const defaultTableStylesSpecs: TableStyleSpecs = {
+export const defaultTableStylesSpecs: TableStyleSpecs = {
   selectableText: false,
   linkColor: '#3498DB',
   fontFamily: 'sans-serif',

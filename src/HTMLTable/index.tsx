@@ -1,11 +1,11 @@
 import React, { PureComponent, ComponentType } from 'react'
 import PropTypes from 'prop-types'
 import { Platform, StyleSheet, NativeSyntheticEvent, WebViewMessageEventData, Dimensions, LayoutAnimation, Animated, StyleProp, ViewStyle } from 'react-native'
-import cssRulesFromSpecs, { TableStyleSpecs } from './css-rules'
+import cssRulesFromSpecs, { TableStyleSpecs, defaultTableStylesSpecs } from './css-rules'
 import script from './script'
 export { IGNORED_TAGS, TABLE_TAGS } from './tags'
 
-export { TableStyleSpecs }
+export { TableStyleSpecs, defaultTableStylesSpecs, cssRulesFromSpecs }
 
 export interface TableConfig<WebViewProps = any> {
   /**

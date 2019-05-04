@@ -1,6 +1,6 @@
 import makeTableRenderer from './make-table-renderer'
 import alterNode, { domToHTML } from './alter-node'
-import HTMLTable, { TableConfig, TableStyleSpecs } from './HTMLTable'
+import HTMLTable, { TableConfig, TableStyleSpecs, defaultTableStylesSpecs, cssRulesFromSpecs } from './HTMLTable'
 
 export {
     IGNORED_TAGS,
@@ -8,6 +8,8 @@ export {
 } from './HTMLTable'
 
 export {
+    defaultTableStylesSpecs,
+    cssRulesFromSpecs,
     alterNode,
     domToHTML,
     makeTableRenderer,
