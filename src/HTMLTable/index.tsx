@@ -1,11 +1,11 @@
 import React, { PureComponent, ComponentType } from 'react'
 import PropTypes from 'prop-types'
 import { Platform, StyleSheet, NativeSyntheticEvent, WebViewMessageEventData, Dimensions, LayoutAnimation, Animated, StyleProp, ViewStyle } from 'react-native'
-import cssRulesFromSpecs, { TableStyleSpecs } from './css-rules'
+import cssRulesFromSpecs, { TableStyleSpecs, defaultTableStylesSpecs } from './css-rules'
 import script from './script'
 export { IGNORED_TAGS, TABLE_TAGS } from './tags'
 
-export { TableStyleSpecs }
+export { TableStyleSpecs, defaultTableStylesSpecs, cssRulesFromSpecs }
 
 export interface TableConfig<WebViewProps = any> {
   /**
@@ -77,11 +77,11 @@ export interface TableConfig<WebViewProps = any> {
   transitionDuration?: number
 }
 
-export interface TableProps<WebViewProps = any> extends TableConfig<WebViewProps> {
+export interface HTMLTableProps {
   /**
    * The outerHtml of <table> tag.
    */
-  rawHtml: string
+  html: string
 
   /**
    * Intercept links press.
@@ -89,6 +89,23 @@ export interface TableProps<WebViewProps = any> extends TableConfig<WebViewProps
    * **Info**: `makeTableRenderer` uses `<HTML>onLinkPress` prop.
    */
   onLinkPress?: (url: string) => void
+}
+
+export interface HTMLTablePropsWithStats extends HTMLTableProps {
+  /**
+   * Number of rows, header included
+   */
+  numOfRows: number
+
+  /**
+   * Number of columns.
+   */
+  numOfColumns: number
+
+  /**
+   * Number of text characters.
+   */
+  numOfChars: number
 }
 
 interface PostMessage {
@@ -127,11 +144,9 @@ function animateNextFrames(duration?: number) {
   })
 }
 
-const DEFAULT_CONTAINER_HEIGHT = Math.max(
-  Dimensions.get('window').height,
-  Dimensions.get('window').width) / 2
+interface Props<WVP> extends TableConfig<WVP>, HTMLTablePropsWithStats {}
 
-export default class HTMLTable<WVP extends Record<string, any>> extends PureComponent<TableProps<WVP>, State> {
+export default class HTMLTable<WVP extends Record<string, any>> extends PureComponent<Props<WVP>, State> {
 
   static defaultProps = {
     autoheight: true,
@@ -140,7 +155,10 @@ export default class HTMLTable<WVP extends Record<string, any>> extends PureComp
   }
 
   static propTypes = {
-    rawHtml: PropTypes.string.isRequired,
+    html: PropTypes.string.isRequired,
+    numOfChars: PropTypes.number.isRequired,
+    numOfColumns: PropTypes.number.isRequired,
+    numOfRows: PropTypes.number.isRequired,
     WebViewComponent: PropTypes.func.isRequired,
     autoheight: PropTypes.bool,
     defaultHeight: PropTypes.number,
@@ -167,7 +185,7 @@ export default class HTMLTable<WVP extends Record<string, any>> extends PureComp
 
   private oldContainerHeight: number = 0
 
-  constructor(props: TableProps) {
+  constructor(props: Props<WVP>) {
     super(props)
     const state = {
       containerHeight: 0,
@@ -194,10 +212,15 @@ export default class HTMLTable<WVP extends Record<string, any>> extends PureComp
 
   private buildHTML() {
     const {
-        tableStyleSpecs: styleSpecs,
+        autoheight,
+        tableStyleSpecs,
         cssRules,
-        rawHtml
+        html
       } = this.props
+    const styleSpecs = tableStyleSpecs ? tableStyleSpecs : {
+      ...defaultTableStylesSpecs,
+      fitContainer: !autoheight
+    }
     const tableCssStyle = cssRules ? cssRules : cssRulesFromSpecs(styleSpecs)
     return `
       <!DOCTYPE html>
@@ -209,17 +232,26 @@ export default class HTMLTable<WVP extends Record<string, any>> extends PureComp
         <style>
         ${tableCssStyle}
         </style>
-        ${rawHtml}
+        ${html}
       </body>
       </html>
       `
   }
 
-  private findHeight(props: TableProps, state: State) {
+  private computeHeightHeuristic() {
+    const { numOfChars, numOfRows } = this.props
+    const width = Dimensions.get('window').width
+    const charsPerLine = 30 * width / 400
+    const lineHeight = 20
+    const approxNumOfLines = Math.floor(numOfChars / charsPerLine)
+    return Math.max(approxNumOfLines, numOfRows) * lineHeight
+  }
+
+  private findHeight(props: Props<WVP>, state: State) {
     const { containerHeight } = state
     const { autoheight, defaultHeight, maxHeight } = props
     const computedHeight = autoheight ?
-                               containerHeight ? containerHeight : DEFAULT_CONTAINER_HEIGHT :
+                               containerHeight ? containerHeight : this.computeHeightHeuristic() :
                                defaultHeight
     if (maxHeight) {
       return Math.min(maxHeight, computedHeight as number)
@@ -227,7 +259,7 @@ export default class HTMLTable<WVP extends Record<string, any>> extends PureComp
     return computedHeight
   }
 
-  componentWillUpdate(_nextProps: TableProps, nextState: State) {
+  componentWillUpdate(_nextProps: Props<WVP>, nextState: State) {
     const { autoheight, useLayoutAnimations, transitionDuration } = this.props
     const shouldAnimate = nextState.containerHeight !== this.state.containerHeight &&
                           autoheight && useLayoutAnimations
@@ -236,7 +268,7 @@ export default class HTMLTable<WVP extends Record<string, any>> extends PureComp
     }
   }
 
-  componentDidUpdate(_oldProps: TableProps, oldState: State) {
+  componentDidUpdate(_oldProps: Props<WVP>, oldState: State) {
     const { autoheight, useLayoutAnimations, transitionDuration } = this.props
     const shouldAnimate = oldState.containerHeight !== this.state.containerHeight &&
                           autoheight && !useLayoutAnimations
@@ -269,7 +301,7 @@ export default class HTMLTable<WVP extends Record<string, any>> extends PureComp
         outputRange: [this.oldContainerHeight, containerHeight as number]
       })
     } : {
-      height: containerHeight
+      height: !containerHeight || Number.isNaN(containerHeight) ? undefined : containerHeight
     }
     return (
           <Animated.View style={[containerStyle, styles.container, style]}>

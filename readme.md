@@ -170,3 +170,70 @@ This should be preferred performance-wise, but you need to setup `UIManager` on 
 The transition duration in milliseconds when table height is updated when `autoheight` is used.
 
 **default**: `120`
+
+## FAQ
+
+### How to extend default or custom styles?
+
+**A**: Use `cssRulesFromSpecs` function and override `cssRules` config.
+
+```javascript
+import { defaultTableStylesSpecs, cssRulesFromSpecs } from 'react-native-render-html-table-bridge';
+
+const cssRules = cssRulesFromSpecs(defaultTableStylesSpecs) + `
+a {
+  text-transform: uppercase;
+}
+`
+
+const config = {
+  cssRules,
+  // Other config options
+}
+
+```
+
+### How to customize the Table component?
+
+**A**: Use `makeCustomTableRenderer` function. [See custom example](examples/custom).
+
+<img src="images/adaptative.jpeg" width="300">
+
+### How to load custom fonts?
+
+**A**: Extend styles and add `@font-face` rules.
+
+```javascript
+import { defaultTableStylesSpecs, cssRulesFromSpecs } from 'react-native-render-html-table-bridge';
+import { Platform } from 'react-native';
+
+function getFontAssetURL(fontFileName: string) {
+  return Platform.select({
+    ios: `url(${fontFileName})`,
+    android: `url(file://android_asset/fonts/${fontFileName})`
+  })
+}
+
+const openSansUnicodeRanges = 'U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD';
+
+const openSansRegular = getFontAssetURL('OpenSans-Regular.ttf');
+
+const cssRules = cssRulesFromSpecs({
+  ...defaultTableStylesSpecs,
+  fontFamily: '"Open Sans"' // beware to quote font family name!
+}) + `
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: ${openSansRegular}, format('ttf');
+  unicode-range: ${openSansUnicodeRanges};
+}
+`;
+
+const config = {
+  cssRules,
+  // Other config options
+}
+
+```

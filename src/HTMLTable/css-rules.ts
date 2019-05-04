@@ -1,5 +1,6 @@
 export interface TableStyleSpecs {
   selectableText: boolean
+  fitContainer: boolean
   linkColor: string
   fontFamily: string
   tdBorderColor: string
@@ -12,8 +13,9 @@ export interface TableStyleSpecs {
   trEvenColor: string
 }
 
-const defaultTableStylesSpecs: TableStyleSpecs = {
+export const defaultTableStylesSpecs: TableStyleSpecs = {
   selectableText: false,
+  fitContainer: false,
   linkColor: '#3498DB',
   fontFamily: 'sans-serif',
   thBorderColor : '#3f5c7a',
@@ -29,6 +31,7 @@ const defaultTableStylesSpecs: TableStyleSpecs = {
 export default function cssRulesFromSpecs(specs: TableStyleSpecs = defaultTableStylesSpecs) {
   const {
         selectableText,
+        fitContainer,
         linkColor,
         fontFamily,
         tdBorderColor,
@@ -45,6 +48,10 @@ export default function cssRulesFromSpecs(specs: TableStyleSpecs = defaultTableS
     -webkit-user-select: none;
     -ms-user-select: none;
   `
+  const spanToContainerRule = fitContainer ? `
+    min-height: 100vh;
+    min-width: 100vw;
+  ` : ''
   return `
     :root {
       font-family: ${fontFamily};
@@ -59,8 +66,7 @@ export default function cssRulesFromSpecs(specs: TableStyleSpecs = defaultTableS
       color: ${linkColor};
     }
     table {
-      min-height: 100vh;
-      min-width: 100vw;
+      ${spanToContainerRule}
       margin: 0;
       padding: 0;
     }

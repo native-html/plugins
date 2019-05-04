@@ -5,13 +5,15 @@ var RNWV = window.ReactNativeWebView;
 
 // Send size on body content height updates
 function postSize() {
-    //https://stackoverflow.com/questions/1145850/how-to-get-height-of-entire-document-with-javascript
-    var body = document.body, html = document.documentElement;
-    var maxHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
+  var tables = document.getElementsByTagName('table');
+  if (tables.length > 0) {
+    var table = tables[0];
+    var tableHeight = table.scrollHeight;
     RNWV.postMessage(JSON.stringify({
       type: 'heightUpdate',
-      content: maxHeight
+      content: tableHeight
     }));
+  }
 }
 postSize();
 //trigger when DOM changes

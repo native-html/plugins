@@ -8,7 +8,33 @@ import Snackbar from 'react-native-snackbar';
 
 type Props = {};
 const table1 = `
-<h2>Header 1</h2>
+
+<h2>Small table</h2>
+
+<table>
+  <tr>
+    <th>Entry Header 1</th>
+    <th>Entry Header 2</th>
+    <th>Entry Header 3</th>
+  </tr>
+  <tr>
+    <td>Entry First Line 1</td>
+    <td>Entry First Line 2</td>
+    <td>Entry First Line 3</td>
+  </tr>
+  <tr>
+    <td>Entry Second Line 1</td>
+    <td>Entry Second Line 2</td>
+    <td>Entry Second Line 3</td>
+  </tr>
+  <tr>
+    <td>Entry Third Line 1</td>
+    <td>Entry Third Line 2</td>
+    <td>Entry Third Line 3</td>
+  </tr>
+</table>
+
+<h2>Big table</h2>
 
 <table>
   <tr>
@@ -90,6 +116,21 @@ const table1 = `
     <td>Ernst Handel</td>
     <td>Roland Mendel</td>
     <td><a href="https://en.wikipedia.org/wiki/austria">Austria</a></td>
+  </tr>
+  <tr>
+    <td>Island Trading</td>
+    <td>Helen Bennett</td>
+    <td><a href="https://en.wikipedia.org/wiki/united_kingdom">UK</td>
+  </tr>
+  <tr>
+    <td>Laughing Bacchus Winecellars</td>
+    <td>Yoshi Tannamuri</td>
+    <td><a href="https://en.wikipedia.org/wiki/canada">Canada</a></td>
+  </tr>
+  <tr>
+    <td>Magazzini Alimentari Riuniti</td>
+    <td>Giovanni Rovelli</td>
+    <td><a href="https://en.wikipedia.org/wiki/italy">Italy</a></td>
   </tr>
   <tr>
     <td>Island Trading</td>

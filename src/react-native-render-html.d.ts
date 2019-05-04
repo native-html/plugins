@@ -21,7 +21,7 @@ declare module 'react-native-render-html' {
     type HTMLNode = HTMLTagNode | HTMLTextNode
     type NonRegisteredStylesProp<T> = T
     interface HtmlAttributesDictionary {
-      [attribute: string]: string
+      [attribute: string]: string|number
     }
     interface PassProps<P = {}> {
       onLinkPress?: (evt: GestureResponderEvent, url: string, attribs: HtmlAttributesDictionary) => void

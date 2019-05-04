@@ -1,15 +1,39 @@
-import React from 'react'
+import React, { ComponentType } from 'react'
 import { RendererDeclaration } from 'react-native-render-html'
-import Table, { TableProps } from './HTMLTable'
-import { Omit } from 'ramda'
+import HTMLTable, { TableConfig, HTMLTablePropsWithStats } from './HTMLTable'
 
-export type TableRendererConfig = Omit<TableProps, 'rawHtml'|'onLinkPress'>
-
-function makeTableRenderer(tableConfig: TableRendererConfig): RendererDeclaration {
+export function makeTableRenderer(tableConfig: TableConfig): RendererDeclaration {
   return (attribs, _children, _css, { key, onLinkPress }) => {
     const handleOnLinkPress = (url: string) => onLinkPress && onLinkPress({} as any, url, {})
-    return <Table key={key} {...tableConfig} rawHtml={attribs.rawHtml} onLinkPress={handleOnLinkPress} />
+    if (typeof attribs._rawHtml !== 'string') {
+      throw new Error("You must inject `alterNode' method from react-native-render-html-table-bdridge in `HTML' component.")
+    }
+    return <HTMLTable key={key}
+                  {...tableConfig}
+                  numOfColumns={attribs._numOfColumns as number}
+                  numOfRows={attribs._numOfRows as number}
+                  numOfChars={attribs._numOfChars as number}
+                  html={attribs._rawHtml as string}
+                  onLinkPress={handleOnLinkPress} />
   }
 }
 
-export default makeTableRenderer
+/**
+ * 
+ * @param TableComponent A component which will receive `HTMLTablePropsWithStats` props.
+ * @see HTMLTablePropsWithStats
+ */
+export function makeCustomTableRenderer(TableComponent: ComponentType<HTMLTablePropsWithStats>): RendererDeclaration {
+  return (attribs, _children, _css, { key, onLinkPress }) => {
+    const handleOnLinkPress = (url: string) => onLinkPress && onLinkPress({} as any, url, {})
+    if (typeof attribs._rawHtml !== 'string') {
+      throw new Error("You must inject `alterNode' method from react-native-render-html-table-bdridge in `HTML' component.")
+    }
+    return <TableComponent key={key}
+                  numOfColumns={attribs._numOfColumns as number}
+                  numOfRows={attribs._numOfRows as number}
+                  numOfChars={attribs._numOfChars as number}
+                  html={attribs._rawHtml as string}
+                  onLinkPress={handleOnLinkPress} />
+  }
+}
