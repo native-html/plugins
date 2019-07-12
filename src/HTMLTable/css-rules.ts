@@ -1,12 +1,16 @@
 export interface TableStyleSpecs {
   selectableText: boolean
   fitContainer: boolean
+  cellPaddingEm: number
+  borderWidthPx: number
   linkColor: string
   fontFamily: string
   tdBorderColor: string
   thBorderColor: string
-  thBackground: string
-  thColor: string
+  thOddBackground: string
+  thOddColor: string
+  thEvenBackground: string
+  thEvenColor: string
   trOddBackground: string
   trOddColor: string
   trEvenBackground: string
@@ -16,12 +20,16 @@ export interface TableStyleSpecs {
 export const defaultTableStylesSpecs: TableStyleSpecs = {
   selectableText: false,
   fitContainer: false,
+  cellPaddingEm: 0.25,
+  borderWidthPx: 0.25,
   linkColor: '#3498DB',
   fontFamily: 'sans-serif',
   thBorderColor : '#3f5c7a',
   tdBorderColor : '#b5b5b5',
-  thBackground : '#253546',
-  thColor : '#FFFFFF',
+  thOddBackground : '#253546',
+  thOddColor : '#FFFFFF',
+  thEvenBackground: '#253546',
+  thEvenColor: '#FFFFFF',
   trOddBackground : '#e2e2e2',
   trOddColor : '#333333',
   trEvenBackground : '#FFFFFF',
@@ -30,14 +38,18 @@ export const defaultTableStylesSpecs: TableStyleSpecs = {
 
 export default function cssRulesFromSpecs(specs: TableStyleSpecs = defaultTableStylesSpecs) {
   const {
+        cellPaddingEm,
+        borderWidthPx,
         selectableText,
         fitContainer,
         linkColor,
         fontFamily,
         tdBorderColor,
         thBorderColor,
-        thBackground,
-        thColor,
+        thOddBackground,
+        thOddColor,
+        thEvenBackground,
+        thEvenColor,
         trOddBackground,
         trOddColor,
         trEvenBackground,
@@ -71,7 +83,7 @@ export default function cssRulesFromSpecs(specs: TableStyleSpecs = defaultTableS
       padding: 0;
     }
     th, td {
-      padding: 0.25em;
+      padding: ${cellPaddingEm}em;
       text-align: center;
     }
     table, th, td {
@@ -81,23 +93,29 @@ export default function cssRulesFromSpecs(specs: TableStyleSpecs = defaultTableS
       margin: 'auto';
     }
     th {
-      border-bottom: 0.25px solid ${thBorderColor};
-      border-right: 0.25px solid ${thBorderColor};
-      background-color: ${thBackground};
-      color: ${thColor};
+      border-bottom: ${borderWidthPx}px solid ${thBorderColor};
+      border-right: ${borderWidthPx}px solid ${thBorderColor};
+    }
+    tr:nth-child(odd) th {
+      background-color: ${thOddBackground};
+      color: ${thOddColor};
+    }
+    tr:nth-child(even) th {
+      background-color: ${thEvenBackground};
+      color: ${thEvenColor};
     }
     td {
-      border-bottom: 0.25px solid ${tdBorderColor};
-      border-right: 0.25px solid ${tdBorderColor};
+      border-bottom: ${borderWidthPx}px solid ${tdBorderColor};
+      border-right: ${borderWidthPx}px solid ${tdBorderColor};
     }
     thead {
-      background-color: ${thBackground};
+      background-color: ${thOddBackground};
     }
     tr:nth-child(odd) {
       background-color: ${trOddBackground};
       color: ${trOddColor}
     }
-    tr:nth-child(even), tr:nth-child(1) {
+    tr:nth-child(even) {
       background-color: ${trEvenBackground};
       color: ${trEvenColor};
     }
