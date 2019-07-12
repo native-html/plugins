@@ -96,11 +96,11 @@ export default function cssRulesFromSpecs(specs: TableStyleSpecs = defaultTableS
       border-bottom: ${borderWidthPx}px solid ${thBorderColor};
       border-right: ${borderWidthPx}px solid ${thBorderColor};
     }
-    tr:nth-child(odd) th {
+    tr:nth-of-type(odd) th {
       background-color: ${thOddBackground};
       color: ${thOddColor};
     }
-    tr:nth-child(even) th {
+    tr:nth-of-type(even) th {
       background-color: ${thEvenBackground};
       color: ${thEvenColor};
     }
@@ -111,11 +111,11 @@ export default function cssRulesFromSpecs(specs: TableStyleSpecs = defaultTableS
     thead {
       background-color: ${thOddBackground};
     }
-    tr:nth-child(odd) {
+    tr:nth-of-type(odd) {
       background-color: ${trOddBackground};
       color: ${trOddColor}
     }
-    tr:nth-child(even) {
+    tr:nth-of-type(even) {
       background-color: ${trEvenBackground};
       color: ${trEvenColor};
     }
