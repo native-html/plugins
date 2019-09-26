@@ -14,7 +14,7 @@ type Props = {};
 export default class App extends Component<Props> {
 
 
-  componentWillMount() {
+  componentDidMount() {
     if (Platform.OS === 'android') {
       UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
     }

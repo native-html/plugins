@@ -5,7 +5,8 @@ import { HTMLTable } from 'react-native-render-html-table-bridge';
 import WebView from 'react-native-webview';
 
 const tableConfig = {
-  WebViewComponent: WebView
+  WebViewComponent: WebView,
+  useLayoutAnimations: false
 };
 
 export default class ClickTable extends PureComponent<Props> {
@@ -15,7 +16,7 @@ export default class ClickTable extends PureComponent<Props> {
   }
 
   render() {
-    const { html, numOfRows, numOfColumns, numOfChars } = this.props
+    const { numOfRows, numOfColumns, numOfChars } = this.props
     // If table contains less then 100 chars or has less then 4 columns and 8 rows,
     // show table inline
     const shouldRenderTableInline = numOfChars < 400 || numOfColumns < 4 && numOfRows < 8

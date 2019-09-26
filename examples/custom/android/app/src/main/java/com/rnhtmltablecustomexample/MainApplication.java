@@ -1,4 +1,4 @@
-package com.rnhtmltablesimpleexample;
+package com.rnhtmltablecustomexample;
 
 import android.app.Application;
 import android.content.Context;

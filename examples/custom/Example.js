@@ -1,6 +1,6 @@
 
 import React, {PureComponent} from 'react';
-import {View, Dimensions, ScrollView} from 'react-native';
+import {ScrollView} from 'react-native';
 import HTML from 'react-native-render-html';
 import { IGNORED_TAGS, alterNode, makeCustomTableRenderer } from 'react-native-render-html-table-bridge';
 import Snackbar from 'react-native-snackbar';

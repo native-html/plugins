@@ -1,6 +1,6 @@
 
 import React, {PureComponent} from 'react';
-import {View, Dimensions, ScrollView} from 'react-native';
+import {ScrollView} from 'react-native';
 import HTML from 'react-native-render-html';
 import { IGNORED_TAGS, alterNode, makeTableRenderer } from 'react-native-render-html-table-bridge';
 import WebView from 'react-native-webview';
