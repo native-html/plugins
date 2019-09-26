@@ -30,16 +30,16 @@ yarn add react-native-render-html-table-bridge
 
 You need 3 conditions to get to a working example:
 
-1. If you're not using Expo, install (`npm add --save react-native-webview`) and link (`react-native link react-native-webview`) `react-native-webview`
-2. inject `alterNode` and `ignoredTags` props to `HTML` component
-3. `makeTableRenderer` and inject `renderers` prop to `HTML` component
+1. Provide import for `WebView` component. [Instructions will differ depending on your setup](#errors-when-importing-webview-component);
+2. Inject `alterNode` and `ignoredTags` props to `HTML` component;
+3. `makeTableRenderer` and inject `renderers` prop to `HTML` component.
 
 ```javascript
 import React, {PureComponent} from 'react';
 import {ScrollView} from 'react-native';
 import HTML from 'react-native-render-html';
 import { IGNORED_TAGS, alterNode, makeTableRenderer } from 'react-native-render-html-table-bridge';
-import WebView from 'react-native-webview';
+import WebView from 'react-native-webview'; // <-- Instructions might defer depending on your setup
 
 const html = `
 <table>
@@ -87,7 +87,7 @@ This config object will be passed to the [`HTMLTable`](src/HTMLTable/index.ts) c
 
 *Required* `ComponentType`
 
-Your `WebView` component.
+Your `WebView` component. If importing this component causes errors, [check the dedicated troubleshooting section](#errors-when-importing-webview-component).
 
 **Warning**: Features such as `autoheight` and `onLinkPress` don't work with the legacy core version or Expo &lt;33 version.
 
@@ -150,7 +150,7 @@ Override default CSS rules.
 Any properties you want to pass to the `WebViewComponent` element.
 
 **Info**: `source`, `injectedJavascript`, `javascriptEnabled` and `onMessage`
-will be ignored and overriden.
+will be ignored and overridden.
 
 ### `useLayoutAnimations`
 
@@ -170,6 +170,19 @@ This should be preferred performance-wise, but you need to setup `UIManager` on 
 The transition duration in milliseconds when table height is updated when `autoheight` is used.
 
 **default**: `120`
+
+## Troubleshooting
+
+
+<a name="errors-when-importing-webview-component" />
+
+### Errors when importing `WebView` component
+
+Setting up `WebView` component largely vary on your `react-native` or `expo` version.
+Please refer to the official documentation and make sure you have selected your RN / Expo SDK version:
+
+- [Expo](https://docs.expo.io/versions/latest/sdk/webview/);
+- [React Native](https://facebook.github.io/react-native/docs/webview).
 
 ## FAQ
 
