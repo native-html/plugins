@@ -1,6 +1,6 @@
 import React, { PureComponent, ComponentType } from 'react'
 import PropTypes from 'prop-types'
-import { Platform, StyleSheet, NativeSyntheticEvent, WebViewMessageEventData, Dimensions, LayoutAnimation, Animated, StyleProp, ViewStyle } from 'react-native'
+import { Platform, StyleSheet, Dimensions, LayoutAnimation, Animated, StyleProp, ViewStyle, NativeSyntheticEvent } from 'react-native'
 import cssRulesFromSpecs, { TableStyleSpecs, defaultTableStylesSpecs } from './css-rules'
 import script from './script'
 export { IGNORED_TAGS, TABLE_TAGS } from './tags'
@@ -146,15 +146,38 @@ function animateNextFrames(duration?: number) {
 
 interface Props<WVP> extends TableConfig<WVP>, HTMLTablePropsWithStats {}
 
+const tableStylePropTypeSpec: Record<keyof TableStyleSpecs, any> = {
+  linkColor: PropTypes.string.isRequired,
+  fontFamily: PropTypes.string.isRequired,
+  tdBorderColor: PropTypes.string.isRequired,
+  thBorderColor: PropTypes.string.isRequired,
+  trOddBackground: PropTypes.string.isRequired,
+  trOddColor: PropTypes.string.isRequired,
+  trEvenBackground: PropTypes.string.isRequired,
+  trEvenColor: PropTypes.string.isRequired,
+  borderWidthPx:  PropTypes.number.isRequired,
+  cellPaddingEm: PropTypes.number.isRequired,
+  fitContainer: PropTypes.bool.isRequired,
+  selectableText: PropTypes.bool.isRequired,
+  thEvenBackground: PropTypes.string.isRequired,
+  thEvenColor: PropTypes.string.isRequired,
+  thOddBackground: PropTypes.string.isRequired,
+  thOddColor: PropTypes.string.isRequired
+}
+
+interface WebViewMessage {
+  data: string
+}
+
 export default class HTMLTable<WVP extends Record<string, any>> extends PureComponent<Props<WVP>, State> {
 
-  static defaultProps = {
+  static defaultProps: Partial<Record<keyof Props<any>, any>> = {
     autoheight: true,
     useLayoutAnimations: false,
     transitionDuration: DEFAULT_TRANSITION_DURATION
   }
 
-  static propTypes = {
+  static propTypes: Record<keyof Props<any>, any> = {
     html: PropTypes.string.isRequired,
     numOfChars: PropTypes.number.isRequired,
     numOfColumns: PropTypes.number.isRequired,
@@ -165,18 +188,7 @@ export default class HTMLTable<WVP extends Record<string, any>> extends PureComp
     maxHeight: PropTypes.number,
     onLinkPress: PropTypes.func,
     style: PropTypes.any,
-    tableStyleSpecs: PropTypes.shape({
-      linkColor: PropTypes.string.isRequired,
-      fontFamily: PropTypes.string.isRequired,
-      tdBorderColor: PropTypes.string.isRequired,
-      thBorderColor: PropTypes.string.isRequired,
-      thBackground: PropTypes.string.isRequired,
-      thColor: PropTypes.string.isRequired,
-      trOddBackground: PropTypes.string.isRequired,
-      trOddColor: PropTypes.string.isRequired,
-      trEvenBackground: PropTypes.string.isRequired,
-      trEvenColor: PropTypes.string.isRequired
-    }),
+    tableStyleSpecs: PropTypes.shape(tableStylePropTypeSpec),
     cssRules: PropTypes.string,
     webViewProps: PropTypes.object,
     useLayoutAnimations: PropTypes.bool,
@@ -195,7 +207,7 @@ export default class HTMLTable<WVP extends Record<string, any>> extends PureComp
     this.oldContainerHeight = this.findHeight(this.props, this.state) || 0
   }
 
-  private handleOnMessage = ({ nativeEvent }: NativeSyntheticEvent<WebViewMessageEventData>) => {
+  private handleOnMessage = ({ nativeEvent }: NativeSyntheticEvent<WebViewMessage>) => {
     const { type, content } = JSON.parse(nativeEvent.data) as PostMessage
     if (type === 'heightUpdate') {
       const containerHeight = content
