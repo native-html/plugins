@@ -25,11 +25,22 @@ const injectedScript = `
 
   // Intercept click events
 
+  function findParent(tagname,el){
+    while (el){
+        if ((el.nodeName || el.tagName).toLowerCase() === tagname.toLowerCase()){
+            return el;
+        }
+        el = el.parentNode;
+    }
+    return null;
+  }
+
   function interceptClickEvent(e) {
     var href;
     var target = e.target || e.srcElement;
-    if (target.tagName === 'A') {
-        href = target.getAttribute('href');
+    let anchor = findParent('a', target)
+    if (anchor) {
+        href = anchor.getAttribute('href');
         e.preventDefault();
         // Post message
         RNWV.postMessage(JSON.stringify({
