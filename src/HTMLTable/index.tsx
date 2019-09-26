@@ -271,25 +271,18 @@ export default class HTMLTable<WVP extends Record<string, any>> extends PureComp
     return computedHeight
   }
 
-  componentWillUpdate(_nextProps: Props<WVP>, nextState: State) {
-    const { autoheight, useLayoutAnimations, transitionDuration } = this.props
-    const shouldAnimate = nextState.containerHeight !== this.state.containerHeight &&
-                          autoheight && useLayoutAnimations
-    if (shouldAnimate) {
-      animateNextFrames(transitionDuration)
-    }
-  }
-
   componentDidUpdate(_oldProps: Props<WVP>, oldState: State) {
     const { autoheight, useLayoutAnimations, transitionDuration } = this.props
-    const shouldAnimate = oldState.containerHeight !== this.state.containerHeight &&
-                          autoheight && !useLayoutAnimations
-    if (shouldAnimate) {
+    const shouldAnimate = oldState.containerHeight !== this.state.containerHeight && autoheight
+    if (shouldAnimate && !useLayoutAnimations) {
       this.oldContainerHeight = oldState.containerHeight
       Animated.timing(this.state.animatedHeight, {
         toValue: 1,
         duration: transitionDuration
       }).start()
+    }
+    if (shouldAnimate && useLayoutAnimations) {
+      animateNextFrames(transitionDuration)
     }
   }
 
