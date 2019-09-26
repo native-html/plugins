@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.4.1
+
+- Fix HTML.onLinkPress does not get fired if link contains html elements, [#5](https://github.com/jsamr/react-native-render-html-table-bridge/issues/5)
+- Use const TABLE_TAGS for IGNORED_TAGS, [#1](https://github.com/jsamr/react-native-render-html-table-bridge/pull/1) by @donni106
+
 ## v0.4.0
 
 - Get rid of deprecated `componentWillUpdate` method in `HTMLTable` component;
