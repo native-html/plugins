@@ -159,7 +159,7 @@ will be ignored and overridden.
 Use native `LayoutAnimation` instead of `Animated` module with `autoheight`.
 This should be preferred performance-wise, but you need to setup `UIManager` on android.
 
-[See official guide](https://facebook.github.io/react-native/docs/animations#layoutanimation-api)
+[See official guide](https://facebook.github.io/react-native/docs/layoutanimation)
 
 **default**: `false`
 
