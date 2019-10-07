@@ -171,6 +171,12 @@ The transition duration in milliseconds when table height is updated when `autoh
 
 **default**: `120`
 
+### `androidSourceBaseUrl`
+
+*Optional*: `string`
+
+See: https://git.io/JeCAG
+
 ## Troubleshooting
 
 
