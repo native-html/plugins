@@ -75,9 +75,14 @@ export interface TableConfig<WebViewProps = any> {
    * **default**: `120`
    */
   transitionDuration?: number
+
+  /**
+   * See https://git.io/JeCAG
+   */
+  androidSourceBaseUrl: string
 }
 
-export interface HTMLTableProps {
+export interface HTMLTableBaseProps {
   /**
    * The outerHtml of <table> tag.
    */
@@ -91,7 +96,7 @@ export interface HTMLTableProps {
   onLinkPress?: (url: string) => void
 }
 
-export interface HTMLTablePropsWithStats extends HTMLTableProps {
+export interface HTMLTablePropsWithStats extends HTMLTableBaseProps {
   /**
    * Number of rows, header included
    */
@@ -144,12 +149,7 @@ function animateNextFrames(duration?: number) {
   })
 }
 
-interface Props<WVP> extends TableConfig<WVP>, HTMLTablePropsWithStats {
-  /**
-   * See https://git.io/JeCAG
-   */
-  androidSourceBaseUrl: string
-}
+export interface HTMLTableProps<WVP> extends TableConfig<WVP>, HTMLTablePropsWithStats {}
 
 const tableStylePropTypeSpec: Record<keyof TableStyleSpecs, any> = {
   linkColor: PropTypes.string.isRequired,
@@ -174,15 +174,15 @@ interface WebViewMessage {
   data: string
 }
 
-export default class HTMLTable<WVP extends Record<string, any>> extends PureComponent<Props<WVP>, State> {
+export default class HTMLTable<WVP extends Record<string, any>> extends PureComponent<HTMLTableProps<WVP>, State> {
 
-  static defaultProps: Partial<Record<keyof Props<any>, any>> = {
+  static defaultProps: Partial<Record<keyof HTMLTableProps<any>, any>> = {
     autoheight: true,
     useLayoutAnimations: false,
     transitionDuration: DEFAULT_TRANSITION_DURATION
   }
 
-  static propTypes: Record<keyof Props<any>, any> = {
+  static propTypes: Record<keyof HTMLTableProps<any>, any> = {
     html: PropTypes.string.isRequired,
     numOfChars: PropTypes.number.isRequired,
     numOfColumns: PropTypes.number.isRequired,
@@ -203,7 +203,7 @@ export default class HTMLTable<WVP extends Record<string, any>> extends PureComp
 
   private oldContainerHeight: number = 0
 
-  constructor(props: Props<WVP>) {
+  constructor(props: HTMLTableProps<WVP>) {
     super(props)
     const state = {
       containerHeight: 0,
@@ -265,7 +265,7 @@ export default class HTMLTable<WVP extends Record<string, any>> extends PureComp
     return Math.max(approxNumOfLines, numOfRows) * lineHeight
   }
 
-  private findHeight(props: Props<WVP>, state: State) {
+  private findHeight(props: HTMLTableProps<WVP>, state: State) {
     const { containerHeight } = state
     const { autoheight, defaultHeight, maxHeight } = props
     const computedHeight = autoheight ?
@@ -277,7 +277,7 @@ export default class HTMLTable<WVP extends Record<string, any>> extends PureComp
     return computedHeight
   }
 
-  componentDidUpdate(_oldProps: Props<WVP>, oldState: State) {
+  componentDidUpdate(_oldProps: HTMLTableProps<WVP>, oldState: State) {
     const { autoheight, useLayoutAnimations, transitionDuration } = this.props
     const shouldAnimate = oldState.containerHeight !== this.state.containerHeight && autoheight
     if (shouldAnimate && !useLayoutAnimations) {
