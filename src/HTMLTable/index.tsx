@@ -79,7 +79,7 @@ export interface TableConfig<WebViewProps = any> {
   /**
    * See https://git.io/JeCAG
    */
-  androidSourceBaseUrl: string
+  androidSourceBaseUrl?: string
 }
 
 export interface HTMLTableBaseProps {
