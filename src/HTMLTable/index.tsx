@@ -144,7 +144,12 @@ function animateNextFrames(duration?: number) {
   })
 }
 
-interface Props<WVP> extends TableConfig<WVP>, HTMLTablePropsWithStats {}
+interface Props<WVP> extends TableConfig<WVP>, HTMLTablePropsWithStats {
+  /**
+   * See https://git.io/JeCAG
+   */
+  androidSourceBaseUrl: string
+}
 
 const tableStylePropTypeSpec: Record<keyof TableStyleSpecs, any> = {
   linkColor: PropTypes.string.isRequired,
@@ -192,7 +197,8 @@ export default class HTMLTable<WVP extends Record<string, any>> extends PureComp
     cssRules: PropTypes.string,
     webViewProps: PropTypes.object,
     useLayoutAnimations: PropTypes.bool,
-    transitionDuration: PropTypes.number
+    transitionDuration: PropTypes.number,
+    androidSourceBaseUrl: PropTypes.string
   }
 
   private oldContainerHeight: number = 0
@@ -292,11 +298,13 @@ export default class HTMLTable<WVP extends Record<string, any>> extends PureComp
         style,
         WebViewComponent,
         webViewProps,
-        useLayoutAnimations
+        useLayoutAnimations,
+        androidSourceBaseUrl
       } = this.props
     const html = this.buildHTML()
     const source = {
-      html
+      html,
+      baseUrl: androidSourceBaseUrl || undefined
     }
     const containerHeight = this.findHeight(this.props, this.state)
     const WebView = WebViewComponent as ComponentType<any>
