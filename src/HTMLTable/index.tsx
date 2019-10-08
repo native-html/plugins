@@ -79,7 +79,7 @@ export interface TableConfig<WebViewProps = any> {
   /**
    * See https://git.io/JeCAG
    */
-  androidSourceBaseUrl?: string
+  sourceBaseUrl?: string
 }
 
 export interface HTMLTableBaseProps {
@@ -198,7 +198,7 @@ export default class HTMLTable<WVP extends Record<string, any>> extends PureComp
     webViewProps: PropTypes.object,
     useLayoutAnimations: PropTypes.bool,
     transitionDuration: PropTypes.number,
-    androidSourceBaseUrl: PropTypes.string
+    sourceBaseUrl: PropTypes.string
   }
 
   private oldContainerHeight: number = 0
@@ -299,12 +299,14 @@ export default class HTMLTable<WVP extends Record<string, any>> extends PureComp
         WebViewComponent,
         webViewProps,
         useLayoutAnimations,
-        androidSourceBaseUrl
+        sourceBaseUrl
       } = this.props
     const html = this.buildHTML()
-    const source = {
-      html,
-      baseUrl: androidSourceBaseUrl || undefined
+    const source: any = {
+      html
+    }
+    if (sourceBaseUrl) {
+      source.baseUrl = sourceBaseUrl
     }
     const containerHeight = this.findHeight(this.props, this.state)
     const WebView = WebViewComponent as ComponentType<any>
