@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.5.1
+
+- include table border attribute when computing table's height, fix [#8](https://github.com/jsamr/react-native-render-html-table-bridge/issues/8)
+
 ## v0.5.0
 
 - rename `androidSourceBaseUrl` prop to `sourceBaseUrl`
