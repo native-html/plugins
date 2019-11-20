@@ -7,7 +7,7 @@ const injectedScript = `
     var tables = document.getElementsByTagName('table');
     if (tables.length > 0) {
       var table = tables[0];
-      var tableHeight = table.scrollHeight;
+      var tableHeight = table.scrollHeight + Number(table.border) * 2;
       RNWV.postMessage(JSON.stringify({
         type: 'heightUpdate',
         content: tableHeight
