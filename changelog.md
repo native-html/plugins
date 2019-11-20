@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.5.0
+
+- rename `androidSourceBaseUrl` prop to `sourceBaseUrl`
+
+**BREAKING** the prop will be used on Android and iOS.
+
 ## v0.4.1
 
 - Fix HTML.onLinkPress does not get fired if link contains html elements, [#5](https://github.com/jsamr/react-native-render-html-table-bridge/issues/5)
