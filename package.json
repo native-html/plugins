@@ -1,6 +1,6 @@
 {
   "name": "react-native-render-html-table-bridge",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "A bridge to render tables with render-html library",
   "main": "lib/index.js",
   "files": [
