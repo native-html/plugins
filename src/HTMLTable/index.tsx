@@ -94,6 +94,11 @@ export interface HTMLTableBaseProps {
    * **Info**: `makeTableRenderer` uses `<HTML>onLinkPress` prop.
    */
   onLinkPress?: (url: string) => void
+
+  /**
+   * Renderers props.
+   */
+  renderersProps: any
 }
 
 export interface HTMLTablePropsWithStats extends HTMLTableBaseProps {
@@ -198,7 +203,8 @@ export default class HTMLTable<WVP extends Record<string, any>> extends PureComp
     webViewProps: PropTypes.object,
     useLayoutAnimations: PropTypes.bool,
     transitionDuration: PropTypes.number,
-    sourceBaseUrl: PropTypes.string
+    sourceBaseUrl: PropTypes.string,
+    renderersProps: PropTypes.any
   }
 
   private oldContainerHeight: number = 0

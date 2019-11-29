@@ -3,7 +3,7 @@ import { RendererDeclaration } from 'react-native-render-html'
 import HTMLTable, { TableConfig, HTMLTablePropsWithStats } from './HTMLTable'
 
 export function makeTableRenderer(tableConfig: TableConfig): RendererDeclaration {
-  return (attribs, _children, _css, { key, onLinkPress }) => {
+  return (attribs, _children, _css, { key, onLinkPress, renderersProps }) => {
     const handleOnLinkPress = (url: string) => onLinkPress && onLinkPress({} as any, url, {})
     if (typeof attribs._rawHtml !== 'string') {
       throw new Error("You must inject `alterNode' method from react-native-render-html-table-bdridge in `HTML' component.")
@@ -14,6 +14,7 @@ export function makeTableRenderer(tableConfig: TableConfig): RendererDeclaration
                   numOfRows={attribs._numOfRows as number}
                   numOfChars={attribs._numOfChars as number}
                   html={attribs._rawHtml as string}
+                  renderersProps={renderersProps}
                   onLinkPress={handleOnLinkPress} />
   }
 }
@@ -24,7 +25,7 @@ export function makeTableRenderer(tableConfig: TableConfig): RendererDeclaration
  * @see HTMLTablePropsWithStats
  */
 export function makeCustomTableRenderer(TableComponent: ComponentType<HTMLTablePropsWithStats>): RendererDeclaration {
-  return (attribs, _children, _css, { key, onLinkPress }) => {
+  return (attribs, _children, _css, { key, onLinkPress, renderersProps }) => {
     const handleOnLinkPress = (url: string) => onLinkPress && onLinkPress({} as any, url, {})
     if (typeof attribs._rawHtml !== 'string') {
       throw new Error("You must inject `alterNode' method from react-native-render-html-table-bdridge in `HTML' component.")
@@ -34,6 +35,7 @@ export function makeCustomTableRenderer(TableComponent: ComponentType<HTMLTableP
                   numOfRows={attribs._numOfRows as number}
                   numOfChars={attribs._numOfChars as number}
                   html={attribs._rawHtml as string}
+                  renderersProps={renderersProps}
                   onLinkPress={handleOnLinkPress} />
   }
 }
