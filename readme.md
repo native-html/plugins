@@ -261,7 +261,7 @@ const config = {
 
 **A**: Add a `react-native-render-html-table-bridge.js` file to your `__mocks__` folder (this folder should be at the root of your project) with the following content:
 
-```
+``` js
 const IGNORED_TAGS = [];
 const alterNode = jest.fn();
 const makeTableRenderer = jest.fn();
