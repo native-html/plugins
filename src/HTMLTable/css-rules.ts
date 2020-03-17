@@ -5,6 +5,8 @@ export interface TableStyleSpecs {
   borderWidthPx: number
   linkColor: string
   fontFamily: string
+  tableBorderColor: string,
+  tableBorderWidthPx: number,
   tdBorderColor: string
   thBorderColor: string
   thOddBackground: string
@@ -24,6 +26,8 @@ export const defaultTableStylesSpecs: TableStyleSpecs = {
   borderWidthPx: 0.25,
   linkColor: '#3498DB',
   fontFamily: 'sans-serif',
+  tableBorderColor: 'black',
+  tableBorderWidthPx: 0,
   thBorderColor : '#3f5c7a',
   tdBorderColor : '#b5b5b5',
   thOddBackground : '#253546',
@@ -44,6 +48,8 @@ export default function cssRulesFromSpecs(specs: TableStyleSpecs = defaultTableS
         fitContainer,
         linkColor,
         fontFamily,
+        tableBorderColor,
+        tableBorderWidthPx,
         tdBorderColor,
         thBorderColor,
         thOddBackground,
@@ -78,6 +84,7 @@ export default function cssRulesFromSpecs(specs: TableStyleSpecs = defaultTableS
       color: ${linkColor};
     }
     table {
+      border: ${tableBorderWidthPx}px solid ${tableBorderColor};
       ${spanToContainerRule}
       margin: 0;
       padding: 0;
