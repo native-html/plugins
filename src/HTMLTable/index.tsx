@@ -159,6 +159,8 @@ export interface HTMLTableProps<WVP> extends TableConfig<WVP>, HTMLTablePropsWit
 const tableStylePropTypeSpec: Record<keyof TableStyleSpecs, any> = {
   linkColor: PropTypes.string.isRequired,
   fontFamily: PropTypes.string.isRequired,
+  tableBorderColor: PropTypes.string.isRequired,
+  tableBorderWidthPx: PropTypes.number.isRequired,
   tdBorderColor: PropTypes.string.isRequired,
   thBorderColor: PropTypes.string.isRequired,
   trOddBackground: PropTypes.string.isRequired,
