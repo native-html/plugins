@@ -233,6 +233,8 @@ export default class HTMLTable<WVP extends Record<string, any>> extends PureComp
         const url = content
         onLinkPress && onLinkPress(url)
       }
+    } catch (e) {
+
     } finally {
       this.props.webViewProps && this.props.webViewProps.onMessage(nativeEvent)
     }
