@@ -10,7 +10,7 @@ export { TableStyleSpecs, defaultTableStylesSpecs, cssRulesFromSpecs }
 export interface TableConfig<WebViewProps = any> {
   /**
    * The `WebView` Component you wish to use.
-   * 
+   *
    * **Warning** Features such as `autoheight` and `onLinkPress` don't work with legacy, core version.
    * Please use latest community version instead, https://github.com/react-native-community/react-native-webview
    */
@@ -18,9 +18,9 @@ export interface TableConfig<WebViewProps = any> {
 
   /**
    * Fit height to HTML content.
-   * 
+   *
    * **default** `true`
-   * 
+   *
    * **Warning** Works with `WebView` community edition &ge;5.0.0 and Expo SDK &ge;33.
    */
   autoheight?: boolean
@@ -44,7 +44,7 @@ export interface TableConfig<WebViewProps = any> {
 
   /**
    * Specs to generate css rules.
-   * 
+   *
    * **Info**: ignored if `cssRules` are provided.
    */
   tableStyleSpecs?: TableStyleSpecs
@@ -56,7 +56,7 @@ export interface TableConfig<WebViewProps = any> {
 
   /**
    * Any props you'd like to pass to WebView component
-   * 
+   *
    * **Info**: `source`, `injectedJavascript`, `javascriptEnabled` and `onMessage`
    * will be ignored and overriden.
    */
@@ -64,14 +64,14 @@ export interface TableConfig<WebViewProps = any> {
 
   /**
    * Use native `LayoutAnimation` instead of `Animated` module with `autoheight`
-   * 
+   *
    * **Info**: It requires some setup on Android.
    */
   useLayoutAnimations?: boolean,
 
   /**
    * The transition duration in milliseconds when table height is updated when `autoheight` is used.
-   * 
+   *
    * **default**: `120`
    */
   transitionDuration?: number
@@ -90,7 +90,7 @@ export interface HTMLTableBaseProps {
 
   /**
    * Intercept links press.
-   * 
+   *
    * **Info**: `makeTableRenderer` uses `<HTML>onLinkPress` prop.
    */
   onLinkPress?: (url: string) => void
@@ -232,6 +232,7 @@ export default class HTMLTable<WVP extends Record<string, any>> extends PureComp
       const url = content
       onLinkPress && onLinkPress(url)
     }
+    this.props.webViewProps && this.props.webViewProps.onMessage(nativeEvent)
   }
 
   private buildHTML() {
@@ -332,7 +333,7 @@ export default class HTMLTable<WVP extends Record<string, any>> extends PureComp
                     style={[StyleSheet.absoluteFill, webViewProps && webViewProps.style]}
                     contentInset={defaultInsets}
                     {...webViewProps}
-                    injectedJavaScript={script}
+                    injectedJavaScript={script + (webViewProps && webViewProps.injectedJavaScript)}
                     javaScriptEnabled={true}
                     onMessage={this.handleOnMessage}
                     source={source}/>
