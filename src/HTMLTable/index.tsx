@@ -57,7 +57,7 @@ export interface TableConfig<WebViewProps = any> {
   /**
    * Any props you'd like to pass to WebView component
    *
-   * **Info**: `source`, `injectedJavascript`, `javascriptEnabled` and `onMessage`
+   * **Info**: `source`, `javascriptEnabled`
    * will be ignored and overriden.
    */
   webViewProps?: WebViewProps
