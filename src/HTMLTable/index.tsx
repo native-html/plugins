@@ -235,8 +235,9 @@ export default class HTMLTable<WVP extends Record<string, any>> extends PureComp
       }
     } catch (e) {
 
-    } finally {
-      this.props.webViewProps && this.props.webViewProps.onMessage(nativeEvent)
+    }
+    if (this.props.webViewProps && typeof this.props.webViewProps.onMessage === 'function') {
+      this.props.webViewProps.onMessage(nativeEvent)
     }
   }
 
