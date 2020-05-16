@@ -149,7 +149,7 @@ Override default CSS rules.
 
 Any properties you want to pass to the `WebViewComponent` element.
 
-**Info**: `source`, `injectedJavascript`, `javascriptEnabled` and `onMessage`
+**Info**: `source` and `javascriptEnabled`
 will be ignored and overridden.
 
 ### `useLayoutAnimations`
