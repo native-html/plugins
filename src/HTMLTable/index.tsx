@@ -233,9 +233,7 @@ export default class HTMLTable<WVP extends Record<string, any>> extends PureComp
         const url = content
         onLinkPress && onLinkPress(url)
       }
-    } catch (e) {
-
-    }
+    } catch {}
     if (this.props.webViewProps && typeof this.props.webViewProps.onMessage === 'function') {
       this.props.webViewProps.onMessage(nativeEvent)
     }
@@ -339,7 +337,7 @@ export default class HTMLTable<WVP extends Record<string, any>> extends PureComp
                     style={[StyleSheet.absoluteFill, webViewProps && webViewProps.style]}
                     contentInset={defaultInsets}
                     {...webViewProps}
-                    injectedJavaScript={script + (webViewProps && webViewProps.injectedJavaScript)}
+                    injectedJavaScript={script + '\n' + (webViewProps && webViewProps.injectedJavaScript)}
                     javaScriptEnabled={true}
                     onMessage={this.handleOnMessage}
                     source={source}/>
