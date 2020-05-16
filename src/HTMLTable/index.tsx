@@ -220,8 +220,16 @@ export default class HTMLTable<WVP extends Record<string, any>> extends PureComp
   }
 
   private handleOnMessage = ({ nativeEvent }: NativeSyntheticEvent<WebViewMessage>) => {
-    try {
-      const { type, content } = JSON.parse(nativeEvent.data) as PostMessage
+    const parsedJSON = (() => {
+      try {
+        return JSON.parse(nativeEvent.data) as PostMessage
+      } catch (e) {
+        return null
+      }
+    })()
+
+    if (parsedJSON && typeof parsedJSON === 'object') {
+      const { type, content } = parsedJSON
       if (type === 'heightUpdate') {
         const containerHeight = content
         if (typeof containerHeight === 'number' && !Number.isNaN(containerHeight)) {
@@ -230,10 +238,10 @@ export default class HTMLTable<WVP extends Record<string, any>> extends PureComp
       }
       if (type === 'navigateEvent') {
         const { onLinkPress } = this.props
-        const url = content
-        onLinkPress && onLinkPress(url)
+        onLinkPress && onLinkPress(content)
       }
-    } catch {}
+    }
+
     if (this.props.webViewProps && typeof this.props.webViewProps.onMessage === 'function') {
       this.props.webViewProps.onMessage(nativeEvent)
     }
