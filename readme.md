@@ -142,7 +142,7 @@ An object describing the table appearance.
 
 Override default CSS rules.
 
-**Info**: When set, `tableStyleSpecs` is ignored.
+**Info**: When set, `tableStyleSpecs` is ignored. If you want to extend default instead of override CSS styles, [see FAQ](extend-styles).
 
 ### `webViewProps`
 
@@ -192,6 +192,8 @@ Please refer to the official documentation and make sure you have selected your 
 - [React Native](https://facebook.github.io/react-native/docs/webview).
 
 ## FAQ
+
+<a name="extend-styles" />
 
 ### How to extend default or custom styles?
 
