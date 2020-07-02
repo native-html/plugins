@@ -130,7 +130,7 @@ Container style.
 
 ### `tableStyleSpecs`
 
-*Optional* [`TableStyleSpecs`](src/HTMLTable/table-specs.d.ts)
+*Optional* [`TableStyleSpecs`](src/HTMLTable/css-rules.ts)
 
 An object describing the table appearance.
 
