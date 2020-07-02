@@ -1,6 +1,7 @@
 # Table support for react-native-render-html
 
 ![npm](https://img.shields.io/npm/v/react-native-render-html-table-bridge.svg)
+![DL/month](https://img.shields.io/npm/dm/react-native-render-html-table-bridge.svg)
 
 ```bash
 npm add --save react-native-render-html-table-bridge
