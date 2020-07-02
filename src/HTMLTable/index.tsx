@@ -167,7 +167,8 @@ const tableStylePropTypeSpec: Record<keyof TableStyleSpecs, any> = {
   trEvenColor: PropTypes.string.isRequired,
   borderWidthPx:  PropTypes.number.isRequired,
   cellPaddingEm: PropTypes.number.isRequired,
-  fitContainer: PropTypes.bool.isRequired,
+  fitContainerWidth: PropTypes.bool.isRequired,
+  fitContainerHeight: PropTypes.bool.isRequired,
   selectableText: PropTypes.bool.isRequired,
   thEvenBackground: PropTypes.string.isRequired,
   thEvenColor: PropTypes.string.isRequired,
@@ -256,7 +257,7 @@ export default class HTMLTable<WVP extends Record<string, any>> extends PureComp
       } = this.props
     const styleSpecs = tableStyleSpecs ? tableStyleSpecs : {
       ...defaultTableStylesSpecs,
-      fitContainer: !autoheight
+      fitContainerHeight: !autoheight
     }
     const tableCssStyle = cssRules ? cssRules : cssRulesFromSpecs(styleSpecs)
     return `

@@ -1,6 +1,7 @@
 export interface TableStyleSpecs {
   selectableText: boolean
-  fitContainer: boolean
+  fitContainerWidth: boolean
+  fitContainerHeight: boolean
   cellPaddingEm: number
   borderWidthPx: number
   linkColor: string
@@ -19,7 +20,8 @@ export interface TableStyleSpecs {
 
 export const defaultTableStylesSpecs: TableStyleSpecs = {
   selectableText: false,
-  fitContainer: false,
+  fitContainerWidth: false,
+  fitContainerHeight: false,
   cellPaddingEm: 0.25,
   borderWidthPx: 0.25,
   linkColor: '#3498DB',
@@ -41,7 +43,8 @@ export default function cssRulesFromSpecs(specs: TableStyleSpecs = defaultTableS
         cellPaddingEm,
         borderWidthPx,
         selectableText,
-        fitContainer,
+        fitContainerWidth,
+        fitContainerHeight,
         linkColor,
         fontFamily,
         tdBorderColor,
@@ -60,9 +63,11 @@ export default function cssRulesFromSpecs(specs: TableStyleSpecs = defaultTableS
     -webkit-user-select: none;
     -ms-user-select: none;
   `
-  const spanToContainerRule = fitContainer ? `
-    min-height: 100vh;
+  const spanToContainerWidthRule = fitContainerWidth ? `
     min-width: 100vw;
+  ` : ''
+  const spanToContainerHeightRule = fitContainerHeight ? `
+    min-height: 100vh;
   ` : ''
   return `
     :root {
@@ -78,8 +83,8 @@ export default function cssRulesFromSpecs(specs: TableStyleSpecs = defaultTableS
       color: ${linkColor};
     }
     table {
-      ${spanToContainerRule}
-      margin: 0;
+      ${spanToContainerWidthRule}
+      ${spanToContainerHeightRule}
       padding: 0;
     }
     th, td {
@@ -88,9 +93,6 @@ export default function cssRulesFromSpecs(specs: TableStyleSpecs = defaultTableS
     }
     table, th, td {
       margin: 0;
-    },
-    table {
-      margin: 'auto';
     }
     th {
       border-bottom: ${borderWidthPx}px solid ${thBorderColor};
