@@ -345,7 +345,7 @@ export default class HTMLTable<WVP extends Record<string, any>> extends PureComp
                     style={[StyleSheet.absoluteFill, webViewProps && webViewProps.style]}
                     contentInset={defaultInsets}
                     {...webViewProps}
-                    injectedJavaScript={script + '\n' + (webViewProps && webViewProps.injectedJavaScript)}
+                    injectedJavaScript={`${script}'\n'${(webViewProps && webViewProps.injectedJavaScript)}\ntrue;`}
                     javaScriptEnabled={true}
                     onMessage={this.handleOnMessage}
                     source={source}/>
