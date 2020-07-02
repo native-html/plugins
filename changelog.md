@@ -1,5 +1,16 @@
 # Changelog
 
+## v0.6.0
+
+- Make each attribute of `tableStyleSpecs` optional.
+- End injected script with a true statement to comply with RNWV
+
+**BREAKING** `fitContainer` attribute of `tableStyleSpecs` config has been split into `fitContainerWidth` and `fitContainerHeight`.
+
+## v0.5.3
+
+- restrict `react-native-render-html` peer version
+
 ## v0.5.2
 
 - add `renderersProps` to `HTMLTable` and custom tables.
