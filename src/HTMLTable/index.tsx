@@ -157,23 +157,23 @@ function animateNextFrames(duration?: number) {
 export interface HTMLTableProps<WVP> extends TableConfig<WVP>, HTMLTablePropsWithStats {}
 
 const tableStylePropTypeSpec: Record<keyof TableStyleSpecs, any> = {
-  linkColor: PropTypes.string.isRequired,
-  fontFamily: PropTypes.string.isRequired,
-  tdBorderColor: PropTypes.string.isRequired,
-  thBorderColor: PropTypes.string.isRequired,
-  trOddBackground: PropTypes.string.isRequired,
-  trOddColor: PropTypes.string.isRequired,
-  trEvenBackground: PropTypes.string.isRequired,
-  trEvenColor: PropTypes.string.isRequired,
-  borderWidthPx:  PropTypes.number.isRequired,
-  cellPaddingEm: PropTypes.number.isRequired,
-  fitContainerWidth: PropTypes.bool.isRequired,
-  fitContainerHeight: PropTypes.bool.isRequired,
-  selectableText: PropTypes.bool.isRequired,
-  thEvenBackground: PropTypes.string.isRequired,
-  thEvenColor: PropTypes.string.isRequired,
-  thOddBackground: PropTypes.string.isRequired,
-  thOddColor: PropTypes.string.isRequired
+  linkColor: PropTypes.string,
+  fontFamily: PropTypes.string,
+  tdBorderColor: PropTypes.string,
+  thBorderColor: PropTypes.string,
+  trOddBackground: PropTypes.string,
+  trOddColor: PropTypes.string,
+  trEvenBackground: PropTypes.string,
+  trEvenColor: PropTypes.string,
+  borderWidthPx:  PropTypes.number,
+  cellPaddingEm: PropTypes.number,
+  fitContainerWidth: PropTypes.bool,
+  fitContainerHeight: PropTypes.bool,
+  selectableText: PropTypes.bool,
+  thEvenBackground: PropTypes.string,
+  thEvenColor: PropTypes.string,
+  thOddBackground: PropTypes.string,
+  thOddColor: PropTypes.string
 }
 
 interface WebViewMessage {
