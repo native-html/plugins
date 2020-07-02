@@ -259,7 +259,7 @@ export default class HTMLTable<WVP extends Record<string, any>> extends PureComp
       ...defaultTableStylesSpecs,
       fitContainerHeight: !autoheight
     }
-    const tableCssStyle = cssRules ? cssRules : cssRulesFromSpecs(styleSpecs)
+    const tableCssStyle = typeof cssRules === 'string' ? cssRules : cssRulesFromSpecs(styleSpecs)
     return `
       <!DOCTYPE html>
       <html>
