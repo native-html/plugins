@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.6.1
+
+**bugfix**
+
+- Merge defaults table style specs to user-provided `tableStyleSpecs`.
+
 ## v0.6.0
 
 - Make each attribute of `tableStyleSpecs` optional.
