@@ -98,21 +98,21 @@ Please use latest [community edition instead](https://github.com/react-native-co
 
 *Optional* `boolean`
 
-Fit height to HTML content.
+Fit height to HTML content. The operation is dynamic, because it requires the DOM to be mounted, and a script be executed to send height through the `WebView` component.
 
 **default**: `true`
 
 **Supported WebView**: `WebView` community edition &ge;5.0.0 and Expo SDK &ge;33.
 
-**Warning**: When setting to false, you must either give container absolute positioning with `style` prop, or give a fixed height with `defaultHeight` prop.
+**Warning**: When setting to `false`, you must either give container absolute positioning with `style` prop, or give a fixed height with `defaultHeight` prop.
 Otherwise, React Native will assign a `0` height.
 
 ### `defaultHeight`
 
 *Optional* `number`
 
-If `autoheight` is set to `true`, the container will span to `defaultHeight` during content height computation.
-Otherwise, container height will be fixed to `defaultHeight` before and after height computation.
+If `autoheight` is set to `true`, `defaultHeight` will be ignored.
+Otherwise, container height will be fixed to `defaultHeight`.
 
 ### `maxHeight`
 
