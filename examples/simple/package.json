@@ -1,29 +1,31 @@
 {
-  "name": "RNHtmlTableSimpleExample",
-  "version": "0.1.1",
+  "name": "RNSimpleExample",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
-    "test": "jest"
+    "test": "jest",
+    "lint": "eslint ."
   },
   "dependencies": {
-    "react": "16.9.0",
-    "react-native": "0.61.1",
-    "react-native-render-html": "^4.2.0",
+    "react": "16.11.0",
+    "react-native": "0.62.2",
+    "react-native-render-html": "^4.2.1",
     "react-native-render-html-table-bridge": "^0.5.3",
-    "react-native-snackbar": "^2.0.2",
+    "react-native-snackbar": "^2.2.3",
     "react-native-webview": "^10.3.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.5.0",
-    "@babel/runtime": "^7.5.0",
-    "@react-native-community/eslint-config": "^0.0.3",
-    "babel-jest": "^24.1.0",
-    "jest": "^24.1.0",
-    "metro-react-native-babel-preset": "^0.51.1",
-    "react-test-renderer": "16.8.1"
+    "@babel/core": "^7.6.2",
+    "@babel/runtime": "^7.6.2",
+    "@react-native-community/eslint-config": "^0.0.5",
+    "babel-jest": "^24.9.0",
+    "eslint": "^6.5.1",
+    "jest": "^24.9.0",
+    "metro-react-native-babel-preset": "^0.58.0",
+    "react-test-renderer": "16.11.0"
   },
   "jest": {
     "preset": "react-native"

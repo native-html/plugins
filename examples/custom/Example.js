@@ -170,8 +170,8 @@ const htmlConfig = {
     ignoredTags: IGNORED_TAGS,
     onLinkPress: (e, url) => {
       Snackbar.show({
-        title: url,
-        color: 'white'
+        text: url,
+        textColor: 'white'
       })
     }
 };
