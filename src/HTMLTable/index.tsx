@@ -338,6 +338,7 @@ export default class HTMLTable<WVP extends Record<string, any>> extends PureComp
     } : {
       height: !containerHeight || Number.isNaN(containerHeight) ? undefined : containerHeight
     }
+    const userScript = (webViewProps && webViewProps.injectedJavaScript) || ''
     return (
           <Animated.View style={[containerStyle, styles.container, style]}>
             <WebView scalesPageToFit={Platform.select({ android: false, ios: undefined })}
@@ -346,7 +347,7 @@ export default class HTMLTable<WVP extends Record<string, any>> extends PureComp
                     style={[StyleSheet.absoluteFill, webViewProps && webViewProps.style]}
                     contentInset={defaultInsets}
                     {...webViewProps}
-                    injectedJavaScript={`${script}'\n'${(webViewProps && webViewProps.injectedJavaScript)}\ntrue;`}
+                    injectedJavaScript={`${script}\n${userScript}\ntrue;`}
                     javaScriptEnabled={true}
                     onMessage={this.handleOnMessage}
                     source={source}/>
