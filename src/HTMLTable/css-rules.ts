@@ -16,6 +16,12 @@ export interface TableStyleSpecs {
    */
   cellPaddingEm: number
   /**
+   * Font size, in pixels.
+   * 
+   * @remarks This value being applied to root, it will affect rem and em.
+   */
+  fontSizePx: number | null
+  /**
    * Border width, in pixels.
    */
   borderWidthPx: number
@@ -79,6 +85,7 @@ export const defaultTableStylesSpecs: TableStyleSpecs = {
   borderWidthPx: 0.25,
   linkColor: '#3498DB',
   fontFamily: 'sans-serif',
+  fontSizePx: null,
   thBorderColor : '#3f5c7a',
   tdBorderColor : '#b5b5b5',
   thOddBackground : '#253546',
@@ -98,6 +105,7 @@ export default function cssRulesFromSpecs(specs: TableStyleSpecs = defaultTableS
         selectableText,
         fitContainerWidth,
         fitContainerHeight,
+        fontSizePx,
         linkColor,
         fontFamily,
         tdBorderColor,
@@ -122,10 +130,12 @@ export default function cssRulesFromSpecs(specs: TableStyleSpecs = defaultTableS
   const spanToContainerHeightRule = fitContainerHeight ? `
     min-height: 100vh;
   ` : ''
+  const fontSizeRule = fontSizePx ?  `font-size: ${fontSizePx}px;` : ''
   return `
     :root {
       font-family: ${fontFamily};
       background-color: transparent;
+      ${fontSizeRule}
     }
     body, html {
       margin: 0;

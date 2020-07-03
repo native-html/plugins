@@ -3,7 +3,8 @@
 ## v0.6.0
 
 - Make each attribute of `tableStyleSpecs` optional.
-- End injected script with a true statement to comply with RNWV
+- `tableStyleSpecs` new attribute `fontSizePx`.
+- End injected script with a true statement to comply with RNWV.
 
 **BREAKING** 
 
