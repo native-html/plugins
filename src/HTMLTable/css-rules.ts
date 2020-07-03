@@ -1,20 +1,73 @@
 export interface TableStyleSpecs {
+  /**
+   * Will text be selectable.
+   */
   selectableText: boolean
+  /**
+   * Expand table to HTML width.
+   */
   fitContainerWidth: boolean
+  /**
+   * Expand table to HTML height.
+   */
   fitContainerHeight: boolean
+  /**
+   * Spacing between cells, in em.
+   */
   cellPaddingEm: number
+  /**
+   * Border width, in pixels.
+   */
   borderWidthPx: number
+  /**
+   * Link of anchors.
+   */
   linkColor: string
+  /**
+   * Font family.
+   * 
+   * @remarks You will need to do additional work to support non-native fonts.
+   */
   fontFamily: string
+  /**
+   * Table cell border color.
+   */
   tdBorderColor: string
+  /**
+   * Table header cell border color.
+   */
   thBorderColor: string
+  /**
+   * Table even header cell background color.
+   */
   thOddBackground: string
+  /**
+   * Table odd header cell text color.
+   */
   thOddColor: string
+  /**
+   * Table even header cell background color.
+   */
   thEvenBackground: string
+  /**
+   * Table even header cell text color.
+   */
   thEvenColor: string
+  /**
+   * Table odd row background color.
+   */
   trOddBackground: string
+  /**
+   * Table odd row text color.
+   */
   trOddColor: string
+  /**
+   * Table even row background color.
+   */
   trEvenBackground: string
+  /**
+   * Table even row text color.
+   */
   trEvenColor: string
 }
 
