@@ -142,6 +142,8 @@ An object describing the table appearance.
 
 Override default CSS rules.
 
+**Warning**: You should at least set a rule which adds a 0-margin to `body` and `html`, otherwise the table will look truncated.
+
 **Info**: When set, `tableStyleSpecs` is ignored. If you want to extend default instead of override CSS styles, [see FAQ](extend-styles).
 
 ### `webViewProps`
