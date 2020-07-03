@@ -256,7 +256,10 @@ export default class HTMLTable<WVP extends Record<string, any>> extends PureComp
         cssRules,
         html
       } = this.props
-    const styleSpecs = tableStyleSpecs ? tableStyleSpecs : {
+    const styleSpecs = tableStyleSpecs ? {
+      ...defaultTableStylesSpecs,
+      ...tableStyleSpecs
+    } : {
       ...defaultTableStylesSpecs,
       fitContainerHeight: !autoheight
     }
