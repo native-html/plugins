@@ -151,6 +151,12 @@ export default function cssRulesFromSpecs(specs: TableStyleSpecs = defaultTableS
       border-bottom: ${borderWidthPx}px solid ${thBorderColor};
       border-right: ${borderWidthPx}px solid ${thBorderColor};
     }
+    th:first-child {
+      border-left: ${borderWidthPx}px solid ${thBorderColor};
+    }
+    tr:last-child th {
+      border-bottom: ${borderWidthPx}px solid ${thBorderColor};
+    }
     tr:nth-of-type(odd) th {
       background-color: ${thOddBackground};
       color: ${thOddColor};
@@ -162,6 +168,12 @@ export default function cssRulesFromSpecs(specs: TableStyleSpecs = defaultTableS
     td {
       border-bottom: ${borderWidthPx}px solid ${tdBorderColor};
       border-right: ${borderWidthPx}px solid ${tdBorderColor};
+    }
+    td:first-child {
+      border-left: ${borderWidthPx}px solid ${tdBorderColor};
+    }
+    tr:last-child td {
+      border-bottom: ${borderWidthPx}px solid ${tdBorderColor};
     }
     thead {
       background-color: ${thOddBackground};
