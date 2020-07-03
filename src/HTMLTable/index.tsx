@@ -304,7 +304,8 @@ export default class HTMLTable<WVP extends Record<string, any>> extends PureComp
       this.oldContainerHeight = oldState.containerHeight
       Animated.timing(this.state.animatedHeight, {
         toValue: 1,
-        duration: transitionDuration
+        duration: transitionDuration,
+        useNativeDriver: false
       }).start()
     }
     if (shouldAnimate && useLayoutAnimations) {
