@@ -5,7 +5,11 @@
 - Make each attribute of `tableStyleSpecs` optional.
 - End injected script with a true statement to comply with RNWV
 
-**BREAKING** `fitContainer` attribute of `tableStyleSpecs` config has been split into `fitContainerWidth` and `fitContainerHeight`.
+**BREAKING** 
+
+- `fitContainer` attribute of `tableStyleSpecs` config has been split into `fitContainerWidth` and `fitContainerHeight`.
+- TypeScript definitions for `react-native-render-html` are not embedded anymore. Please upgrade to `react-native-render-html@4.2.1`.
+
 
 ## v0.5.3
 

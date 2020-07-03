@@ -191,6 +191,15 @@ Please refer to the official documentation and make sure you have selected your 
 - [Expo](https://docs.expo.io/versions/latest/sdk/webview/);
 - [React Native](https://facebook.github.io/react-native/docs/webview).
 
+### Typescript errors
+
+If you encounter typescript errors, chances are you are not following `peerDependencies` rules. Make sure you follow these rules:
+
+| react-native-render-html | Bridge   |
+|--------------------------|----------|
+| ≤ 4.2.0                  | ≤ 0.5.3  |
+|  ≥ 4.2.1                 |  ≥ 0.6.0 |
+
 ## FAQ
 
 <a name="extend-styles" />

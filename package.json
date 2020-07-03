@@ -1,6 +1,6 @@
 {
   "name": "react-native-render-html-table-bridge",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "description": "A bridge to render tables with render-html library",
   "main": "lib/index.js",
   "files": [
@@ -44,6 +44,6 @@
   "peerDependencies": {
     "react": "*",
     "react-native": "*",
-    "react-native-render-html": "^4.0"
+    "react-native-render-html": ">= 4.2.1 < 5.0"
   }
 }
