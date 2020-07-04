@@ -13,7 +13,7 @@
     "react": "16.11.0",
     "react-native": "0.62.2",
     "react-native-render-html": "^4.2.1",
-    "react-native-render-html-table-bridge": "^0.5.3",
+    "react-native-render-html-table-bridge": "^0.6.1",
     "react-native-snackbar": "^2.2.3",
     "react-native-webview": "^10.3.2"
   },
