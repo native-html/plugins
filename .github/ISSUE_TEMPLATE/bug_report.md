@@ -25,46 +25,67 @@ I swear that I have completed these tasks before submitting:
 
 #### Environment
 
+<!--
+  REMARK: you can skip and delete the Libraries section if you are providing
+  a full reproduction in a snack or git repository.
+-->
 ##### React Native
 
 <!--
   Paste the result of running “npx react-native info” or “expo diagnostics”
   inside the backtics.
-
-  REMARK: you can skip this if you are providing a full reproduction in a
-  repository.
-
 -->
 
 ```
 
 ```
 
+<!--
+  REMARK: you can skip and delete the Libraries section if you are providing
+  a full reproduction in a snack or git repository.
+-->
 ##### Libraries
 
 <!--
   Print the versions of each library.
-
-  REMARK: you can skip this if you are providing a full reproduction in a
-  repository.
 -->
 
 - react-native-render-html:
 - react-native-render-html-table-bridge:
 - react-native-webview:
 
+<!--
+  REMARK: you can skip and delete the Devices section if your issue meets at
+  least one of the following criterion:
+
+  - it does not happen on a device, e.g. during bundling or testing with jest;
+  - you have demonstrated with a test or a debugging tool that the bug resides
+    in the rendering tree (at React level) and not at native level, and thus is
+    platform-independent.
+-->
 ##### Devices
 
 <!--
   Give the details of the devices in which you have tested the issue. Please
   also include devices in which you could not reproduce the issue! You are
   welcome to mention simulators and emulators.
+
+  It is advised that you test on at least one Android and iOS device. If you
+  can reproduce the issue for one device, set "Diagnostic" to "reproduction",
+  otherwise set it to "negative".
+
+  If you had a chance to test the issue in production, please add new devices
+  entries for each of these, and set the "Environment" value to "production".
 -->
 
-- Device 1 <!-- OnePlus 7 Pro -->
-  * OS: <!-- Oxygen OS 10.0 -->
-  * Diagnostic: <!-- reproduction / OK -->
-  
+- Device 1 <!-- emulator (Google Pixel 3a) -->
+  * OS: <!-- Android 9.0 -->
+  * Diagnostic: <!-- reproduction / negative -->
+  * Environment: <!-- production / development -->
+- Device 2 <!-- simulator (iPhone X) -->
+  * OS: <!-- iOS 13.0 -->
+  * Diagnostic: <!-- reproduction / negative -->
+  * Environment: <!-- production / development -->
 
 ### Reproduction
 
@@ -75,6 +96,9 @@ I swear that I have completed these tasks before submitting:
   project?  Try to write a sequence of steps that anybody can repeat to see
   the issue.  Be specific! If the bug cannot be reproduced, your issue may be
   closed.
+
+  You must also provide a description of the expected outcome and compare with
+  the observed outcome.
 -->
 
 (Write your steps here:)
@@ -82,6 +106,10 @@ I swear that I have completed these tasks before submitting:
 1.
 2.
 3.
+
+(Describe the expected outcome, and compare it to the observed outcome. You are
+encouraged to join screenshots and screencasts, or pictures of the rendering
+tree from debugging tools such as flipper)
 
 #### Reproducible Demo
 
@@ -105,3 +133,21 @@ I swear that I have completed these tasks before submitting:
 (Paste the link to an example project or paste the entirety of the relevant
 source code. When deemed appropriate, provide instructions to reproduce the
 issue.)
+
+<!--
+  What happens if you skip this step?
+
+  Someone will read your bug report, and maybe will be able to help you, but
+  it’s unlikely that it will get much attention from the team. Eventually, the
+  issue will likely get closed in favor of issues that have reproducible
+  demos.
+
+  Please remember that:
+
+    * Issues without reproducible demos have a very low priority.
+    * The person fixing the bug would have to do that anyway. Please be
+      respectful of their time.
+    * You might figure out the issues yourself as you work on extracting it.
+
+  Thanks for helping us help you!
+-->
