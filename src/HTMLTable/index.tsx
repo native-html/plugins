@@ -1,11 +1,27 @@
-import React, { PureComponent, ComponentType } from 'react'
-import PropTypes from 'prop-types'
-import { Platform, StyleSheet, Dimensions, LayoutAnimation, Animated, StyleProp, ViewStyle, NativeSyntheticEvent } from 'react-native'
-import cssRulesFromSpecs, { TableStyleSpecs, defaultTableStylesSpecs } from './css-rules'
-import script from './script'
-export { IGNORED_TAGS, TABLE_TAGS } from './tags'
+import React, { PureComponent, ComponentType } from "react";
+import PropTypes from "prop-types";
+import {
+  Platform,
+  StyleSheet,
+  Dimensions,
+  LayoutAnimation,
+  Animated,
+  StyleProp,
+  ViewStyle,
+} from "react-native";
+import makeWebshell, {
+  dimensionsFeature,
+  linkPressFeature,
+  DimensionsObject,
+  WebshellComponentOf,
+} from "react-native-webshell";
+import cssRulesFromSpecs, {
+  TableStyleSpecs,
+  defaultTableStylesSpecs,
+} from "./css-rules";
+export { IGNORED_TAGS, TABLE_TAGS } from "./tags";
 
-export { TableStyleSpecs, defaultTableStylesSpecs, cssRulesFromSpecs }
+export { TableStyleSpecs, defaultTableStylesSpecs, cssRulesFromSpecs };
 
 export interface TableConfig<WebViewProps = any> {
   /**
@@ -14,7 +30,7 @@ export interface TableConfig<WebViewProps = any> {
    * **Warning** Features such as `autoheight` and `onLinkPress` don't work with legacy, core version.
    * Please use latest community version instead, https://github.com/react-native-community/react-native-webview
    */
-  WebViewComponent: ComponentType<WebViewProps>
+  WebViewComponent: ComponentType<WebViewProps>;
 
   /**
    * Fit height to HTML content.
@@ -23,36 +39,36 @@ export interface TableConfig<WebViewProps = any> {
    *
    * **Warning** Works with `WebView` community edition &ge;5.0.0 and Expo SDK &ge;33.
    */
-  autoheight?: boolean
+  autoheight?: boolean;
 
   /**
    * If `autoheight` is set to `true`, the container will span to `defaultHeight` during content height computation.
    * Otherwise, container height will be fixed to `defaultHeight` before and after height computation.
    */
-  defaultHeight?: number
+  defaultHeight?: number;
 
   /**
    * Maximum container height.
    * Content will be scrollable on overflow.
    */
-  maxHeight?: number
+  maxHeight?: number;
 
   /**
    * Container style.
    */
-  style?: StyleProp<ViewStyle>
+  style?: StyleProp<ViewStyle>;
 
   /**
    * Specs to generate css rules.
    *
    * **Info**: ignored if `cssRules` are provided.
    */
-  tableStyleSpecs?: TableStyleSpecs
+  tableStyleSpecs?: TableStyleSpecs;
 
   /**
    * Override default CSS rules with this prop.
    */
-  cssRules?: string
+  cssRules?: string;
 
   /**
    * Any props you'd like to pass to WebView component
@@ -60,101 +76,98 @@ export interface TableConfig<WebViewProps = any> {
    * **Info**: `source`, `javascriptEnabled`
    * will be ignored and overriden.
    */
-  webViewProps?: WebViewProps
+  webViewProps?: WebViewProps;
 
   /**
    * Use native `LayoutAnimation` instead of `Animated` module with `autoheight`
    *
    * **Info**: It requires some setup on Android.
    */
-  useLayoutAnimations?: boolean,
+  useLayoutAnimations?: boolean;
 
   /**
    * The transition duration in milliseconds when table height is updated when `autoheight` is used.
    *
    * **default**: `120`
    */
-  transitionDuration?: number
+  transitionDuration?: number;
 
   /**
    * See https://git.io/JeCAG
    */
-  sourceBaseUrl?: string
+  sourceBaseUrl?: string;
 }
 
 export interface HTMLTableBaseProps {
   /**
    * The outerHtml of <table> tag.
    */
-  html: string
+  html: string;
 
   /**
    * Intercept links press.
    *
    * **Info**: `makeTableRenderer` uses `<HTML>onLinkPress` prop.
    */
-  onLinkPress?: (url: string) => void
+  onLinkPress?: (url: string) => void;
 
   /**
    * Renderers props.
    */
-  renderersProps: any
+  renderersProps: any;
 }
 
 export interface HTMLTablePropsWithStats extends HTMLTableBaseProps {
   /**
    * Number of rows, header included
    */
-  numOfRows: number
+  numOfRows: number;
 
   /**
    * Number of columns.
    */
-  numOfColumns: number
+  numOfColumns: number;
 
   /**
    * Number of text characters.
    */
-  numOfChars: number
-}
-
-interface PostMessage {
-  type: 'heightUpdate' | 'navigateEvent',
-  content: any
+  numOfChars: number;
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     // See https://github.com/react-native-community/react-native-webview/issues/101
-    overflow: 'hidden'
-  }
-})
+    overflow: "hidden",
+  },
+});
 
 interface State {
-  containerHeight: number
-  animatedHeight: Animated.Value
+  containerHeight: number;
+  animatedHeight: Animated.Value;
 }
 
 const defaultInsets = {
   top: 0,
   bottom: 0,
   left: 0,
-  right: 0
-}
+  right: 0,
+};
 
-const DEFAULT_TRANSITION_DURATION = 120
+const DEFAULT_TRANSITION_DURATION = 120;
 
 function animateNextFrames(duration?: number) {
   LayoutAnimation.configureNext({
     duration: duration || DEFAULT_TRANSITION_DURATION,
     update: {
-      type: LayoutAnimation.Types.easeInEaseOut
-    }
-  })
+      type: LayoutAnimation.Types.easeInEaseOut,
+    },
+  });
 }
 
-export interface HTMLTableProps<WVP> extends TableConfig<WVP>, HTMLTablePropsWithStats {}
+export interface HTMLTableProps<WVP>
+  extends TableConfig<WVP>,
+    HTMLTablePropsWithStats {}
 
 const tableStylePropTypeSpec: Record<keyof TableStyleSpecs, any> = {
   linkColor: PropTypes.string,
@@ -166,7 +179,7 @@ const tableStylePropTypeSpec: Record<keyof TableStyleSpecs, any> = {
   trOddColor: PropTypes.string,
   trEvenBackground: PropTypes.string,
   trEvenColor: PropTypes.string,
-  borderWidthPx:  PropTypes.number,
+  borderWidthPx: PropTypes.number,
   cellPaddingEm: PropTypes.number,
   fitContainerWidth: PropTypes.bool,
   fitContainerHeight: PropTypes.bool,
@@ -174,20 +187,17 @@ const tableStylePropTypeSpec: Record<keyof TableStyleSpecs, any> = {
   thEvenBackground: PropTypes.string,
   thEvenColor: PropTypes.string,
   thOddBackground: PropTypes.string,
-  thOddColor: PropTypes.string
-}
+  thOddColor: PropTypes.string,
+};
 
-interface WebViewMessage {
-  data: string
-}
-
-export default class HTMLTable<WVP extends Record<string, any>> extends PureComponent<HTMLTableProps<WVP>, State> {
-
+export default class HTMLTable<
+  WVP extends Record<string, any>
+> extends PureComponent<HTMLTableProps<WVP>, State> {
   static defaultProps: Partial<Record<keyof HTMLTableProps<any>, any>> = {
     autoheight: true,
     useLayoutAnimations: false,
-    transitionDuration: DEFAULT_TRANSITION_DURATION
-  }
+    transitionDuration: DEFAULT_TRANSITION_DURATION,
+  };
 
   static propTypes: Record<keyof HTMLTableProps<any>, any> = {
     html: PropTypes.string.isRequired,
@@ -206,64 +216,43 @@ export default class HTMLTable<WVP extends Record<string, any>> extends PureComp
     useLayoutAnimations: PropTypes.bool,
     transitionDuration: PropTypes.number,
     sourceBaseUrl: PropTypes.string,
-    renderersProps: PropTypes.any
-  }
+    renderersProps: PropTypes.any,
+  };
 
-  private oldContainerHeight: number = 0
+  private oldContainerHeight: number = 0;
+  private Webshell: WebshellComponentOf<
+    any,
+    [typeof linkPressFeature, typeof dimensionsFeature]
+  >;
 
   constructor(props: HTMLTableProps<WVP>) {
-    super(props)
+    super(props);
     const state = {
       containerHeight: 0,
-      animatedHeight: new Animated.Value(0)
-    }
-    this.state = state
-    this.oldContainerHeight = this.findHeight(this.props, this.state) || 0
-  }
-
-  private handleOnMessage = ({ nativeEvent }: NativeSyntheticEvent<WebViewMessage>) => {
-    const parsedJSON = (() => {
-      try {
-        return JSON.parse(nativeEvent.data) as PostMessage
-      } catch (e) {
-        return null
-      }
-    })()
-
-    if (parsedJSON && typeof parsedJSON === 'object') {
-      const { type, content } = parsedJSON
-      if (type === 'heightUpdate') {
-        const containerHeight = content
-        if (typeof containerHeight === 'number' && !Number.isNaN(containerHeight)) {
-          this.setState({ containerHeight })
-        }
-      }
-      if (type === 'navigateEvent') {
-        const { onLinkPress } = this.props
-        onLinkPress && onLinkPress(content)
-      }
-    }
-
-    if (this.props.webViewProps && typeof this.props.webViewProps.onMessage === 'function') {
-      this.props.webViewProps.onMessage(nativeEvent)
-    }
+      animatedHeight: new Animated.Value(0),
+    };
+    this.state = state;
+    this.oldContainerHeight = this.findHeight(this.props, this.state) || 0;
+    this.Webshell = makeWebshell(
+      props.WebViewComponent,
+      linkPressFeature.assemble(),
+      dimensionsFeature.assemble({ tagName: "table" })
+    );
   }
 
   private buildHTML() {
-    const {
-        autoheight,
-        tableStyleSpecs,
-        cssRules,
-        html
-      } = this.props
-    const styleSpecs = tableStyleSpecs ? {
-      ...defaultTableStylesSpecs,
-      ...tableStyleSpecs
-    } : {
-      ...defaultTableStylesSpecs,
-      fitContainerHeight: !autoheight
-    }
-    const tableCssStyle = typeof cssRules === 'string' ? cssRules : cssRulesFromSpecs(styleSpecs)
+    const { autoheight, tableStyleSpecs, cssRules, html } = this.props;
+    const styleSpecs = tableStyleSpecs
+      ? {
+          ...defaultTableStylesSpecs,
+          ...tableStyleSpecs,
+        }
+      : {
+          ...defaultTableStylesSpecs,
+          fitContainerHeight: !autoheight,
+        };
+    const tableCssStyle =
+      typeof cssRules === "string" ? cssRules : cssRulesFromSpecs(styleSpecs);
     return `
       <!DOCTYPE html>
       <html>
@@ -277,86 +266,108 @@ export default class HTMLTable<WVP extends Record<string, any>> extends PureComp
         ${html}
       </body>
       </html>
-      `
+      `;
   }
 
   private computeHeightHeuristic() {
-    const { numOfChars, numOfRows } = this.props
-    const width = Dimensions.get('window').width
-    const charsPerLine = 30 * width / 400
-    const lineHeight = 20
-    const approxNumOfLines = Math.floor(numOfChars / charsPerLine)
-    return Math.max(approxNumOfLines, numOfRows) * lineHeight
+    const { numOfChars, numOfRows } = this.props;
+    const width = Dimensions.get("window").width;
+    const charsPerLine = (30 * width) / 400;
+    const lineHeight = 20;
+    const approxNumOfLines = Math.floor(numOfChars / charsPerLine);
+    return Math.max(approxNumOfLines, numOfRows) * lineHeight;
   }
 
   private findHeight(props: HTMLTableProps<WVP>, state: State) {
-    const { containerHeight } = state
-    const { autoheight, defaultHeight, maxHeight } = props
-    const computedHeight = autoheight ?
-                               containerHeight ? containerHeight : this.computeHeightHeuristic() :
-                               defaultHeight
+    const { containerHeight } = state;
+    const { autoheight, defaultHeight, maxHeight } = props;
+    const computedHeight = autoheight
+      ? containerHeight
+        ? containerHeight
+        : this.computeHeightHeuristic()
+      : defaultHeight;
     if (maxHeight) {
-      return Math.min(maxHeight, computedHeight as number)
+      return Math.min(maxHeight, computedHeight as number);
     }
-    return computedHeight
+    return computedHeight;
   }
 
-  componentDidUpdate(_oldProps: HTMLTableProps<WVP>, oldState: State) {
-    const { autoheight, useLayoutAnimations, transitionDuration } = this.props
-    const shouldAnimate = oldState.containerHeight !== this.state.containerHeight && autoheight
+  private onTableDimensions = ({ height: containerHeight }: DimensionsObject) => {
+    if (typeof containerHeight === 'number' && !Number.isNaN(containerHeight)) {
+      this.setState({ containerHeight })
+    }
+  };
+
+  componentDidUpdate(oldProps: HTMLTableProps<WVP>, oldState: State) {
+    const { autoheight, useLayoutAnimations, transitionDuration, WebViewComponent } = this.props;
+    const shouldAnimate =
+      oldState.containerHeight !== this.state.containerHeight && autoheight;
     if (shouldAnimate && !useLayoutAnimations) {
-      this.oldContainerHeight = oldState.containerHeight
+      this.oldContainerHeight = oldState.containerHeight;
       Animated.timing(this.state.animatedHeight, {
         toValue: 1,
         duration: transitionDuration,
-        useNativeDriver: false
-      }).start()
+        useNativeDriver: false,
+      }).start();
     }
     if (shouldAnimate && useLayoutAnimations) {
-      animateNextFrames(transitionDuration)
+      animateNextFrames(transitionDuration);
+    }
+    if (WebViewComponent !== oldProps.WebViewComponent && __DEV__) {
+      throw new Error("HTMLTable: you cannot pass new WebViewComponent values");
     }
   }
 
   render() {
     const {
-        autoheight,
-        style,
-        WebViewComponent,
-        webViewProps,
-        useLayoutAnimations,
-        sourceBaseUrl
-      } = this.props
-    const html = this.buildHTML()
+      autoheight,
+      style,
+      WebViewComponent,
+      webViewProps: userWebViewProps,
+      useLayoutAnimations,
+      sourceBaseUrl,
+      onLinkPress,
+    } = this.props;
+    const html = this.buildHTML();
     const source: any = {
-      html
-    }
+      html,
+    };
     if (sourceBaseUrl) {
-      source.baseUrl = sourceBaseUrl
+      source.baseUrl = sourceBaseUrl;
     }
-    const containerHeight = this.findHeight(this.props, this.state)
-    const WebView = WebViewComponent as ComponentType<any>
-    const containerStyle = autoheight && !useLayoutAnimations ? {
-      height: this.state.animatedHeight.interpolate({
-        inputRange: [0, 1],
-        outputRange: [this.oldContainerHeight, containerHeight as number]
-      })
-    } : {
-      height: !containerHeight || Number.isNaN(containerHeight) ? undefined : containerHeight
-    }
-    const userScript = (webViewProps && webViewProps.injectedJavaScript) || ''
+    const containerHeight = this.findHeight(this.props, this.state);
+    const Webshell = this.Webshell;
+    const containerStyle =
+      autoheight && !useLayoutAnimations
+        ? {
+            height: this.state.animatedHeight.interpolate({
+              inputRange: [0, 1],
+              outputRange: [this.oldContainerHeight, containerHeight as number],
+            }),
+          }
+        : {
+            height:
+              !containerHeight || Number.isNaN(containerHeight)
+                ? undefined
+                : containerHeight,
+          };
+    const webViewProps = {
+      scalesPageToFit: Platform.select({ android: false, ios: undefined }),
+      automaticallyAdjustContentInsets: false,
+      scrollEnabled: true,
+      contentInset: defaultInsets,
+      ...userWebViewProps,
+      style: [StyleSheet.absoluteFill, userWebViewProps?.style],
+      source,
+    };
     return (
-          <Animated.View style={[containerStyle, styles.container, style]}>
-            <WebView scalesPageToFit={Platform.select({ android: false, ios: undefined })}
-                    automaticallyAdjustContentInsets={false}
-                    scrollEnabled={true}
-                    style={[StyleSheet.absoluteFill, webViewProps && webViewProps.style]}
-                    contentInset={defaultInsets}
-                    {...webViewProps}
-                    injectedJavaScript={`${script}\n${userScript}\ntrue;`}
-                    javaScriptEnabled={true}
-                    onMessage={this.handleOnMessage}
-                    source={source}/>
-          </Animated.View>
-    )
+      <Animated.View style={[containerStyle, styles.container, style]}>
+        <Webshell
+          onLinkPress={onLinkPress}
+          onDimensions={this.onTableDimensions}
+          webViewProps={webViewProps}
+        />
+      </Animated.View>
+    );
   }
 }

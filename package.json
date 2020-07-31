@@ -1,6 +1,6 @@
 {
   "name": "react-native-render-html-table-bridge",
-  "version": "0.6.1",
+  "version": "0.6.2-alpha.3",
   "description": "A bridge to render tables with render-html library",
   "main": "lib/index.js",
   "files": [
@@ -33,12 +33,13 @@
     "tslint-config-airbnb": "^5.11.2",
     "tslint-react": "^4.1.0",
     "tslint-react-recommended": "^1.0.15",
-    "typescript": "^3.6.3"
+    "typescript": "^3.9.7"
   },
   "dependencies": {
     "@types/prop-types": "^15.7.3",
     "prop-types": "^15.7.2",
     "ramda": "^0.26.1",
+    "react-native-webshell": "^2.0.0-alpha.5",
     "stringify-entities": "^2.0.0"
   },
   "peerDependencies": {
