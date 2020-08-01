@@ -40,7 +40,7 @@ import React, {PureComponent} from 'react';
 import {ScrollView} from 'react-native';
 import HTML from 'react-native-render-html';
 import { IGNORED_TAGS, alterNode, makeTableRenderer } from 'react-native-render-html-table-bridge';
-import WebView from 'react-native-webview'; // <-- Instructions might defer depending on your setup
+import WebView from 'react-native-webview'; // <-- Instructions might differ depending on your setup
 
 const html = `
 <table>
@@ -80,105 +80,9 @@ export default class Example extends PureComponent<Props> {
 }
 ```
 
-## `makeTableRenderer` config
+## API Reference
 
-This config object will be passed to the [`HTMLTable`](src/HTMLTable/index.ts) component as props.
-
-### `WebViewComponent`
-
-*Required* `ComponentType`
-
-Your `WebView` component. If importing this component causes errors, [check the dedicated troubleshooting section](#errors-when-importing-webview-component).
-
-**Warning**: Features such as `autoheight` and `onLinkPress` don't work with the legacy core version or Expo &lt;33 version.
-
-Please use latest [community edition instead](https://github.com/react-native-community/react-native-webview)
-
-### `autoheight`
-
-*Optional* `boolean`
-
-Fit height to HTML content. The operation is dynamic, because it requires the DOM to be mounted, and a script be executed to send height through the `WebView` component.
-
-**default**: `true`
-
-**Supported WebView**: `WebView` community edition &ge;5.0.0 and Expo SDK &ge;33.
-
-**Warning**: When setting to `false`, you must either give container absolute positioning with `style` prop, or give a fixed height with `defaultHeight` prop.
-Otherwise, React Native will assign a `0` height.
-
-### `defaultHeight`
-
-*Optional* `number`
-
-If `autoheight` is set to `true`, `defaultHeight` will be ignored.
-Otherwise, container height will be fixed to `defaultHeight`.
-
-### `maxHeight`
-
-*Optional* `number`
-
-Maximum container height.
-
-**Warning**: Content should theoretically be scrollable on overflow, but there is a [**pending issue**](https://github.com/react-native-community/react-native-webview/issues/22) in `react-native-community/react-native-webview` which prevents `WebView` nested in a `ScrollView` to be scrollable.
-
-### `style`
-
-*Optional* `StyleProp<ViewStyle>`
-
-Container style.
-
-### `tableStyleSpecs`
-
-*Optional* [`TableStyleSpecs`](src/HTMLTable/css-rules.ts)
-
-An object describing the table appearance.
-
-**default**: [*see definition*](src/HTMLTable/css-rules.ts)
-
-### `cssRules`
-
-*Optional* `string`
-
-Override default CSS rules.
-
-**Warning**: You should at least set a rule which adds a 0-margin to `body` and `html`, otherwise the table will look truncated.
-
-**Info**: When set, `tableStyleSpecs` is ignored. If you want to extend default instead of override CSS styles, [see FAQ](extend-styles).
-
-### `webViewProps`
-
-*Optional* `object`
-
-Any properties you want to pass to the `WebViewComponent` element.
-
-**Info**: `source` and `javascriptEnabled`
-will be ignored and overridden.
-
-### `useLayoutAnimations`
-
-*Optional* `boolean`
-
-Use native `LayoutAnimation` instead of `Animated` module with `autoheight`.
-This should be preferred performance-wise, but you need to setup `UIManager` on android.
-
-[See official guide](https://facebook.github.io/react-native/docs/layoutanimation)
-
-**default**: `false`
-
-### `transitionDuration`
-
-*Optional* `number`
-
-The transition duration in milliseconds when table height is updated when `autoheight` is used.
-
-**default**: `120`
-
-### `androidSourceBaseUrl`
-
-*Optional*: `string`
-
-See: https://git.io/JeCAG
+The complete API reference is available here: [doc/react-native-render-html-table-bridge.md](doc/react-native-render-html-table-bridge.md).
 
 ## Troubleshooting
 
