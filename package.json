@@ -5,11 +5,11 @@
   "main": "lib/index.js",
   "types": "types/react-native-webshell/index.d.ts",
   "files": [
-    "lib/**/*",
+    "lib/**/*.js",
     "types/**/*"
   ],
   "scripts": {
-    "build": "rimraf lib; tsc --project ./tsconfig.json && api-extractor run --local --verbose && build:doc",
+    "build": "rimraf lib; tsc --project ./tsconfig.json && api-extractor run --local --verbose && npm run build:doc",
     "prepare": "npm run build",
     "lint": "tslint 'src/**/*?(.d).ts?(x)' --fix",
     "build:doc": "api-documenter markdown --input-folder temp --output-folder doc"
