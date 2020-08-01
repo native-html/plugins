@@ -7,6 +7,7 @@
 import { Component } from 'react';
 import { ComponentType } from 'react';
 import { HTMLNode } from 'react-native-render-html';
+import { HTMLTableProps as HTMLTableProps_2 } from '@src/types';
 import { RendererDeclaration } from 'react-native-render-html';
 import { StyleProp } from 'react-native';
 import { TableStyleSpecs as TableStyleSpecs_2 } from '@src/types';
@@ -22,7 +23,7 @@ export function cssRulesFromSpecs(specs?: TableStyleSpecs_2): string;
 export const defaultTableStylesSpecs: TableStyleSpecs_2;
 
 // @public (undocumented)
-export class HTMLTable<WCP> extends Component<WCP> {
+export class HTMLTable<WVP> extends Component<HTMLTableProps_2<WVP>> {
 }
 
 // @public (undocumented)

@@ -261,7 +261,7 @@ class __HTMLTable<
 /**
  * @public
  */
-export declare class HTMLTable<WCP> extends Component<WCP> {}
+export declare class HTMLTable<WVP> extends Component<HTMLTableProps<WVP>> {}
 
 module.exports = {
   HTMLTable: __HTMLTable

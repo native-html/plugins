@@ -8,7 +8,7 @@
 <b>Signature:</b>
 
 ```typescript
-export declare class HTMLTable<WCP> extends Component<WCP> 
+export declare class HTMLTable<WVP> extends Component<HTMLTableProps<WVP>> 
 ```
-<b>Extends:</b> Component&lt;WCP&gt;
+<b>Extends:</b> Component&lt;[HTMLTableProps](./react-native-render-html-table-bridge.htmltableprops.md)<!-- -->&lt;WVP&gt;&gt;
 
