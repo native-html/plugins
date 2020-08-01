@@ -1,16 +1,18 @@
 {
   "name": "react-native-render-html-table-bridge",
   "version": "0.6.2-alpha.3",
-  "description": "A bridge to render tables with render-html library",
+  "description": "A bridge to render tables with react-native-render-html library",
   "main": "lib/index.js",
+  "types": "types/react-native-webshell/index.d.ts",
   "files": [
-    "lib/**/*"
+    "lib/**/*",
+    "types/**/*"
   ],
-  "types": "lib/index.d.ts",
   "scripts": {
-    "build": "rimraf lib; tsc --project ./tsconfig.json",
+    "build": "rimraf lib; tsc --project ./tsconfig.json && api-extractor run --local --verbose",
     "prepare": "npm run build",
-    "lint": "tslint 'src/**/*?(.d).ts?(x)' --fix"
+    "lint": "tslint 'src/**/*?(.d).ts?(x)' --fix",
+    "build:doc": "api-documenter markdown --input-folder temp --output-folder doc"
   },
   "keywords": [
     "react native",
@@ -21,6 +23,8 @@
   "license": "MIT",
   "repository": "git@github.com:jsamr/react-native-render-html-table-bridge.git",
   "devDependencies": {
+    "@microsoft/api-documenter": "^7.8.21",
+    "@microsoft/api-extractor": "^7.9.2",
     "@types/ramda": "github:types/npm-ramda#dist",
     "@types/react": "^16.9.41",
     "@types/react-native": "^0.62.16",

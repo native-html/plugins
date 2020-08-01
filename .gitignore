@@ -3,5 +3,6 @@
 .jest
 .watchmanconfig
 node_modules
-lib
-
+/lib
+/types
+/temp
