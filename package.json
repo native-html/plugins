@@ -9,7 +9,7 @@
     "types/**/*"
   ],
   "scripts": {
-    "build": "rimraf lib; tsc --project ./tsconfig.json && api-extractor run --local --verbose",
+    "build": "rimraf lib; tsc --project ./tsconfig.json && api-extractor run --local --verbose && build:doc",
     "prepare": "npm run build",
     "lint": "tslint 'src/**/*?(.d).ts?(x)' --fix",
     "build:doc": "api-documenter markdown --input-folder temp --output-folder doc"
