@@ -1,4 +1,4 @@
-import { HtmlAttributesDictionary, HTMLNode, HTMLTagNode } from 'react-native-render-html'
+import { HtmlAttributesDictionary, HTMLNode } from 'react-native-render-html'
 import forEachObjIndexed from 'ramda/es/forEachObjIndexed'
 import strigifyEntities from 'stringify-entities'
 
@@ -10,13 +10,13 @@ function renderOpeningTag(tag: string, attributes: HtmlAttributesDictionary) {
   return `<${tag}${strAttributes.length ? ' ' : ''}${strAttributes.join(' ')}>`
 }
 
-export interface TableStats {
+interface TableStats {
   rows: number
   columns: number
   characters: number
 }
 
-export function domToHTML(root: HTMLNode, stats: TableStats): string {
+function domToHTML(root: HTMLNode, stats: TableStats): string {
   let html = ''
   if (root.type === 'tag') {
     const strChildren = root.children.reduce((prev: string, curr: HTMLNode) => {
@@ -37,7 +37,14 @@ export function domToHTML(root: HTMLNode, stats: TableStats): string {
   return html
 }
 
-export default function alterNode(node: HTMLNode) {
+/**
+ * This function should be passed to HTML component.
+ * 
+ * @param node - A node from htmlparser2 library.
+ * 
+ * @public
+ */
+export function alterNode(node: HTMLNode) {
   if (node.type === 'tag' && node.name === 'table') {
     const stats = {
       html: '',

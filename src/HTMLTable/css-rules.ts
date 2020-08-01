@@ -1,82 +1,13 @@
-export interface TableStyleSpecs {
-  /**
-   * Will text be selectable.
-   */
-  selectableText: boolean
-  /**
-   * Expand table to HTML width.
-   */
-  fitContainerWidth: boolean
-  /**
-   * Expand table to HTML height.
-   */
-  fitContainerHeight: boolean
-  /**
-   * Spacing between cells, in em.
-   */
-  cellPaddingEm: number
-  /**
-   * Font size, in pixels.
-   * 
-   * @remarks This value being applied to root, it will affect rem and em.
-   */
-  fontSizePx: number | null
-  /**
-   * Border width, in pixels.
-   */
-  borderWidthPx: number
-  /**
-   * Link of anchors.
-   */
-  linkColor: string
-  /**
-   * Font family.
-   * 
-   * @remarks You will need to do additional work to support non-native fonts.
-   */
-  fontFamily: string
-  /**
-   * Table cell border color.
-   */
-  tdBorderColor: string
-  /**
-   * Table header cell border color.
-   */
-  thBorderColor: string
-  /**
-   * Table even header cell background color.
-   */
-  thOddBackground: string
-  /**
-   * Table odd header cell text color.
-   */
-  thOddColor: string
-  /**
-   * Table even header cell background color.
-   */
-  thEvenBackground: string
-  /**
-   * Table even header cell text color.
-   */
-  thEvenColor: string
-  /**
-   * Table odd row background color.
-   */
-  trOddBackground: string
-  /**
-   * Table odd row text color.
-   */
-  trOddColor: string
-  /**
-   * Table even row background color.
-   */
-  trEvenBackground: string
-  /**
-   * Table even row text color.
-   */
-  trEvenColor: string
-}
+import { TableStyleSpecs } from "@src/types"
 
+/**
+ * Default styles attributes.
+ * 
+ * @remarks
+ * Custom attributes will be shallow-merged.
+ * 
+ * @public
+ */
 export const defaultTableStylesSpecs: TableStyleSpecs = {
   selectableText: false,
   fitContainerWidth: false,
@@ -98,7 +29,14 @@ export const defaultTableStylesSpecs: TableStyleSpecs = {
   trEvenColor : '#333333'
 }
 
-export default function cssRulesFromSpecs(specs: TableStyleSpecs = defaultTableStylesSpecs) {
+/**
+ * Create css rules from a specification object.
+ * 
+ * @param specs - The specifications object.
+ * 
+ * @public
+ */
+export function cssRulesFromSpecs(specs: TableStyleSpecs = defaultTableStylesSpecs) {
   const {
         cellPaddingEm,
         borderWidthPx,
