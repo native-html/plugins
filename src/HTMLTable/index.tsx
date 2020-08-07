@@ -12,7 +12,7 @@ import makeWebshell, {
   linkPressFeature,
   DimensionsObject,
   WebshellComponentOf,
-} from "react-native-webshell";
+} from "@formidable-webview/webshell";
 import {
   cssRulesFromSpecs,
   defaultTableStylesSpecs,

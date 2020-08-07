@@ -3,7 +3,7 @@
   "version": "0.6.2-alpha.3",
   "description": "A bridge to render tables with react-native-render-html library",
   "main": "lib/index.js",
-  "types": "types/react-native-webshell/index.d.ts",
+  "types": "types/react-native-render-html-table-bridge/index.d.ts",
   "files": [
     "lib/**/*.js",
     "types/**/*"
@@ -40,10 +40,10 @@
     "typescript": "^3.9.7"
   },
   "dependencies": {
+    "@formidable-webview/webshell": "^0.10.1-alpha.4",
     "@types/prop-types": "^15.7.3",
     "prop-types": "^15.7.2",
     "ramda": "^0.26.1",
-    "react-native-webshell": "^2.0.0-alpha.5",
     "stringify-entities": "^2.0.0"
   },
   "peerDependencies": {
