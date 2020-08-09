@@ -7,11 +7,11 @@
 ![DL/month](https://img.shields.io/npm/dm/react-native-render-html-table-bridge.svg)
 
 ```sh
-npm add --save react-native-render-html-table-bridge
+npm add --save @native-html/table-plugin
 ```
 
 ```sh
-yarn add react-native-render-html-table-bridge
+yarn add @native-html/table-plugin
 ```
 
 **Features**:
@@ -46,7 +46,7 @@ import {
   IGNORED_TAGS,
   alterNode,
   makeTableRenderer
-} from 'react-native-render-html-table-bridge';
+} from '@native-html/table-plugin';
 import WebView from 'react-native-webview'; // <-- Instructions might differ depending on your setup
 
 const html = `
@@ -124,7 +124,7 @@ If you encounter typescript errors, chances are you are not following `peerDepen
 import {
   defaultTableStylesSpecs,
   cssRulesFromSpecs
-} from 'react-native-render-html-table-bridge';
+} from '@native-html/table-plugin';
 
 const cssRules =
   cssRulesFromSpecs(defaultTableStylesSpecs) +
@@ -154,7 +154,7 @@ const config = {
 import {
   defaultTableStylesSpecs,
   cssRulesFromSpecs
-} from 'react-native-render-html-table-bridge';
+} from '@native-html/table-plugin';
 import { Platform } from 'react-native';
 
 function getFontAssetURL(fontFileName: string) {
@@ -192,7 +192,7 @@ const config = {
 
 ### How to use with Jest?
 
-**A**: Add a `react-native-render-html-table-bridge.js` file to your `__mocks__` folder (this folder should be at the root of your project) with the following content:
+**A**: Add a `@native-html/table-plugin.js` file to your `__mocks__` folder (this folder should be at the root of your project) with the following content:
 
 ```js
 const IGNORED_TAGS = [];

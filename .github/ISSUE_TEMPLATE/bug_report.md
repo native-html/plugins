@@ -8,7 +8,7 @@ labels: bug
 <!--
   MAKE SURE TO READ AND FOLLOW THIS TEMPLATE CLOSELY OR YOUR ISSUE WILL BE
   CLOSED WITHOUT NOTICE
-  
+
   We expect that it will take you about 30 minutes to produce a high-quality
   bug report.  While this may seem like a lot, putting care into issues helps
   us fix them faster.
@@ -51,7 +51,7 @@ I swear that I have completed these tasks before submitting:
 -->
 
 - react-native-render-html:
-- react-native-render-html-table-bridge:
+- @native-html/table-plugin:
 - react-native-webview:
 
 <!--
