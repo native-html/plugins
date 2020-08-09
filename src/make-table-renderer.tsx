@@ -1,13 +1,13 @@
-import React, { ComponentType } from "react";
-import { RendererDeclaration } from "react-native-render-html";
-import { HTMLTable } from "./HTMLTable";
-import { TableConfig, HTMLTablePropsWithStats } from "./types";
+import React, { ComponentType } from 'react';
+import { RendererDeclaration } from 'react-native-render-html';
+import { HTMLTable } from './HTMLTable';
+import { TableConfig, HTMLTablePropsWithStats } from './types';
 
 /**
  * Create the table renderer.
- * 
+ *
  * @param tableConfig - An object to customize the renderer.
- * 
+ *
  * @public
  */
 export function makeTableRenderer(
@@ -16,7 +16,7 @@ export function makeTableRenderer(
   return (attribs, _children, _css, { key, onLinkPress, renderersProps }) => {
     const handleOnLinkPress = (url: string) =>
       onLinkPress && onLinkPress({} as any, url, {});
-    if (typeof attribs._rawHtml !== "string") {
+    if (typeof attribs._rawHtml !== 'string') {
       throw new Error(
         "You must inject `alterNode' method from react-native-render-html-table-bdridge in `HTML' component."
       );
@@ -39,7 +39,7 @@ export function makeTableRenderer(
 /**
  *
  * @param TableComponent - A component which will receive {@link HTMLTablePropsWithStats} props.
- * 
+ *
  * @public
  */
 export function makeCustomTableRenderer(
@@ -48,7 +48,7 @@ export function makeCustomTableRenderer(
   return (attribs, _children, _css, { key, onLinkPress, renderersProps }) => {
     const handleOnLinkPress = (url: string) =>
       onLinkPress && onLinkPress({} as any, url, {});
-    if (typeof attribs._rawHtml !== "string") {
+    if (typeof attribs._rawHtml !== 'string') {
       throw new Error(
         "You must inject `alterNode' method from react-native-render-html-table-bdridge in `HTML' component."
       );

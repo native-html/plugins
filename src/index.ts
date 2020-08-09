@@ -1,21 +1,21 @@
 export {
   makeTableRenderer,
-  makeCustomTableRenderer,
-} from "./make-table-renderer";
-export { alterNode } from "./alter-node";
-export {
+  makeCustomTableRenderer
+} from './make-table-renderer';
+export { alterNode } from './alter-node';
+export type {
   HTMLTableBaseProps,
   HTMLTableProps,
   TableStyleSpecs,
   HTMLTableStatProps,
   TableConfig,
-  HTMLTablePropsWithStats,
-} from "./types";
+  HTMLTablePropsWithStats
+} from './types';
 
 export {
   HTMLTable,
   defaultTableStylesSpecs,
-  cssRulesFromSpecs,
-} from "./HTMLTable";
+  cssRulesFromSpecs
+} from './HTMLTable';
 
-export { IGNORED_TAGS, TABLE_TAGS } from "./HTMLTable";
+export { IGNORED_TAGS, TABLE_TAGS } from './HTMLTable';

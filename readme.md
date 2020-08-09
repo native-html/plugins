@@ -27,7 +27,7 @@ yarn add react-native-render-html-table-bridge
 
 ## Minimal working example
 
-*[Full example](examples/simple)*
+_[Full example](examples/simple)_
 
 You need 3 conditions to get to a working example:
 
@@ -36,10 +36,14 @@ You need 3 conditions to get to a working example:
 3. `makeTableRenderer` and inject `renderers` prop to `HTML` component.
 
 ```javascript
-import React, {PureComponent} from 'react';
-import {ScrollView} from 'react-native';
+import React, { PureComponent } from 'react';
+import { ScrollView } from 'react-native';
 import HTML from 'react-native-render-html';
-import { IGNORED_TAGS, alterNode, makeTableRenderer } from 'react-native-render-html-table-bridge';
+import {
+  IGNORED_TAGS,
+  alterNode,
+  makeTableRenderer
+} from 'react-native-render-html-table-bridge';
 import WebView from 'react-native-webview'; // <-- Instructions might differ depending on your setup
 
 const html = `
@@ -56,7 +60,7 @@ const html = `
 `;
 
 const config = {
-    WebViewComponent: WebView
+  WebViewComponent: WebView
 };
 
 const renderers = {
@@ -73,19 +77,18 @@ export default class Example extends PureComponent<Props> {
   render() {
     return (
       <ScrollView>
-        <HTML html={html} {...htmlConfig}/>
+        <HTML html={html} {...htmlConfig} />
       </ScrollView>
-    )
+    );
   }
 }
 ```
 
 ## API Reference
 
-The complete API reference is available here: [doc/react-native-render-html-table-bridge.md](doc/react-native-render-html-table-bridge.md).
+The complete API reference is available here: [docs/table-plugin.md](docs/table-plugin.md).
 
 ## Troubleshooting
-
 
 <a name="errors-when-importing-webview-component" />
 
@@ -101,10 +104,10 @@ Please refer to the official documentation and make sure you have selected your 
 
 If you encounter typescript errors, chances are you are not following `peerDependencies` rules. Make sure you follow these rules:
 
-| react-native-render-html | Bridge   |
-|--------------------------|----------|
-| ≤ 4.2.0                  | ≤ 0.5.3  |
-|  ≥ 4.2.1                 |  ≥ 0.6.0 |
+| react-native-render-html | Bridge  |
+| ------------------------ | ------- |
+| ≤ 4.2.0                  | ≤ 0.5.3 |
+| ≥ 4.2.1                  | ≥ 0.6.0 |
 
 ## FAQ
 
@@ -115,19 +118,23 @@ If you encounter typescript errors, chances are you are not following `peerDepen
 **A**: Use `cssRulesFromSpecs` function and override `cssRules` config.
 
 ```javascript
-import { defaultTableStylesSpecs, cssRulesFromSpecs } from 'react-native-render-html-table-bridge';
+import {
+  defaultTableStylesSpecs,
+  cssRulesFromSpecs
+} from 'react-native-render-html-table-bridge';
 
-const cssRules = cssRulesFromSpecs(defaultTableStylesSpecs) + `
+const cssRules =
+  cssRulesFromSpecs(defaultTableStylesSpecs) +
+  `
 a {
   text-transform: uppercase;
 }
-`
+`;
 
 const config = {
-  cssRules,
+  cssRules
   // Other config options
-}
-
+};
 ```
 
 ### How to customize the Table component?
@@ -141,24 +148,30 @@ const config = {
 **A**: Extend styles and add `@font-face` rules.
 
 ```javascript
-import { defaultTableStylesSpecs, cssRulesFromSpecs } from 'react-native-render-html-table-bridge';
+import {
+  defaultTableStylesSpecs,
+  cssRulesFromSpecs
+} from 'react-native-render-html-table-bridge';
 import { Platform } from 'react-native';
 
 function getFontAssetURL(fontFileName: string) {
   return Platform.select({
     ios: `url(${fontFileName})`,
     android: `url(file://android_asset/fonts/${fontFileName})`
-  })
+  });
 }
 
-const openSansUnicodeRanges = 'U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD';
+const openSansUnicodeRanges =
+  'U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD';
 
 const openSansRegular = getFontAssetURL('OpenSans-Regular.ttf');
 
-const cssRules = cssRulesFromSpecs({
-  ...defaultTableStylesSpecs,
-  fontFamily: '"Open Sans"' // beware to quote font family name!
-}) + `
+const cssRules =
+  cssRulesFromSpecs({
+    ...defaultTableStylesSpecs,
+    fontFamily: '"Open Sans"' // beware to quote font family name!
+  }) +
+  `
 @font-face {
   font-family: 'Open Sans';
   font-style: normal;
@@ -169,25 +182,19 @@ const cssRules = cssRulesFromSpecs({
 `;
 
 const config = {
-  cssRules,
+  cssRules
   // Other config options
-}
-
+};
 ```
 
 ### How to use with Jest?
 
 **A**: Add a `react-native-render-html-table-bridge.js` file to your `__mocks__` folder (this folder should be at the root of your project) with the following content:
 
-``` js
+```js
 const IGNORED_TAGS = [];
 const alterNode = jest.fn();
 const makeTableRenderer = jest.fn();
 
-export {
-	IGNORED_TAGS,
-	alterNode,
-	makeTableRenderer,
-};
-
+export { IGNORED_TAGS, alterNode, makeTableRenderer };
 ```

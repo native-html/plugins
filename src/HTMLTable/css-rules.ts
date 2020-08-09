@@ -1,11 +1,11 @@
-import { TableStyleSpecs } from "@src/types"
+import { TableStyleSpecs } from '../types';
 
 /**
  * Default styles attributes.
- * 
+ *
  * @remarks
  * Custom attributes will be shallow-merged.
- * 
+ *
  * @public
  */
 export const defaultTableStylesSpecs: TableStyleSpecs = {
@@ -17,58 +17,60 @@ export const defaultTableStylesSpecs: TableStyleSpecs = {
   linkColor: '#3498DB',
   fontFamily: 'sans-serif',
   fontSizePx: null,
-  thBorderColor : '#3f5c7a',
-  tdBorderColor : '#b5b5b5',
-  thOddBackground : '#253546',
-  thOddColor : '#FFFFFF',
+  thBorderColor: '#3f5c7a',
+  tdBorderColor: '#b5b5b5',
+  thOddBackground: '#253546',
+  thOddColor: '#FFFFFF',
   thEvenBackground: '#253546',
   thEvenColor: '#FFFFFF',
-  trOddBackground : '#e2e2e2',
-  trOddColor : '#333333',
-  trEvenBackground : '#FFFFFF',
-  trEvenColor : '#333333'
-}
+  trOddBackground: '#e2e2e2',
+  trOddColor: '#333333',
+  trEvenBackground: '#FFFFFF',
+  trEvenColor: '#333333'
+};
 
 /**
  * Create css rules from a specification object.
- * 
+ *
  * @param specs - The specifications object.
- * 
+ *
  * @public
  */
-export function cssRulesFromSpecs(specs: TableStyleSpecs = defaultTableStylesSpecs) {
+export function cssRulesFromSpecs(
+  specs: TableStyleSpecs = defaultTableStylesSpecs
+) {
   const {
-        cellPaddingEm,
-        borderWidthPx,
-        selectableText,
-        fitContainerWidth,
-        fitContainerHeight,
-        fontSizePx,
-        linkColor,
-        fontFamily,
-        tdBorderColor,
-        thBorderColor,
-        thOddBackground,
-        thOddColor,
-        thEvenBackground,
-        thEvenColor,
-        trOddBackground,
-        trOddColor,
-        trEvenBackground,
-        trEvenColor
-    } = specs
-  const selectTextRule = selectableText ? '' : `
+    cellPaddingEm,
+    borderWidthPx,
+    selectableText,
+    fitContainerWidth,
+    fitContainerHeight,
+    fontSizePx,
+    linkColor,
+    fontFamily,
+    tdBorderColor,
+    thBorderColor,
+    thOddBackground,
+    thOddColor,
+    thEvenBackground,
+    thEvenColor,
+    trOddBackground,
+    trOddColor,
+    trEvenBackground,
+    trEvenColor
+  } = specs;
+  const selectTextRule = selectableText
+    ? ''
+    : `
     user-select: none;
     -webkit-user-select: none;
     -ms-user-select: none;
-  `
-  const spanToContainerWidthRule = fitContainerWidth ? `
-    min-width: 100vw;
-  ` : ''
-  const spanToContainerHeightRule = fitContainerHeight ? `
-    min-height: 100vh;
-  ` : ''
-  const fontSizeRule = fontSizePx ?  `font-size: ${fontSizePx}px;` : ''
+  `;
+  const spanToContainerWidthRule = fitContainerWidth ? 'min-width: 100vw;' : '';
+  const spanToContainerHeightRule = fitContainerHeight
+    ? 'min-height: 100vh;'
+    : '';
+  const fontSizeRule = fontSizePx ? `font-size: ${fontSizePx}px;` : '';
   return `
     :root {
       font-family: ${fontFamily};
@@ -134,5 +136,5 @@ export function cssRulesFromSpecs(specs: TableStyleSpecs = defaultTableStylesSpe
       background-color: ${trEvenBackground};
       color: ${trEvenColor};
     }
-    `
+    `;
 }

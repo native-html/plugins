@@ -1,5 +1,5 @@
-import { ComponentType } from "react";
-import { StyleProp, ViewStyle } from "react-native";
+import { ComponentType } from 'react';
+import { StyleProp, ViewStyle } from 'react-native';
 
 /**
  * An object describing how to generate styles. See {@link cssRulesFromSpecs}.

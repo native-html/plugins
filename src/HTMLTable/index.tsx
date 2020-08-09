@@ -1,24 +1,21 @@
-import React, { PureComponent, Component } from "react";
-import PropTypes from "prop-types";
+import React, { PureComponent, Component } from 'react';
+import PropTypes from 'prop-types';
 import {
   Platform,
   StyleSheet,
   Dimensions,
   LayoutAnimation,
-  Animated,
-} from "react-native";
+  Animated
+} from 'react-native';
 import makeWebshell, {
   dimensionsFeature,
   linkPressFeature,
   DimensionsObject,
-  WebshellComponentOf,
-} from "@formidable-webview/webshell";
-import {
-  cssRulesFromSpecs,
-  defaultTableStylesSpecs,
-} from "./css-rules";
-import { TableStyleSpecs, HTMLTableProps } from "@src/types";
-export { IGNORED_TAGS, TABLE_TAGS } from "./tags";
+  WebshellComponentOf
+} from '@formidable-webview/webshell';
+import { cssRulesFromSpecs, defaultTableStylesSpecs } from './css-rules';
+import { TableStyleSpecs, HTMLTableProps } from '../types';
+export { IGNORED_TAGS, TABLE_TAGS } from './tags';
 
 export { defaultTableStylesSpecs, cssRulesFromSpecs };
 
@@ -26,8 +23,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     // See https://github.com/react-native-community/react-native-webview/issues/101
-    overflow: "hidden",
-  },
+    overflow: 'hidden'
+  }
 });
 
 interface State {
@@ -39,7 +36,7 @@ const defaultInsets = {
   top: 0,
   bottom: 0,
   left: 0,
-  right: 0,
+  right: 0
 };
 
 const DEFAULT_TRANSITION_DURATION = 120;
@@ -48,8 +45,8 @@ function animateNextFrames(duration?: number) {
   LayoutAnimation.configureNext({
     duration: duration || DEFAULT_TRANSITION_DURATION,
     update: {
-      type: LayoutAnimation.Types.easeInEaseOut,
-    },
+      type: LayoutAnimation.Types.easeInEaseOut
+    }
   });
 }
 
@@ -71,16 +68,17 @@ const tableStylePropTypeSpec: Record<keyof TableStyleSpecs, any> = {
   thEvenBackground: PropTypes.string,
   thEvenColor: PropTypes.string,
   thOddBackground: PropTypes.string,
-  thOddColor: PropTypes.string,
+  thOddColor: PropTypes.string
 };
 
-class __HTMLTable<
-  WVP extends Record<string, any>
-> extends PureComponent<HTMLTableProps<WVP>, State> {
+class __HTMLTable<WVP extends Record<string, any>> extends PureComponent<
+  HTMLTableProps<WVP>,
+  State
+> {
   static defaultProps: Partial<Record<keyof HTMLTableProps<any>, any>> = {
     autoheight: true,
     useLayoutAnimations: false,
-    transitionDuration: DEFAULT_TRANSITION_DURATION,
+    transitionDuration: DEFAULT_TRANSITION_DURATION
   };
 
   static displayName = 'HTMLTable';
@@ -102,7 +100,7 @@ class __HTMLTable<
     useLayoutAnimations: PropTypes.bool,
     transitionDuration: PropTypes.number,
     sourceBaseUrl: PropTypes.string,
-    renderersProps: PropTypes.any,
+    renderersProps: PropTypes.any
   };
 
   private oldContainerHeight: number = 0;
@@ -115,14 +113,14 @@ class __HTMLTable<
     super(props);
     const state = {
       containerHeight: 0,
-      animatedHeight: new Animated.Value(0),
+      animatedHeight: new Animated.Value(0)
     };
     this.state = state;
     this.oldContainerHeight = this.findHeight(this.props, this.state) || 0;
     this.Webshell = makeWebshell(
       props.WebViewComponent,
       linkPressFeature.assemble(),
-      dimensionsFeature.assemble({ tagName: "table" })
+      dimensionsFeature.assemble({ tagName: 'table' })
     );
   }
 
@@ -131,14 +129,14 @@ class __HTMLTable<
     const styleSpecs = tableStyleSpecs
       ? {
           ...defaultTableStylesSpecs,
-          ...tableStyleSpecs,
+          ...tableStyleSpecs
         }
       : {
           ...defaultTableStylesSpecs,
-          fitContainerHeight: !autoheight,
+          fitContainerHeight: !autoheight
         };
     const tableCssStyle =
-      typeof cssRules === "string" ? cssRules : cssRulesFromSpecs(styleSpecs);
+      typeof cssRules === 'string' ? cssRules : cssRulesFromSpecs(styleSpecs);
     return `
       <!DOCTYPE html>
       <html>
@@ -157,7 +155,7 @@ class __HTMLTable<
 
   private computeHeightHeuristic() {
     const { numOfChars, numOfRows } = this.props;
-    const width = Dimensions.get("window").width;
+    const width = Dimensions.get('window').width;
     const charsPerLine = (30 * width) / 400;
     const lineHeight = 20;
     const approxNumOfLines = Math.floor(numOfChars / charsPerLine);
@@ -178,14 +176,21 @@ class __HTMLTable<
     return computedHeight;
   }
 
-  private onTableDimensions = ({ height: containerHeight }: DimensionsObject) => {
+  private onTableDimensions = ({
+    height: containerHeight
+  }: DimensionsObject) => {
     if (typeof containerHeight === 'number' && !Number.isNaN(containerHeight)) {
-      this.setState({ containerHeight })
+      this.setState({ containerHeight });
     }
   };
 
   componentDidUpdate(oldProps: HTMLTableProps<WVP>, oldState: State) {
-    const { autoheight, useLayoutAnimations, transitionDuration, WebViewComponent } = this.props;
+    const {
+      autoheight,
+      useLayoutAnimations,
+      transitionDuration,
+      WebViewComponent
+    } = this.props;
     const shouldAnimate =
       oldState.containerHeight !== this.state.containerHeight && autoheight;
     if (shouldAnimate && !useLayoutAnimations) {
@@ -193,14 +198,14 @@ class __HTMLTable<
       Animated.timing(this.state.animatedHeight, {
         toValue: 1,
         duration: transitionDuration,
-        useNativeDriver: false,
+        useNativeDriver: false
       }).start();
     }
     if (shouldAnimate && useLayoutAnimations) {
       animateNextFrames(transitionDuration);
     }
     if (WebViewComponent !== oldProps.WebViewComponent && __DEV__) {
-      throw new Error("HTMLTable: you cannot pass new WebViewComponent values");
+      throw new Error('HTMLTable: you cannot pass new WebViewComponent values');
     }
   }
 
@@ -208,15 +213,14 @@ class __HTMLTable<
     const {
       autoheight,
       style,
-      WebViewComponent,
       webViewProps: userWebViewProps,
       useLayoutAnimations,
       sourceBaseUrl,
-      onLinkPress,
+      onLinkPress
     } = this.props;
     const html = this.buildHTML();
     const source: any = {
-      html,
+      html
     };
     if (sourceBaseUrl) {
       source.baseUrl = sourceBaseUrl;
@@ -228,14 +232,14 @@ class __HTMLTable<
         ? {
             height: this.state.animatedHeight.interpolate({
               inputRange: [0, 1],
-              outputRange: [this.oldContainerHeight, containerHeight as number],
-            }),
+              outputRange: [this.oldContainerHeight, containerHeight as number]
+            })
           }
         : {
             height:
               !containerHeight || Number.isNaN(containerHeight)
                 ? undefined
-                : containerHeight,
+                : containerHeight
           };
     const webViewProps = {
       scalesPageToFit: Platform.select({ android: false, ios: undefined }),
@@ -244,7 +248,7 @@ class __HTMLTable<
       contentInset: defaultInsets,
       ...userWebViewProps,
       style: [StyleSheet.absoluteFill, userWebViewProps?.style],
-      source,
+      source
     };
     return (
       <Animated.View style={[containerStyle, styles.container, style]}>
@@ -265,4 +269,4 @@ export declare class HTMLTable<WVP> extends Component<HTMLTableProps<WVP>> {}
 
 module.exports = {
   HTMLTable: __HTMLTable
-}
+};
