@@ -89,7 +89,21 @@ export default class Example extends PureComponent<Props> {
 
 ## API Reference
 
-The complete API reference is available here: [docs/table-plugin.md](docs/table-plugin.md).
+**The complete API reference is available here: [docs/table-plugin.md](docs/table-plugin.md).**
+
+**Landmark exports**:
+
+- [`makeTableRenderer`](docs/table-plugin.maketablerenderer.md)
+- [`makeCustomTableRenderer`](docs/table-plugin.makecustomtablerenderer.md)
+- [`alterNode`](docs/table-plugin.alternode.md)
+- [`IGNORED_TAGS`](docs/table-plugin.ignored_tags.md)
+
+Other exports:
+
+- [`HTMLTable`](docs/table-plugin.htmltable.md)
+- [`defaultTableStylesSpecs`](docs/table-plugin.defaulttablestylesspecs.md)
+- [`cssRulesFromSpecs`](docs/table-plugin.cssrulesfromspecs.md)
+- [`TABLE_TAGS`](docs/table-plugin.table_tags.md)
 
 ## Troubleshooting
 
