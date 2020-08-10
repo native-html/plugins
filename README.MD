@@ -111,15 +111,15 @@ Other exports:
 
 ### Errors when importing `WebView` component
 
+> :warning: **Always favor
+[`react-native-community/react-native-webview`](https://github.com/react-native-community/react-native-webview)
+over legacy `WebView` when possible.**
+
 Setting up `WebView` component largely vary on your `react-native` or `expo` version.
 Please refer to the official documentation and make sure you have selected your RN / Expo SDK version:
 
 - [Expo](https://docs.expo.io/versions/latest/sdk/webview/);
 - [React Native](https://facebook.github.io/react-native/docs/webview).
-
-> :warning: **Always prefer
-[`react-native-community/react-native-webview`](https://github.com/react-native-community/react-native-webview)
-when possible.**
 
 ### Typescript errors
 
