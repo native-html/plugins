@@ -1,4 +1,6 @@
-# Table support for react-native-render-html
+# @native-html/table-plugin
+
+:capital_abcd: A WebView-based plugin to render tables in react-native-render-html.
 
 [![npm](https://img.shields.io/npm/v/@native-html/table-plugin)](https://www.npmjs.com/package/@native-html/table-plugin)
 [![semver](https://img.shields.io/badge/semver-2.0.0-e10079.svg)](https://semver.org/spec/v2.0.0.html)

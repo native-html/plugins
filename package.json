@@ -1,7 +1,7 @@
 {
   "name": "@native-html/table-plugin",
   "version": "0.6.2-alpha.3",
-  "description": "A plugin to render tables in react-native-render-html",
+  "description": "🔠 A WebView-based plugin to render tables in react-native-render-html",
   "main": "lib/commonjs/index.js",
   "module": "lib/module/index.js",
   "types": "types/@native-html/table-plugin/index.d.ts",
