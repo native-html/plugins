@@ -13,7 +13,6 @@
     "strict": true,
     "noImplicitAny": false,
     "moduleResolution": "node",
-    "baseUrl": "./",
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true
   },
