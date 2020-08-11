@@ -41,7 +41,7 @@ You need 3 conditions to get to a working example:
 3. `makeTableRenderer` and inject `renderers` prop to `HTML` component.
 
 ```javascript
-import React, { PureComponent } from 'react';
+import React from 'react';
 import { ScrollView } from 'react-native';
 import HTML from 'react-native-render-html';
 import {
@@ -49,7 +49,7 @@ import {
   alterNode,
   makeTableRenderer
 } from '@native-html/table-plugin';
-import WebView from 'react-native-webview'; // <-- Instructions might differ depending on your setup
+import WebView from 'react-native-webview';
 
 const html = `
 <table>
@@ -78,15 +78,12 @@ const htmlConfig = {
   ignoredTags: IGNORED_TAGS
 };
 
-export default class Example extends PureComponent<Props> {
-  render() {
-    return (
-      <ScrollView>
-        <HTML html={html} {...htmlConfig} />
-      </ScrollView>
-    );
-  }
-}
+export const Example = () => (
+  <ScrollView>
+    <HTML html={html} {...htmlConfig} />
+  </ScrollView>
+);
+
 ```
 
 ## API Reference
@@ -114,8 +111,8 @@ Other exports:
 ### Errors when importing `WebView` component
 
 > :warning: **Always favor
-[`react-native-community/react-native-webview`](https://github.com/react-native-community/react-native-webview)
-over legacy `WebView` when possible.**
+> [`react-native-community/react-native-webview`](https://github.com/react-native-community/react-native-webview)
+> over legacy `WebView` when possible.**
 
 Setting up `WebView` component largely vary on your `react-native` or `expo` version.
 Please refer to the official documentation and make sure you have selected your RN / Expo SDK version:
@@ -212,12 +209,4 @@ const config = {
 
 ### How to use with Jest?
 
-**A**: Add a `@native-html/table-plugin.js` file to your `__mocks__` folder (this folder should be at the root of your project) with the following content:
-
-```js
-const IGNORED_TAGS = [];
-const alterNode = jest.fn();
-const makeTableRenderer = jest.fn();
-
-export { IGNORED_TAGS, alterNode, makeTableRenderer };
-```
+**A**: Replace the `WebView` component with `Ersatz` from [`@formidable-webview/ersatz`](https://github.com/formidable-webview/ersatz).
