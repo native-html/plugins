@@ -14,10 +14,8 @@ import makeWebshell, {
   WebshellComponentOf
 } from '@formidable-webview/webshell';
 import { cssRulesFromSpecs, defaultTableStylesSpecs } from './css-rules';
-import { TableStyleSpecs, HTMLTableProps } from '../types';
+import { TableStyleSpecs, HTMLTableProps } from './types';
 export { IGNORED_TAGS, TABLE_TAGS } from './tags';
-
-export { defaultTableStylesSpecs, cssRulesFromSpecs };
 
 const styles = StyleSheet.create({
   container: {

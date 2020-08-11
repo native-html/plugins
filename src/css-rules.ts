@@ -1,4 +1,4 @@
-import { TableStyleSpecs } from '../types';
+import { TableStyleSpecs } from './types';
 
 /**
  * Default styles attributes.

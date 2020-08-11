@@ -11,11 +11,6 @@ export type {
   TableConfig,
   HTMLTablePropsWithStats
 } from './types';
-
-export {
-  HTMLTable,
-  defaultTableStylesSpecs,
-  cssRulesFromSpecs
-} from './HTMLTable';
-
+export { defaultTableStylesSpecs, cssRulesFromSpecs } from './css-rules';
+export { HTMLTable } from './HTMLTable';
 export { IGNORED_TAGS, TABLE_TAGS } from './HTMLTable';
