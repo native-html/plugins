@@ -1,8 +1,11 @@
-
 import React, {PureComponent} from 'react';
 import {ScrollView} from 'react-native';
 import HTML from 'react-native-render-html';
-import { IGNORED_TAGS, alterNode, makeCustomTableRenderer } from 'react-native-render-html-table-bridge';
+import {
+  IGNORED_TAGS,
+  alterNode,
+  makeCustomTableRenderer,
+} from 'react-native-render-html-table-bridge';
 import Snackbar from 'react-native-snackbar';
 import ClickTable from './ClickTable';
 
@@ -158,30 +161,32 @@ Otherwise, a button will be displayed to open a modal.
 <p>
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 </p>
-`
+`;
 
 const renderers = {
-    table: makeCustomTableRenderer(ClickTable)
+  table: makeCustomTableRenderer(ClickTable),
 };
 
 const htmlConfig = {
-    alterNode,
-    renderers,
-    ignoredTags: IGNORED_TAGS,
-    onLinkPress: (e, url) => {
-      Snackbar.show({
-        text: url,
-        textColor: 'white'
-      })
-    }
+  alterNode,
+  renderers,
+  ignoredTags: IGNORED_TAGS,
+  onLinkPress: (e, url) => {
+    Snackbar.show({
+      text: url,
+      textColor: 'white',
+    });
+  },
 };
 
 export default class Example extends PureComponent<Props> {
   render() {
     return (
-      <ScrollView contentContainerStyle={{ paddingHorizontal: 20 }} style={{ backgroundColor: 'white' }}>
-        <HTML html={table1} {...htmlConfig}/>
+      <ScrollView
+        contentContainerStyle={{paddingHorizontal: 20}}
+        style={{backgroundColor: 'white'}}>
+        <HTML html={table1} {...htmlConfig} />
       </ScrollView>
-    )
+    );
   }
 }

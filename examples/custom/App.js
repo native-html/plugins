@@ -7,23 +7,31 @@
  */
 
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, SafeAreaView, UIManager, Platform} from 'react-native';
-import Example from './Example'
+import {
+  StyleSheet,
+  Text,
+  View,
+  SafeAreaView,
+  UIManager,
+  Platform,
+} from 'react-native';
+import Example from './Example';
 
 type Props = {};
 export default class App extends Component<Props> {
-
-
   componentDidMount() {
     if (Platform.OS === 'android') {
-      UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
+      UIManager.setLayoutAnimationEnabledExperimental &&
+        UIManager.setLayoutAnimationEnabledExperimental(true);
     }
   }
 
   render() {
     return (
       <SafeAreaView style={styles.container}>
-        <Text style={styles.welcome}>React Native render-HTML Table Bridge</Text>
+        <Text style={styles.welcome}>
+          @native-html/table-plugin Custom Example
+        </Text>
         <View style={styles.example}>
           <Example />
         </View>
@@ -45,6 +53,6 @@ const styles = StyleSheet.create({
   },
   example: {
     flex: 1,
-    width: '100%'
-  }
+    width: '100%',
+  },
 });
