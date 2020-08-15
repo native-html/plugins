@@ -45,6 +45,7 @@
     "@release-it/conventional-changelog": "^1.1.4",
     "@testing-library/react-native": "^7.0.1",
     "@tsconfig/react-native": "^1.0.2",
+    "@types/html-validator": "^5.0.0",
     "@types/jest": "^26.0.9",
     "@types/ramda": "^0.27.14",
     "@types/react": "^16.9.45",
@@ -52,11 +53,12 @@
     "@types/react-test-renderer": "^16.9.3",
     "@typescript-eslint/eslint-plugin": "^3.8.0",
     "@typescript-eslint/parser": "^3.8.0",
-    "babel-jest": "^26.2.2",
+    "babel-jest": "^26.3.0",
     "babel-plugin-inline-import": "^3.0.0",
     "eslint": "^7.6.0",
     "eslint-plugin-compat": "^3.8.0",
     "eslint-plugin-tsdoc": "^0.2.6",
+    "html-validator": "^5.1.14",
     "husky": "^4.2.5",
     "jest": "^26.2.2",
     "metro-react-native-babel-preset": "^0.61.0",
@@ -67,11 +69,13 @@
     "react-native-webview": "^10.4.0",
     "react-test-renderer": "16.13.1",
     "release-it": "^13.6.6",
-    "typescript": "^3.9.7"
+    "typescript": "^3.9.7",
+    "valimate": "^3.0.1"
   },
   "dependencies": {
     "@formidable-webview/webshell": "^0.10.1-alpha.4",
     "@types/prop-types": "^15.7.3",
+    "metro-react-native-babel-transformer": "^0.62.0",
     "prop-types": "^15.7.2",
     "ramda": "^0.26.1",
     "stringify-entities": "^2.0.0"

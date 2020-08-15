@@ -136,18 +136,15 @@ class __HTMLTable<WVP extends Record<string, any>> extends PureComponent<
     const tableCssStyle =
       typeof cssRules === 'string' ? cssRules : cssRulesFromSpecs(styleSpecs);
     return `
-      <!DOCTYPE html>
-      <html>
-      <head>
-      <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=false">
-      </head>
-      <body>
-        <style>
-        ${tableCssStyle}
-        </style>
-        ${html}
-      </body>
-      </html>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=false">
+  <title>Table</title>
+  <style>${tableCssStyle}</style>
+</head>
+<body>${html}</body>
+</html>
       `;
   }
 
