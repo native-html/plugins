@@ -11,7 +11,7 @@
     "types"
   ],
   "scripts": {
-    "test": "npm run test:ts && npm run test:lint",
+    "test": "npm run test:ts && npm run test:lint && npm run test:jest",
     "test:jest": "jest src/",
     "test:ts": "tsc --noEmit",
     "test:lint": "eslint --ext ts,tsx src/",
