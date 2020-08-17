@@ -1,4 +1,4 @@
-import React, { PureComponent, Component } from 'react';
+import React, { PureComponent, Component, ComponentType } from 'react';
 import PropTypes from 'prop-types';
 import {
   Platform,
@@ -8,10 +8,11 @@ import {
   Animated
 } from 'react-native';
 import makeWebshell, {
-  dimensionsFeature,
+  elementDimensionsFeature,
   linkPressFeature,
-  DimensionsObject,
-  WebshellComponentOf
+  ElementDimensionsObject,
+  WebshellComponentOf,
+  MinimalWebViewProps
 } from '@formidable-webview/webshell';
 import { cssRulesFromSpecs, defaultTableStylesSpecs } from './css-rules';
 import { TableStyleSpecs, HTMLTableProps } from './types';
@@ -69,7 +70,9 @@ const tableStylePropTypeSpec: Record<keyof TableStyleSpecs, any> = {
   thOddColor: PropTypes.string
 };
 
-class __HTMLTable<WVP extends Record<string, any>> extends PureComponent<
+type TableFeatures = [typeof linkPressFeature, typeof elementDimensionsFeature];
+
+class __HTMLTable<WVP extends MinimalWebViewProps> extends PureComponent<
   HTMLTableProps<WVP>,
   State
 > {
@@ -102,10 +105,7 @@ class __HTMLTable<WVP extends Record<string, any>> extends PureComponent<
   };
 
   private oldContainerHeight: number = 0;
-  private Webshell: WebshellComponentOf<
-    any,
-    [typeof linkPressFeature, typeof dimensionsFeature]
-  >;
+  private Webshell: WebshellComponentOf<ComponentType<any>, TableFeatures>;
 
   constructor(props: HTMLTableProps<WVP>) {
     super(props);
@@ -118,8 +118,8 @@ class __HTMLTable<WVP extends Record<string, any>> extends PureComponent<
     this.Webshell = makeWebshell(
       props.WebViewComponent,
       linkPressFeature.assemble(),
-      dimensionsFeature.assemble({ tagName: 'table' })
-    );
+      elementDimensionsFeature.assemble({ tagName: 'table' })
+    ) as any;
   }
 
   private buildHTML() {
@@ -173,7 +173,7 @@ class __HTMLTable<WVP extends Record<string, any>> extends PureComponent<
 
   private onTableDimensions = ({
     height: containerHeight
-  }: DimensionsObject) => {
+  }: ElementDimensionsObject) => {
     if (typeof containerHeight === 'number' && !Number.isNaN(containerHeight)) {
       this.setState({ containerHeight });
     }
@@ -208,10 +208,10 @@ class __HTMLTable<WVP extends Record<string, any>> extends PureComponent<
     const {
       autoheight,
       style,
-      webViewProps: userWebViewProps,
       useLayoutAnimations,
       sourceBaseUrl,
-      onLinkPress
+      onLinkPress,
+      webViewProps: userWebViewProps
     } = this.props;
     const html = this.buildHTML();
     const source: any = {
@@ -242,15 +242,15 @@ class __HTMLTable<WVP extends Record<string, any>> extends PureComponent<
       scrollEnabled: true,
       contentInset: defaultInsets,
       ...userWebViewProps,
-      style: [StyleSheet.absoluteFill, userWebViewProps?.style],
+      style: [StyleSheet.absoluteFill, (userWebViewProps as any)?.style],
       source
     };
     return (
       <Animated.View style={[containerStyle, styles.container, style]}>
         <Webshell
-          onLinkPress={onLinkPress}
-          onDimensions={this.onTableDimensions}
-          webViewProps={webViewProps}
+          onDOMLinkPress={onLinkPress}
+          onDOMElementDimensions={this.onTableDimensions}
+          {...(webViewProps as MinimalWebViewProps)}
         />
       </Animated.View>
     );
