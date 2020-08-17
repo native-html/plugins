@@ -100,7 +100,7 @@ export interface TableConfig<WebViewProps = any> {
    * core version. Please use latest community version instead,
    * https://github.com/react-native-community/react-native-webview
    */
-  WebViewComponent: ComponentType<WebViewProps>;
+  WebView: ComponentType<WebViewProps>;
 
   /**
    * Fit height to HTML content.
@@ -184,7 +184,7 @@ export interface TableConfig<WebViewProps = any> {
   cssRules?: string;
 
   /**
-   * Any props you'd like to pass to {@link TableConfig.WebViewComponent}.
+   * Any props you'd like to pass to {@link TableConfig.WebView}.
    *
    * @remarks
    * `source` and `javascriptEnabled` will be ignored and overriden.

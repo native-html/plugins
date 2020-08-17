@@ -89,7 +89,7 @@ class __HTMLTable<WVP extends MinimalWebViewProps> extends PureComponent<
     numOfChars: PropTypes.number.isRequired,
     numOfColumns: PropTypes.number.isRequired,
     numOfRows: PropTypes.number.isRequired,
-    WebViewComponent: PropTypes.func.isRequired,
+    WebView: PropTypes.func.isRequired,
     autoheight: PropTypes.bool,
     defaultHeight: PropTypes.number,
     maxHeight: PropTypes.number,
@@ -116,7 +116,7 @@ class __HTMLTable<WVP extends MinimalWebViewProps> extends PureComponent<
     this.state = state;
     this.oldContainerHeight = this.findHeight(this.props, this.state) || 0;
     this.Webshell = makeWebshell(
-      props.WebViewComponent,
+      props.WebView,
       linkPressFeature.assemble(),
       elementDimensionsFeature.assemble({ tagName: 'table' })
     ) as any;
@@ -184,7 +184,7 @@ class __HTMLTable<WVP extends MinimalWebViewProps> extends PureComponent<
       autoheight,
       useLayoutAnimations,
       transitionDuration,
-      WebViewComponent
+      WebView
     } = this.props;
     const shouldAnimate =
       oldState.containerHeight !== this.state.containerHeight && autoheight;
@@ -199,8 +199,8 @@ class __HTMLTable<WVP extends MinimalWebViewProps> extends PureComponent<
     if (shouldAnimate && useLayoutAnimations) {
       animateNextFrames(transitionDuration);
     }
-    if (WebViewComponent !== oldProps.WebViewComponent && __DEV__) {
-      throw new Error('HTMLTable: you cannot pass new WebViewComponent values');
+    if (WebView !== oldProps.WebView && __DEV__) {
+      throw new Error('HTMLTable: you cannot change WebView prop');
     }
   }
 

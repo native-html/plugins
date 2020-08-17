@@ -10,7 +10,7 @@ describe('HTMLTable component', () => {
     const { UNSAFE_getByType } = render(
       <HTMLTable
         html={'<table></table>'}
-        WebViewComponent={WebView}
+        WebView={WebView}
         renderersProps={{}}
         numOfChars={0}
         numOfColumns={0}

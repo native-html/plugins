@@ -69,7 +69,7 @@ export interface TableConfig<WebViewProps = any> {
     tableStyleSpecs?: TableStyleSpecs;
     transitionDuration?: number;
     useLayoutAnimations?: boolean;
-    WebViewComponent: ComponentType<WebViewProps>;
+    WebView: ComponentType<WebViewProps>;
     webViewProps?: WebViewProps;
 }
 

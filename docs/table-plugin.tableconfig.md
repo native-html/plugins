@@ -25,6 +25,6 @@ export interface TableConfig<WebViewProps = any>
 |  [tableStyleSpecs](./table-plugin.tableconfig.tablestylespecs.md) | [TableStyleSpecs](./table-plugin.tablestylespecs.md) | Specs to generate css rules. |
 |  [transitionDuration](./table-plugin.tableconfig.transitionduration.md) | number | The transition duration in milliseconds when table height is updated when <code>autoheight</code> is used. |
 |  [useLayoutAnimations](./table-plugin.tableconfig.uselayoutanimations.md) | boolean | Use native <code>LayoutAnimation</code> instead of <code>Animated</code> module with <code>autoheight</code>. |
-|  [WebViewComponent](./table-plugin.tableconfig.webviewcomponent.md) | ComponentType&lt;WebViewProps&gt; | The <code>WebView</code> Component you wish to use. |
-|  [webViewProps](./table-plugin.tableconfig.webviewprops.md) | WebViewProps | Any props you'd like to pass to [TableConfig.WebViewComponent](./table-plugin.tableconfig.webviewcomponent.md)<!-- -->. |
+|  [WebView](./table-plugin.tableconfig.webview.md) | ComponentType&lt;WebViewProps&gt; | The <code>WebView</code> Component you wish to use. |
+|  [webViewProps](./table-plugin.tableconfig.webviewprops.md) | WebViewProps | Any props you'd like to pass to [TableConfig.WebView](./table-plugin.tableconfig.webview.md)<!-- -->. |
 

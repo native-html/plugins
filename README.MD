@@ -65,7 +65,7 @@ const html = `
 `;
 
 const config = {
-  WebViewComponent: WebView
+  WebView
 };
 
 const renderers = {

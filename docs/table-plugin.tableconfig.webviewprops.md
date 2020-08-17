@@ -4,7 +4,7 @@
 
 ## TableConfig.webViewProps property
 
-Any props you'd like to pass to [TableConfig.WebViewComponent](./table-plugin.tableconfig.webviewcomponent.md)<!-- -->.
+Any props you'd like to pass to [TableConfig.WebView](./table-plugin.tableconfig.webview.md)<!-- -->.
 
 <b>Signature:</b>
 
