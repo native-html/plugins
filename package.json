@@ -73,12 +73,12 @@
     "valimate": "^3.0.1"
   },
   "dependencies": {
-    "@formidable-webview/webshell": "^0.10.1-alpha.4",
+    "@formidable-webview/webshell": "^0.10.1-alpha.5",
     "@types/prop-types": "^15.7.3",
     "metro-react-native-babel-transformer": "^0.62.0",
     "prop-types": "^15.7.2",
-    "ramda": "^0.26.1",
-    "stringify-entities": "^2.0.0"
+    "ramda": "^0.27.1",
+    "stringify-entities": "^3.0.1"
   },
   "peerDependencies": {
     "react": "*",
