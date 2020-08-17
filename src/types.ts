@@ -139,6 +139,13 @@ export interface TableConfig<WebViewProps = any> {
   maxHeight?: number;
 
   /**
+   * The transition duration in milliseconds when table height is updated when `autoheight` is used.
+   *
+   * @defaultValue 120
+   */
+  transitionDuration?: number;
+
+  /**
    * Container style.
    */
   style?: StyleProp<ViewStyle>;
@@ -196,13 +203,6 @@ export interface TableConfig<WebViewProps = any> {
    * @defaultValue false
    */
   useLayoutAnimations?: boolean;
-
-  /**
-   * The transition duration in milliseconds when table height is updated when `autoheight` is used.
-   *
-   * @defaultValue 120
-   */
-  transitionDuration?: number;
 
   /**
    * See https://git.io/JeCAG
