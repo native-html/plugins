@@ -16,15 +16,14 @@ export interface TableConfig<WebViewProps = any>
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [autoheight](./table-plugin.tableconfig.autoheight.md) | boolean | Fit height to HTML content. |
+|  [animationDuration](./table-plugin.tableconfig.animationduration.md) | number | The animation duration in milliseconds when infered height value changes. See [TableConfig.computeContainerHeight](./table-plugin.tableconfig.computecontainerheight.md)<!-- -->. |
+|  [animationType](./table-plugin.tableconfig.animationtype.md) | 'none' \| 'layout' \| 'animated' | What kind of animation should be used when height is changed?<!-- -->- \*\*layout\*\*: use native <code>LayoutAnimation</code>. This is the best option performance-wise, but requires some setup. See https://facebook.github.io/react-native/docs/layoutanimation. - \*\*animated\*\*: use <code>Animated</code> module from react-native. - \*\*none\*\*: no animations are performed. |
+|  [computeContainerHeight](./table-plugin.tableconfig.computecontainerheight.md) | (state: [TableHeightState](./table-plugin.tableheightstate.md)<!-- -->) =&gt; number \| null | A function which will compute container's height given the height computation state. |
+|  [computeHeightHeuristic](./table-plugin.tableconfig.computeheightheuristic.md) | (state: [HTMLTableStats](./table-plugin.htmltablestats.md)<!-- -->) =&gt; number | A function to compute approximate height before the content height has been fetched on DOM mount. |
 |  [cssRules](./table-plugin.tableconfig.cssrules.md) | string | Override default CSS rules with this prop. |
-|  [defaultHeight](./table-plugin.tableconfig.defaultheight.md) | number | If <code>autoheight</code> is set to <code>true</code>, <code>defaultHeight</code> will be ignored. Otherwise, container height will be fixed to <code>defaultHeight</code>. |
-|  [maxHeight](./table-plugin.tableconfig.maxheight.md) | number | Maximum container height. Content will be scrollable on overflow. |
 |  [sourceBaseUrl](./table-plugin.tableconfig.sourcebaseurl.md) | string | See https://git.io/JeCAG |
 |  [style](./table-plugin.tableconfig.style.md) | StyleProp&lt;ViewStyle&gt; | Container style. |
 |  [tableStyleSpecs](./table-plugin.tableconfig.tablestylespecs.md) | [TableStyleSpecs](./table-plugin.tablestylespecs.md) | Specs to generate css rules. |
-|  [transitionDuration](./table-plugin.tableconfig.transitionduration.md) | number | The transition duration in milliseconds when table height is updated when <code>autoheight</code> is used. |
-|  [useLayoutAnimations](./table-plugin.tableconfig.uselayoutanimations.md) | boolean | Use native <code>LayoutAnimation</code> instead of <code>Animated</code> module with <code>autoheight</code>. |
 |  [WebView](./table-plugin.tableconfig.webview.md) | ComponentType&lt;WebViewProps&gt; | The <code>WebView</code> Component you wish to use. |
 |  [webViewProps](./table-plugin.tableconfig.webviewprops.md) | WebViewProps | Any props you'd like to pass to [TableConfig.WebView](./table-plugin.tableconfig.webview.md)<!-- -->. |
 

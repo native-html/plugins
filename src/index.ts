@@ -5,11 +5,15 @@ export {
 export { alterNode } from './alter-node';
 export type {
   HTMLTableBaseProps,
+  HTMLTablePropsWithStats,
   HTMLTableProps,
   TableStyleSpecs,
-  HTMLTableStatProps,
+  HTMLTableStats as HTMLTableStatProps,
   TableConfig,
-  HTMLTablePropsWithStats
+  HTMLTableStats,
+  TableHeightState,
+  TableDeterminatedHeightState,
+  TableUndeterminatedHeightState
 } from './types';
 export { defaultTableStylesSpecs, cssRulesFromSpecs } from './css-rules';
 export { HTMLTable } from './HTMLTable';

@@ -36,15 +36,19 @@ export interface HTMLTableProps<WVP> extends TableConfig<WVP>, HTMLTablePropsWit
 }
 
 // @public (undocumented)
-export interface HTMLTablePropsWithStats extends HTMLTableBaseProps, HTMLTableStatProps {
+export interface HTMLTablePropsWithStats extends HTMLTableBaseProps, HTMLTableStats {
 }
 
 // @public (undocumented)
-export interface HTMLTableStatProps {
+interface HTMLTableStats {
     numOfChars: number;
     numOfColumns: number;
     numOfRows: number;
 }
+
+export { HTMLTableStats as HTMLTableStatProps }
+
+export { HTMLTableStats }
 
 // @public (undocumented)
 export const IGNORED_TAGS: string[];
@@ -60,18 +64,28 @@ export const TABLE_TAGS: string[];
 
 // @public
 export interface TableConfig<WebViewProps = any> {
-    autoheight?: boolean;
+    animationDuration?: number;
+    animationType?: 'none' | 'layout' | 'animated';
+    computeContainerHeight?: (state: TableHeightState) => number | null;
+    computeHeightHeuristic?: (state: HTMLTableStats) => number;
     cssRules?: string;
-    defaultHeight?: number;
-    maxHeight?: number;
     sourceBaseUrl?: string;
     style?: StyleProp<ViewStyle>;
     tableStyleSpecs?: TableStyleSpecs;
-    transitionDuration?: number;
-    useLayoutAnimations?: boolean;
     WebView: ComponentType<WebViewProps>;
     webViewProps?: WebViewProps;
 }
+
+// @public (undocumented)
+export interface TableDeterminatedHeightState {
+    // (undocumented)
+    scrollableHeight: number;
+    // (undocumented)
+    type: 'determinated';
+}
+
+// @public (undocumented)
+export type TableHeightState = TableUndeterminatedHeightState | TableDeterminatedHeightState;
 
 // @public
 export interface TableStyleSpecs {
@@ -93,6 +107,14 @@ export interface TableStyleSpecs {
     trEvenColor: string;
     trOddBackground: string;
     trOddColor: string;
+}
+
+// @public (undocumented)
+export interface TableUndeterminatedHeightState {
+    // (undocumented)
+    heuristicHeight: number;
+    // (undocumented)
+    type: 'undeterminated';
 }
 
 

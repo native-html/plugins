@@ -26,9 +26,11 @@
 |  [HTMLTableBaseProps](./table-plugin.htmltablebaseprops.md) |  |
 |  [HTMLTableProps](./table-plugin.htmltableprops.md) |  |
 |  [HTMLTablePropsWithStats](./table-plugin.htmltablepropswithstats.md) |  |
-|  [HTMLTableStatProps](./table-plugin.htmltablestatprops.md) |  |
+|  [HTMLTableStats](./table-plugin.htmltablestats.md) |  |
 |  [TableConfig](./table-plugin.tableconfig.md) | This object defines how the table component can be customized. |
+|  [TableDeterminatedHeightState](./table-plugin.tabledeterminatedheightstate.md) |  |
 |  [TableStyleSpecs](./table-plugin.tablestylespecs.md) | An object describing how to generate styles. See [cssRulesFromSpecs()](./table-plugin.cssrulesfromspecs.md)<!-- -->. |
+|  [TableUndeterminatedHeightState](./table-plugin.tableundeterminatedheightstate.md) |  |
 
 ## Variables
 
@@ -37,4 +39,10 @@
 |  [defaultTableStylesSpecs](./table-plugin.defaulttablestylesspecs.md) | Default styles attributes. |
 |  [IGNORED\_TAGS](./table-plugin.ignored_tags.md) |  |
 |  [TABLE\_TAGS](./table-plugin.table_tags.md) |  |
+
+## Type Aliases
+
+|  Type Alias | Description |
+|  --- | --- |
+|  [TableHeightState](./table-plugin.tableheightstate.md) |  |
 

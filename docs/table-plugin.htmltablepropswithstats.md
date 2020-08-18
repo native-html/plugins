@@ -8,7 +8,7 @@
 <b>Signature:</b>
 
 ```typescript
-export interface HTMLTablePropsWithStats extends HTMLTableBaseProps, HTMLTableStatProps 
+export interface HTMLTablePropsWithStats extends HTMLTableBaseProps, HTMLTableStats 
 ```
-<b>Extends:</b> [HTMLTableBaseProps](./table-plugin.htmltablebaseprops.md)<!-- -->, [HTMLTableStatProps](./table-plugin.htmltablestatprops.md)
+<b>Extends:</b> [HTMLTableBaseProps](./table-plugin.htmltablebaseprops.md)<!-- -->, [HTMLTableStats](./table-plugin.htmltablestats.md)
 
