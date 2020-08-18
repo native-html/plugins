@@ -133,13 +133,19 @@ export interface TableConfig<WebViewProps = any> {
    * What kind of animation should be used when height is changed?
    *
    * @remarks
-   *
-   * - **layout**: use native `LayoutAnimation`. This is the best option
-   *   performance-wise, but requires some setup. See
-   *   https://facebook.github.io/react-native/docs/layoutanimation.
-   * - **animated**: use `Animated` module from react-native.
-   * - **none**: no animations are performed.
-   *
+   * <ul>
+   *   <li>
+   *     <b>layout</b>: use native `LayoutAnimation`. This is the best option
+   *     performance-wise, but requires some setup. See
+   *     https://facebook.github.io/react-native/docs/layoutanimation.
+   *   </li>
+   *   <li>
+   *     <b>animated</b>: use `Animated` module from react-native.
+   *   </li>
+   *   <li>
+   *     <b>none</b>: no animations are performed.
+   *   </li>
+   * </ul>
    *
    * @defaultValue `'animated'`
    */
