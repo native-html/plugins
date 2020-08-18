@@ -289,6 +289,10 @@ class __HTMLTable<WVP extends MinimalWebViewProps> extends PureComponent<
 }
 
 /**
+ * A component capable of rendering a html string which root tag is a table
+ * tag. This component should not be used directly, except with custom
+ * renderers.
+ *
  * @public
  */
 export declare class HTMLTable<WVP> extends Component<HTMLTableProps<WVP>> {}

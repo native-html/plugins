@@ -20,7 +20,7 @@ export function cssRulesFromSpecs(specs?: TableStyleSpecs): string;
 // @public
 export const defaultTableStylesSpecs: TableStyleSpecs;
 
-// @public (undocumented)
+// @public
 export class HTMLTable<WVP> extends Component<HTMLTableProps<WVP>> {
 }
 
