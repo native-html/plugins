@@ -1,7 +1,7 @@
 import React, { ComponentType } from 'react';
 import { RendererDeclaration } from 'react-native-render-html';
 import { HTMLTable } from './HTMLTable';
-import { TableConfig, HTMLTablePropsWithStats } from './types';
+import { TableConfig, HTMLTableBaseProps } from './types';
 
 /**
  * Create the table renderer.
@@ -38,12 +38,14 @@ export function makeTableRenderer(
 
 /**
  *
- * @param TableComponent - A component which will receive {@link HTMLTablePropsWithStats} props.
+ * Create a table renderer from a custom `TableComponent`.
+ *
+ * @param TableComponent - A component which will receive {@link HTMLTableBaseProps} props.
  *
  * @public
  */
 export function makeCustomTableRenderer(
-  TableComponent: ComponentType<HTMLTablePropsWithStats>
+  TableComponent: ComponentType<HTMLTableBaseProps>
 ): RendererDeclaration {
   return (attribs, _children, _css, { key, onLinkPress, renderersProps }) => {
     const handleOnLinkPress = (url: string) =>

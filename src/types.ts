@@ -87,76 +87,107 @@ export interface TableStyleSpecs {
 }
 
 /**
+ * This content height state is available on mount, before the real height is
+ * known from the DOM.
+ *
+ * @remarks
+ * `heuristicHeight` is an approximated height used to minimize the “flash”
+ * effect of height transitions, see
+ * {@link TableConfig.computeHeuristicContentHeight}.
+ *
+ * @public
+ */
+export interface TableHeuristicContentHeightState {
+  type: 'heuristic';
+  contentHeight: number;
+}
+
+/**
+ *
+ * This content height state appears when the real table height is available,
+ * after the DOM has been mounted in the `WebView`.
+ *
+ * @public
+ */
+export interface TableAccurateContentHeightState {
+  type: 'accurate';
+  contentHeight: number;
+}
+
+/**
+ * An object describing the present knowledge of content height.
+ *
+ * @public
+ */
+export type TableContentHeightState =
+  | TableHeuristicContentHeightState
+  | TableAccurateContentHeightState;
+
+/**
  * This object defines how the table component can be customized.
  *
  * @public
  */
 export interface TableConfig<WebViewProps = any> {
   /**
-   * The `WebView` Component you wish to use.
+   * What kind of animation should be used when height is changed?
    *
    * @remarks
-   * Features such as `autoheight` and `onLinkPress` don't work with legacy,
-   * core version. Please use latest community version instead,
-   * https://github.com/react-native-community/react-native-webview
+   * <ul>
+   *   <li>
+   *     <b>layout</b>: use native `LayoutAnimation`. This is the best option
+   *     performance-wise, but requires some setup. See
+   *     https://facebook.github.io/react-native/docs/layoutanimation.
+   *   </li>
+   *   <li>
+   *     <b>animated</b>: use `Animated` module from react-native.
+   *   </li>
+   *   <li>
+   *     <b>none</b>: no animations are performed.
+   *   </li>
+   * </ul>
+   *
+   * @defaultValue `'animated'`
    */
-  WebView: ComponentType<WebViewProps>;
+  animationType?: 'none' | 'layout' | 'animated';
 
   /**
-   * Fit height to HTML content.
-   *
-   * @defaultValue true
-   *
-   * @remarks
-   * The operation is dynamic, because it requires the DOM to be mounted, and a
-   * script be executed to send height through the `WebView` component. Works
-   * with `WebView` community edition &ge;5.0.0 and Expo SDK &ge;33.
-   *
-   * @remarks
-   * When setting to `false`, you must either give container absolute
-   * positioning with `style` prop, or give a fixed height with `defaultHeight`
-   * prop. Otherwise, React Native will assign a `0` height.
-   */
-  autoheight?: boolean;
-
-  /**
-   * If `autoheight` is set to `true`, `defaultHeight` will be ignored.
-   * Otherwise, container height will be fixed to `defaultHeight`.
-   */
-  defaultHeight?: number;
-
-  /**
-   * Maximum container height.
-   * Content will be scrollable on overflow.
-   *
-   * @remarks
-   * Content should theoretically be scrollable on overflow, but there is a
-   * [**pending
-   * issue**](https://github.com/react-native-community/react-native-webview/issues/22)
-   * in `react-native-community/react-native-webview` which prevents `WebView`
-   * nested in a `ScrollView` to be scrollable.
-   */
-  maxHeight?: number;
-
-  /**
-   * The transition duration in milliseconds when table height is updated when `autoheight` is used.
+   * The animation duration in milliseconds when infered height value changes.
+   * See {@link TableConfig.computeContainerHeight}.
    *
    * @defaultValue 120
    */
-  transitionDuration?: number;
+  animationDuration?: number;
 
   /**
-   * Container style.
-   */
-  style?: StyleProp<ViewStyle>;
-
-  /**
-   * Specs to generate css rules.
+   * A function which will compute container's height given the table content
+   * height.
    *
    * @remarks
-   * This prop will be ignored when `cssRules` are provided.
+   * For each instance, this function will be called twice. First time on
+   * container mount, and second time when the DOM has been mounted inside of
+   * `WebView`. At that moment, the state will hold the real content height.
+   * See {@link TableContentHeightState}.
+   *
+   * @defaultValue A function which will use heuristics to guess content height
+   * before DOM loaded, and real content height after DOM loaded. You can change
+   * those heuristics with {@link TableConfig.computeHeuristicContentHeight}.
+   *
+   * @returns The container height, or `null` for unconstrained height. In that
+   * case, it is advised that you provide a fixed height through `style` prop,
+   * otherwise React Native won't be able to figure out the container height
+   * and it will not be visible.
    */
-  tableStyleSpecs?: TableStyleSpecs;
+  computeContainerHeight?: (state: TableContentHeightState) => number | null;
+
+  /**
+   * A function to compute approximate content height before the real content
+   * height has been fetched on DOM mount.
+   *
+   * @defaultValue A simple implementation which looks at the number of
+   * characters and screen width.
+   */
+  computeHeuristicContentHeight?: (state: HTMLTableStats) => number;
 
   /**
    * Override default CSS rules with this prop.
@@ -184,58 +215,45 @@ export interface TableConfig<WebViewProps = any> {
   cssRules?: string;
 
   /**
-   * Any props you'd like to pass to {@link TableConfig.WebView}.
-   *
-   * @remarks
-   * `source` and `javascriptEnabled` will be ignored and overriden.
-   */
-  webViewProps?: WebViewProps;
-
-  /**
-   * Use native `LayoutAnimation` instead of `Animated` module with
-   * `autoheight`.
-   *
-   * @remarks
-   * This should be preferred performance-wise, but you need to setup
-   * `UIManager` on android. See official guide:
-   * https://facebook.github.io/react-native/docs/layoutanimation
-   *
-   * @defaultValue false
-   */
-  useLayoutAnimations?: boolean;
-
-  /**
    * See https://git.io/JeCAG
    */
   sourceBaseUrl?: string;
-}
 
-/**
- * @public
- */
-export interface HTMLTableBaseProps {
   /**
-   * The outerHtml of <table> tag.
+   * Container style.
    */
-  html: string;
+  style?: StyleProp<ViewStyle>;
 
   /**
-   * Intercept links press.
+   * Specs to generate css rules.
    *
-   * **Info**: `makeTableRenderer` uses `<HTML>onLinkPress` prop.
+   * @remarks
+   * This prop will be ignored when `cssRules` are provided.
    */
-  onLinkPress?: (url: string) => void;
+  tableStyleSpecs?: TableStyleSpecs;
 
   /**
-   * Renderers props.
+   * The `WebView` Component you wish to use.
    */
-  renderersProps: any;
+  WebView: ComponentType<WebViewProps>;
+
+  /**
+   * Any props you'd like to pass to {@link TableConfig.WebView}.
+   *
+   * @remarks
+   * `source` and `javascriptEnabled` will be ignored and overriden. Also, you
+   * should pass a stable or memoized object to avoid extraneous renderings.
+   * See `React.useMemo`.
+   */
+  webViewProps?: WebViewProps;
 }
 
 /**
+ * An object holding information on the table shape.
+ *
  * @public
  */
-export interface HTMLTableStatProps {
+export interface HTMLTableStats {
   /**
    * Number of rows, header included
    */
@@ -253,15 +271,34 @@ export interface HTMLTableStatProps {
 }
 
 /**
+ * Base props for HTMLTable original and custom components.
+ *
  * @public
  */
-export interface HTMLTablePropsWithStats
-  extends HTMLTableBaseProps,
-    HTMLTableStatProps {}
+export interface HTMLTableBaseProps extends HTMLTableStats {
+  /**
+   * The outerHtml of <table> tag.
+   */
+  html: string;
+
+  /**
+   * Intercept links press.
+   *
+   * **Info**: `makeTableRenderer` uses `HTML.onLinkPress` prop.
+   */
+  onLinkPress?: (url: string) => void;
+
+  /**
+   * Renderers props.
+   */
+  renderersProps?: any;
+}
 
 /**
+ * Props for HTMLTable component.
+ *
  * @public
  */
 export interface HTMLTableProps<WVP>
   extends TableConfig<WVP>,
-    HTMLTablePropsWithStats {}
+    HTMLTableBaseProps {}

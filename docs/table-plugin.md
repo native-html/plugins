@@ -8,7 +8,7 @@
 
 |  Class | Description |
 |  --- | --- |
-|  [HTMLTable](./table-plugin.htmltable.md) |  |
+|  [HTMLTable](./table-plugin.htmltable.md) | A component capable of rendering a html string which root tag is a table tag. This component should not be used directly, except with custom renderers. |
 
 ## Functions
 
@@ -16,18 +16,19 @@
 |  --- | --- |
 |  [alterNode(node)](./table-plugin.alternode.md) | This function should be passed to HTML component. |
 |  [cssRulesFromSpecs(specs)](./table-plugin.cssrulesfromspecs.md) | Create css rules from a specification object. |
-|  [makeCustomTableRenderer(TableComponent)](./table-plugin.makecustomtablerenderer.md) |  |
+|  [makeCustomTableRenderer(TableComponent)](./table-plugin.makecustomtablerenderer.md) | Create a table renderer from a custom <code>TableComponent</code>. |
 |  [makeTableRenderer(tableConfig)](./table-plugin.maketablerenderer.md) | Create the table renderer. |
 
 ## Interfaces
 
 |  Interface | Description |
 |  --- | --- |
-|  [HTMLTableBaseProps](./table-plugin.htmltablebaseprops.md) |  |
-|  [HTMLTableProps](./table-plugin.htmltableprops.md) |  |
-|  [HTMLTablePropsWithStats](./table-plugin.htmltablepropswithstats.md) |  |
-|  [HTMLTableStatProps](./table-plugin.htmltablestatprops.md) |  |
+|  [HTMLTableBaseProps](./table-plugin.htmltablebaseprops.md) | Base props for HTMLTable original and custom components. |
+|  [HTMLTableProps](./table-plugin.htmltableprops.md) | Props for HTMLTable component. |
+|  [HTMLTableStats](./table-plugin.htmltablestats.md) | An object holding information on the table shape. |
+|  [TableAccurateContentHeightState](./table-plugin.tableaccuratecontentheightstate.md) | This content height state appears when the real table height is available, after the DOM has been mounted in the <code>WebView</code>. |
 |  [TableConfig](./table-plugin.tableconfig.md) | This object defines how the table component can be customized. |
+|  [TableHeuristicContentHeightState](./table-plugin.tableheuristiccontentheightstate.md) | This content height state is available on mount, before the real height is known from the DOM. |
 |  [TableStyleSpecs](./table-plugin.tablestylespecs.md) | An object describing how to generate styles. See [cssRulesFromSpecs()](./table-plugin.cssrulesfromspecs.md)<!-- -->. |
 
 ## Variables
@@ -35,6 +36,12 @@
 |  Variable | Description |
 |  --- | --- |
 |  [defaultTableStylesSpecs](./table-plugin.defaulttablestylesspecs.md) | Default styles attributes. |
-|  [IGNORED\_TAGS](./table-plugin.ignored_tags.md) |  |
-|  [TABLE\_TAGS](./table-plugin.table_tags.md) |  |
+|  [IGNORED\_TAGS](./table-plugin.ignored_tags.md) | A new list of tags to ignore, which exclude [TABLE\_TAGS](./table-plugin.table_tags.md)<!-- -->. |
+|  [TABLE\_TAGS](./table-plugin.table_tags.md) | All HTML tags associated with a table element. |
+
+## Type Aliases
+
+|  Type Alias | Description |
+|  --- | --- |
+|  [TableContentHeightState](./table-plugin.tablecontentheightstate.md) | An object describing the present knowledge of content height. |
 

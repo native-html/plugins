@@ -4,6 +4,7 @@
 
 ## HTMLTable class
 
+A component capable of rendering a html string which root tag is a table tag. This component should not be used directly, except with custom renderers.
 
 <b>Signature:</b>
 

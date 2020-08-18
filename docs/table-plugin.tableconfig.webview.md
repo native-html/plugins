@@ -11,8 +11,3 @@ The `WebView` Component you wish to use.
 ```typescript
 WebView: ComponentType<WebViewProps>;
 ```
-
-## Remarks
-
-Features such as `autoheight` and `onLinkPress` don't work with legacy, core version. Please use latest community version instead, https://github.com/react-native-community/react-native-webview
-

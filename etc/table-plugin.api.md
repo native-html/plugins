@@ -12,7 +12,7 @@ import { StyleProp } from 'react-native';
 import { ViewStyle } from 'react-native';
 
 // @public
-export function alterNode(node: HTMLNode): void;
+export function alterNode(node: HTMLNode): false;
 
 // @public
 export function cssRulesFromSpecs(specs?: TableStyleSpecs): string;
@@ -20,57 +20,71 @@ export function cssRulesFromSpecs(specs?: TableStyleSpecs): string;
 // @public
 export const defaultTableStylesSpecs: TableStyleSpecs;
 
-// @public (undocumented)
+// @public
 export class HTMLTable<WVP> extends Component<HTMLTableProps<WVP>> {
 }
 
-// @public (undocumented)
-export interface HTMLTableBaseProps {
+// @public
+export interface HTMLTableBaseProps extends HTMLTableStats {
     html: string;
     onLinkPress?: (url: string) => void;
-    renderersProps: any;
+    renderersProps?: any;
 }
 
-// @public (undocumented)
-export interface HTMLTableProps<WVP> extends TableConfig<WVP>, HTMLTablePropsWithStats {
+// @public
+export interface HTMLTableProps<WVP> extends TableConfig<WVP>, HTMLTableBaseProps {
 }
 
-// @public (undocumented)
-export interface HTMLTablePropsWithStats extends HTMLTableBaseProps, HTMLTableStatProps {
-}
-
-// @public (undocumented)
-export interface HTMLTableStatProps {
+// @public
+export interface HTMLTableStats {
     numOfChars: number;
     numOfColumns: number;
     numOfRows: number;
 }
 
-// @public (undocumented)
+// @public
 export const IGNORED_TAGS: string[];
 
-// @public (undocumented)
-export function makeCustomTableRenderer(TableComponent: ComponentType<HTMLTablePropsWithStats>): RendererDeclaration;
+// @public
+export function makeCustomTableRenderer(TableComponent: ComponentType<HTMLTableBaseProps>): RendererDeclaration;
 
 // @public
 export function makeTableRenderer(tableConfig: TableConfig): RendererDeclaration;
 
-// @public (undocumented)
+// @public
 export const TABLE_TAGS: string[];
 
 // @public
+export interface TableAccurateContentHeightState {
+    // (undocumented)
+    contentHeight: number;
+    // (undocumented)
+    type: 'accurate';
+}
+
+// @public
 export interface TableConfig<WebViewProps = any> {
-    autoheight?: boolean;
+    animationDuration?: number;
+    animationType?: 'none' | 'layout' | 'animated';
+    computeContainerHeight?: (state: TableContentHeightState) => number | null;
+    computeHeuristicContentHeight?: (state: HTMLTableStats) => number;
     cssRules?: string;
-    defaultHeight?: number;
-    maxHeight?: number;
     sourceBaseUrl?: string;
     style?: StyleProp<ViewStyle>;
     tableStyleSpecs?: TableStyleSpecs;
-    transitionDuration?: number;
-    useLayoutAnimations?: boolean;
     WebView: ComponentType<WebViewProps>;
     webViewProps?: WebViewProps;
+}
+
+// @public
+export type TableContentHeightState = TableHeuristicContentHeightState | TableAccurateContentHeightState;
+
+// @public
+export interface TableHeuristicContentHeightState {
+    // (undocumented)
+    contentHeight: number;
+    // (undocumented)
+    type: 'heuristic';
 }
 
 // @public

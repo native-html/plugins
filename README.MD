@@ -19,7 +19,7 @@ yarn add @native-html/table-plugin
 **Features**:
 
 - Render HTML tables with a `WebView` component you provide
-- Supports `<HTML>onLinkPress` prop to handle clicks
+- Supports `HTML.onLinkPress` prop to handle clicks
 - Automatic height
 
 <img src="images/android.gif" width="300">
@@ -28,7 +28,7 @@ yarn add @native-html/table-plugin
 
 - don't forget you're rendering cells inside a webview, so you won't be able to apply your custom renderers there
 - limited support of Expo &lt;33 version ; full support [&ge;33 versions](https://github.com/expo/expo/milestone/22) (see bellow limitation)
-- `autoheight` and `onLinkPress` config options only work with [`WebView` &ge; `v5.0.0` community edition](https://github.com/react-native-community/react-native-webview/releases/tag/v2.14.0)
+- Autoheight behavior and `onLinkPress` config options only work with [`WebView` &ge; `v5.0.0` community edition](https://github.com/react-native-community/react-native-webview/releases/tag/v2.14.0)
 
 ## Minimal working example
 
@@ -64,12 +64,8 @@ const html = `
 </table>
 `;
 
-const config = {
-  WebView
-};
-
 const renderers = {
-  table: makeTableRenderer(config)
+  table: makeTableRenderer({ WebView })
 };
 
 const htmlConfig = {
@@ -88,6 +84,7 @@ export const Example = () => (
 ## API Reference
 
 **The complete API reference is available here: [docs/table-plugin.md](docs/table-plugin.md).**
+Most notably, check [`TableConfig`](docs/table-plugin.tableconfig.md) to see how you can customize the table behavior.
 
 **Landmark exports**:
 
@@ -150,10 +147,13 @@ a {
 }
 `;
 
-const config = {
-  cssRules
-  // Other config options
+const renderers = {
+  table: makeTableRenderer({
+    cssRules,
+    // Other config options
+   })
 };
+
 ```
 
 ### How to customize the Table component?
@@ -200,12 +200,14 @@ const cssRules =
 }
 `;
 
-const config = {
-  cssRules
-  // Other config options
+const renderers = {
+  table: makeTableRenderer({
+    cssRules,
+    // Other config options
+   })
 };
 ```
 
 ### How to use with Jest?
 
-**A**: Replace the `WebView` component with `Ersatz` from [`@formidable-webview/ersatz`](https://github.com/formidable-webview/ersatz).
+**A**: Mock the `WebView` component with `View`. See https://jestjs.io/docs/en/manual-mocks.

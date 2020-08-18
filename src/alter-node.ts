@@ -51,7 +51,7 @@ function domToHTML(root: HTMLNode, stats: TableStats): string {
  *
  * @public
  */
-export function alterNode(node: HTMLNode) {
+export function alterNode(node: HTMLNode): false {
   if (node.type === 'tag' && node.name === 'table') {
     const stats = {
       html: '',
@@ -67,4 +67,5 @@ export function alterNode(node: HTMLNode) {
     node.attribs._numOfColumns = columns;
     node.attribs._numOfChars = characters;
   }
+  return false;
 }

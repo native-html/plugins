@@ -9,5 +9,5 @@ Renderers props.
 <b>Signature:</b>
 
 ```typescript
-renderersProps: any;
+renderersProps?: any;
 ```

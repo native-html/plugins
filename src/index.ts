@@ -6,10 +6,12 @@ export { alterNode } from './alter-node';
 export type {
   HTMLTableBaseProps,
   HTMLTableProps,
+  HTMLTableStats,
   TableStyleSpecs,
-  HTMLTableStatProps,
   TableConfig,
-  HTMLTablePropsWithStats
+  TableContentHeightState,
+  TableAccurateContentHeightState,
+  TableHeuristicContentHeightState
 } from './types';
 export { defaultTableStylesSpecs, cssRulesFromSpecs } from './css-rules';
 export { HTMLTable } from './HTMLTable';

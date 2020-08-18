@@ -6,7 +6,7 @@
 
 Intercept links press.
 
-\*\*Info\*\*: `makeTableRenderer` uses `<HTML>onLinkPress` prop.
+\*\*Info\*\*: `makeTableRenderer` uses `HTML.onLinkPress` prop.
 
 <b>Signature:</b>
 
