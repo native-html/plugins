@@ -38,7 +38,9 @@ export function makeTableRenderer(
 
 /**
  *
- * @param TableComponent - A component which will receive {@link HTMLTablePropsWithStats} props.
+ * Create a table renderer from a custom `TableComponent`.
+ *
+ * @param TableComponent - A component which will receive {@link HTMLTableBaseProps} props.
  *
  * @public
  */

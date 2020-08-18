@@ -11,5 +11,5 @@ Props for HTMLTable component.
 ```typescript
 export interface HTMLTableProps<WVP> extends TableConfig<WVP>, HTMLTableBaseProps 
 ```
-<b>Extends:</b> [TableConfig](./table-plugin.tableconfig.md)<!-- -->&lt;WVP&gt;, HTMLTableBaseProps
+<b>Extends:</b> [TableConfig](./table-plugin.tableconfig.md)<!-- -->&lt;WVP&gt;, [HTMLTableBaseProps](./table-plugin.htmltablebaseprops.md)
 

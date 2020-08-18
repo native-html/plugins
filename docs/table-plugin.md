@@ -16,15 +16,15 @@
 |  --- | --- |
 |  [alterNode(node)](./table-plugin.alternode.md) | This function should be passed to HTML component. |
 |  [cssRulesFromSpecs(specs)](./table-plugin.cssrulesfromspecs.md) | Create css rules from a specification object. |
-|  [makeCustomTableRenderer(TableComponent)](./table-plugin.makecustomtablerenderer.md) |  |
+|  [makeCustomTableRenderer(TableComponent)](./table-plugin.makecustomtablerenderer.md) | Create a table renderer from a custom <code>TableComponent</code>. |
 |  [makeTableRenderer(tableConfig)](./table-plugin.maketablerenderer.md) | Create the table renderer. |
 
 ## Interfaces
 
 |  Interface | Description |
 |  --- | --- |
+|  [HTMLTableBaseProps](./table-plugin.htmltablebaseprops.md) | Base props for HTMLTable original and custom components. |
 |  [HTMLTableProps](./table-plugin.htmltableprops.md) | Props for HTMLTable component. |
-|  [HTMLTablePropsWithStats](./table-plugin.htmltablepropswithstats.md) | Base props for HTMLTable original and custom components. |
 |  [HTMLTableStats](./table-plugin.htmltablestats.md) | An object holding information on the table shape. |
 |  [TableConfig](./table-plugin.tableconfig.md) | This object defines how the table component can be customized. |
 |  [TableDeterminatedHeightState](./table-plugin.tabledeterminatedheightstate.md) | This height state appears when the real table height is available, after the DOM has been mounted in the <code>WebView</code>. |
@@ -36,8 +36,8 @@
 |  Variable | Description |
 |  --- | --- |
 |  [defaultTableStylesSpecs](./table-plugin.defaulttablestylesspecs.md) | Default styles attributes. |
-|  [IGNORED\_TAGS](./table-plugin.ignored_tags.md) |  |
-|  [TABLE\_TAGS](./table-plugin.table_tags.md) |  |
+|  [IGNORED\_TAGS](./table-plugin.ignored_tags.md) | A new list of tags to ignore, which exclude [TABLE\_TAGS](./table-plugin.table_tags.md)<!-- -->. |
+|  [TABLE\_TAGS](./table-plugin.table_tags.md) | All HTML tags associated with a table element. |
 
 ## Type Aliases
 

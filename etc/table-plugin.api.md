@@ -25,37 +25,33 @@ export class HTMLTable<WVP> extends Component<HTMLTableProps<WVP>> {
 }
 
 // @public
-export interface HTMLTableProps<WVP> extends TableConfig<WVP>, HTMLTablePropsWithStats {
-}
-
-// @public
-export interface HTMLTablePropsWithStats extends HTMLTableStats {
+export interface HTMLTableBaseProps extends HTMLTableStats {
     html: string;
     onLinkPress?: (url: string) => void;
     renderersProps: any;
 }
 
 // @public
-interface HTMLTableStats {
+export interface HTMLTableProps<WVP> extends TableConfig<WVP>, HTMLTableBaseProps {
+}
+
+// @public
+export interface HTMLTableStats {
     numOfChars: number;
     numOfColumns: number;
     numOfRows: number;
 }
 
-export { HTMLTableStats as HTMLTableStatProps }
-
-export { HTMLTableStats }
-
-// @public (undocumented)
+// @public
 export const IGNORED_TAGS: string[];
 
-// @public (undocumented)
-export function makeCustomTableRenderer(TableComponent: ComponentType<HTMLTablePropsWithStats>): RendererDeclaration;
+// @public
+export function makeCustomTableRenderer(TableComponent: ComponentType<HTMLTableBaseProps>): RendererDeclaration;
 
 // @public
 export function makeTableRenderer(tableConfig: TableConfig): RendererDeclaration;
 
-// @public (undocumented)
+// @public
 export const TABLE_TAGS: string[];
 
 // @public

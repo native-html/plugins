@@ -4,6 +4,8 @@
 
 ## makeCustomTableRenderer() function
 
+Create a table renderer from a custom `TableComponent`<!-- -->.
+
 <b>Signature:</b>
 
 ```typescript
@@ -14,7 +16,7 @@ export declare function makeCustomTableRenderer(TableComponent: ComponentType<HT
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  TableComponent | ComponentType&lt;HTMLTableBaseProps&gt; | A component which will receive [HTMLTablePropsWithStats](./table-plugin.htmltablepropswithstats.md) props. |
+|  TableComponent | ComponentType&lt;[HTMLTableBaseProps](./table-plugin.htmltablebaseprops.md)<!-- -->&gt; | A component which will receive [HTMLTableBaseProps](./table-plugin.htmltablebaseprops.md) props. |
 
 <b>Returns:</b>
 

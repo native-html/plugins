@@ -4,6 +4,7 @@
 
 ## IGNORED\_TAGS variable
 
+A new list of tags to ignore, which exclude [TABLE\_TAGS](./table-plugin.table_tags.md)<!-- -->.
 
 <b>Signature:</b>
 

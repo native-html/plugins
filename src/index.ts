@@ -4,12 +4,11 @@ export {
 } from './make-table-renderer';
 export { alterNode } from './alter-node';
 export type {
-  HTMLTableBaseProps as HTMLTablePropsWithStats,
+  HTMLTableBaseProps,
   HTMLTableProps,
-  TableStyleSpecs,
-  HTMLTableStats as HTMLTableStatProps,
-  TableConfig,
   HTMLTableStats,
+  TableStyleSpecs,
+  TableConfig,
   TableHeightState,
   TableDeterminatedHeightState,
   TableUndeterminatedHeightState

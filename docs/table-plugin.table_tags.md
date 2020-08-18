@@ -4,6 +4,7 @@
 
 ## TABLE\_TAGS variable
 
+All HTML tags associated with a table element.
 
 <b>Signature:</b>
 
