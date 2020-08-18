@@ -4,12 +4,17 @@
 
 ## TableUndeterminatedHeightState interface
 
+This height state appears right at mount, before the real height is known from the DOM.
 
 <b>Signature:</b>
 
 ```typescript
 export interface TableUndeterminatedHeightState 
 ```
+
+## Remarks
+
+`heuristicHeight` is an approximated height used to minimize the “flash” effect of height transitions, see [TableConfig.computeHeightHeuristic](./table-plugin.tableconfig.computeheightheuristic.md)<!-- -->.
 
 ## Properties
 

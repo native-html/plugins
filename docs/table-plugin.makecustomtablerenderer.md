@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-export declare function makeCustomTableRenderer(TableComponent: ComponentType<HTMLTablePropsWithStats>): RendererDeclaration;
+export declare function makeCustomTableRenderer(TableComponent: ComponentType<HTMLTableBaseProps>): RendererDeclaration;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  TableComponent | ComponentType&lt;[HTMLTablePropsWithStats](./table-plugin.htmltablepropswithstats.md)<!-- -->&gt; | A component which will receive [HTMLTablePropsWithStats](./table-plugin.htmltablepropswithstats.md) props. |
+|  TableComponent | ComponentType&lt;HTMLTableBaseProps&gt; | A component which will receive [HTMLTablePropsWithStats](./table-plugin.htmltablepropswithstats.md) props. |
 
 <b>Returns:</b>
 

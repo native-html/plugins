@@ -24,22 +24,18 @@ export const defaultTableStylesSpecs: TableStyleSpecs;
 export class HTMLTable<WVP> extends Component<HTMLTableProps<WVP>> {
 }
 
-// @public (undocumented)
-export interface HTMLTableBaseProps {
+// @public
+export interface HTMLTableProps<WVP> extends TableConfig<WVP>, HTMLTablePropsWithStats {
+}
+
+// @public
+export interface HTMLTablePropsWithStats extends HTMLTableStats {
     html: string;
     onLinkPress?: (url: string) => void;
     renderersProps: any;
 }
 
-// @public (undocumented)
-export interface HTMLTableProps<WVP> extends TableConfig<WVP>, HTMLTablePropsWithStats {
-}
-
-// @public (undocumented)
-export interface HTMLTablePropsWithStats extends HTMLTableBaseProps, HTMLTableStats {
-}
-
-// @public (undocumented)
+// @public
 interface HTMLTableStats {
     numOfChars: number;
     numOfColumns: number;
@@ -76,7 +72,7 @@ export interface TableConfig<WebViewProps = any> {
     webViewProps?: WebViewProps;
 }
 
-// @public (undocumented)
+// @public
 export interface TableDeterminatedHeightState {
     // (undocumented)
     scrollableHeight: number;
@@ -84,7 +80,7 @@ export interface TableDeterminatedHeightState {
     type: 'determinated';
 }
 
-// @public (undocumented)
+// @public
 export type TableHeightState = TableUndeterminatedHeightState | TableDeterminatedHeightState;
 
 // @public
@@ -109,7 +105,7 @@ export interface TableStyleSpecs {
     trOddColor: string;
 }
 
-// @public (undocumented)
+// @public
 export interface TableUndeterminatedHeightState {
     // (undocumented)
     heuristicHeight: number;

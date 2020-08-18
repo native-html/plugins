@@ -87,6 +87,14 @@ export interface TableStyleSpecs {
 }
 
 /**
+ * This height state appears right at mount, before the real height is known
+ * from the DOM.
+ *
+ * @remarks
+ * `heuristicHeight` is an approximated height used to minimize the “flash”
+ * effect of height transitions, see
+ * {@link TableConfig.computeHeightHeuristic}.
+ *
  * @public
  */
 export interface TableUndeterminatedHeightState {
@@ -95,6 +103,10 @@ export interface TableUndeterminatedHeightState {
 }
 
 /**
+ *
+ * This height state appears when the real table height is available, after the
+ * DOM has been mounted in the `WebView`.
+ *
  * @public
  */
 export interface TableDeterminatedHeightState {
@@ -103,6 +115,8 @@ export interface TableDeterminatedHeightState {
 }
 
 /**
+ * An object containing information to help compute container height.
+ *
  * @public
  */
 export type TableHeightState =
@@ -118,6 +132,8 @@ export interface TableConfig<WebViewProps = any> {
   /**
    * What kind of animation should be used when height is changed?
    *
+   * @remarks
+   *
    * - **layout**: use native `LayoutAnimation`. This is the best option
    *   performance-wise, but requires some setup. See
    *   https://facebook.github.io/react-native/docs/layoutanimation.
@@ -125,7 +141,7 @@ export interface TableConfig<WebViewProps = any> {
    * - **none**: no animations are performed.
    *
    *
-   * @defaultValue `"animated"`
+   * @defaultValue `'animated'`
    */
   animationType?: 'none' | 'layout' | 'animated';
 
@@ -226,28 +242,8 @@ export interface TableConfig<WebViewProps = any> {
 }
 
 /**
- * @public
- */
-export interface HTMLTableBaseProps {
-  /**
-   * The outerHtml of <table> tag.
-   */
-  html: string;
-
-  /**
-   * Intercept links press.
-   *
-   * **Info**: `makeTableRenderer` uses `HTML.onLinkPress` prop.
-   */
-  onLinkPress?: (url: string) => void;
-
-  /**
-   * Renderers props.
-   */
-  renderersProps: any;
-}
-
-/**
+ * An object holding information on the table shape.
+ *
  * @public
  */
 export interface HTMLTableStats {
@@ -268,15 +264,34 @@ export interface HTMLTableStats {
 }
 
 /**
+ * Base props for HTMLTable original and custom components.
+ *
  * @public
  */
-export interface HTMLTablePropsWithStats
-  extends HTMLTableBaseProps,
-    HTMLTableStats {}
+export interface HTMLTableBaseProps extends HTMLTableStats {
+  /**
+   * The outerHtml of <table> tag.
+   */
+  html: string;
+
+  /**
+   * Intercept links press.
+   *
+   * **Info**: `makeTableRenderer` uses `HTML.onLinkPress` prop.
+   */
+  onLinkPress?: (url: string) => void;
+
+  /**
+   * Renderers props.
+   */
+  renderersProps: any;
+}
 
 /**
+ * Props for HTMLTable component.
+ *
  * @public
  */
 export interface HTMLTableProps<WVP>
   extends TableConfig<WVP>,
-    HTMLTablePropsWithStats {}
+    HTMLTableBaseProps {}

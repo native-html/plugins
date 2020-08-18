@@ -4,6 +4,7 @@
 
 ## TableDeterminatedHeightState interface
 
+This height state appears when the real table height is available, after the DOM has been mounted in the `WebView`<!-- -->.
 
 <b>Signature:</b>
 

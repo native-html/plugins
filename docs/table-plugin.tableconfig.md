@@ -17,7 +17,7 @@ export interface TableConfig<WebViewProps = any>
 |  Property | Type | Description |
 |  --- | --- | --- |
 |  [animationDuration](./table-plugin.tableconfig.animationduration.md) | number | The animation duration in milliseconds when infered height value changes. See [TableConfig.computeContainerHeight](./table-plugin.tableconfig.computecontainerheight.md)<!-- -->. |
-|  [animationType](./table-plugin.tableconfig.animationtype.md) | 'none' \| 'layout' \| 'animated' | What kind of animation should be used when height is changed?<!-- -->- \*\*layout\*\*: use native <code>LayoutAnimation</code>. This is the best option performance-wise, but requires some setup. See https://facebook.github.io/react-native/docs/layoutanimation. - \*\*animated\*\*: use <code>Animated</code> module from react-native. - \*\*none\*\*: no animations are performed. |
+|  [animationType](./table-plugin.tableconfig.animationtype.md) | 'none' \| 'layout' \| 'animated' | What kind of animation should be used when height is changed? |
 |  [computeContainerHeight](./table-plugin.tableconfig.computecontainerheight.md) | (state: [TableHeightState](./table-plugin.tableheightstate.md)<!-- -->) =&gt; number \| null | A function which will compute container's height given the height computation state. |
 |  [computeHeightHeuristic](./table-plugin.tableconfig.computeheightheuristic.md) | (state: [HTMLTableStats](./table-plugin.htmltablestats.md)<!-- -->) =&gt; number | A function to compute approximate height before the content height has been fetched on DOM mount. |
 |  [cssRules](./table-plugin.tableconfig.cssrules.md) | string | Override default CSS rules with this prop. |

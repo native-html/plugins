@@ -4,6 +4,7 @@
 
 ## TableHeightState type
 
+An object containing information to help compute container height.
 
 <b>Signature:</b>
 

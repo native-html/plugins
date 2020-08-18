@@ -4,11 +4,12 @@
 
 ## HTMLTableProps interface
 
+Props for HTMLTable component.
 
 <b>Signature:</b>
 
 ```typescript
-export interface HTMLTableProps<WVP> extends TableConfig<WVP>, HTMLTablePropsWithStats 
+export interface HTMLTableProps<WVP> extends TableConfig<WVP>, HTMLTableBaseProps 
 ```
-<b>Extends:</b> [TableConfig](./table-plugin.tableconfig.md)<!-- -->&lt;WVP&gt;, [HTMLTablePropsWithStats](./table-plugin.htmltablepropswithstats.md)
+<b>Extends:</b> [TableConfig](./table-plugin.tableconfig.md)<!-- -->&lt;WVP&gt;, HTMLTableBaseProps
 

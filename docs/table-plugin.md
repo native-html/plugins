@@ -23,14 +23,13 @@
 
 |  Interface | Description |
 |  --- | --- |
-|  [HTMLTableBaseProps](./table-plugin.htmltablebaseprops.md) |  |
-|  [HTMLTableProps](./table-plugin.htmltableprops.md) |  |
-|  [HTMLTablePropsWithStats](./table-plugin.htmltablepropswithstats.md) |  |
-|  [HTMLTableStats](./table-plugin.htmltablestats.md) |  |
+|  [HTMLTableProps](./table-plugin.htmltableprops.md) | Props for HTMLTable component. |
+|  [HTMLTablePropsWithStats](./table-plugin.htmltablepropswithstats.md) | Base props for HTMLTable original and custom components. |
+|  [HTMLTableStats](./table-plugin.htmltablestats.md) | An object holding information on the table shape. |
 |  [TableConfig](./table-plugin.tableconfig.md) | This object defines how the table component can be customized. |
-|  [TableDeterminatedHeightState](./table-plugin.tabledeterminatedheightstate.md) |  |
+|  [TableDeterminatedHeightState](./table-plugin.tabledeterminatedheightstate.md) | This height state appears when the real table height is available, after the DOM has been mounted in the <code>WebView</code>. |
 |  [TableStyleSpecs](./table-plugin.tablestylespecs.md) | An object describing how to generate styles. See [cssRulesFromSpecs()](./table-plugin.cssrulesfromspecs.md)<!-- -->. |
-|  [TableUndeterminatedHeightState](./table-plugin.tableundeterminatedheightstate.md) |  |
+|  [TableUndeterminatedHeightState](./table-plugin.tableundeterminatedheightstate.md) | This height state appears right at mount, before the real height is known from the DOM. |
 
 ## Variables
 
@@ -44,5 +43,5 @@
 
 |  Type Alias | Description |
 |  --- | --- |
-|  [TableHeightState](./table-plugin.tableheightstate.md) |  |
+|  [TableHeightState](./table-plugin.tableheightstate.md) | An object containing information to help compute container height. |
 

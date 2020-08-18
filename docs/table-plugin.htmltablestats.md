@@ -4,6 +4,7 @@
 
 ## HTMLTableStats interface
 
+An object holding information on the table shape.
 
 <b>Signature:</b>
 

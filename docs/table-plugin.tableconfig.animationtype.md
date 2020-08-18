@@ -6,10 +6,13 @@
 
 What kind of animation should be used when height is changed?
 
-- \*\*layout\*\*: use native `LayoutAnimation`<!-- -->. This is the best option performance-wise, but requires some setup. See https://facebook.github.io/react-native/docs/layoutanimation. - \*\*animated\*\*: use `Animated` module from react-native. - \*\*none\*\*: no animations are performed.
-
 <b>Signature:</b>
 
 ```typescript
 animationType?: 'none' | 'layout' | 'animated';
 ```
+
+## Remarks
+
+- \*\*layout\*\*: use native `LayoutAnimation`<!-- -->. This is the best option performance-wise, but requires some setup. See https://facebook.github.io/react-native/docs/layoutanimation. - \*\*animated\*\*: use `Animated` module from react-native. - \*\*none\*\*: no animations are performed.
+
