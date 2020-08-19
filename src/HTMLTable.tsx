@@ -22,7 +22,6 @@ import {
   TableHeightState,
   HTMLTableStats
 } from './types';
-export { IGNORED_TAGS, TABLE_TAGS } from './tags';
 
 const styles = StyleSheet.create({
   container: {
