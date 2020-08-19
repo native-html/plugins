@@ -101,7 +101,7 @@ function findHeight({
   });
 }
 
-function defaultComputeHeightHeuristic(tableStats: HTMLTableStats) {
+export function defaultComputeHeightHeuristic(tableStats: HTMLTableStats) {
   const { numOfChars, numOfRows } = tableStats;
   const width = Dimensions.get('window').width;
   const charsPerLine = (30 * width) / 400;
@@ -110,7 +110,7 @@ function defaultComputeHeightHeuristic(tableStats: HTMLTableStats) {
   return Math.max(approxNumOfLines, numOfRows) * lineHeight;
 }
 
-function defaultComputeContainerHeight(state: TableHeightState) {
+export function defaultComputeContainerHeight(state: TableHeightState) {
   if (state.type === 'undeterminated') {
     return state.heuristicHeight;
   }
@@ -159,12 +159,7 @@ class __HTMLTable<WVP extends MinimalWebViewProps> extends PureComponent<
       animatedHeight: new Animated.Value(0)
     };
     this.state = state;
-    this.oldContainerHeight = findHeight({
-      computeContainerHeight: props.computeContainerHeight,
-      computeHeightHeuristic: props.computeHeightHeuristic,
-      contentHeight: null,
-      stats: props
-    });
+    this.oldContainerHeight = null;
     this.Webshell = makeWebshell<
       AssembledFeatureOf<TableFeatures[keyof TableFeatures]>[],
       ComponentType<any>
@@ -210,7 +205,6 @@ class __HTMLTable<WVP extends MinimalWebViewProps> extends PureComponent<
     const { animationDuration, WebView, animationType } = this
       .props as Required<HTMLTableProps<WVP>>;
     const shouldAnimate =
-      // TODO: fix logic
       oldState.contentHeight !== this.state.contentHeight &&
       animationType !== 'none';
     if (shouldAnimate && animationType === 'animated') {
@@ -239,7 +233,7 @@ class __HTMLTable<WVP extends MinimalWebViewProps> extends PureComponent<
       animationType,
       webViewProps: userWebViewProps
     } = this.props as Required<HTMLTableProps<any>>;
-    const html = this.buildHTML();
+    const html = this.buildHTML(); // TODO memoize
     const source: any = {
       html
     };
@@ -258,7 +252,12 @@ class __HTMLTable<WVP extends MinimalWebViewProps> extends PureComponent<
         ? {
             height: this.state.animatedHeight.interpolate({
               inputRange: [0, 1],
-              outputRange: [this.oldContainerHeight || 0, containerHeight]
+              outputRange: [
+                this.oldContainerHeight === null
+                  ? containerHeight
+                  : this.oldContainerHeight,
+                containerHeight
+              ]
             })
           }
         : {
@@ -277,7 +276,9 @@ class __HTMLTable<WVP extends MinimalWebViewProps> extends PureComponent<
       source
     };
     return (
-      <Animated.View style={[containerStyle, styles.container, style]}>
+      <Animated.View
+        testID="html-table-container"
+        style={[containerStyle, styles.container, style]}>
         <Webshell
           onDOMLinkPress={onLinkPress}
           onDOMElementDimensions={this.onTableDimensions}

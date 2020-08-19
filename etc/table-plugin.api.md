@@ -12,7 +12,7 @@ import { StyleProp } from 'react-native';
 import { ViewStyle } from 'react-native';
 
 // @public
-export function alterNode(node: HTMLNode): void;
+export function alterNode(node: HTMLNode): false;
 
 // @public
 export function cssRulesFromSpecs(specs?: TableStyleSpecs): string;
@@ -28,7 +28,7 @@ export class HTMLTable<WVP> extends Component<HTMLTableProps<WVP>> {
 export interface HTMLTableBaseProps extends HTMLTableStats {
     html: string;
     onLinkPress?: (url: string) => void;
-    renderersProps: any;
+    renderersProps?: any;
 }
 
 // @public

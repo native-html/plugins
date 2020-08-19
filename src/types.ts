@@ -290,7 +290,7 @@ export interface HTMLTableBaseProps extends HTMLTableStats {
   /**
    * Renderers props.
    */
-  renderersProps: any;
+  renderersProps?: any;
 }
 
 /**

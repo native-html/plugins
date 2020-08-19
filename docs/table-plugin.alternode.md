@@ -9,7 +9,7 @@ This function should be passed to HTML component.
 <b>Signature:</b>
 
 ```typescript
-export declare function alterNode(node: HTMLNode): void;
+export declare function alterNode(node: HTMLNode): false;
 ```
 
 ## Parameters
@@ -20,5 +20,5 @@ export declare function alterNode(node: HTMLNode): void;
 
 <b>Returns:</b>
 
-void
+false
 
