@@ -4,15 +4,10 @@
 
 ## TableConfig.animationType property
 
-What kind of animation should be used when height is changed?
+What kind of animation should be used when height is changed? <ul> <li> <b>layout</b>: use native `LayoutAnimation`<!-- -->. This is the best option performance-wise, but requires some setup. See https://facebook.github.io/react-native/docs/layoutanimation. </li> <li> <b>animated</b>: use `Animated` module from react-native. </li> <li> <b>none</b>: no animations are performed. </li> </ul>
 
 <b>Signature:</b>
 
 ```typescript
 animationType?: 'none' | 'layout' | 'animated';
 ```
-
-## Remarks
-
-<ul> <li> <b>layout</b>: use native `LayoutAnimation`<!-- -->. This is the best option performance-wise, but requires some setup. See https://facebook.github.io/react-native/docs/layoutanimation. </li> <li> <b>animated</b>: use `Animated` module from react-native. </li> <li> <b>none</b>: no animations are performed. </li> </ul>
-

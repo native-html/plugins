@@ -131,8 +131,6 @@ export type TableContentHeightState =
 export interface TableConfig<WebViewProps = any> {
   /**
    * What kind of animation should be used when height is changed?
-   *
-   * @remarks
    * <ul>
    *   <li>
    *     <b>layout</b>: use native `LayoutAnimation`. This is the best option
