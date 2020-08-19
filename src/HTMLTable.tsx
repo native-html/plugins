@@ -164,7 +164,7 @@ class __HTMLTable<WVP extends MinimalWebViewProps> extends PureComponent<
     >(
       props.WebView,
       linkPressFeature.assemble(),
-      elementDimensionsFeature.assemble({ tagName: 'table' })
+      elementDimensionsFeature.assemble({ tagName: 'body' })
     );
   }
 
