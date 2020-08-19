@@ -1,4 +1,4 @@
-import { without } from 'ramda';
+import without from 'ramda/es/without';
 import { IGNORED_TAGS as ORIGINAL_IGNORED_TAGS } from 'react-native-render-html/src/HTMLUtils';
 
 /**
