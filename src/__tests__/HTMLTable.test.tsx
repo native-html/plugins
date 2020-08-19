@@ -6,7 +6,7 @@ import { render } from '@testing-library/react-native';
 import WebView from 'react-native-webview';
 import Ersatz from '@formidable-webview/ersatz';
 import makeErsatzTesting from '@formidable-webview/ersatz-testing';
-import { TableConfig, HTMLTableStats, TableContentHeightState } from '../types';
+import { TableConfig, HTMLTableStats } from '../types';
 import './setup';
 
 const { waitForErsatz } = makeErsatzTesting(Ersatz);
@@ -30,16 +30,6 @@ const dummyStats: HTMLTableStats = {
   numOfChars: 200,
   numOfColumns: 1,
   numOfRows: 2
-};
-
-const MATCH_STATE_UNDETERMINATED = {
-  asymmetricMatch: (obj: TableContentHeightState) =>
-    obj && obj.type === 'heuristic' && typeof obj.contentHeight === 'number'
-};
-
-const MATCH_STATE_DETERMINATED = {
-  asymmetricMatch: (obj: TableContentHeightState) =>
-    obj && obj.type === 'accurate' && typeof obj.contentHeight === 'number'
 };
 
 describe('HTMLTable component', () => {
@@ -88,14 +78,14 @@ describe('HTMLTable component', () => {
         )
       );
       expect(computeContainerHeight).toHaveBeenCalledTimes(2);
-      expect(computeContainerHeight).toHaveBeenNthCalledWith(
-        1,
-        MATCH_STATE_UNDETERMINATED
-      );
-      expect(computeContainerHeight).toHaveBeenNthCalledWith(
-        2,
-        MATCH_STATE_DETERMINATED
-      );
+      expect(computeContainerHeight).toHaveBeenNthCalledWith(1, {
+        type: 'heuristic',
+        contentHeight: expect.any(Number)
+      });
+      expect(computeContainerHeight).toHaveBeenNthCalledWith(2, {
+        type: 'accurate',
+        contentHeight: expect.any(Number)
+      });
     });
     it("should be used to set container's height", () => {
       const { getByTestId } = render(
