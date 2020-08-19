@@ -87,7 +87,10 @@
   },
   "author": "Jules Sam. Randolph <jules.sam.randolph@gmail.com> (https://github.com/jsamr)",
   "license": "MIT",
-  "repository": "git@github.com:jsamr/@native-html/table-plugin.git",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/native-html/table-plugin.git"
+  },
   "publishConfig": {
     "access": "public"
   },
