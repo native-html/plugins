@@ -1,3 +1,5 @@
+## [1.0.1](https://github.com/jsamr/@native-html/table-plugin/compare/v1.0.0...v1.0.1) (2020-08-19)
+
 # Changelog
 ## [1.0.0](https://github.com/native-html/table-plugin/compare/v0.6.1...v1.0.0) (2020-08-19)
 
