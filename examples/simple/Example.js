@@ -1,17 +1,15 @@
-import React, {PureComponent} from 'react';
-import {ScrollView} from 'react-native';
+import React from 'react';
+import {ScrollView, StyleSheet} from 'react-native';
 import HTML from 'react-native-render-html';
 import {
   IGNORED_TAGS,
   alterNode,
   makeTableRenderer,
-} from 'react-native-render-html-table-bridge';
+} from '@native-html/table-plugin';
 import WebView from 'react-native-webview';
 import Snackbar from 'react-native-snackbar';
 
-type Props = {};
 const table1 = `
-
 <h2>Small table</h2>
 
 <table>
@@ -161,8 +159,8 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 
 const renderers = {
   table: makeTableRenderer({
-    WebViewComponent: WebView,
-    useLayoutAnimations: true, // <-- You must activate animation at the root of your app in android, see App.js
+    WebView,
+    animationType: 'layout', // <-- You must activate animation at the root of your app in android, see App.js
   }),
 };
 
@@ -170,7 +168,7 @@ const htmlConfig = {
   alterNode,
   renderers,
   ignoredTags: IGNORED_TAGS,
-  onLinkPress: (e, url) => {
+  onLinkPress(e, url) {
     Snackbar.show({
       text: url,
       textColor: 'white',
@@ -178,14 +176,21 @@ const htmlConfig = {
   },
 };
 
-export default class Example extends PureComponent<Props> {
-  render() {
-    return (
-      <ScrollView
-        contentContainerStyle={{paddingHorizontal: 20}}
-        style={{backgroundColor: 'white'}}>
-        <HTML html={table1} {...htmlConfig} />
-      </ScrollView>
-    );
-  }
+export default function Example() {
+  return (
+    <ScrollView
+      contentContainerStyle={styles.contentStyle}
+      style={styles.scrollViewStyle}>
+      <HTML html={table1} {...htmlConfig} />
+    </ScrollView>
+  );
 }
+
+const styles = StyleSheet.create({
+  contentStyle: {
+    paddingHorizontal: 20,
+  },
+  scrollViewStyle: {
+    backgroundColor: 'white',
+  },
+});

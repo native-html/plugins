@@ -10,10 +10,10 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@native-html/table-plugin": "^1.0.0-alpha.2",
     "react": "16.13.1",
     "react-native": "0.63.2",
     "react-native-render-html": "^4.2.3",
-    "react-native-render-html-table-bridge": "^0.6.1",
     "react-native-snackbar": "^2.2.3",
     "react-native-webview": "^10.4.0"
   },

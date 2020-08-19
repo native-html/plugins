@@ -1,15 +1,14 @@
-import React, {PureComponent} from 'react';
-import {ScrollView} from 'react-native';
+import React from 'react';
+import {ScrollView, StyleSheet} from 'react-native';
 import HTML from 'react-native-render-html';
 import {
   IGNORED_TAGS,
   alterNode,
   makeCustomTableRenderer,
-} from 'react-native-render-html-table-bridge';
+} from '@native-html/table-plugin';
 import Snackbar from 'react-native-snackbar';
 import ClickTable from './ClickTable';
 
-type Props = {};
 const table1 = `
 
 This custom component will adapt it's layout depending on table stats.
@@ -179,14 +178,21 @@ const htmlConfig = {
   },
 };
 
-export default class Example extends PureComponent<Props> {
-  render() {
-    return (
-      <ScrollView
-        contentContainerStyle={{paddingHorizontal: 20}}
-        style={{backgroundColor: 'white'}}>
-        <HTML html={table1} {...htmlConfig} />
-      </ScrollView>
-    );
-  }
+export default function Example() {
+  return (
+    <ScrollView
+      contentContainerStyle={styles.contentStyle}
+      style={styles.scrollViewStyle}>
+      <HTML html={table1} {...htmlConfig} />
+    </ScrollView>
+  );
 }
+
+const styles = StyleSheet.create({
+  contentStyle: {
+    paddingHorizontal: 20,
+  },
+  scrollViewStyle: {
+    backgroundColor: 'white',
+  },
+});
