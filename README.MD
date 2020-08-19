@@ -207,7 +207,3 @@ const renderers = {
    })
 };
 ```
-
-### How to use with Jest?
-
-**A**: Mock the `WebView` component with `View`. See https://jestjs.io/docs/en/manual-mocks.
