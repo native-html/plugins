@@ -121,7 +121,7 @@
       [
         "commonjs",
         {
-          "babelrc": true
+          "babelrc": false
         }
       ],
       [
