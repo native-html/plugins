@@ -1,3 +1,10 @@
+## [1.0.3](https://github.com/native-html/table-plugin/compare/v1.0.2...v1.0.3) (2020-08-20)
+
+
+### Bug Fixes
+
+* **deps:** move metro-react-native-babel-transformer to devDependencies ([c64e4c0](https://github.com/native-html/table-plugin/commit/c64e4c05e60347e4d403da3f2711cbeb684d6e78))
+
 ## [1.0.2](https://github.com/native-html/table-plugin/compare/v1.0.0...v1.0.2) (2020-08-19)
 
 ### Chore
