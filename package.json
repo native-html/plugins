@@ -74,7 +74,7 @@
     "valimate": "^3.0.1"
   },
   "dependencies": {
-    "@formidable-webview/webshell": "^1.0.1",
+    "@formidable-webview/webshell": "^1.0.2",
     "@types/prop-types": "^15.7.3",
     "prop-types": "^15.7.2",
     "ramda": "^0.27.1",
