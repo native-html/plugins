@@ -73,7 +73,7 @@
     "valimate": "^3.0.1"
   },
   "dependencies": {
-    "@formidable-webview/webshell": "^0.10.1-alpha.6",
+    "@formidable-webview/webshell": "^1.0.1",
     "@types/prop-types": "^15.7.3",
     "metro-react-native-babel-transformer": "^0.62.0",
     "prop-types": "^15.7.2",
