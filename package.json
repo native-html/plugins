@@ -62,6 +62,7 @@
     "husky": "^4.2.5",
     "jest": "^26.4.0",
     "metro-react-native-babel-preset": "^0.62.0",
+    "metro-react-native-babel-transformer": "^0.62.0",
     "prettier": "^2.0.5",
     "react": "16.13.1",
     "react-native": "^0.63.2",
@@ -75,7 +76,6 @@
   "dependencies": {
     "@formidable-webview/webshell": "^1.0.1",
     "@types/prop-types": "^15.7.3",
-    "metro-react-native-babel-transformer": "^0.62.0",
     "prop-types": "^15.7.2",
     "ramda": "^0.27.1",
     "stringify-entities": "^3.0.1"
