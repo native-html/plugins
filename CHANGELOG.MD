@@ -27,6 +27,7 @@ Fix misconfigured repository field in package.json, responsible for bad relative
 
 ### BREAKING CHANGES
 
+* `WebViewComponent` config field has been renamed to `WebView`.
 * `autoheight`, `maxHeight` and `defaultHeight` have been
 dropped in favour of `computeContainerHeight`. This function gives more
 flexibility to library users, providing a way to set height at different
