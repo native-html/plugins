@@ -28,7 +28,7 @@ yarn add @native-html/table-plugin
 
 - don't forget you're rendering cells inside a webview, so you won't be able to apply your custom renderers there
 - limited support of Expo &lt;33 version ; full support [&ge;33 versions](https://github.com/expo/expo/milestone/22) (see bellow limitation)
-- Autoheight behavior and `onLinkPress` config options only work with [`WebView` &ge; `v5.0.0` community edition](https://github.com/react-native-community/react-native-webview/releases/tag/v2.14.0)
+- Autoheight behavior and `onLinkPress` config options only work with [`WebView` &ge; `v5.0.0` community edition](https://github.com/react-native-community/react-native-webview/releases/tag/v5.0.0)
 
 ## Minimal working example
 
