@@ -1,3 +1,7 @@
+> **:warning: as of version 1.0.0, this package name has been changed from
+> `react-native-render-html-table-bridge` to `@native-html/table-plugin`**. To
+> migrate, you must add the new package in your project and change imports.
+
 # @native-html/table-plugin
 
 :capital_abcd: A WebView-based plugin to render tables in react-native-render-html.
