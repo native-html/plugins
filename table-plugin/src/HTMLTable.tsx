@@ -72,13 +72,12 @@ function findHeight({
   computeContainerHeight,
   computeHeuristicContentHeight,
   contentHeight,
-  stats
+  ...stats
 }: {
   computeContainerHeight: (state: TableContentHeightState) => number | null;
   computeHeuristicContentHeight: (tableStats: HTMLTableStats) => number;
   contentHeight: number | null;
-  stats: HTMLTableStats;
-}) {
+} & HTMLTableStats) {
   if (typeof contentHeight === 'number') {
     return computeContainerHeight({
       type: 'accurate',
@@ -110,7 +109,9 @@ function useAnimatedAutoheight<WVP extends MinimalWebViewProps>({
   animationType,
   animationDuration,
   webViewProps,
-  ...stats
+  numOfChars,
+  numOfColumns,
+  numOfRows
 }: Pick<
   HTMLTableProps<any>,
   | 'animationType'
@@ -125,24 +126,30 @@ function useAnimatedAutoheight<WVP extends MinimalWebViewProps>({
     >
   >) {
   const animatedHeight = useRef(new Animated.Value(0)).current;
-  const oldContainerHeightRef = useRef<number | null>(
-    findHeight({
-      computeContainerHeight,
-      computeHeuristicContentHeight,
-      contentHeight: null,
-      stats
-    })
-  );
   const { autoheightWebshellProps, contentSize } = useAutoheight<WVP>({
     webshellProps: webViewProps as any,
     reinitHeightOnViewportWidthChange: false
   });
-  const containerHeight = findHeight({
-    computeContainerHeight,
-    computeHeuristicContentHeight,
-    contentHeight: contentSize.height || null,
-    stats
-  });
+  const containerHeight = useMemo(
+    () =>
+      findHeight({
+        computeContainerHeight,
+        computeHeuristicContentHeight,
+        contentHeight: contentSize.height || null,
+        numOfChars,
+        numOfColumns,
+        numOfRows
+      }),
+    [
+      computeContainerHeight,
+      computeHeuristicContentHeight,
+      contentSize.height,
+      numOfChars,
+      numOfColumns,
+      numOfRows
+    ]
+  );
+  const oldContainerHeightRef = useRef<number | null>(containerHeight);
   const containerStyle = useMemo(
     () =>
       animationType === 'animated' && containerHeight !== null
