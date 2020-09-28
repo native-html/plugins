@@ -2329,11 +2329,11 @@ __metadata:
     "@testing-library/react-native": ^7.0.2
     "@tsconfig/react-native": ^1.0.2
     "@types/html-validator": ^5.0.0
-    "@types/jest": ^26.0.10
+    "@types/jest": ^26.0.14
     "@types/prop-types": ^15.7.3
-    "@types/ramda": ^0.27.14
-    "@types/react": ^16.9.46
-    "@types/react-native": ^0.63.8
+    "@types/ramda": ^0.27.19
+    "@types/react": ^16.9.49
+    "@types/react-native": ^0.63.22
     "@types/react-test-renderer": ^16.9.3
     babel-jest: ^26.3.0
     babel-plugin-inline-import: ^3.0.0
@@ -2983,7 +2983,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/jest@npm:^26.0.10":
+"@types/jest@npm:^26.0.14":
   version: 26.0.14
   resolution: "@types/jest@npm:26.0.14"
   dependencies:
@@ -3072,7 +3072,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/ramda@npm:^0.27.14":
+"@types/ramda@npm:^0.27.19":
   version: 0.27.19
   resolution: "@types/ramda@npm:0.27.19"
   dependencies:
@@ -3081,7 +3081,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-native@npm:^0.63.8":
+"@types/react-native@npm:^0.63.22":
   version: 0.63.22
   resolution: "@types/react-native@npm:0.63.22"
   dependencies:
@@ -3099,7 +3099,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:*, @types/react@npm:^16.9.46":
+"@types/react@npm:*, @types/react@npm:^16.9.49":
   version: 16.9.49
   resolution: "@types/react@npm:16.9.49"
   dependencies:
