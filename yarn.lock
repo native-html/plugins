@@ -11569,7 +11569,7 @@ fsevents@^2.1.2:
   languageName: node
   linkType: hard
 
-"prettier@npm:^2.0.2, prettier@npm:^2.0.5":
+"prettier@npm:^2.0.2, prettier@npm:^2.1.2":
   version: 2.1.2
   resolution: "prettier@npm:2.1.2"
   bin:
@@ -13449,7 +13449,7 @@ resolve@~1.12.0:
     eslint-plugin-compat: ^3.8.0
     eslint-plugin-tsdoc: ^0.2.7
     husky: ^4.3.0
-    prettier: ^2.0.5
+    prettier: ^2.1.2
   languageName: unknown
   linkType: soft
 
