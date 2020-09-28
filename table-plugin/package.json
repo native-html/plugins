@@ -43,7 +43,6 @@
     "@tsconfig/react-native": "^1.0.2",
     "@types/html-validator": "^5.0.0",
     "@types/jest": "^26.0.14",
-    "@types/ramda": "^0.27.19",
     "@types/react": "^16.9.49",
     "@types/react-native": "^0.63.22",
     "@types/react-test-renderer": "^16.9.3",
@@ -66,7 +65,6 @@
     "@formidable-webview/webshell": "2.0.0-alpha.0",
     "@types/prop-types": "^15.7.3",
     "prop-types": "^15.7.2",
-    "ramda": "^0.27.1",
     "stringify-entities": "^3.0.1"
   },
   "peerDependencies": {

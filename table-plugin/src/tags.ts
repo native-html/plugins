@@ -1,5 +1,8 @@
-import without from 'ramda/es/without';
 import { IGNORED_TAGS as ORIGINAL_IGNORED_TAGS } from 'react-native-render-html/src/HTMLUtils';
+
+function without<T>(undesired: T[], original: T[]): T[] {
+  return original.filter((v) => undesired.indexOf(v) === -1);
+}
 
 /**
  * All HTML tags associated with a table element.

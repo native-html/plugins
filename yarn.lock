@@ -2161,7 +2161,6 @@ __metadata:
     "@types/html-validator": ^5.0.0
     "@types/jest": ^26.0.14
     "@types/prop-types": ^15.7.3
-    "@types/ramda": ^0.27.19
     "@types/react": ^16.9.49
     "@types/react-native": ^0.63.22
     "@types/react-test-renderer": ^16.9.3
@@ -2173,7 +2172,6 @@ __metadata:
     metro-react-native-babel-preset: ^0.63.0
     metro-react-native-babel-transformer: ^0.63.0
     prop-types: ^15.7.2
-    ramda: ^0.27.1
     react: 16.13.1
     react-native: ^0.63.2
     react-native-render-html: ^4.2.4
@@ -2975,15 +2973,6 @@ __metadata:
   version: 15.7.3
   resolution: "@types/prop-types@npm:15.7.3"
   checksum: bd0eab69d5120ad3784d0c9985f902653d5924707a7f2b3702a330e762dfd61b6494954cb54ad0c52b918ffd6f1e7e27c9270e4442bc15250de348596f2f60cb
-  languageName: node
-  linkType: hard
-
-"@types/ramda@npm:^0.27.19":
-  version: 0.27.19
-  resolution: "@types/ramda@npm:0.27.19"
-  dependencies:
-    ts-toolbelt: ^6.3.3
-  checksum: c04f66842a9cc4281dbc0bdae9dfff7768c99629e86ead65f69621657a9d3be040e2799cdf03a92abd3050316ce100da953ae491dc5c3e9124c28fe5af744eee
   languageName: node
   linkType: hard
 
@@ -11913,13 +11902,6 @@ fsevents@^2.1.2:
   languageName: node
   linkType: hard
 
-"ramda@npm:^0.27.1":
-  version: 0.27.1
-  resolution: "ramda@npm:0.27.1"
-  checksum: 9aa4655dffdca66f8ba2ceabebe51996d6c75f6a2fb901a150885ace22c5950c211dd589868780b7a91c1443771702634d4370e7572d8c63c60e4b4f61aa57a9
-  languageName: node
-  linkType: hard
-
 "range-parser@npm:~1.2.1":
   version: 1.2.1
   resolution: "range-parser@npm:1.2.1"
@@ -14002,13 +13984,6 @@ resolve@~1.12.0:
   version: 1.0.1
   resolution: "trim-off-newlines@npm:1.0.1"
   checksum: c590b9e8c1d91ac1b57b65f8ed7cc7837e702d86f47c725462cc7e03f3850dfa92a32f956d350632208aa78e9be03917a21d9ef5d139c30be13bb51bf576209f
-  languageName: node
-  linkType: hard
-
-"ts-toolbelt@npm:^6.3.3":
-  version: 6.15.5
-  resolution: "ts-toolbelt@npm:6.15.5"
-  checksum: d2f585ee3439ae7a72dd7c00630491195b2a4f34107c595d567242482b9fa911b5a9b5921fb4984506c2f7d8efce61351c7f48519438df67b6c0a8dcd40c862c
   languageName: node
   linkType: hard
 

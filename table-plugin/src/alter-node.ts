@@ -1,13 +1,11 @@
 import { HtmlAttributesDictionary, HTMLNode } from 'react-native-render-html';
-import forEachObjIndexed from 'ramda/es/forEachObjIndexed';
 import strigifyEntities from 'stringify-entities';
 
 function renderOpeningTag(tag: string, attributes: HtmlAttributesDictionary) {
   const strAttributes: string[] = [];
-  //@ts-ignore
-  forEachObjIndexed((attrVal: string | number, attrKey: string) => {
-    strAttributes.push(`${attrKey}="${strigifyEntities(`${attrVal}`)}"`);
-  })(attributes);
+  Object.keys(attributes).forEach((key) => {
+    strAttributes.push(`${key}="${strigifyEntities(`${attributes[key]}`)}"`);
+  });
   return `<${tag}${strAttributes.length ? ' ' : ''}${strAttributes.join(' ')}>`;
 }
 
