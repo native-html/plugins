@@ -3,26 +3,25 @@
 
 ### Code Refactoring
 
-* implement HTMLTable component with webshell 2.0 useAutoheight ([0d038ba](https://github.com/native-html/table-plugin/commit/0d038ba0f61cfa2cd9f089ed7d69d26d191cd4a6)), closes [#16](https://github.com/native-html/table-plugin/issues/16)
+* implement HTMLTable component with [**webshell 2.0**](https://formidable-webview.github.io/webshell/) `useAutoheight` ([0d038ba](https://github.com/native-html/table-plugin/commit/0d038ba0f61cfa2cd9f089ed7d69d26d191cd4a6)), closes [#16](https://github.com/native-html/table-plugin/issues/16)
 
 
 ### Features
 
-* better customizability of table style specs ([2b66c10](https://github.com/native-html/table-plugin/commit/2b66c10a61990de4a7beb735be0e5be9121c985b)), closes [#10](https://github.com/native-html/table-plugin/issues/10)
+* better customizability of table style specs ([2b66c10](https://github.com/native-html/table-plugin/commit/2b66c10a61990de4a7beb735be0e5be9121c985b)), thanks [@nadav2051](https://github.com/nadav2051)! closes [#10](https://github.com/native-html/table-plugin/issues/10)
 
 
 ### Performance Improvements
 
-* avoid rerendering caused by onDOMLinkPress ([1fe9f77](https://github.com/native-html/table-plugin/commit/1fe9f7748851d92935f9fcc7693b5be02f79bfc6))
+* avoid rerendering caused by `onDOMLinkPress` ([1fe9f77](https://github.com/native-html/table-plugin/commit/1fe9f7748851d92935f9fcc7693b5be02f79bfc6))
 * limit number of rendering cycles ([312e648](https://github.com/native-html/table-plugin/commit/312e648b8fb7eddd8c933d6e0b1ba8e35457a910))
 
 
 ### BREAKING CHANGES
 
-* removed TableStyleSpecs.borderWidthPx in favor of
-rowsBorderWidthPx, columnsBorderWidthPx and outerBorderWidthPx
-* This plugin now requires React Native 0.59+ because it
-uses hooks internally.
+* removed `TableStyleSpecs.borderWidthPx` in favor of
+`rowsBorderWidthPx`, `columnsBorderWidthPx` and `outerBorderWidthPx`
+* This plugin now **requires React Native 0.59+** because it uses hooks internally.
 
 ## [1.0.4](https://github.com/native-html/table-plugin/compare/v1.0.3...v1.0.4) (2020-08-20)
 
