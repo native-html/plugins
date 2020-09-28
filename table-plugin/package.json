@@ -1,0 +1,133 @@
+{
+  "name": "@native-html/table-plugin",
+  "version": "1.0.4",
+  "description": "🔠 A WebView-based plugin to render tables in react-native-render-html",
+  "main": "lib/commonjs/index.js",
+  "module": "lib/module/index.js",
+  "types": "types/@native-html/table-plugin/index.d.ts",
+  "files": [
+    "lib",
+    "src",
+    "types"
+  ],
+  "scripts": {
+    "test": "npm run test:ts && npm run test:lint && npm run test:jest",
+    "test:jest": "jest src/",
+    "test:ts": "tsc --noEmit",
+    "test:lint": "eslint --ext ts,tsx src/",
+    "build": "npm run build:source && npm run build:defs && npm run build:doc",
+    "build:source": "bob build",
+    "build:defs": "api-extractor run --local --verbose",
+    "build:doc": "api-documenter markdown --input-folder temp --output-folder docs",
+    "prepublish": "npm run build"
+  },
+  "keywords": [
+    "react-native",
+    "react-native-render-html",
+    "html",
+    "table"
+  ],
+  "devDependencies": {
+    "@babel/cli": "^7.10.5",
+    "@babel/core": "^7.11.1",
+    "@babel/plugin-transform-react-jsx": "^7.10.4",
+    "@babel/preset-typescript": "^7.10.4",
+    "@babel/runtime": "^7.11.2",
+    "@formidable-webview/ersatz": "^0.10.1-alpha.5",
+    "@formidable-webview/ersatz-testing": "^0.10.1-alpha.6",
+    "@microsoft/api-documenter": "^7.8.27",
+    "@microsoft/api-extractor": "7.9.5",
+    "@release-it/conventional-changelog": "^1.1.4",
+    "@testing-library/react-native": "^7.0.2",
+    "@tsconfig/react-native": "^1.0.2",
+    "@types/html-validator": "^5.0.0",
+    "@types/jest": "^26.0.10",
+    "@types/ramda": "^0.27.14",
+    "@types/react": "^16.9.46",
+    "@types/react-native": "^0.63.8",
+    "@types/react-test-renderer": "^16.9.3",
+    "babel-jest": "^26.3.0",
+    "babel-plugin-inline-import": "^3.0.0",
+    "eslint": "^7.7.0",
+    "html-validator": "^5.1.17",
+    "jest": "^26.4.0",
+    "metro-react-native-babel-preset": "^0.62.0",
+    "metro-react-native-babel-transformer": "^0.62.0",
+    "react": "16.13.1",
+    "react-native": "^0.63.2",
+    "react-native-render-html": "^4.2.3",
+    "react-native-webview": "^10.7.0",
+    "react-test-renderer": "16.13.1",
+    "release-it": "^13.6.7",
+    "typescript": "^3.9.7"
+  },
+  "dependencies": {
+    "@formidable-webview/webshell": "1.x",
+    "@types/prop-types": "^15.7.3",
+    "prop-types": "^15.7.2",
+    "ramda": "^0.27.1",
+    "stringify-entities": "^3.0.1"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*",
+    "react-native-render-html": ">= 4.2.1 < 5.0"
+  },
+  "author": "Jules Sam. Randolph <jules.sam.randolph@gmail.com> (https://github.com/jsamr)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/native-html/table-plugin.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "chore: release ${version}",
+      "tagName": "v${version}"
+    },
+    "npm": {
+      "publish": true
+    },
+    "github": {
+      "release": true
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "preset": "angular",
+        "infile": "../CHANGELOG.MD",
+        "skipUnstable": true
+      }
+    }
+  },
+  "@react-native-community/bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      [
+        "module",
+        {
+          "babelrc": false
+        }
+      ],
+      [
+        "commonjs",
+        {
+          "babelrc": false
+        }
+      ],
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  }
+}

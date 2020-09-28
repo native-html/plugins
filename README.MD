@@ -37,7 +37,7 @@ yarn add @native-html/table-plugin
 
 ## Minimal working example
 
-_[Full example](examples/simple)_
+_[Full example](example/SimpleExample.js)_
 
 You need 3 conditions to get to a working example:
 

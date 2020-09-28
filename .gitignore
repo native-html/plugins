@@ -59,17 +59,11 @@ buck-out/
 # Bundle artifact
 *.jsbundle
 
-# CocoaPods
-/ios/Pods/
+*.todos
 
-# Jest code coverage
-/coverage
-
-# This library
-/lib/
-
-# api-extractor
-/temp
-
-# Types must be bundled with api-extractor, not included in the repo
-/types
+# yarn berry
+.yarn/*
+!.yarn/releases
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions

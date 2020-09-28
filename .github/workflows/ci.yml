@@ -20,16 +20,16 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - run: npm ci
-    - run: npm run test:ts
+    - run: yarn install --immutable
+    - run: yarn workspace @native-html/table-plugin test:ts
       name: Typescript Tests
-    - run: npm run test:lint
+    - run: yarn workspace @native-html/table-plugin test:lint
       name: Linting Tests
-    - run: npm run test:jest -- --coverage
+    - run: yarn workspace @native-html/table-plugin test:jest -- --coverage
       name: Behavior Tests
-    - run: npm run build
+    - run: yarn workspace @native-html/table-plugin build
       name: Build
     - uses: codecov/codecov-action@v1
       with:
-        file: ./coverage/clover.xml
+        file: ./table-plugin/coverage/clover.xml
         fail_ci_if_error: true
