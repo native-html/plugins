@@ -1675,45 +1675,45 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@formidable-webview/ersatz-core@npm:^0.10.1-alpha.5":
-  version: 0.10.1-alpha.5
-  resolution: "@formidable-webview/ersatz-core@npm:0.10.1-alpha.5"
+"@formidable-webview/ersatz-core@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "@formidable-webview/ersatz-core@npm:1.0.0"
   peerDependencies:
     react: "*"
     react-native: "*"
     react-native-webview: "*"
-  checksum: 1d9de19dba7fd299fea2f3d1874f73c207b33cdd99c770a36a4ae9e8dc92ba1bc57d317d9cf593d5d3c5aaed5b1656b5e716fdeb13cec0d6acffda94e28be878
+  checksum: 771cf4a76871aa91afb0c2d84aee738ffbe32fd9f6dbec4487256374a38dc2b0a6b68cec948da13f39e3c62bab1312297510f6fc78cb0facbf471962d2d0a9e5
   languageName: node
   linkType: hard
 
-"@formidable-webview/ersatz-testing@npm:^0.10.1-alpha.6":
-  version: 0.10.1-alpha.6
-  resolution: "@formidable-webview/ersatz-testing@npm:0.10.1-alpha.6"
+"@formidable-webview/ersatz-testing@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "@formidable-webview/ersatz-testing@npm:1.0.1"
   dependencies:
-    "@formidable-webview/ersatz-core": ^0.10.1-alpha.5
+    "@formidable-webview/ersatz-core": ^1.0.0
   peerDependencies:
-    "@testing-library/react-native": ">= 7.0.0"
+    "@testing-library/react-native": ">=7.0.1"
     jest: "*"
     react: "*"
     react-native: "*"
-  checksum: c3de933e86bccf1df8e1658e456463b9d53ffd6c5afd5f2ea54aea6bc33f0ab6bd14f0f919db6dc4250baeed0feb21657fab903fb97a8c37d2feecac7f7814e4
+  checksum: c5bb63591ca0dc300be0a240d08f517962cb0312a931680773e1fe0667eb3529d7b4ebda1eff3cae1cc7da18b64784e536d04a98358b36f1876f64d0fefe658a
   languageName: node
   linkType: hard
 
-"@formidable-webview/ersatz@npm:^0.10.1-alpha.5":
-  version: 0.10.1-alpha.5
-  resolution: "@formidable-webview/ersatz@npm:0.10.1-alpha.5"
+"@formidable-webview/ersatz@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "@formidable-webview/ersatz@npm:1.0.0"
   dependencies:
-    "@formidable-webview/ersatz-core": ^0.10.1-alpha.5
+    "@formidable-webview/ersatz-core": ^1.0.0
     assert: ^2.0.0
     canvas: ^2.6.1
-    jsdom: ^16.3.0
-    node-fetch: ^3.0.0-beta.7
+    jsdom: ^16.4.0
+    node-fetch: ^3.0.0-beta.8
   peerDependencies:
     react: "*"
     react-native: "*"
     react-native-webview: ">= 7.6.0 < 11"
-  checksum: 735efa93cde0a7924872c8d53bec1a7a1930eb21c4a9507fa4ae824ea90fef5037edde409441c5458815443a5ece8a6025954777a53d83ce636cc6154fb660c2
+  checksum: 4780e7b1153adc4710a97e9ec61709c635b18669285c0579856a6fbada8d0181ad111c4961ff52a3fbaaa2e9a2d720e951f5f8fb452b2d091b0187dd74c48122
   languageName: node
   linkType: hard
 
@@ -1727,7 +1727,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@formidable-webview/webshell@npm:1.x":
+"@formidable-webview/webshell@npm:^1.0.2":
   version: 1.0.2
   resolution: "@formidable-webview/webshell@npm:1.0.2"
   peerDependencies:
@@ -2340,9 +2340,9 @@ __metadata:
     "@babel/plugin-transform-react-jsx": ^7.10.4
     "@babel/preset-typescript": ^7.10.4
     "@babel/runtime": ^7.11.2
-    "@formidable-webview/ersatz": ^0.10.1-alpha.5
-    "@formidable-webview/ersatz-testing": ^0.10.1-alpha.6
-    "@formidable-webview/webshell": 1.x
+    "@formidable-webview/ersatz": ^1.0.0
+    "@formidable-webview/ersatz-testing": ^1.0.1
+    "@formidable-webview/webshell": ^1.0.2
     "@microsoft/api-documenter": ^7.8.27
     "@microsoft/api-extractor": 7.9.5
     "@release-it/conventional-changelog": ^2.0.0
@@ -9926,7 +9926,7 @@ fsevents@^2.1.2:
   languageName: node
   linkType: hard
 
-"jsdom@npm:^16.2.2, jsdom@npm:^16.3.0":
+"jsdom@npm:^16.2.2, jsdom@npm:^16.4.0":
   version: 16.4.0
   resolution: "jsdom@npm:16.4.0"
   dependencies:
@@ -11503,7 +11503,7 @@ fsevents@^2.1.2:
   languageName: node
   linkType: hard
 
-"node-fetch@npm:^3.0.0-beta.7":
+"node-fetch@npm:^3.0.0-beta.8":
   version: 3.0.0-beta.9
   resolution: "node-fetch@npm:3.0.0-beta.9"
   dependencies:
