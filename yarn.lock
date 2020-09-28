@@ -2160,8 +2160,8 @@ __metadata:
     eslint: ^7.10.0
     html-validator: ^5.1.17
     jest: ^26.4.2
-    metro-react-native-babel-preset: ^0.62.0
-    metro-react-native-babel-transformer: ^0.62.0
+    metro-react-native-babel-preset: ^0.63.0
+    metro-react-native-babel-transformer: ^0.63.0
     prop-types: ^15.7.2
     ramda: ^0.27.1
     react: 16.13.1
@@ -6136,7 +6136,7 @@ __metadata:
     babel-jest: ^26.3.0
     eslint: ^7.10.0
     jest: ^26.4.2
-    metro-react-native-babel-preset: ^0.59.0
+    metro-react-native-babel-preset: ^0.63.0
     react: 16.13.1
     react-native: 0.63.2
     react-native-render-html: ^4.2.4
@@ -9797,13 +9797,13 @@ fsevents@^2.1.2:
   languageName: node
   linkType: hard
 
-"metro-babel-transformer@npm:0.62.0":
-  version: 0.62.0
-  resolution: "metro-babel-transformer@npm:0.62.0"
+"metro-babel-transformer@npm:0.63.0":
+  version: 0.63.0
+  resolution: "metro-babel-transformer@npm:0.63.0"
   dependencies:
     "@babel/core": ^7.0.0
-    metro-source-map: 0.62.0
-  checksum: 9a7fdc99ad3614e1b205b7f35f666a17bb06bbbee2b1ae894c7c857dbef3f55eb39f00df3f83c20a3974f34943760f7be3f4d5be2ced74c2d534c0a6ace021e8
+    metro-source-map: 0.63.0
+  checksum: 40e6ef10e4db6f11e41433c56cad6db4ba440c54b209f49f21702a7ad50aaea6f6621ecb85e6bc136772b2f0f19a164f2625c99a98daea79ddc01f4a3ddf60a0
   languageName: node
   linkType: hard
 
@@ -9914,7 +9914,7 @@ fsevents@^2.1.2:
   languageName: node
   linkType: hard
 
-"metro-react-native-babel-preset@npm:0.59.0, metro-react-native-babel-preset@npm:^0.59.0":
+"metro-react-native-babel-preset@npm:0.59.0":
   version: 0.59.0
   resolution: "metro-react-native-babel-preset@npm:0.59.0"
   dependencies:
@@ -9962,9 +9962,9 @@ fsevents@^2.1.2:
   languageName: node
   linkType: hard
 
-"metro-react-native-babel-preset@npm:0.62.0, metro-react-native-babel-preset@npm:^0.62.0":
-  version: 0.62.0
-  resolution: "metro-react-native-babel-preset@npm:0.62.0"
+"metro-react-native-babel-preset@npm:0.63.0, metro-react-native-babel-preset@npm:^0.63.0":
+  version: 0.63.0
+  resolution: "metro-react-native-babel-preset@npm:0.63.0"
   dependencies:
     "@babel/core": ^7.0.0
     "@babel/plugin-proposal-class-properties": ^7.0.0
@@ -10007,7 +10007,7 @@ fsevents@^2.1.2:
     react-refresh: ^0.4.0
   peerDependencies:
     "@babel/core": "*"
-  checksum: aa5b620c2ad33b853617582cb6378295fee217e1b83bfb33b1a7e651f1a97cdb6c4ce1db485c397dc22d1654f2864733ef95a221b5d72d6baf2a5b588d691c55
+  checksum: dcbd3c7247336a40c80086255a7df8758f05663c2999af5be55192f9e7ceea42bc6e714dcce41b2a4567504ed198b3ca998ba514fcdbde9bf7aabd1e60158b2a
   languageName: node
   linkType: hard
 
@@ -10041,18 +10041,18 @@ fsevents@^2.1.2:
   languageName: node
   linkType: hard
 
-"metro-react-native-babel-transformer@npm:^0.62.0":
-  version: 0.62.0
-  resolution: "metro-react-native-babel-transformer@npm:0.62.0"
+"metro-react-native-babel-transformer@npm:^0.63.0":
+  version: 0.63.0
+  resolution: "metro-react-native-babel-transformer@npm:0.63.0"
   dependencies:
     "@babel/core": ^7.0.0
     babel-preset-fbjs: ^3.3.0
-    metro-babel-transformer: 0.62.0
-    metro-react-native-babel-preset: 0.62.0
-    metro-source-map: 0.62.0
+    metro-babel-transformer: 0.63.0
+    metro-react-native-babel-preset: 0.63.0
+    metro-source-map: 0.63.0
   peerDependencies:
     "@babel/core": "*"
-  checksum: 3c489d29f52d22ee50e1f5f5f51fb2d3411ab0a62c88dfa556c1d233d22f27f3c92c1c18c59d24b78dd95649ad9b9503c0eb5c43d95de0ed2336bb321569169b
+  checksum: a2d954bee005c4a04b157cfc429b182aff29dcac541714ecbe23c81aba1850319cb1e3b97d1ddd8074b47343fa56c83462fc16b30129c7fe90c65d8d5d6db713
   languageName: node
   linkType: hard
 
@@ -10095,18 +10095,18 @@ fsevents@^2.1.2:
   languageName: node
   linkType: hard
 
-"metro-source-map@npm:0.62.0":
-  version: 0.62.0
-  resolution: "metro-source-map@npm:0.62.0"
+"metro-source-map@npm:0.63.0":
+  version: 0.63.0
+  resolution: "metro-source-map@npm:0.63.0"
   dependencies:
     "@babel/traverse": ^7.0.0
     "@babel/types": ^7.0.0
     invariant: ^2.2.4
-    metro-symbolicate: 0.62.0
-    ob1: 0.62.0
+    metro-symbolicate: 0.63.0
+    ob1: 0.63.0
     source-map: ^0.5.6
     vlq: ^1.0.0
-  checksum: 3e02e60d5e6944b9da72bae20a5ab573ae17e74dbfdaec2ce678d5a0d6befdf340edcb0b6e31e4d2bdda9e386896bfdaa9f33f5c0ce241f389360bd44be65cc0
+  checksum: 0a7ebac9d903084f7d42d0e17246d0fd0970a059a30d3b7a1829d484d417ea3cae445afa853664e8b3c335190fd65766e0a5f08ab49dda59b425324f7d4326d4
   languageName: node
   linkType: hard
 
@@ -10140,18 +10140,18 @@ fsevents@^2.1.2:
   languageName: node
   linkType: hard
 
-"metro-symbolicate@npm:0.62.0":
-  version: 0.62.0
-  resolution: "metro-symbolicate@npm:0.62.0"
+"metro-symbolicate@npm:0.63.0":
+  version: 0.63.0
+  resolution: "metro-symbolicate@npm:0.63.0"
   dependencies:
     invariant: ^2.2.4
-    metro-source-map: 0.62.0
+    metro-source-map: 0.63.0
     source-map: ^0.5.6
     through2: ^2.0.1
     vlq: ^1.0.0
   bin:
     metro-symbolicate: src/symbolicate.js
-  checksum: 1eee28344e1c1dd91c0817a6e447a5c425c51ff8754e393fbbc18ab0f9e961c32d6b7eb55de8afa4f2d5e68144fddbce9f3f5fe97ad209ca3f9600f5687cee2b
+  checksum: f9b452063453c26c74665f5439315d9931154fcc811f8c77bb26575fe5aa9caa1bfc5a2575a0c2dfdef02b9a4f29c1d825f6d606477e3df5ecc723625ddf3e6b
   languageName: node
   linkType: hard
 
@@ -10822,10 +10822,10 @@ fsevents@^2.1.2:
   languageName: node
   linkType: hard
 
-"ob1@npm:0.62.0":
-  version: 0.62.0
-  resolution: "ob1@npm:0.62.0"
-  checksum: 5fddb81f01a9112508847838a7ca51598c92b9cc426554ab400a58e0211ecedd60033662970a86d201a60bda3b152252c31d651c58da5dbac07dc480cfc5438a
+"ob1@npm:0.63.0":
+  version: 0.63.0
+  resolution: "ob1@npm:0.63.0"
+  checksum: 6916cedc9052eeddcfef95ecbd7a18296c5562025ad9776d12c574e4c766ac1978f133477c972be03e9e1be2fe7a4048690b1e7d8ec57d8634d11fe760e28a5d
   languageName: node
   linkType: hard
 
