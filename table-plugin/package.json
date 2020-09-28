@@ -28,8 +28,8 @@
     "table"
   ],
   "devDependencies": {
-    "@babel/cli": "^7.10.5",
-    "@babel/core": "^7.11.1",
+    "@babel/cli": "^7.11.6",
+    "@babel/core": "^7.11.6",
     "@babel/plugin-transform-react-jsx": "^7.10.4",
     "@babel/preset-typescript": "^7.10.4",
     "@babel/runtime": "^7.11.2",

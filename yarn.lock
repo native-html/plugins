@@ -5,7 +5,7 @@ __metadata:
   version: 4
   cacheKey: 6
 
-"@babel/cli@npm:^7.10.5":
+"@babel/cli@npm:^7.11.6":
   version: 7.11.6
   resolution: "@babel/cli@npm:7.11.6"
   dependencies:
@@ -50,7 +50,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/core@npm:^7.0.0, @babel/core@npm:^7.1.0, @babel/core@npm:^7.10.2, @babel/core@npm:^7.11.1, @babel/core@npm:^7.7.5, @babel/core@npm:^7.8.4":
+"@babel/core@npm:^7.0.0, @babel/core@npm:^7.1.0, @babel/core@npm:^7.10.2, @babel/core@npm:^7.11.6, @babel/core@npm:^7.7.5":
   version: 7.11.6
   resolution: "@babel/core@npm:7.11.6"
   dependencies:
@@ -2335,8 +2335,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@native-html/table-plugin@workspace:table-plugin"
   dependencies:
-    "@babel/cli": ^7.10.5
-    "@babel/core": ^7.11.1
+    "@babel/cli": ^7.11.6
+    "@babel/core": ^7.11.6
     "@babel/plugin-transform-react-jsx": ^7.10.4
     "@babel/preset-typescript": ^7.10.4
     "@babel/runtime": ^7.11.2
@@ -6564,8 +6564,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "example@workspace:example"
   dependencies:
-    "@babel/core": ^7.8.4
-    "@babel/runtime": ^7.8.4
+    "@babel/core": ^7.11.6
+    "@babel/runtime": ^7.11.2
     "@native-html/table-plugin": "workspace:*"
     "@react-native-community/eslint-config": ^1.1.0
     babel-jest: ^25.1.0
