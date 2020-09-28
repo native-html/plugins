@@ -8,6 +8,7 @@ import Ersatz from '@formidable-webview/ersatz';
 import makeErsatzTesting from '@formidable-webview/ersatz-testing';
 import { TableConfig, HTMLTableStats } from '../types';
 import './setup';
+import { TableContentHeightState } from '@native-html/table-plugin';
 
 const { waitForErsatz } = makeErsatzTesting(Ersatz);
 
@@ -34,17 +35,18 @@ const dummyStats: HTMLTableStats = {
 
 describe('HTMLTable component', () => {
   it('should produce w3-compliant HTML code', async () => {
-    const { UNSAFE_getByType } = render(
-      <HTMLTable
-        html={'<table></table>'}
-        WebView={WebView}
-        renderersProps={{}}
-        numOfChars={0}
-        numOfColumns={0}
-        numOfRows={0}
-      />
+    const webview = await waitForErsatz(
+      render(
+        <HTMLTable
+          html={'<table></table>'}
+          WebView={Ersatz}
+          renderersProps={{}}
+          numOfChars={0}
+          numOfColumns={0}
+          numOfRows={0}
+        />
+      )
     );
-    const webview = UNSAFE_getByType(WebView);
     const validated = await validator({
       data: webview.props.source.html,
       format: 'json'
@@ -52,7 +54,7 @@ describe('HTMLTable component', () => {
     expect(validated).toBeValidHTML();
   });
   describe('computeContainerHeight prop', () => {
-    it('should be called once when there is no DOM mounting', () => {
+    it('should be called twice when there is no DOM mounting', () => {
       const computeContainerHeight = jest.fn(() => 40);
       render(
         <HTMLTable
@@ -62,10 +64,12 @@ describe('HTMLTable component', () => {
           {...defaultTestConfig}
         />
       );
-      expect(computeContainerHeight).toHaveBeenCalledTimes(1);
+      expect(computeContainerHeight).toHaveBeenCalledTimes(2);
     });
-    it('should be called twice when there is DOM mounting', async () => {
-      const computeContainerHeight = jest.fn(() => null);
+    it('should be called three times when there is DOM mounting', async () => {
+      const computeContainerHeight = jest.fn((s: TableContentHeightState) => {
+        return s.contentHeight;
+      });
       await waitForErsatz(
         render(
           <HTMLTable
@@ -77,12 +81,12 @@ describe('HTMLTable component', () => {
           />
         )
       );
-      expect(computeContainerHeight).toHaveBeenCalledTimes(2);
+      expect(computeContainerHeight).toHaveBeenCalledTimes(3);
       expect(computeContainerHeight).toHaveBeenNthCalledWith(1, {
         type: 'heuristic',
         contentHeight: expect.any(Number)
       });
-      expect(computeContainerHeight).toHaveBeenNthCalledWith(2, {
+      expect(computeContainerHeight).toHaveBeenNthCalledWith(3, {
         type: 'accurate',
         contentHeight: expect.any(Number)
       });
@@ -104,7 +108,7 @@ describe('HTMLTable component', () => {
     });
   });
   describe('computeHeuristicHeight prop', () => {
-    it("should be used on first rendering cycle to determine container's height", () => {
+    it("should be used on two initial rendering cycles to determine container's height", () => {
       const computeHeuristicContentHeight = jest.fn(() => 2);
       const { getByTestId } = render(
         <HTMLTable
@@ -114,7 +118,7 @@ describe('HTMLTable component', () => {
           {...defaultTestConfig}
         />
       );
-      expect(computeHeuristicContentHeight).toHaveBeenCalledTimes(1);
+      expect(computeHeuristicContentHeight).toHaveBeenCalledTimes(2);
       const container = getByTestId('html-table-container');
       expect(container).toBeTruthy();
       expect(StyleSheet.flatten(container.props.style)).toMatchObject({

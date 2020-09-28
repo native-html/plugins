@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useLayoutEffect } from 'react';
+import React, { useMemo, useRef, useLayoutEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import {
   Platform,
@@ -126,7 +126,9 @@ function useAnimatedAutoheight<WVP extends MinimalWebViewProps>({
     >
   >) {
   const animatedHeight = useRef(new Animated.Value(0)).current;
-  const { autoheightWebshellProps, contentSize } = useAutoheight<WVP>({
+  const { autoheightWebshellProps, contentSize, syncState } = useAutoheight<
+    WVP
+  >({
     webshellProps: webViewProps as any,
     reinitHeightOnViewportWidthChange: false
   });
@@ -135,7 +137,7 @@ function useAnimatedAutoheight<WVP extends MinimalWebViewProps>({
       findHeight({
         computeContainerHeight,
         computeHeuristicContentHeight,
-        contentHeight: contentSize.height || null,
+        contentHeight: syncState === 'synced' ? contentSize.height || 0 : null,
         numOfChars,
         numOfColumns,
         numOfRows
@@ -144,6 +146,7 @@ function useAnimatedAutoheight<WVP extends MinimalWebViewProps>({
       computeContainerHeight,
       computeHeuristicContentHeight,
       contentSize.height,
+      syncState,
       numOfChars,
       numOfColumns,
       numOfRows
@@ -236,7 +239,7 @@ function useSource({
  *
  * @public
  */
-export function HTMLTable<WVP extends MinimalWebViewProps>({
+export const HTMLTable = function <WVP extends MinimalWebViewProps>({
   WebView,
   tableStyleSpecs,
   cssRules,
@@ -260,6 +263,12 @@ export function HTMLTable<WVP extends MinimalWebViewProps>({
         new HandleHTMLDimensionsFeature()
       ),
     [WebView]
+  );
+  const onDOMLinkPress = useCallback(
+    (t) => {
+      onLinkPress?.(t.uri);
+    },
+    [onLinkPress]
   );
   const { autoheightWebshellProps, containerStyle } = useAnimatedAutoheight({
     ...stats,
@@ -288,16 +297,14 @@ export function HTMLTable<WVP extends MinimalWebViewProps>({
       {
         //@ts-ignore
         <Webshell
-          onDOMLinkPress={(t) => {
-            onLinkPress?.(t.uri);
-          }}
+          onDOMLinkPress={onDOMLinkPress}
           {...autoheightWebshellProps}
           webshellDebug
         />
       }
     </Animated.View>
   );
-}
+};
 
 const propTypes: Record<keyof HTMLTableProps<any>, any> = {
   animationDuration: PropTypes.number.isRequired,
