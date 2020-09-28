@@ -11,13 +11,78 @@ import {
   StyleSheet,
   Text,
   View,
-  SafeAreaView,
   ScrollView,
   UIManager,
   Platform,
+  Button,
 } from 'react-native';
+import {createStackNavigator} from '@react-navigation/stack';
+import {NavigationContainer, useNavigation} from '@react-navigation/native';
 import SimpleExample from './SimpleExample';
 import CustomExample from './CustomExample';
+
+const Stack = createStackNavigator();
+
+function SimpleExampleDescription() {
+  return (
+    <Text style={styles.welcome}>
+      This Table renderer was created with makeTableRenderer function, and will
+      render HTML tables in the body of the HTML component.
+    </Text>
+  );
+}
+
+function CustomExampleDescription() {
+  return (
+    <Text style={styles.welcome}>
+      This Table renderer was created with makeCustomTableRenderer function to
+      register a custom component. Depending on the table complexity, it will
+      display the HTLM table in the content or through an actionable modal.
+    </Text>
+  );
+}
+
+function CustomExampleScreen() {
+  return (
+    <ScrollView
+      contentContainerStyle={styles.contentStyle}
+      style={styles.scrollViewStyle}>
+      <CustomExampleDescription />
+      <View style={styles.example}>
+        <CustomExample />
+      </View>
+    </ScrollView>
+  );
+}
+
+function SimpleExampleScreen() {
+  return (
+    <ScrollView
+      contentContainerStyle={styles.contentStyle}
+      style={styles.scrollViewStyle}>
+      <SimpleExampleDescription />
+      <View style={styles.example}>
+        <SimpleExample />
+      </View>
+    </ScrollView>
+  );
+}
+
+function HomeScreen() {
+  const navigation = useNavigation();
+  return (
+    <View style={styles.buttonsContainer}>
+      <Button
+        title="Open simple example"
+        onPress={() => navigation.navigate('SimpleExample')}
+      />
+      <Button
+        title="Open custom example"
+        onPress={() => navigation.navigate('CustomExample')}
+      />
+    </View>
+  );
+}
 
 export default class App extends Component {
   componentDidMount() {
@@ -29,24 +94,31 @@ export default class App extends Component {
 
   render() {
     return (
-      <SafeAreaView style={styles.container}>
-        <ScrollView
-          contentContainerStyle={styles.contentStyle}
-          style={styles.scrollViewStyle}>
-          <Text style={styles.welcome}>
-            @native-html/table-plugin Simple Example
-          </Text>
-          <View style={styles.example}>
-            <SimpleExample />
-          </View>
-          <Text style={styles.welcome}>
-            @native-html/table-plugin Custom Example
-          </Text>
-          <View style={styles.example}>
-            <CustomExample />
-          </View>
-        </ScrollView>
-      </SafeAreaView>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen
+            options={{
+              title: '@native-html/table-plugin',
+            }}
+            name="Home"
+            component={HomeScreen}
+          />
+          <Stack.Screen
+            options={{
+              title: 'Simple Example',
+            }}
+            name="SimpleExample"
+            component={SimpleExampleScreen}
+          />
+          <Stack.Screen
+            options={{
+              title: 'Custom Example',
+            }}
+            name="CustomExample"
+            component={CustomExampleScreen}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
     );
   }
 }
@@ -57,9 +129,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
+  buttonsContainer: {
+    justifyContent: 'space-between',
+    alignItems: 'stretch',
+    minHeight: 100,
+    alignSelf: 'center',
+    marginTop: 100,
+  },
   welcome: {
-    fontSize: 20,
-    textAlign: 'center',
     margin: 10,
   },
   example: {

@@ -11,9 +11,17 @@
   },
   "dependencies": {
     "@native-html/table-plugin": "workspace:*",
+    "@react-native-community/masked-view": "^0.1.10",
+    "@react-navigation/native": "^5.7.4",
+    "@react-navigation/stack": "^5.9.1",
     "react": "16.13.1",
     "react-native": "0.63.2",
+    "react-native-gesture-handler": "^1.8.0",
+    "react-native-picker-select": "^8.0.0",
+    "react-native-reanimated": "^1.13.1",
     "react-native-render-html": "^4.2.4",
+    "react-native-safe-area-context": "^3.1.8",
+    "react-native-screens": "^2.11.0",
     "react-native-snackbar": "^2.2.3",
     "react-native-webview": "^10.9.0"
   },
