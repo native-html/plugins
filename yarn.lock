@@ -2248,7 +2248,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@microsoft/api-documenter@npm:^7.8.27":
+"@microsoft/api-documenter@npm:^7.8.56":
   version: 7.8.56
   resolution: "@microsoft/api-documenter@npm:7.8.56"
   dependencies:
@@ -2265,16 +2265,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@microsoft/api-extractor-model@npm:7.8.15":
-  version: 7.8.15
-  resolution: "@microsoft/api-extractor-model@npm:7.8.15"
-  dependencies:
-    "@microsoft/tsdoc": 0.12.19
-    "@rushstack/node-core-library": 3.27.0
-  checksum: 4d0c6b419e027e7cedddd7ad7c58dfe76401381a38b786608a0705b6eba8781f470a6d8b5645179b18f174b82720ad7133136a3060618380e0996d314d34a415
-  languageName: node
-  linkType: hard
-
 "@microsoft/api-extractor-model@npm:7.9.7":
   version: 7.9.7
   resolution: "@microsoft/api-extractor-model@npm:7.9.7"
@@ -2285,14 +2275,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@microsoft/api-extractor@npm:7.9.5":
-  version: 7.9.5
-  resolution: "@microsoft/api-extractor@npm:7.9.5"
+"@microsoft/api-extractor@npm:7.9.22":
+  version: 7.9.22
+  resolution: "@microsoft/api-extractor@npm:7.9.22"
   dependencies:
-    "@microsoft/api-extractor-model": 7.8.15
+    "@microsoft/api-extractor-model": 7.9.7
     "@microsoft/tsdoc": 0.12.19
-    "@rushstack/node-core-library": 3.27.0
-    "@rushstack/ts-command-line": 4.4.8
+    "@rushstack/node-core-library": 3.33.6
+    "@rushstack/ts-command-line": 4.6.10
     colors: ~1.2.1
     lodash: ~4.17.15
     resolve: ~1.17.0
@@ -2301,7 +2291,7 @@ __metadata:
     typescript: ~3.9.5
   bin:
     api-extractor: bin/api-extractor
-  checksum: 540d9a54a688a702ad20f3656da525c25d80f4c22e7cc9b11e3be70da706d605a01616bb99854ef30abbd6f7ae94d4d3605135a6c2e105adc38b402e9475dd66
+  checksum: 49494c995df11ee42bd4fe16d44998dfd31d8bf5c05d79b686e5c6d68a4f3a758c22d5233197ced8440d1a5922b6f52f1334d72579e4bdf0519ea37f2f4579f0
   languageName: node
   linkType: hard
 
@@ -2343,8 +2333,8 @@ __metadata:
     "@formidable-webview/ersatz": ^1.0.0
     "@formidable-webview/ersatz-testing": ^1.0.1
     "@formidable-webview/webshell": ^1.0.2
-    "@microsoft/api-documenter": ^7.8.27
-    "@microsoft/api-extractor": 7.9.5
+    "@microsoft/api-documenter": ^7.8.56
+    "@microsoft/api-extractor": 7.9.22
     "@release-it/conventional-changelog": ^2.0.0
     "@testing-library/react-native": ^7.0.2
     "@tsconfig/react-native": ^1.0.2
@@ -2769,21 +2759,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rushstack/node-core-library@npm:3.27.0":
-  version: 3.27.0
-  resolution: "@rushstack/node-core-library@npm:3.27.0"
-  dependencies:
-    "@types/node": 10.17.13
-    colors: ~1.2.1
-    fs-extra: ~7.0.1
-    jju: ~1.4.0
-    semver: ~7.3.0
-    timsort: ~0.3.0
-    z-schema: ~3.18.3
-  checksum: b8de951c055460514a3d2ca141eeb9529e022f60cc41f561e8f423139435d5aaafb744a60951134dd03da7bfac8d985f00e1faec5fbbddb87c9afe7b464e233a
-  languageName: node
-  linkType: hard
-
 "@rushstack/node-core-library@npm:3.33.6":
   version: 3.33.6
   resolution: "@rushstack/node-core-library@npm:3.33.6"
@@ -2798,17 +2773,6 @@ __metadata:
     timsort: ~0.3.0
     z-schema: ~3.18.3
   checksum: bba6e58971631891874873e60385efd7ceb2ea2ac789a3e6889ae71fbcdb78f16431a22489197f68ad74fd46214158a000cfb001534c2e172a52eb172a2341f2
-  languageName: node
-  linkType: hard
-
-"@rushstack/ts-command-line@npm:4.4.8":
-  version: 4.4.8
-  resolution: "@rushstack/ts-command-line@npm:4.4.8"
-  dependencies:
-    "@types/argparse": 1.0.38
-    argparse: ~1.0.9
-    colors: ~1.2.1
-  checksum: 81eef8e815b0caa2db37b0b3108026089a181d79db09d0dff5847e7a66786a644260a03405f07159dd4a538e1d0af211c994fd6e7151f2063664516177531a7d
   languageName: node
   linkType: hard
 
