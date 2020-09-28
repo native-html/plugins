@@ -50,7 +50,7 @@
     "babel-plugin-inline-import": "^3.0.0",
     "eslint": "^7.10.0",
     "html-validator": "^5.1.17",
-    "jest": "^26.4.0",
+    "jest": "^26.4.2",
     "metro-react-native-babel-preset": "^0.62.0",
     "metro-react-native-babel-transformer": "^0.62.0",
     "react": "16.13.1",
