@@ -88,13 +88,16 @@ export interface TableHeuristicContentHeightState {
 
 // @public
 export interface TableStyleSpecs {
-    borderWidthPx: number;
     cellPaddingEm: number;
+    columnsBorderWidthPx: number;
     fitContainerHeight: boolean;
     fitContainerWidth: boolean;
     fontFamily: string;
     fontSizePx: number | null;
     linkColor: string;
+    outerBorderColor: string;
+    outerBorderWidthPx: number;
+    rowsBorderWidthPx: number;
     selectableText: boolean;
     tdBorderColor: string;
     thBorderColor: string;

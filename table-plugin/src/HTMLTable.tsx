@@ -57,7 +57,10 @@ const tableStylePropTypeSpec: Record<keyof TableStyleSpecs, any> = {
   trOddColor: PropTypes.string,
   trEvenBackground: PropTypes.string,
   trEvenColor: PropTypes.string,
-  borderWidthPx: PropTypes.number,
+  rowsBorderWidthPx: PropTypes.number,
+  columnsBorderWidthPx: PropTypes.number,
+  outerBorderColor: PropTypes.string,
+  outerBorderWidthPx: PropTypes.number,
   cellPaddingEm: PropTypes.number,
   fitContainerWidth: PropTypes.bool,
   fitContainerHeight: PropTypes.bool,
@@ -239,7 +242,7 @@ function useSource({
  *
  * @public
  */
-export const HTMLTable = function <WVP extends MinimalWebViewProps>({
+export function HTMLTable<WVP extends MinimalWebViewProps>({
   WebView,
   tableStyleSpecs,
   cssRules,
@@ -304,7 +307,7 @@ export const HTMLTable = function <WVP extends MinimalWebViewProps>({
       }
     </Animated.View>
   );
-};
+}
 
 const propTypes: Record<keyof HTMLTableProps<any>, any> = {
   animationDuration: PropTypes.number.isRequired,

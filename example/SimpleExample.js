@@ -160,6 +160,11 @@ const renderers = {
   table: makeTableRenderer({
     WebView,
     animationType: 'animated',
+    tableStyleSpecs: {
+      outerBorderWidthPx: 1,
+      rowsBorderWidthPx: 1,
+      columnsBorderWidthPx: 1,
+    },
   }),
 };
 

@@ -16,13 +16,16 @@ export interface TableStyleSpecs
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [borderWidthPx](./table-plugin.tablestylespecs.borderwidthpx.md) | number | Border width, in pixels. |
 |  [cellPaddingEm](./table-plugin.tablestylespecs.cellpaddingem.md) | number | Spacing between cells, in em. |
+|  [columnsBorderWidthPx](./table-plugin.tablestylespecs.columnsborderwidthpx.md) | number | The width of the border between columns. |
 |  [fitContainerHeight](./table-plugin.tablestylespecs.fitcontainerheight.md) | boolean | Expand table to HTML height. |
 |  [fitContainerWidth](./table-plugin.tablestylespecs.fitcontainerwidth.md) | boolean | Expand table to HTML width. |
 |  [fontFamily](./table-plugin.tablestylespecs.fontfamily.md) | string | Font family. |
 |  [fontSizePx](./table-plugin.tablestylespecs.fontsizepx.md) | number \| null | Font size, in pixels. |
 |  [linkColor](./table-plugin.tablestylespecs.linkcolor.md) | string | Link of anchors. |
+|  [outerBorderColor](./table-plugin.tablestylespecs.outerbordercolor.md) | string | The border color of the table frame. |
+|  [outerBorderWidthPx](./table-plugin.tablestylespecs.outerborderwidthpx.md) | number | The border width for the table frame. |
+|  [rowsBorderWidthPx](./table-plugin.tablestylespecs.rowsborderwidthpx.md) | number | The width of the border between rows. |
 |  [selectableText](./table-plugin.tablestylespecs.selectabletext.md) | boolean | Will text be selectable. |
 |  [tdBorderColor](./table-plugin.tablestylespecs.tdbordercolor.md) | string | Table cell border color. |
 |  [thBorderColor](./table-plugin.tablestylespecs.thbordercolor.md) | string | Table header cell border color. |

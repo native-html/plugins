@@ -13,7 +13,10 @@ export const defaultTableStylesSpecs: TableStyleSpecs = {
   fitContainerWidth: false,
   fitContainerHeight: false,
   cellPaddingEm: 0.25,
-  borderWidthPx: 0.25,
+  outerBorderColor: '#b5b5b5',
+  outerBorderWidthPx: 0,
+  rowsBorderWidthPx: 1,
+  columnsBorderWidthPx: 0,
   linkColor: '#3498DB',
   fontFamily: 'sans-serif',
   fontSizePx: null,
@@ -41,7 +44,10 @@ export function cssRulesFromSpecs(
 ) {
   const {
     cellPaddingEm,
-    borderWidthPx,
+    rowsBorderWidthPx,
+    columnsBorderWidthPx,
+    outerBorderColor,
+    outerBorderWidthPx,
     selectableText,
     fitContainerWidth,
     fitContainerHeight,
@@ -86,6 +92,7 @@ export function cssRulesFromSpecs(
       color: ${linkColor};
     }
     table {
+      border: ${outerBorderWidthPx}px solid ${outerBorderColor};
       ${spanToContainerWidthRule}
       ${spanToContainerHeightRule}
       padding: 0;
@@ -97,15 +104,8 @@ export function cssRulesFromSpecs(
     table, th, td {
       margin: 0;
     }
-    th {
-      border-bottom: ${borderWidthPx}px solid ${thBorderColor};
-      border-right: ${borderWidthPx}px solid ${thBorderColor};
-    }
-    th:first-child {
-      border-left: ${borderWidthPx}px solid ${thBorderColor};
-    }
-    tr:last-child th {
-      border-bottom: ${borderWidthPx}px solid ${thBorderColor};
+    thead {
+      background-color: ${thOddBackground};
     }
     tr:nth-of-type(odd) th {
       background-color: ${thOddBackground};
@@ -115,26 +115,30 @@ export function cssRulesFromSpecs(
       background-color: ${thEvenBackground};
       color: ${thEvenColor};
     }
-    td {
-      border-bottom: ${borderWidthPx}px solid ${tdBorderColor};
-      border-right: ${borderWidthPx}px solid ${tdBorderColor};
-    }
-    td:first-child {
-      border-left: ${borderWidthPx}px solid ${tdBorderColor};
-    }
-    tr:last-child td {
-      border-bottom: ${borderWidthPx}px solid ${tdBorderColor};
-    }
-    thead {
-      background-color: ${thOddBackground};
-    }
-    tr:nth-of-type(odd) {
+    tr:nth-of-type(odd) td {
       background-color: ${trOddBackground};
       color: ${trOddColor}
     }
-    tr:nth-of-type(even) {
+    tr:nth-of-type(even) td {
       background-color: ${trEvenBackground};
       color: ${trEvenColor};
+    }
+    th {
+      border-bottom: ${rowsBorderWidthPx}px solid ${thBorderColor};
+      border-right: ${columnsBorderWidthPx}px solid ${thBorderColor};
+    }
+    td {
+      border-bottom: ${rowsBorderWidthPx}px solid ${tdBorderColor};
+      border-right: ${columnsBorderWidthPx}px solid ${tdBorderColor};
+    }
+    th:last-of-type, td:last-of-type {
+      border-right: none;
+    }
+    td:last-of-type {
+      border-right: none;
+    }
+    tr:last-of-type td {
+      border-bottom: none;
     }
     `;
 }

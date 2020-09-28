@@ -30,9 +30,21 @@ export interface TableStyleSpecs {
    */
   fontSizePx: number | null;
   /**
-   * Border width, in pixels.
+   * The width of the border between rows.
    */
-  borderWidthPx: number;
+  rowsBorderWidthPx: number;
+  /**
+   * The width of the border between columns.
+   */
+  columnsBorderWidthPx: number;
+  /**
+   * The border color of the table frame.
+   */
+  outerBorderColor: string;
+  /**
+   * The border width for the table frame.
+   */
+  outerBorderWidthPx: number;
   /**
    * Link of anchors.
    */
