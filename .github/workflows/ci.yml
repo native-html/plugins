@@ -25,7 +25,7 @@ jobs:
       name: Typescript Tests
     - run: yarn workspace @native-html/table-plugin test:lint
       name: Linting Tests
-    - run: yarn workspace @native-html/table-plugin test:jest -- --coverage
+    - run: yarn workspace @native-html/table-plugin test:jest --coverage
       name: Behavior Tests
     - run: yarn workspace @native-html/table-plugin build
       name: Build
