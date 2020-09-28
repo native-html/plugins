@@ -10,8 +10,8 @@
     "release": "yarn workspace @native-html/table-plugin release-it"
   },
   "devDependencies": {
-    "@commitlint/cli": "^9.1.2",
-    "@commitlint/config-conventional": "^9.1.2",
+    "@commitlint/cli": "^11.0.0",
+    "@commitlint/config-conventional": "^11.0.0",
     "@formidable-webview/eslint-config-webjs": "^1.0.0",
     "@react-native-community/bob": "^0.16.2",
     "@react-native-community/eslint-config": "^2.0.0",
@@ -20,7 +20,7 @@
     "eslint": "^7.7.0",
     "eslint-plugin-compat": "^3.8.0",
     "eslint-plugin-tsdoc": "^0.2.6",
-    "husky": "^4.2.5",
+    "husky": "^4.3.0",
     "prettier": "^2.0.5"
   },
   "author": "Jules Sam. Randolph <jules.sam.randolph@gmail.com> (https://github.com/jsamr)",
