@@ -159,7 +159,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 const renderers = {
   table: makeTableRenderer({
     WebView,
-    animationType: 'layout', // <-- You must activate animation at the root of your app in android, see App.js
+    animationType: 'animated',
   }),
 };
 
@@ -175,6 +175,6 @@ const htmlConfig = {
   },
 };
 
-export default function SimpleExample() {
-  return <HTML html={table1} {...htmlConfig} />;
+export default function SimpleExample({instance}) {
+  return <HTML key={`simple-${instance}`} html={table1} {...htmlConfig} />;
 }

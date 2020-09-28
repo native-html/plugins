@@ -177,6 +177,6 @@ const htmlConfig = {
   },
 };
 
-export default function CustomExample() {
-  return <HTML html={table1} {...htmlConfig} />;
+export default function CustomExample({instance}) {
+  return <HTML key={`custom-${instance}`} html={table1} {...htmlConfig} />;
 }

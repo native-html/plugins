@@ -34,7 +34,12 @@ export default class ClickTable extends PureComponent {
       return (
         <View>
           {description}
-          <HTMLTable autoheight={true} {...this.props} {...tableConfig} />
+          <HTMLTable
+            computeHeuristicContentHeight={() => 1000}
+            autoheight={true}
+            {...this.props}
+            {...tableConfig}
+          />
         </View>
       );
     }

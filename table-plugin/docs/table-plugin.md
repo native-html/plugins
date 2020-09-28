@@ -4,18 +4,13 @@
 
 ## table-plugin package
 
-## Classes
-
-|  Class | Description |
-|  --- | --- |
-|  [HTMLTable](./table-plugin.htmltable.md) | A component capable of rendering a html string which root tag is a table tag. This component should not be used directly, except with custom renderers. |
-
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
 |  [alterNode(node)](./table-plugin.alternode.md) | This function should be passed to HTML component. |
 |  [cssRulesFromSpecs(specs)](./table-plugin.cssrulesfromspecs.md) | Create css rules from a specification object. |
+|  [HTMLTable({ WebView, tableStyleSpecs, cssRules, html, sourceBaseUrl, animationType, computeHeuristicContentHeight, computeContainerHeight, webViewProps: userWebViewProps, style, onLinkPress, animationDuration, renderersProps, ...stats })](./table-plugin.htmltable.md) | A component capable of rendering a html string which root tag is a table tag. This component should not be used directly, except with custom renderers. |
 |  [makeCustomTableRenderer(TableComponent)](./table-plugin.makecustomtablerenderer.md) | Create a table renderer from a custom <code>TableComponent</code>. |
 |  [makeTableRenderer(tableConfig)](./table-plugin.maketablerenderer.md) | Create the table renderer. |
 

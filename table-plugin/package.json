@@ -63,15 +63,15 @@
     "typescript": "~3.9.7"
   },
   "dependencies": {
-    "@formidable-webview/webshell": "^1.0.2",
+    "@formidable-webview/webshell": "2.0.0-alpha.0",
     "@types/prop-types": "^15.7.3",
     "prop-types": "^15.7.2",
     "ramda": "^0.27.1",
     "stringify-entities": "^3.0.1"
   },
   "peerDependencies": {
-    "react": "*",
-    "react-native": "*",
+    "react": ">= 16.8.0",
+    "react-native": ">= 0.59.0",
     "react-native-render-html": ">= 4.2.1 < 5.0"
   },
   "author": "Jules Sam. Randolph <jules.sam.randolph@gmail.com> (https://github.com/jsamr)",

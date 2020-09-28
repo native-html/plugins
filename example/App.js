@@ -6,7 +6,7 @@
  * @flow
  */
 
-import React, {Component} from 'react';
+import React, {Component, useState} from 'react';
 import {
   StyleSheet,
   Text,
@@ -43,26 +43,30 @@ function CustomExampleDescription() {
 }
 
 function CustomExampleScreen() {
+  const [instance, setInstance] = useState(0);
   return (
     <ScrollView
       contentContainerStyle={styles.contentStyle}
       style={styles.scrollViewStyle}>
       <CustomExampleDescription />
+      <Button title="reload" onPress={() => setInstance((i) => i + 1)} />
       <View style={styles.example}>
-        <CustomExample />
+        <CustomExample instance={instance} />
       </View>
     </ScrollView>
   );
 }
 
 function SimpleExampleScreen() {
+  const [instance, setInstance] = useState(0);
   return (
     <ScrollView
       contentContainerStyle={styles.contentStyle}
       style={styles.scrollViewStyle}>
       <SimpleExampleDescription />
+      <Button title="reload" onPress={() => setInstance((i) => i + 1)} />
       <View style={styles.example}>
-        <SimpleExample />
+        <SimpleExample instance={instance} />
       </View>
     </ScrollView>
   );

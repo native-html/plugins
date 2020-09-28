@@ -1,4 +1,4 @@
-import React, { PureComponent, Component, ComponentType } from 'react';
+import React, { useMemo, useRef, useLayoutEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
   Platform,
@@ -8,12 +8,10 @@ import {
   Animated
 } from 'react-native';
 import makeWebshell, {
-  elementDimensionsFeature,
-  linkPressFeature,
-  ElementDimensionsObject,
-  WebshellComponentOf,
-  MinimalWebViewProps,
-  AssembledFeatureOf
+  useAutoheight,
+  HandleHTMLDimensionsFeature,
+  HandleLinkPressFeature,
+  MinimalWebViewProps
 } from '@formidable-webview/webshell';
 import { cssRulesFromSpecs, defaultTableStylesSpecs } from './css-rules';
 import {
@@ -30,11 +28,6 @@ const styles = StyleSheet.create({
     overflow: 'hidden'
   }
 });
-
-interface State {
-  contentHeight: number | null;
-  animatedHeight: Animated.Value;
-}
 
 const defaultInsets = {
   top: 0,
@@ -75,8 +68,6 @@ const tableStylePropTypeSpec: Record<keyof TableStyleSpecs, any> = {
   thOddColor: PropTypes.string
 };
 
-type TableFeatures = [typeof linkPressFeature, typeof elementDimensionsFeature];
-
 function findHeight({
   computeContainerHeight,
   computeHeuristicContentHeight,
@@ -100,9 +91,7 @@ function findHeight({
   });
 }
 
-export function defaultComputeHeuristicContentHeight(
-  tableStats: HTMLTableStats
-) {
+function defaultComputeHeuristicContentHeight(tableStats: HTMLTableStats) {
   const { numOfChars, numOfRows } = tableStats;
   const width = Dimensions.get('window').width;
   const charsPerLine = (30 * width) / 400;
@@ -111,149 +100,57 @@ export function defaultComputeHeuristicContentHeight(
   return Math.max(approxNumOfLines, numOfRows) * lineHeight;
 }
 
-export function defaultComputeContainerHeight(state: TableContentHeightState) {
+function defaultComputeContainerHeight(state: TableContentHeightState) {
   return state.contentHeight;
 }
 
-class __HTMLTable<WVP extends MinimalWebViewProps> extends PureComponent<
-  HTMLTableProps<WVP>,
-  State
-> {
-  static defaultProps = {
-    animationDuration: DEFAULT_TRANSITION_DURATION,
-    animationType: 'animated',
-    computeHeuristicContentHeight: defaultComputeHeuristicContentHeight,
-    computeContainerHeight: defaultComputeContainerHeight
-  };
-
-  static displayName = 'HTMLTable';
-
-  static propTypes: Record<keyof HTMLTableProps<any>, any> = {
-    animationDuration: PropTypes.number.isRequired,
-    animationType: PropTypes.oneOf(['none', 'animated', 'layout']),
-    computeContainerHeight: PropTypes.func.isRequired,
-    computeHeuristicContentHeight: PropTypes.func.isRequired,
-    html: PropTypes.string.isRequired,
-    numOfChars: PropTypes.number.isRequired,
-    numOfColumns: PropTypes.number.isRequired,
-    numOfRows: PropTypes.number.isRequired,
-    WebView: PropTypes.func.isRequired,
-    onLinkPress: PropTypes.func,
-    style: PropTypes.any,
-    tableStyleSpecs: PropTypes.shape(tableStylePropTypeSpec),
-    cssRules: PropTypes.string,
-    webViewProps: PropTypes.object,
-    sourceBaseUrl: PropTypes.string,
-    renderersProps: PropTypes.any
-  };
-
-  private oldContainerHeight: number | null = null;
-  private Webshell: WebshellComponentOf<ComponentType<any>, TableFeatures>;
-
-  constructor(props: Required<HTMLTableProps<WVP>>) {
-    super(props);
-    const state = {
+function useAnimatedAutoheight<WVP extends MinimalWebViewProps>({
+  computeContainerHeight,
+  computeHeuristicContentHeight,
+  animationType,
+  animationDuration,
+  webViewProps,
+  ...stats
+}: Pick<
+  HTMLTableProps<any>,
+  | 'animationType'
+  | 'animationDuration'
+  | 'numOfChars'
+  | 'numOfColumns'
+  | 'numOfRows'
+> & { webViewProps: any } & Required<
+    Pick<
+      HTMLTableProps<any>,
+      'computeContainerHeight' | 'computeHeuristicContentHeight'
+    >
+  >) {
+  const animatedHeight = useRef(new Animated.Value(0)).current;
+  const oldContainerHeightRef = useRef<number | null>(
+    findHeight({
+      computeContainerHeight,
+      computeHeuristicContentHeight,
       contentHeight: null,
-      animatedHeight: new Animated.Value(0)
-    };
-    this.state = state;
-    this.oldContainerHeight = null;
-    this.Webshell = makeWebshell<
-      AssembledFeatureOf<TableFeatures[keyof TableFeatures]>[],
-      ComponentType<any>
-    >(
-      props.WebView,
-      linkPressFeature.assemble(),
-      elementDimensionsFeature.assemble({ tagName: 'body' })
-    );
-  }
-
-  private buildHTML() {
-    const { tableStyleSpecs, cssRules, html } = this.props;
-    const styleSpecs = tableStyleSpecs
-      ? {
-          ...defaultTableStylesSpecs,
-          ...tableStyleSpecs
-        }
-      : defaultTableStylesSpecs;
-    const tableCssStyle =
-      typeof cssRules === 'string' ? cssRules : cssRulesFromSpecs(styleSpecs);
-    return `
-<!DOCTYPE html>
-<html>
-<head>
-  <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=false">
-  <title>Table</title>
-  <style>${tableCssStyle}</style>
-</head>
-<body>${html}</body>
-</html>
-      `;
-  }
-
-  private onTableDimensions = ({
-    height: contentHeight
-  }: ElementDimensionsObject) => {
-    if (typeof contentHeight === 'number' && !Number.isNaN(contentHeight)) {
-      this.setState({ contentHeight });
-    }
-  };
-
-  componentDidUpdate(oldProps: HTMLTableProps<WVP>, oldState: State) {
-    const { animationDuration, WebView, animationType } = this
-      .props as Required<HTMLTableProps<WVP>>;
-    const shouldAnimate =
-      oldState.contentHeight !== this.state.contentHeight &&
-      animationType !== 'none';
-    if (shouldAnimate && animationType === 'animated') {
-      this.oldContainerHeight = oldState.contentHeight || 0;
-      Animated.timing(this.state.animatedHeight, {
-        toValue: 1,
-        duration: animationDuration,
-        useNativeDriver: false
-      }).start();
-    }
-    if (shouldAnimate && animationType === 'layout') {
-      animateNextFrames(animationDuration);
-    }
-    if (WebView !== oldProps.WebView && __DEV__) {
-      throw new Error('HTMLTable: you cannot change WebView prop');
-    }
-  }
-
-  render() {
-    const {
-      computeContainerHeight,
-      computeHeuristicContentHeight,
-      style,
-      sourceBaseUrl,
-      onLinkPress,
-      animationType,
-      webViewProps: userWebViewProps
-    } = this.props as Required<HTMLTableProps<any>>;
-    const html = this.buildHTML(); // TODO memoize
-    const source: any = {
-      html
-    };
-    if (sourceBaseUrl) {
-      source.baseUrl = sourceBaseUrl;
-    }
-    const containerHeight = findHeight({
-      computeContainerHeight,
-      computeHeuristicContentHeight,
-      contentHeight: this.state.contentHeight,
-      stats: this.props
-    });
-    const Webshell = this.Webshell;
-    const containerStyle =
+      stats
+    })
+  );
+  const { autoheightWebshellProps, contentSize } = useAutoheight<WVP>({
+    webshellProps: webViewProps as any,
+    reinitHeightOnViewportWidthChange: false
+  });
+  const containerHeight = findHeight({
+    computeContainerHeight,
+    computeHeuristicContentHeight,
+    contentHeight: contentSize.height || null,
+    stats
+  });
+  const containerStyle = useMemo(
+    () =>
       animationType === 'animated' && containerHeight !== null
         ? {
-            height: this.state.animatedHeight.interpolate({
+            height: animatedHeight.interpolate({
               inputRange: [0, 1],
               outputRange: [
-                this.oldContainerHeight === null
-                  ? containerHeight
-                  : this.oldContainerHeight,
+                oldContainerHeightRef.current || containerHeight,
                 containerHeight
               ]
             })
@@ -263,28 +160,66 @@ class __HTMLTable<WVP extends MinimalWebViewProps> extends PureComponent<
               !containerHeight || Number.isNaN(containerHeight)
                 ? undefined
                 : containerHeight
-          };
-    const webViewProps = {
-      scalesPageToFit: Platform.select({ android: false, ios: undefined }),
-      automaticallyAdjustContentInsets: false,
-      scrollEnabled: true,
-      contentInset: defaultInsets,
-      ...userWebViewProps,
-      style: [StyleSheet.absoluteFill, (userWebViewProps as any)?.style],
-      source
-    };
-    return (
-      <Animated.View
-        testID="html-table-container"
-        style={[containerStyle, styles.container, style]}>
-        <Webshell
-          onDOMLinkPress={onLinkPress}
-          onDOMElementDimensions={this.onTableDimensions}
-          {...(webViewProps as MinimalWebViewProps)}
-        />
-      </Animated.View>
-    );
-  }
+          },
+    [animatedHeight, animationType, containerHeight]
+  );
+  useLayoutEffect(() => {
+    if (oldContainerHeightRef.current !== containerHeight) {
+      oldContainerHeightRef.current = containerHeight;
+      if (animationType === 'animated') {
+        Animated.timing(animatedHeight, {
+          toValue: 1,
+          duration: animationDuration,
+          useNativeDriver: false
+        }).start();
+      } else if (animationType === 'layout') {
+        animateNextFrames(animationDuration);
+      }
+    }
+  }, [containerHeight, animationDuration, animationType, animatedHeight]);
+  return {
+    containerStyle,
+    autoheightWebshellProps
+  };
+}
+
+function useSource({
+  tableStyleSpecs,
+  cssRules,
+  sourceBaseUrl,
+  html
+}: Pick<
+  HTMLTableProps<any>,
+  'html' | 'cssRules' | 'tableStyleSpecs' | 'sourceBaseUrl'
+>) {
+  const injectedHtml = useMemo(() => {
+    const styleSpecs = tableStyleSpecs
+      ? {
+          ...defaultTableStylesSpecs,
+          ...tableStyleSpecs
+        }
+      : defaultTableStylesSpecs;
+    const tableCssStyle =
+      typeof cssRules === 'string' ? cssRules : cssRulesFromSpecs(styleSpecs);
+    return `
+  <!DOCTYPE html>
+  <html>
+  <head>
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=false">
+    <title>Table</title>
+    <style>${tableCssStyle}</style>
+  </head>
+  <body>${html}</body>
+  </html>
+        `;
+  }, [tableStyleSpecs, cssRules, html]);
+  return useMemo(
+    () => ({
+      html: injectedHtml,
+      baseUrl: sourceBaseUrl ?? undefined
+    }),
+    [injectedHtml, sourceBaseUrl]
+  );
 }
 
 /**
@@ -294,8 +229,99 @@ class __HTMLTable<WVP extends MinimalWebViewProps> extends PureComponent<
  *
  * @public
  */
-export declare class HTMLTable<WVP> extends Component<HTMLTableProps<WVP>> {}
+export function HTMLTable<WVP extends MinimalWebViewProps>({
+  WebView,
+  tableStyleSpecs,
+  cssRules,
+  html,
+  sourceBaseUrl,
+  animationType,
+  computeHeuristicContentHeight = defaultComputeHeuristicContentHeight,
+  computeContainerHeight = defaultComputeContainerHeight,
+  webViewProps: userWebViewProps,
+  style,
+  onLinkPress,
+  animationDuration,
+  renderersProps,
+  ...stats
+}: HTMLTableProps<WVP>) {
+  const Webshell = useMemo(
+    () =>
+      makeWebshell(
+        WebView,
+        new HandleLinkPressFeature(),
+        new HandleHTMLDimensionsFeature()
+      ),
+    [WebView]
+  );
+  const { autoheightWebshellProps, containerStyle } = useAnimatedAutoheight({
+    ...stats,
+    animationDuration,
+    animationType,
+    computeContainerHeight,
+    computeHeuristicContentHeight,
+    webViewProps: {
+      scalesPageToFit: Platform.select({ android: false, ios: undefined }),
+      automaticallyAdjustContentInsets: false,
+      scrollEnabled: true,
+      contentInset: defaultInsets,
+      ...userWebViewProps,
+      source: useSource({
+        html,
+        cssRules,
+        sourceBaseUrl,
+        tableStyleSpecs
+      })
+    }
+  });
+  return (
+    <Animated.View
+      testID="html-table-container"
+      style={[containerStyle, styles.container, style]}>
+      {
+        //@ts-ignore
+        <Webshell
+          onDOMLinkPress={(t) => {
+            onLinkPress?.(t.uri);
+          }}
+          {...autoheightWebshellProps}
+          webshellDebug
+        />
+      }
+    </Animated.View>
+  );
+}
 
-module.exports = {
-  HTMLTable: __HTMLTable
+const propTypes: Record<keyof HTMLTableProps<any>, any> = {
+  animationDuration: PropTypes.number.isRequired,
+  animationType: PropTypes.oneOf(['none', 'animated', 'layout']),
+  computeContainerHeight: PropTypes.func.isRequired,
+  computeHeuristicContentHeight: PropTypes.func.isRequired,
+  html: PropTypes.string.isRequired,
+  numOfChars: PropTypes.number.isRequired,
+  numOfColumns: PropTypes.number.isRequired,
+  numOfRows: PropTypes.number.isRequired,
+  WebView: PropTypes.func.isRequired,
+  onLinkPress: PropTypes.func,
+  style: PropTypes.any,
+  tableStyleSpecs: PropTypes.shape(tableStylePropTypeSpec),
+  cssRules: PropTypes.string,
+  webViewProps: PropTypes.object,
+  sourceBaseUrl: PropTypes.string,
+  renderersProps: PropTypes.any
 };
+
+const defaultProps = {
+  animationDuration: DEFAULT_TRANSITION_DURATION,
+  animationType: 'animated',
+  computeHeuristicContentHeight: defaultComputeHeuristicContentHeight,
+  computeContainerHeight: defaultComputeContainerHeight
+};
+
+Object.defineProperty(HTMLTable, 'propTypes', {
+  value: propTypes
+});
+
+Object.defineProperty(HTMLTable, 'defaultProps', {
+  value: defaultProps
+});

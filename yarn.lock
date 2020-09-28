@@ -1726,13 +1726,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@formidable-webview/webshell@npm:^1.0.2":
-  version: 1.0.2
-  resolution: "@formidable-webview/webshell@npm:1.0.2"
+"@formidable-webview/webshell@npm:2.0.0-alpha.0":
+  version: 2.0.0-alpha.0
+  resolution: "@formidable-webview/webshell@npm:2.0.0-alpha.0"
   peerDependencies:
     react: "*"
-    react-native: "*"
-  checksum: 093f53a121a3a40b0cc30c8305af34776777a7a310de211fb5bccfcdefc4ad411347d4744fc54e430a0d525941ad1e9c0467b32e41efbe2e6c26ab390fb2b426
+    react-native: ">= 0.59.0"
+  checksum: 652abe60c00f94f5a59022bf76322acb3c34ae26c27b70314d64e83c5f759215e290a9dac121aa57ce301ac640123400cef45bb023e1154aeec0fa74070758ff
   languageName: node
   linkType: hard
 
@@ -2151,7 +2151,7 @@ __metadata:
     "@babel/runtime": ^7.11.2
     "@formidable-webview/ersatz": ^1.0.0
     "@formidable-webview/ersatz-testing": ^1.0.1
-    "@formidable-webview/webshell": ^1.0.2
+    "@formidable-webview/webshell": 2.0.0-alpha.0
     "@microsoft/api-documenter": ^7.8.56
     "@microsoft/api-extractor": 7.9.22
     "@react-native-community/bob": ^0.16.2
@@ -2183,8 +2183,8 @@ __metadata:
     stringify-entities: ^3.0.1
     typescript: ~3.9.7
   peerDependencies:
-    react: "*"
-    react-native: "*"
+    react: ">= 16.8.0"
+    react-native: ">= 0.59.0"
     react-native-render-html: ">= 4.2.1 < 5.0"
   languageName: unknown
   linkType: soft
