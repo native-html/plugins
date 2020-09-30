@@ -242,7 +242,7 @@ function useSource({
  *
  * @public
  */
-export function HTMLTable<WVP extends MinimalWebViewProps>({
+export function HTMLTable({
   WebView,
   tableStyleSpecs,
   cssRules,
@@ -257,7 +257,7 @@ export function HTMLTable<WVP extends MinimalWebViewProps>({
   animationDuration,
   renderersProps,
   ...stats
-}: HTMLTableProps<WVP>) {
+}: HTMLTableProps<MinimalWebViewProps>) {
   const Webshell = useMemo(
     () =>
       makeWebshell(
@@ -298,7 +298,6 @@ export function HTMLTable<WVP extends MinimalWebViewProps>({
       testID="html-table-container"
       style={[containerStyle, styles.container, style]}>
       {
-        //@ts-ignore
         <Webshell
           onDOMLinkPress={onDOMLinkPress}
           {...autoheightWebshellProps}

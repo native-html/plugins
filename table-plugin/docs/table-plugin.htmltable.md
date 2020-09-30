@@ -9,14 +9,14 @@ A component capable of rendering a html string which root tag is a table tag. Th
 <b>Signature:</b>
 
 ```typescript
-export declare function HTMLTable<WVP extends MinimalWebViewProps>({ WebView, tableStyleSpecs, cssRules, html, sourceBaseUrl, animationType, computeHeuristicContentHeight, computeContainerHeight, webViewProps: userWebViewProps, style, onLinkPress, animationDuration, renderersProps, ...stats }: HTMLTableProps<WVP>): JSX.Element;
+export declare function HTMLTable({ WebView, tableStyleSpecs, cssRules, html, sourceBaseUrl, animationType, computeHeuristicContentHeight, computeContainerHeight, webViewProps: userWebViewProps, style, onLinkPress, animationDuration, renderersProps, ...stats }: HTMLTableProps<MinimalWebViewProps>): JSX.Element;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  { WebView, tableStyleSpecs, cssRules, html, sourceBaseUrl, animationType, computeHeuristicContentHeight, computeContainerHeight, webViewProps: userWebViewProps, style, onLinkPress, animationDuration, renderersProps, ...stats } | [HTMLTableProps](./table-plugin.htmltableprops.md)<!-- -->&lt;WVP&gt; |  |
+|  { WebView, tableStyleSpecs, cssRules, html, sourceBaseUrl, animationType, computeHeuristicContentHeight, computeContainerHeight, webViewProps: userWebViewProps, style, onLinkPress, animationDuration, renderersProps, ...stats } | [HTMLTableProps](./table-plugin.htmltableprops.md)<!-- -->&lt;MinimalWebViewProps&gt; |  |
 
 <b>Returns:</b>
 

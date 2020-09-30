@@ -21,7 +21,7 @@ export function cssRulesFromSpecs(specs?: TableStyleSpecs): string;
 export const defaultTableStylesSpecs: TableStyleSpecs;
 
 // @public
-export function HTMLTable<WVP extends MinimalWebViewProps>({ WebView, tableStyleSpecs, cssRules, html, sourceBaseUrl, animationType, computeHeuristicContentHeight, computeContainerHeight, webViewProps: userWebViewProps, style, onLinkPress, animationDuration, renderersProps, ...stats }: HTMLTableProps<WVP>): JSX.Element;
+export function HTMLTable({ WebView, tableStyleSpecs, cssRules, html, sourceBaseUrl, animationType, computeHeuristicContentHeight, computeContainerHeight, webViewProps: userWebViewProps, style, onLinkPress, animationDuration, renderersProps, ...stats }: HTMLTableProps<MinimalWebViewProps>): JSX.Element;
 
 // @public
 export interface HTMLTableBaseProps extends HTMLTableStats {
