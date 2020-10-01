@@ -4,6 +4,8 @@ import { StyleProp, ViewStyle } from 'react-native';
 /**
  * An object describing how to generate styles. See {@link cssRulesFromSpecs}.
  *
+ * ![](https://raw.githubusercontent.com/native-html/table-plugin/master/images/TableStyleSpecs.png)
+ *
  * @public
  */
 export interface TableStyleSpecs {

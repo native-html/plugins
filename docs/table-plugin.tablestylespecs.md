@@ -6,6 +6,8 @@
 
 An object describing how to generate styles. See [cssRulesFromSpecs()](./table-plugin.cssrulesfromspecs.md)<!-- -->.
 
+!\[\](https://raw.githubusercontent.com/native-html/table-plugin/master/images/TableStyleSpecs.png)
+
 <b>Signature:</b>
 
 ```typescript

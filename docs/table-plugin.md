@@ -24,7 +24,7 @@
 |  [TableAccurateContentHeightState](./table-plugin.tableaccuratecontentheightstate.md) | This content height state appears when the real table height is available, after the DOM has been mounted in the <code>WebView</code>. |
 |  [TableConfig](./table-plugin.tableconfig.md) | This object defines how the table component can be customized. |
 |  [TableHeuristicContentHeightState](./table-plugin.tableheuristiccontentheightstate.md) | This content height state is available on mount, before the real height is known from the DOM. |
-|  [TableStyleSpecs](./table-plugin.tablestylespecs.md) | An object describing how to generate styles. See [cssRulesFromSpecs()](./table-plugin.cssrulesfromspecs.md)<!-- -->. |
+|  [TableStyleSpecs](./table-plugin.tablestylespecs.md) | An object describing how to generate styles. See [cssRulesFromSpecs()](./table-plugin.cssrulesfromspecs.md)<!-- -->.<!-- -->!\[\](https://raw.githubusercontent.com/native-html/table-plugin/master/images/TableStyleSpecs.png) |
 
 ## Variables
 
