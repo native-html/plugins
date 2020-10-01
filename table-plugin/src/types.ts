@@ -4,7 +4,7 @@ import { StyleProp, ViewStyle } from 'react-native';
 /**
  * An object describing how to generate styles. See {@link cssRulesFromSpecs}.
  *
- * ![](https://raw.githubusercontent.com/native-html/table-plugin/master/images/TableStyleSpecs.png)
+ * <img src="https://raw.githubusercontent.com/native-html/table-plugin/master/images/TableStyleSpecs.png" />
  *
  * @public
  */
@@ -238,6 +238,8 @@ export interface TableConfig<WebViewProps = any> {
 
   /**
    * Specs to generate css rules.
+   *
+   * <img src="https://raw.githubusercontent.com/native-html/table-plugin/master/images/TableStyleSpecs.png" />
    *
    * @remarks
    * This prop will be ignored when `cssRules` are provided.

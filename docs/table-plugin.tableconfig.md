@@ -23,7 +23,7 @@ export interface TableConfig<WebViewProps = any>
 |  [cssRules](./table-plugin.tableconfig.cssrules.md) | string | Override default CSS rules with this prop. |
 |  [sourceBaseUrl](./table-plugin.tableconfig.sourcebaseurl.md) | string | See https://git.io/JeCAG |
 |  [style](./table-plugin.tableconfig.style.md) | StyleProp&lt;ViewStyle&gt; | Container style. |
-|  [tableStyleSpecs](./table-plugin.tableconfig.tablestylespecs.md) | [TableStyleSpecs](./table-plugin.tablestylespecs.md) | Specs to generate css rules. |
+|  [tableStyleSpecs](./table-plugin.tableconfig.tablestylespecs.md) | [TableStyleSpecs](./table-plugin.tablestylespecs.md) | Specs to generate css rules.<img src="https://raw.githubusercontent.com/native-html/table-plugin/master/images/TableStyleSpecs.png" /> |
 |  [WebView](./table-plugin.tableconfig.webview.md) | ComponentType&lt;WebViewProps&gt; | The <code>WebView</code> Component you wish to use. |
 |  [webViewProps](./table-plugin.tableconfig.webviewprops.md) | WebViewProps | Any props you'd like to pass to [TableConfig.WebView](./table-plugin.tableconfig.webview.md)<!-- -->. |
 

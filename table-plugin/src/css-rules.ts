@@ -3,6 +3,8 @@ import { TableStyleSpecs } from './types';
 /**
  * Default styles attributes.
  *
+ * <img src="https://raw.githubusercontent.com/native-html/table-plugin/master/images/TableStyleSpecs.png" />
+ *
  * @remarks
  * Custom attributes will be shallow-merged.
  *
