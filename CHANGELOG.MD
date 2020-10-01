@@ -1,3 +1,9 @@
+## [2.0.1](https://github.com/native-html/table-plugin/compare/v2.0.0...v2.0.1) (2020-10-01)
+
+### Dependencies
+
+* Upgrade `@formidable-webview/webshell` ([ef53677](https://github.com/native-html/table-plugin/commit/ef5367728c7ac7fb7babe7018b96ed46a8ba5b66)).
+
 # [2.0.0](https://github.com/native-html/table-plugin/compare/v1.0.4...v2.0.0) (2020-09-28)
 
 
