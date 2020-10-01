@@ -163,7 +163,7 @@ const renderers = {
 
 ### How to customize the Table component?
 
-**A**: Use `makeCustomTableRenderer` function. [See custom example](examples/custom).
+**A**: Use `makeCustomTableRenderer` function. [See custom example](example/CustomExample.js).
 
 <img src="images/adaptative.jpeg" width="300">
 
