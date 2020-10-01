@@ -18,7 +18,7 @@
     "build": "npm run build:source && npm run build:defs && npm run build:doc",
     "build:source": "bob build",
     "build:defs": "api-extractor run --local --verbose",
-    "build:doc": "api-documenter markdown --input-folder temp --output-folder docs",
+    "build:doc": "api-documenter markdown --input-folder temp --output-folder ../docs",
     "prepublish": "npm run build"
   },
   "keywords": [
