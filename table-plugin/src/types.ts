@@ -19,6 +19,8 @@ export interface TableStyleSpecs {
   fitContainerWidth: boolean;
   /**
    * Expand table to HTML height.
+   * **You must une unconstrained height for this to work!**
+   * See {@link TableConfig.computeContainerHeight}.
    */
   fitContainerHeight: boolean;
   /**
@@ -232,6 +234,7 @@ export interface TableConfig<WebViewProps = any> {
    * @defaultValue 1
    */
   maxScale?: boolean;
+
   /**
    * See https://git.io/JeCAG
    */

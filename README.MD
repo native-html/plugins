@@ -132,6 +132,46 @@ If you encounter typescript errors, chances are you are not following `peerDepen
 
 ## FAQ
 
+### How to easily style the table?
+
+Use `TableConfig.tableStyleSpecs`. The options will get merged with defaults,
+so you are not required to pass every field. See
+[documentation](docs/table-plugin.tablestylespecs.md).
+
+```javascript
+import {
+  defaultTableStylesSpecs,
+  cssRulesFromSpecs
+} from '@native-html/table-plugin';
+
+const renderers = {
+  table: makeTableRenderer({
+    tableStyleSpecs: {
+      // my style specs
+    }
+  })
+};
+```
+
+### How to disable autoheight?
+
+Pass `computeContainerHeight` option with a function returning `null`:
+
+```javascript
+import {
+  defaultTableStylesSpecs,
+  cssRulesFromSpecs
+} from '@native-html/table-plugin';
+
+const renderers = {
+  table: makeTableRenderer({
+    computeContainerHeight() {
+      return null;
+    }
+  })
+};
+```
+
 <a name="extend-styles" />
 
 ### How to extend default or custom styles?
@@ -154,11 +194,9 @@ a {
 
 const renderers = {
   table: makeTableRenderer({
-    cssRules,
-    // Other config options
-   })
+    cssRules
+  })
 };
-
 ```
 
 ### How to customize the Table component?
@@ -207,8 +245,8 @@ const cssRules =
 
 const renderers = {
   table: makeTableRenderer({
-    cssRules,
+    cssRules
     // Other config options
-   })
+  })
 };
 ```

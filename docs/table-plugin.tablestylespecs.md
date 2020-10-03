@@ -20,7 +20,7 @@ export interface TableStyleSpecs
 |  --- | --- | --- |
 |  [cellPaddingEm](./table-plugin.tablestylespecs.cellpaddingem.md) | number | Spacing between cells, in em. |
 |  [columnsBorderWidthPx](./table-plugin.tablestylespecs.columnsborderwidthpx.md) | number | The width of the border between columns. |
-|  [fitContainerHeight](./table-plugin.tablestylespecs.fitcontainerheight.md) | boolean | Expand table to HTML height. |
+|  [fitContainerHeight](./table-plugin.tablestylespecs.fitcontainerheight.md) | boolean | Expand table to HTML height. \*\*You must une unconstrained height for this to work!\*\* See [TableConfig.computeContainerHeight](./table-plugin.tableconfig.computecontainerheight.md)<!-- -->. |
 |  [fitContainerWidth](./table-plugin.tablestylespecs.fitcontainerwidth.md) | boolean | Expand table to HTML width. |
 |  [fontFamily](./table-plugin.tablestylespecs.fontfamily.md) | string | Font family. |
 |  [fontSizePx](./table-plugin.tablestylespecs.fontsizepx.md) | number \| null | Font size, in pixels. |

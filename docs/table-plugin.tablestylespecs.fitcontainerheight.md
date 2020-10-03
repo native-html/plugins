@@ -4,7 +4,7 @@
 
 ## TableStyleSpecs.fitContainerHeight property
 
-Expand table to HTML height.
+Expand table to HTML height. \*\*You must une unconstrained height for this to work!\*\* See [TableConfig.computeContainerHeight](./table-plugin.tableconfig.computecontainerheight.md)<!-- -->.
 
 <b>Signature:</b>
 
