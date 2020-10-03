@@ -1726,13 +1726,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@formidable-webview/webshell@npm:2.0.0-alpha.1":
-  version: 2.0.0-alpha.1
-  resolution: "@formidable-webview/webshell@npm:2.0.0-alpha.1"
+"@formidable-webview/webshell@npm:2.0.0-alpha.2":
+  version: 2.0.0-alpha.2
+  resolution: "@formidable-webview/webshell@npm:2.0.0-alpha.2"
   peerDependencies:
     react: "*"
     react-native: ">= 0.59.0"
-  checksum: 0486e9121f74eba986dfb8deb3de66377b8d0cf3cdab63621437a398a9131ab6402572b5f8266b70ebc4ccd24eb25d32e4635da3e8ab1554dc30090a2a50dfdc
+  checksum: f5f4499229adfaf7135e7cb9021e5d00d4e45ec9e7a55ebf246fe54a3bd8c78392fe0327d42e0ea9d134b29d78ee4cb1a0ce32a1af9644a3d3c9be650cf37f87
   languageName: node
   linkType: hard
 
@@ -2151,7 +2151,7 @@ __metadata:
     "@babel/runtime": ^7.11.2
     "@formidable-webview/ersatz": ^1.0.0
     "@formidable-webview/ersatz-testing": ^1.0.1
-    "@formidable-webview/webshell": 2.0.0-alpha.1
+    "@formidable-webview/webshell": 2.0.0-alpha.2
     "@microsoft/api-documenter": ^7.8.56
     "@microsoft/api-extractor": 7.9.22
     "@react-native-community/bob": ^0.16.2

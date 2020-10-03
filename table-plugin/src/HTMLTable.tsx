@@ -133,7 +133,7 @@ function useAnimatedAutoheight<WVP extends MinimalWebViewProps>({
     WVP
   >({
     webshellProps: webViewProps as any,
-    reinitHeightOnViewportWidthChange: false
+    resetHeightOnViewportWidthChange: false
   });
   const containerHeight = useMemo(
     () =>
@@ -218,7 +218,7 @@ function useSource({
   <!DOCTYPE html>
   <html>
   <head>
-    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=false">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1">
     <title>Table</title>
     <style>${tableCssStyle}</style>
   </head>
