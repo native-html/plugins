@@ -1,4 +1,4 @@
-import React, { Component, useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import * as WebBrowser from 'expo-web-browser';
 import {
@@ -97,7 +97,7 @@ export default function App() {
     }
     let timeout = setTimeout(setIsSnackVisible.bind(null, false), 3000);
     return clearTimeout.bind(null, timeout);
-  }, [url])
+  }, [url]);
   const onLinkPress = useCallback((e, url) => {
     setUrl(url);
   }, []);
