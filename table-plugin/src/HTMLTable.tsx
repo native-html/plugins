@@ -200,10 +200,11 @@ function useSource({
   tableStyleSpecs,
   cssRules,
   sourceBaseUrl,
-  html
+  html,
+  maxScale
 }: Pick<
   HTMLTableProps<any>,
-  'html' | 'cssRules' | 'tableStyleSpecs' | 'sourceBaseUrl'
+  'html' | 'cssRules' | 'tableStyleSpecs' | 'sourceBaseUrl' | 'maxScale'
 >) {
   const injectedHtml = useMemo(() => {
     const styleSpecs = tableStyleSpecs
@@ -218,14 +219,17 @@ function useSource({
   <!DOCTYPE html>
   <html>
   <head>
-    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=${Math.max(
+      1,
+      typeof maxScale !== 'number' || Number.isNaN(maxScale) ? 1 : maxScale
+    )}">
     <title>Table</title>
     <style>${tableCssStyle}</style>
   </head>
   <body>${html}</body>
   </html>
         `;
-  }, [tableStyleSpecs, cssRules, html]);
+  }, [tableStyleSpecs, cssRules, html, maxScale]);
   return useMemo(
     () => ({
       html: injectedHtml,
@@ -256,6 +260,7 @@ export function HTMLTable({
   onLinkPress,
   animationDuration,
   renderersProps,
+  maxScale,
   ...stats
 }: HTMLTableProps<MinimalWebViewProps>) {
   const Webshell = useMemo(
@@ -324,14 +329,16 @@ const propTypes: Record<keyof HTMLTableProps<any>, any> = {
   cssRules: PropTypes.string,
   webViewProps: PropTypes.object,
   sourceBaseUrl: PropTypes.string,
-  renderersProps: PropTypes.any
+  renderersProps: PropTypes.any,
+  maxScale: PropTypes.number.isRequired
 };
 
 const defaultProps = {
   animationDuration: DEFAULT_TRANSITION_DURATION,
   animationType: 'animated',
   computeHeuristicContentHeight: defaultComputeHeuristicContentHeight,
-  computeContainerHeight: defaultComputeContainerHeight
+  computeContainerHeight: defaultComputeContainerHeight,
+  maxScale: 1
 };
 
 Object.defineProperty(HTMLTable, 'propTypes', {

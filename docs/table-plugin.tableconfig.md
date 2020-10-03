@@ -21,6 +21,7 @@ export interface TableConfig<WebViewProps = any>
 |  [computeContainerHeight](./table-plugin.tableconfig.computecontainerheight.md) | (state: [TableContentHeightState](./table-plugin.tablecontentheightstate.md)<!-- -->) =&gt; number \| null | A function which will compute container's height given the table content height. |
 |  [computeHeuristicContentHeight](./table-plugin.tableconfig.computeheuristiccontentheight.md) | (state: [HTMLTableStats](./table-plugin.htmltablestats.md)<!-- -->) =&gt; number | A function to compute approximate content height before the real content height has been fetched on DOM mount. |
 |  [cssRules](./table-plugin.tableconfig.cssrules.md) | string | Override default CSS rules with this prop. |
+|  [maxScale](./table-plugin.tableconfig.maxscale.md) | boolean | Max zoom scale (must be greater than 1). |
 |  [sourceBaseUrl](./table-plugin.tableconfig.sourcebaseurl.md) | string | See https://git.io/JeCAG |
 |  [style](./table-plugin.tableconfig.style.md) | StyleProp&lt;ViewStyle&gt; | Container style. |
 |  [tableStyleSpecs](./table-plugin.tableconfig.tablestylespecs.md) | [TableStyleSpecs](./table-plugin.tablestylespecs.md) | Specs to generate css rules.<img src="https://raw.githubusercontent.com/native-html/table-plugin/master/images/TableStyleSpecs.png" /> |

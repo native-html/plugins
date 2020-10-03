@@ -227,6 +227,12 @@ export interface TableConfig<WebViewProps = any> {
   cssRules?: string;
 
   /**
+   * Max zoom scale (must be greater than 1).
+   *
+   * @defaultValue 1
+   */
+  maxScale?: boolean;
+  /**
    * See https://git.io/JeCAG
    */
   sourceBaseUrl?: string;
