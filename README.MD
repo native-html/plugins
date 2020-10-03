@@ -11,7 +11,7 @@
 [![semver](https://img.shields.io/badge/semver-2.0.0-e10079.svg)](https://semver.org/spec/v2.0.0.html)
 [![codecov](https://codecov.io/gh/native-html/table-plugin/branch/master/graph/badge.svg)](https://codecov.io/gh/native-html/table-plugin)
 [![CI](https://github.com/native-html/table-plugin/workflows/CI/badge.svg?branch=master)](https://github.com/native-html/table-plugin/actions?query=branch%3Amaster+workflow%3ACI)
-![DL/month](https://img.shields.io/npm/dm/react-native-render-html-table-bridge.svg)
+![DL/month](https://img.shields.io/npm/dm/@native-html/table-plugin.svg)
 
 ```sh
 npm add --save @native-html/table-plugin

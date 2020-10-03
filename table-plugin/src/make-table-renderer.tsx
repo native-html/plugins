@@ -18,7 +18,7 @@ export function makeTableRenderer(
       onLinkPress && onLinkPress({} as any, url, {});
     if (typeof attribs._rawHtml !== 'string') {
       throw new Error(
-        "You must inject `alterNode' method from react-native-render-html-table-bdridge in `HTML' component."
+        "You must inject `alterNode' method from @native-html/table-plugin in `HTML' component."
       );
     }
     return (
@@ -52,7 +52,7 @@ export function makeCustomTableRenderer(
       onLinkPress && onLinkPress({} as any, url, {});
     if (typeof attribs._rawHtml !== 'string') {
       throw new Error(
-        "You must inject `alterNode' method from react-native-render-html-table-bdridge in `HTML' component."
+        "You must inject `alterNode' method from @native-html/table-plugin in `HTML' component."
       );
     }
     return (
