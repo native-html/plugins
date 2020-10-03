@@ -11,7 +11,8 @@ import makeWebshell, {
   useAutoheight,
   HandleHTMLDimensionsFeature,
   HandleLinkPressFeature,
-  MinimalWebViewProps
+  MinimalWebViewProps,
+  LinkPressTarget
 } from '@formidable-webview/webshell';
 import { cssRulesFromSpecs, defaultTableStylesSpecs } from './css-rules';
 import {
@@ -273,7 +274,7 @@ export function HTMLTable({
     [WebView]
   );
   const onDOMLinkPress = useCallback(
-    (t) => {
+    (t: LinkPressTarget) => {
       onLinkPress?.(t.uri);
     },
     [onLinkPress]
@@ -302,13 +303,11 @@ export function HTMLTable({
     <Animated.View
       testID="html-table-container"
       style={[containerStyle, styles.container, style]}>
-      {
-        <Webshell
-          onDOMLinkPress={onDOMLinkPress}
-          {...autoheightWebshellProps}
-          webshellDebug
-        />
-      }
+      <Webshell
+        onDOMLinkPress={onDOMLinkPress}
+        {...autoheightWebshellProps}
+        webshellDebug
+      />
     </Animated.View>
   );
 }

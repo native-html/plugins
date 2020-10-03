@@ -3,9 +3,8 @@ import HTML from 'react-native-render-html';
 import {
   IGNORED_TAGS,
   alterNode,
-  makeCustomTableRenderer,
+  makeCustomTableRenderer
 } from '@native-html/table-plugin';
-import Snackbar from 'react-native-snackbar';
 import ClickTable from './ClickTable';
 
 const table1 = `
@@ -162,21 +161,22 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 `;
 
 const renderers = {
-  table: makeCustomTableRenderer(ClickTable),
+  table: makeCustomTableRenderer(ClickTable)
 };
 
 const htmlConfig = {
   alterNode,
   renderers,
-  ignoredTags: IGNORED_TAGS,
-  onLinkPress: (e, url) => {
-    Snackbar.show({
-      text: url,
-      textColor: 'white',
-    });
-  },
+  ignoredTags: IGNORED_TAGS
 };
 
-export default function CustomExample({instance}) {
-  return <HTML key={`custom-${instance}`} html={table1} {...htmlConfig} />;
+export default function CustomExample({ instance, onLinkPress }) {
+  return (
+    <HTML
+      key={`custom-${instance}`}
+      html={table1}
+      onLinkPress={onLinkPress}
+      {...htmlConfig}
+    />
+  );
 }

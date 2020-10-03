@@ -7,16 +7,16 @@ module.exports = {
     extraNodeModules: new Proxy(
       {},
       {
-        get: (target, name) => path.join(__dirname, `node_modules/${name}`),
-      },
-    ),
+        get: (target, name) => path.join(__dirname, `node_modules/${name}`)
+      }
+    )
   },
   transformer: {
     getTransformOptions: async () => ({
       transform: {
         experimentalImportSupport: false,
-        inlineRequires: false,
-      },
-    }),
-  },
+        inlineRequires: false
+      }
+    })
+  }
 };

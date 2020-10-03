@@ -1,43 +1,38 @@
 {
   "name": "example",
-  "version": "0.0.1",
-  "private": true,
+  "main": "node_modules/expo/AppEntry.js",
   "scripts": {
-    "android": "react-native run-android",
-    "ios": "react-native run-ios",
-    "start": "react-native start",
-    "test": "jest",
-    "lint": "eslint ."
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web",
+    "eject": "expo eject"
   },
   "dependencies": {
     "@native-html/table-plugin": "workspace:*",
-    "@react-native-community/masked-view": "^0.1.10",
-    "@react-navigation/native": "^5.7.4",
-    "@react-navigation/stack": "^5.9.1",
+    "@react-native-community/masked-view": "0.1.10",
+    "@react-navigation/native": "^5.7.5",
+    "@react-navigation/stack": "^5.9.2",
+    "expo": "~39.0.2",
+    "expo-status-bar": "~1.0.2",
+    "expo-web-browser": "~8.5.0",
     "react": "16.13.1",
-    "react-native": "0.63.2",
-    "react-native-gesture-handler": "^1.8.0",
+    "react-dom": "16.13.1",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-39.0.3.tar.gz",
+    "react-native-gesture-handler": "~1.7.0",
     "react-native-picker-select": "^8.0.0",
-    "react-native-reanimated": "^1.13.1",
+    "react-native-reanimated": "~1.13.0",
     "react-native-render-html": "^4.2.4",
-    "react-native-safe-area-context": "^3.1.8",
-    "react-native-screens": "^2.11.0",
-    "react-native-snackbar": "^2.2.3",
-    "react-native-webview": "^10.9.0"
+    "react-native-safe-area-context": "3.1.4",
+    "react-native-screens": "~2.10.1",
+    "react-native-snackbar-component": "^1.1.11",
+    "react-native-web": "~0.13.12",
+    "react-native-webview": "10.7.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.11.6",
-    "@babel/runtime": "^7.11.2",
-    "@react-native-community/eslint-config": "^2.0.0",
-    "babel-jest": "^26.3.0",
-    "eslint": "^7.10.0",
-    "jest": "^26.4.2",
-    "metro-react-native-babel-preset": "^0.63.0",
-    "react-test-renderer": "16.13.1"
+    "@babel/core": "~7.9.0"
   },
-  "jest": {
-    "preset": "react-native"
-  },
+  "private": true,
   "installConfig": {
     "hoistingLimits": "workspaces"
   }

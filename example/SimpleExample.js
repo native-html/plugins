@@ -3,10 +3,9 @@ import HTML from 'react-native-render-html';
 import {
   IGNORED_TAGS,
   alterNode,
-  makeTableRenderer,
+  makeTableRenderer
 } from '@native-html/table-plugin';
 import WebView from 'react-native-webview';
-import Snackbar from 'react-native-snackbar';
 
 const table1 = `
 <h2>Small table</h2>
@@ -163,23 +162,24 @@ const renderers = {
     tableStyleSpecs: {
       outerBorderWidthPx: 1,
       rowsBorderWidthPx: 1,
-      columnsBorderWidthPx: 1,
-    },
-  }),
+      columnsBorderWidthPx: 1
+    }
+  })
 };
 
 const htmlConfig = {
   alterNode,
   renderers,
-  ignoredTags: IGNORED_TAGS,
-  onLinkPress(e, url) {
-    Snackbar.show({
-      text: url,
-      textColor: 'white',
-    });
-  },
+  ignoredTags: IGNORED_TAGS
 };
 
-export default function SimpleExample({instance}) {
-  return <HTML key={`simple-${instance}`} html={table1} {...htmlConfig} />;
+export default function SimpleExample({ instance, onLinkPress }) {
+  return (
+    <HTML
+      key={`simple-${instance}`}
+      html={table1}
+      onLinkPress={onLinkPress}
+      {...htmlConfig}
+    />
+  );
 }

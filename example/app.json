@@ -1,4 +1,26 @@
 {
-  "name": "RNCustomExample",
-  "displayName": "@native-html/table-plugin Example"
+  "name": "RNTableExample",
+  "displayName": "@native-html/table-plugin Example",
+  "expo": {
+    "name": "Table Example",
+    "slug": "native-html-table-plugin-example",
+    "version": "1.0.0",
+    "orientation": "default",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    }
+  }
 }
