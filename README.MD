@@ -3,9 +3,21 @@
 > migrate, you must add the new package in your project and change imports.
 > Also, [check all breaking changes here](https://github.com/native-html/table-plugin/blob/master/CHANGELOG.MD#100-2020-08-19).
 
-# @native-html/table-plugin
+<h1 align="center">@native-html/table-plugin</h1>
 
+<p align="center">
 :capital_abcd: A WebView-based plugin to render tables in react-native-render-html.
+</p>
+
+<p align="center">
+  <img src="./images/expo-example.png" />
+  <div align="center">
+    <a href="https://expo.io/@jsamr/native-html-table-plugin-example">Try it on Expo!</a>
+  </div>
+  <div align="center">
+    <img src="images/android.gif" width="300">
+  </div>
+</p>
 
 [![npm](https://img.shields.io/npm/v/@native-html/table-plugin)](https://www.npmjs.com/package/@native-html/table-plugin)
 [![semver](https://img.shields.io/badge/semver-2.0.0-e10079.svg)](https://semver.org/spec/v2.0.0.html)
@@ -23,16 +35,15 @@ yarn add @native-html/table-plugin
 
 **Features**:
 
-- Render HTML tables with a `WebView` component you provide
-- Supports `HTML.onLinkPress` prop to handle clicks
-- Automatic height
-
-<img src="images/android.gif" width="300">
+- Render HTML tables with a `WebView` component you provide;
+- Supports `HTML.onLinkPress` prop to handle clicks;
+- Automatic height;
+- Customize table style with ease.
 
 **Known Limitations**:
 
-- don't forget you're rendering cells inside a webview, so you won't be able to apply your custom renderers there
-- limited support of Expo &lt;33 version ; full support [&ge;33 versions](https://github.com/expo/expo/milestone/22) (see bellow limitation)
+- Don't forget you're rendering cells inside a webview, so you won't be able to apply your custom renderers there
+- Limited support of Expo &lt;33 version ; full support [&ge;33 versions](https://github.com/expo/expo/milestone/22) (see bellow limitation)
 - Autoheight behavior and `onLinkPress` config options only work with [`WebView` &ge; `v5.0.0` community edition](https://github.com/react-native-community/react-native-webview/releases/tag/v5.0.0)
 
 ## Minimal working example
