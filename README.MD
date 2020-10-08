@@ -10,12 +10,12 @@
 </p>
 
 <p align="center">
-  <img src="./images/expo-example.png" />
+  <img src="https://github.com/native-html/table-plugin/raw/master/images/expo-example.png" />
   <div align="center">
     <a href="https://expo.io/@jsamr/native-html-table-plugin-example">Try it on Expo!</a>
   </div>
   <div align="center">
-    <img src="images/android.gif" width="300">
+    <img src="https://github.com/native-html/table-plugin/raw/master/images/android.gif" width="300">
   </div>
 </p>
 
@@ -214,7 +214,7 @@ const renderers = {
 
 **A**: Use `makeCustomTableRenderer` function. [See custom example](example/CustomExample.js).
 
-<img src="images/adaptative.jpeg" width="300">
+<img src="https://github.com/native-html/table-plugin/raw/master/images/adaptative.jpeg" width="300">
 
 ### How to load custom fonts?
 
