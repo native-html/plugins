@@ -6,24 +6,54 @@
 <h1 align="center">@native-html/table-plugin</h1>
 
 <p align="center">
-:capital_abcd: A WebView-based plugin to render tables in react-native-render-html.
+  <a href="https://www.npmjs.com/package/@native-html/table-plugin"
+    ><img
+      src="https://img.shields.io/npm/v/@native-html/table-plugin"
+      alt="npm"
+  /></a>
+  <a href="https://semver.org/spec/v2.0.0.html"
+    ><img
+      src="https://img.shields.io/badge/semver-2.0.0-e10079.svg"
+      alt="semver"
+  /></a>
+  <a href="https://codecov.io/gh/native-html/table-plugin"
+    ><img
+      src="https://codecov.io/gh/native-html/table-plugin/branch/master/graph/badge.svg"
+      alt="codecov"
+  /></a>
+  <a
+    href="https://github.com/native-html/table-plugin/actions?query=branch%3Amaster+workflow%3ACI"
+    ><img
+      src="https://github.com/native-html/table-plugin/workflows/CI/badge.svg?branch=master"
+      alt="CI"
+  /></a>
+  <img
+    src="https://img.shields.io/npm/dm/@native-html/table-plugin.svg"
+    alt="DL/month"
+  />
 </p>
 
 <p align="center">
-  <img src="https://github.com/native-html/table-plugin/raw/master/images/expo-example.png" />
-  <div align="center">
-    <a href="https://expo.io/@jsamr/native-html-table-plugin-example">Try it on Expo!</a>
-  </div>
-  <div align="center">
-    <img src="https://github.com/native-html/table-plugin/raw/master/images/android.gif" width="300">
-  </div>
+  🔠 A WebView-based plugin to render tables in react-native-render-html.
 </p>
 
-[![npm](https://img.shields.io/npm/v/@native-html/table-plugin)](https://www.npmjs.com/package/@native-html/table-plugin)
-[![semver](https://img.shields.io/badge/semver-2.0.0-e10079.svg)](https://semver.org/spec/v2.0.0.html)
-[![codecov](https://codecov.io/gh/native-html/table-plugin/branch/master/graph/badge.svg)](https://codecov.io/gh/native-html/table-plugin)
-[![CI](https://github.com/native-html/table-plugin/workflows/CI/badge.svg?branch=master)](https://github.com/native-html/table-plugin/actions?query=branch%3Amaster+workflow%3ACI)
-![DL/month](https://img.shields.io/npm/dm/@native-html/table-plugin.svg)
+<p align="center">
+  <img
+    src="https://github.com/native-html/table-plugin/raw/master/images/expo-example.png"
+  />
+</p>
+<div align="center">
+  <a href="https://expo.io/@jsamr/native-html-table-plugin-example"
+    >Try it on Expo!</a
+  >
+</div>
+<div align="center">
+  <img
+    src="https://github.com/native-html/table-plugin/raw/master/images/android.gif"
+    width="300"
+  />
+</div>
+<hr/>
 
 ```sh
 npm add --save @native-html/table-plugin
