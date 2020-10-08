@@ -19,7 +19,8 @@
     "build:source": "bob build",
     "build:defs": "api-extractor run --local --verbose",
     "build:doc": "api-documenter markdown --input-folder temp --output-folder ../docs",
-    "prepublish": "npm run build"
+    "prepublish": "npm run build",
+    "prepack": "cp ../README.MD ./"
   },
   "keywords": [
     "react-native",
