@@ -6,11 +6,11 @@
 
 ## [2.1.1](https://github.com/native-html/table-plugin/compare/v2.1.0...v2.1.1) (2020-10-08)
 
-# [2.1.0](https://github.com/native-html/table-plugin/compare/v2.0.1...v2.1.0) (2020-10-03)
-
 ### Dependencies
 
 * Upgrade @formidable-webview/* dependencies
+
+# [2.1.0](https://github.com/native-html/table-plugin/compare/v2.0.1...v2.1.0) (2020-10-03)
 
 ### Features
 
