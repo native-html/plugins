@@ -5,12 +5,10 @@ import { HTMLTable } from '../HTMLTable';
 import { render } from '@testing-library/react-native';
 import WebView from 'react-native-webview';
 import Ersatz from '@formidable-webview/ersatz';
-import makeErsatzTesting from '@formidable-webview/ersatz-testing';
+import { waitForErsatz } from '@formidable-webview/ersatz-testing';
 import { TableConfig, HTMLTableStats } from '../types';
 import './setup';
 import { TableContentHeightState } from '@native-html/table-plugin';
-
-const { waitForErsatz } = makeErsatzTesting(Ersatz);
 
 const defaultTestConfig: TableConfig = {
   WebView,

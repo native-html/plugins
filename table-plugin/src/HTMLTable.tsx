@@ -321,7 +321,7 @@ const propTypes: Record<keyof HTMLTableProps<any>, any> = {
   numOfChars: PropTypes.number.isRequired,
   numOfColumns: PropTypes.number.isRequired,
   numOfRows: PropTypes.number.isRequired,
-  WebView: PropTypes.func.isRequired,
+  WebView: PropTypes.oneOfType([PropTypes.func, PropTypes.object]).isRequired,
   onLinkPress: PropTypes.func,
   style: PropTypes.any,
   tableStyleSpecs: PropTypes.shape(tableStylePropTypeSpec),
