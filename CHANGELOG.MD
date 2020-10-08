@@ -1,4 +1,14 @@
+## [2.1.4](https://github.com/native-html/table-plugin/compare/v2.1.3...v2.1.4) (2020-10-08)
+
+### Misc
+
+- Ornamental changes (README)
+
 ## [2.1.3](https://github.com/native-html/table-plugin/compare/v2.1.2...v2.1.3) (2020-10-08)
+
+### Misc
+
+- Ornamental changes (README)
 
 ## [2.1.2](https://github.com/native-html/table-plugin/compare/v2.1.1...v2.1.2) (2020-10-08)
 
