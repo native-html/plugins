@@ -1,12 +1,11 @@
 {
+  "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "@tsconfig/react-native/tsconfig.json",
   "compilerOptions": {
     "allowJs": false,
     "composite": false,
-    "outDir": "./lib",
     "noEmit": false,
     "declaration": true,
     "noImplicitAny": false
-  },
-  "exclude": ["node_modules", "integration", "**/__tests__", "lib", "types"]
+  }
 }

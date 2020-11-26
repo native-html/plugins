@@ -1,13 +1,13 @@
 {
-  "name": "table-plugin-project",
+  "name": "plugins-project",
   "private": true,
   "scripts": {
     "start": "yarn workspace example start",
     "android": "yarn workspace example android",
     "ios": "yarn workspace example ios",
-    "build": "yarn workspace @native-html/table-plugin build",
-    "test": "yarn workspace @native-html/table-plugin test",
-    "release": "yarn workspace @native-html/table-plugin release-it",
+    "build:table": "yarn workspace @native-html/table-plugin build",
+    "test:table": "yarn workspace @native-html/table-plugin test",
+    "release:table": "yarn workspace @native-html/table-plugin release-it",
     "publish:example": "yarn workspace example expo publish"
   },
   "devDependencies": {
@@ -38,7 +38,7 @@
     }
   },
   "workspaces": [
-    "table-plugin",
+    "packages/*",
     "example"
   ]
 }

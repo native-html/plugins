@@ -1,7 +1,7 @@
 > **:warning: as of version 1.0.0, this package name has been changed from
 > `react-native-render-html-table-bridge` to `@native-html/table-plugin`**. To
 > migrate, you must add the new package in your project and change imports.
-> Also, [check all breaking changes here](https://github.com/native-html/table-plugin/blob/master/CHANGELOG.MD#100-2020-08-19).
+> Also, [check all breaking changes here](https://github.com/native-html/table-plugin/blob/master/packages/table-plugin/CHANGELOG.md#100-2020-08-19).
 
 <h1 align="center">@native-html/table-plugin</h1>
 

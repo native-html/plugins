@@ -1,6 +1,6 @@
 module.exports = {
   root: false,
-  extends: ['../.eslintrc.js'],
+  extends: ['../../.eslintrc.js'],
   overrides: [
     {
       files: ['*.webjs'],

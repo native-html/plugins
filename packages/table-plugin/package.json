@@ -8,19 +8,19 @@
   "files": [
     "lib",
     "src",
-    "types"
+    "types",
+    "docs"
   ],
   "scripts": {
-    "test": "npm run test:ts && npm run test:lint && npm run test:jest",
+    "test": "yarn test:ts && yarn test:lint && yarn test:jest",
     "test:jest": "jest src/",
     "test:ts": "tsc --noEmit",
     "test:lint": "eslint --ext ts,tsx src/",
-    "build": "npm run build:source && npm run build:defs && npm run build:doc",
+    "build": "yarn build:source && yarn build:defs && yarn build:doc",
     "build:source": "bob build",
     "build:defs": "api-extractor run --local --verbose",
-    "build:doc": "api-documenter markdown --input-folder temp --output-folder ../docs",
-    "prepublish": "npm run build",
-    "prepack": "cp ../README.MD ./"
+    "build:doc": "api-documenter markdown --input-folder temp --output-folder ./docs",
+    "prepack": "yarn run build"
   },
   "keywords": [
     "react-native",
@@ -74,10 +74,11 @@
     "react-native-render-html": ">= 4.2.1 < 5.0"
   },
   "author": "Jules Sam. Randolph <jules.sam.randolph@gmail.com> (https://github.com/jsamr)",
+  "homepage": "https://github.com/native-html/plugins/tree/master/packages/table-plugin#readme",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/native-html/table-plugin.git"
+    "url": "git+ssh://git@github.com/native-html/plugins.git"
   },
   "publishConfig": {
     "access": "public"
@@ -96,7 +97,7 @@
     "plugins": {
       "@release-it/conventional-changelog": {
         "preset": "angular",
-        "infile": "../CHANGELOG.MD",
+        "infile": "./CHANGELOG.md",
         "skipUnstable": true
       }
     }
