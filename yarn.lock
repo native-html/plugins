@@ -2143,7 +2143,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@microsoft/api-documenter@npm:^7.8.56":
+"@microsoft/api-documenter@npm:^7.11.0":
   version: 7.11.0
   resolution: "@microsoft/api-documenter@npm:7.11.0"
   dependencies:
@@ -2170,33 +2170,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@microsoft/api-extractor-model@npm:7.9.7":
-  version: 7.9.7
-  resolution: "@microsoft/api-extractor-model@npm:7.9.7"
+"@microsoft/api-extractor@npm:7.12.0":
+  version: 7.12.0
+  resolution: "@microsoft/api-extractor@npm:7.12.0"
   dependencies:
+    "@microsoft/api-extractor-model": 7.12.0
     "@microsoft/tsdoc": 0.12.19
-    "@rushstack/node-core-library": 3.33.6
-  checksum: 4dc9f60acad72235b55928271a893f6c7016124a4d3bfc22b1c6664084fdc3b544fe52f1d343e1c87ec1ad3db368409fdc7dd8117e09aaa6d4a9ae4910187003
-  languageName: node
-  linkType: hard
-
-"@microsoft/api-extractor@npm:7.9.22":
-  version: 7.9.22
-  resolution: "@microsoft/api-extractor@npm:7.9.22"
-  dependencies:
-    "@microsoft/api-extractor-model": 7.9.7
-    "@microsoft/tsdoc": 0.12.19
-    "@rushstack/node-core-library": 3.33.6
-    "@rushstack/ts-command-line": 4.6.10
+    "@rushstack/node-core-library": 3.35.1
+    "@rushstack/rig-package": 0.2.8
+    "@rushstack/ts-command-line": 4.7.7
     colors: ~1.2.1
     lodash: ~4.17.15
     resolve: ~1.17.0
     semver: ~7.3.0
     source-map: ~0.6.1
-    typescript: ~3.9.5
+    typescript: ~4.0.5
   bin:
     api-extractor: bin/api-extractor
-  checksum: 49494c995df11ee42bd4fe16d44998dfd31d8bf5c05d79b686e5c6d68a4f3a758c22d5233197ced8440d1a5922b6f52f1334d72579e4bdf0519ea37f2f4579f0
+  checksum: edc03d7550c68f94dff52b20b846cd5a00962acb1f45a5d91b9054713d385536b5bbf062d7c6f237ee4c57ef35a62458d33a0c8e3c970bae99272b47a6a4d2bf
   languageName: node
   linkType: hard
 
@@ -2238,8 +2229,8 @@ __metadata:
     "@formidable-webview/ersatz": ^2.1.2
     "@formidable-webview/ersatz-testing": ^2.0.5
     "@formidable-webview/webshell": 2.0.2
-    "@microsoft/api-documenter": ^7.8.56
-    "@microsoft/api-extractor": 7.9.22
+    "@microsoft/api-documenter": ^7.11.0
+    "@microsoft/api-extractor": 7.12.0
     "@react-native-community/bob": ^0.16.2
     "@release-it/conventional-changelog": ^2.0.0
     "@testing-library/react-native": ^7.0.2
@@ -2738,23 +2729,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rushstack/node-core-library@npm:3.33.6":
-  version: 3.33.6
-  resolution: "@rushstack/node-core-library@npm:3.33.6"
-  dependencies:
-    "@types/node": 10.17.13
-    colors: ~1.2.1
-    fs-extra: ~7.0.1
-    import-lazy: ~4.0.0
-    jju: ~1.4.0
-    resolve: ~1.17.0
-    semver: ~7.3.0
-    timsort: ~0.3.0
-    z-schema: ~3.18.3
-  checksum: bba6e58971631891874873e60385efd7ceb2ea2ac789a3e6889ae71fbcdb78f16431a22489197f68ad74fd46214158a000cfb001534c2e172a52eb172a2341f2
-  languageName: node
-  linkType: hard
-
 "@rushstack/node-core-library@npm:3.35.1":
   version: 3.35.1
   resolution: "@rushstack/node-core-library@npm:3.35.1"
@@ -2772,15 +2746,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rushstack/ts-command-line@npm:4.6.10":
-  version: 4.6.10
-  resolution: "@rushstack/ts-command-line@npm:4.6.10"
+"@rushstack/rig-package@npm:0.2.8":
+  version: 0.2.8
+  resolution: "@rushstack/rig-package@npm:0.2.8"
   dependencies:
-    "@types/argparse": 1.0.38
-    argparse: ~1.0.9
-    colors: ~1.2.1
-    string-argv: ~0.3.1
-  checksum: dd72513c4ca23139fd3b4c12320069e18a3ca078496d79c43ac641ef2d712cf0095f192c3dc52b0eea594c73676864c1819e7f89451480a5b8af0a9917f78099
+    "@types/node": 10.17.13
+    resolve: ~1.17.0
+    strip-json-comments: ~3.1.1
+  checksum: 3ecd0c9943c7f59236f21cfc8b42b73bbc4da7abd4a0aabbdcec466d09bb1d46c20000ad7aa8143f65edd02e1117b885ce439f9d181e5ea6d869498305dffe28
   languageName: node
   linkType: hard
 
@@ -14446,7 +14419,7 @@ resolve@~1.17.0:
   languageName: node
   linkType: hard
 
-"strip-json-comments@npm:^3.1.0, strip-json-comments@npm:^3.1.1":
+"strip-json-comments@npm:^3.1.0, strip-json-comments@npm:^3.1.1, strip-json-comments@npm:~3.1.1":
   version: 3.1.1
   resolution: "strip-json-comments@npm:3.1.1"
   checksum: f16719ce25abc58a55ef82b1c27f541dcfa5d544f17158f62d10be21ff9bd22fde45a53c592b29d80ad3c97ccb67b7451c4833913fdaeadb508a40f5e0a9c206
@@ -14937,7 +14910,7 @@ resolve@~1.17.0:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@~3.9.5#builtin<compat/typescript>, typescript@patch:typescript@~3.9.7#builtin<compat/typescript>":
+"typescript@patch:typescript@~3.9.7#builtin<compat/typescript>":
   version: 3.9.7
   resolution: "typescript@patch:typescript@npm%3A3.9.7#builtin<compat/typescript>::version=3.9.7&hash=5bf698"
   bin:
@@ -14947,13 +14920,33 @@ resolve@~1.17.0:
   languageName: node
   linkType: hard
 
-"typescript@~3.9.5, typescript@~3.9.7":
+"typescript@patch:typescript@~4.0.5#builtin<compat/typescript>":
+  version: 4.0.5
+  resolution: "typescript@patch:typescript@npm%3A4.0.5#builtin<compat/typescript>::version=4.0.5&hash=5bf698"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: d4be0bd2a2050b2d7b132cb2a40329178f181543e9d2ac6d1f06babd9f047208558a736a7effdeb28759ae2e815f070b61d10ee2f02cc93a6221a1490f21ffce
+  languageName: node
+  linkType: hard
+
+typescript@~3.9.7:
   version: 3.9.7
   resolution: "typescript@npm:3.9.7"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
   checksum: 10848a9c35fd8c70a8792b8bd9485317534bcd58768793d3b7d9c7486e9fd30cf345f83fa2a324e0bf6088bc8a4d8d061d58fda38b18c2ff187cf01fbbff6267
+  languageName: node
+  linkType: hard
+
+typescript@~4.0.5:
+  version: 4.0.5
+  resolution: "typescript@npm:4.0.5"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: ce94d4bbb914cc9d6fbd42e1476ab18c3292b262b8ba7ba76cd167a858545207a604e75bf1efbb75b8654c8f85deaa19795c3ef00098d7612855139b4ecc0240
   languageName: node
   linkType: hard
 

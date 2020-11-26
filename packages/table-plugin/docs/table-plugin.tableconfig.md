@@ -16,15 +16,15 @@ export interface TableConfig<WebViewProps = any>
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [animationDuration](./table-plugin.tableconfig.animationduration.md) | number | The animation duration in milliseconds when infered height value changes. See [TableConfig.computeContainerHeight](./table-plugin.tableconfig.computecontainerheight.md)<!-- -->. |
-|  [animationType](./table-plugin.tableconfig.animationtype.md) | 'none' \| 'layout' \| 'animated' | What kind of animation should be used when height is changed? <ul> <li> <b>layout</b>: use native <code>LayoutAnimation</code>. This is the best option performance-wise, but requires some setup. See https://facebook.github.io/react-native/docs/layoutanimation. </li> <li> <b>animated</b>: use <code>Animated</code> module from react-native. </li> <li> <b>none</b>: no animations are performed. </li> </ul> |
-|  [computeContainerHeight](./table-plugin.tableconfig.computecontainerheight.md) | (state: [TableContentHeightState](./table-plugin.tablecontentheightstate.md)<!-- -->) =&gt; number \| null | A function which will compute container's height given the table content height. |
-|  [computeHeuristicContentHeight](./table-plugin.tableconfig.computeheuristiccontentheight.md) | (state: [HTMLTableStats](./table-plugin.htmltablestats.md)<!-- -->) =&gt; number | A function to compute approximate content height before the real content height has been fetched on DOM mount. |
-|  [cssRules](./table-plugin.tableconfig.cssrules.md) | string | Override default CSS rules with this prop. |
-|  [maxScale](./table-plugin.tableconfig.maxscale.md) | boolean | Max zoom scale (must be greater than 1). |
-|  [sourceBaseUrl](./table-plugin.tableconfig.sourcebaseurl.md) | string | See https://git.io/JeCAG |
-|  [style](./table-plugin.tableconfig.style.md) | StyleProp&lt;ViewStyle&gt; | Container style. |
-|  [tableStyleSpecs](./table-plugin.tableconfig.tablestylespecs.md) | [TableStyleSpecs](./table-plugin.tablestylespecs.md) | Specs to generate css rules.<img src="https://raw.githubusercontent.com/native-html/table-plugin/master/images/TableStyleSpecs.png" /> |
+|  [animationDuration?](./table-plugin.tableconfig.animationduration.md) | number | <i>(Optional)</i> The animation duration in milliseconds when infered height value changes. See [TableConfig.computeContainerHeight](./table-plugin.tableconfig.computecontainerheight.md)<!-- -->. |
+|  [animationType?](./table-plugin.tableconfig.animationtype.md) | 'none' \| 'layout' \| 'animated' | <i>(Optional)</i> What kind of animation should be used when height is changed? <ul> <li> <b>layout</b>: use native <code>LayoutAnimation</code>. This is the best option performance-wise, but requires some setup. See https://facebook.github.io/react-native/docs/layoutanimation. </li> <li> <b>animated</b>: use <code>Animated</code> module from react-native. </li> <li> <b>none</b>: no animations are performed. </li> </ul> |
+|  [computeContainerHeight?](./table-plugin.tableconfig.computecontainerheight.md) | (state: [TableContentHeightState](./table-plugin.tablecontentheightstate.md)<!-- -->) =&gt; number \| null | <i>(Optional)</i> A function which will compute container's height given the table content height. |
+|  [computeHeuristicContentHeight?](./table-plugin.tableconfig.computeheuristiccontentheight.md) | (state: [HTMLTableStats](./table-plugin.htmltablestats.md)<!-- -->) =&gt; number | <i>(Optional)</i> A function to compute approximate content height before the real content height has been fetched on DOM mount. |
+|  [cssRules?](./table-plugin.tableconfig.cssrules.md) | string | <i>(Optional)</i> Override default CSS rules with this prop. |
+|  [maxScale?](./table-plugin.tableconfig.maxscale.md) | boolean | <i>(Optional)</i> Max zoom scale (must be greater than 1). |
+|  [sourceBaseUrl?](./table-plugin.tableconfig.sourcebaseurl.md) | string | <i>(Optional)</i> See https://git.io/JeCAG |
+|  [style?](./table-plugin.tableconfig.style.md) | StyleProp&lt;ViewStyle&gt; | <i>(Optional)</i> Container style. |
+|  [tableStyleSpecs?](./table-plugin.tableconfig.tablestylespecs.md) | [TableStyleSpecs](./table-plugin.tablestylespecs.md) | <i>(Optional)</i> Specs to generate css rules.<img src="https://raw.githubusercontent.com/native-html/table-plugin/master/images/TableStyleSpecs.png" /> |
 |  [WebView](./table-plugin.tableconfig.webview.md) | ComponentType&lt;WebViewProps&gt; | The <code>WebView</code> Component you wish to use. |
-|  [webViewProps](./table-plugin.tableconfig.webviewprops.md) | WebViewProps | Any props you'd like to pass to [TableConfig.WebView](./table-plugin.tableconfig.webview.md)<!-- -->. |
+|  [webViewProps?](./table-plugin.tableconfig.webviewprops.md) | WebViewProps | <i>(Optional)</i> Any props you'd like to pass to [TableConfig.WebView](./table-plugin.tableconfig.webview.md)<!-- -->. |
 

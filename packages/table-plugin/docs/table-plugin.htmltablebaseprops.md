@@ -18,6 +18,6 @@ export interface HTMLTableBaseProps extends HTMLTableStats
 |  Property | Type | Description |
 |  --- | --- | --- |
 |  [html](./table-plugin.htmltablebaseprops.html.md) | string | The outerHtml of <table> tag. |
-|  [onLinkPress](./table-plugin.htmltablebaseprops.onlinkpress.md) | (url: string) =&gt; void | Intercept links press.<!-- -->\*\*Info\*\*: <code>makeTableRenderer</code> uses <code>HTML.onLinkPress</code> prop. |
-|  [renderersProps](./table-plugin.htmltablebaseprops.renderersprops.md) | any | Renderers props. |
+|  [onLinkPress?](./table-plugin.htmltablebaseprops.onlinkpress.md) | (url: string) =&gt; void | <i>(Optional)</i> Intercept links press.<!-- -->\*\*Info\*\*: <code>makeTableRenderer</code> uses <code>HTML.onLinkPress</code> prop. |
+|  [renderersProps?](./table-plugin.htmltablebaseprops.renderersprops.md) | any | <i>(Optional)</i> Renderers props. |
 
