@@ -130,9 +130,11 @@ function useAnimatedAutoheight<WVP extends MinimalWebViewProps>({
     >
   >) {
   const animatedHeight = useRef(new Animated.Value(0)).current;
-  const { autoheightWebshellProps, contentSize, syncState } = useAutoheight<
-    WVP
-  >({
+  const {
+    autoheightWebshellProps,
+    contentSize,
+    syncState
+  } = useAutoheight<WVP>({
     webshellProps: webViewProps as any,
     resetHeightOnViewportWidthChange: false
   });

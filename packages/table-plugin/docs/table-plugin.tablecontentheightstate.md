@@ -11,3 +11,5 @@ An object describing the present knowledge of content height.
 ```typescript
 export declare type TableContentHeightState = TableHeuristicContentHeightState | TableAccurateContentHeightState;
 ```
+<b>References:</b> [TableHeuristicContentHeightState](./table-plugin.tableheuristiccontentheightstate.md)<!-- -->, [TableAccurateContentHeightState](./table-plugin.tableaccuratecontentheightstate.md)
+
