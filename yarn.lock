@@ -2674,7 +2674,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-navigation/native@npm:^5.7.5":
+"@react-navigation/native@npm:^5.8.10":
   version: 5.8.10
   resolution: "@react-navigation/native@npm:5.8.10"
   dependencies:
@@ -2697,7 +2697,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-navigation/stack@npm:^5.9.2":
+"@react-navigation/stack@npm:^5.12.8":
   version: 5.12.8
   resolution: "@react-navigation/stack@npm:5.12.8"
   dependencies:
@@ -6513,13 +6513,13 @@ __metadata:
     "@babel/core": ~7.12.9
     "@native-html/table-plugin": "workspace:*"
     "@react-native-community/masked-view": 0.1.10
-    "@react-navigation/native": ^5.7.5
-    "@react-navigation/stack": ^5.9.2
+    "@react-navigation/native": ^5.8.10
+    "@react-navigation/stack": ^5.12.8
     expo: ~39.0.5
-    expo-status-bar: ~1.0.3
+    expo-status-bar: ~1.0.2
     expo-web-browser: ~8.5.0
-    react: 16.14.0
-    react-dom: 16.14.0
+    react: 16.13.1
+    react-dom: 16.13.1
     react-native: "https://github.com/expo/react-native/archive/sdk-39.0.3.tar.gz"
     react-native-gesture-handler: ~1.7.0
     react-native-picker-select: ^8.0.0
@@ -6528,7 +6528,7 @@ __metadata:
     react-native-safe-area-context: 3.1.4
     react-native-screens: ~2.10.1
     react-native-snackbar-component: ^1.1.11
-    react-native-web: ~0.13.12
+    react-native-web: ~0.13.7
     react-native-webview: 10.7.0
   languageName: unknown
   linkType: soft
@@ -6787,7 +6787,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"expo-status-bar@npm:~1.0.3":
+"expo-status-bar@npm:~1.0.2":
   version: 1.0.3
   resolution: "expo-status-bar@npm:1.0.3"
   checksum: 07f90ce536581196adb0705f8ce80b108a962fd49246635556d9795b8ea6bd253bb88aac3d24eb7a46bd5203de8f7090722b5f8ade38d598c52d6ef5c4a72657
@@ -12767,7 +12767,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"react-native-web@npm:~0.13.12":
+"react-native-web@npm:~0.13.7":
   version: 0.13.18
   resolution: "react-native-web@npm:0.13.18"
   dependencies:

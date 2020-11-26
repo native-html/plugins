@@ -11,13 +11,13 @@
   "dependencies": {
     "@native-html/table-plugin": "workspace:*",
     "@react-native-community/masked-view": "0.1.10",
-    "@react-navigation/native": "^5.7.5",
-    "@react-navigation/stack": "^5.9.2",
+    "@react-navigation/native": "^5.8.10",
+    "@react-navigation/stack": "^5.12.8",
     "expo": "~39.0.5",
-    "expo-status-bar": "~1.0.3",
+    "expo-status-bar": "~1.0.2",
     "expo-web-browser": "~8.5.0",
-    "react": "16.14.0",
-    "react-dom": "16.14.0",
+    "react": "16.13.1",
+    "react-dom": "16.13.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-39.0.3.tar.gz",
     "react-native-gesture-handler": "~1.7.0",
     "react-native-picker-select": "^8.0.0",
@@ -26,7 +26,7 @@
     "react-native-safe-area-context": "3.1.4",
     "react-native-screens": "~2.10.1",
     "react-native-snackbar-component": "^1.1.11",
-    "react-native-web": "~0.13.12",
+    "react-native-web": "~0.13.7",
     "react-native-webview": "10.7.0"
   },
   "devDependencies": {
