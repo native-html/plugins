@@ -1,0 +1,129 @@
+{
+  "name": "@native-html/iframe-plugin",
+  "version": "2.1.4",
+  "description": "🔠 A WebView-based plugin to render iframes in react-native-render-html",
+  "main": "lib/commonjs/index.js",
+  "module": "lib/module/index.js",
+  "types": "types/@native-html/iframe-plugin/index.d.ts",
+  "files": [
+    "lib",
+    "src",
+    "types",
+    "docs"
+  ],
+  "scripts": {
+    "test": "yarn test:ts && yarn test:lint && yarn test:jest",
+    "test:jest": "jest src/",
+    "test:ts": "tsc --noEmit",
+    "test:lint": "eslint --ext ts,tsx src/",
+    "build": "yarn build:source && yarn build:defs && yarn build:doc",
+    "build:source": "bob build",
+    "build:defs": "api-extractor run --local --verbose",
+    "build:doc": "api-documenter markdown --input-folder temp --output-folder ./docs",
+    "prepack": "yarn run build"
+  },
+  "keywords": [
+    "react-native",
+    "react-native-render-html",
+    "html",
+    "table"
+  ],
+  "devDependencies": {
+    "@babel/cli": "^7.12.8",
+    "@babel/core": "^7.12.9",
+    "@babel/plugin-transform-react-jsx": "^7.12.7",
+    "@babel/preset-typescript": "^7.12.7",
+    "@babel/runtime": "^7.12.5",
+    "@formidable-webview/ersatz": "^2.1.2",
+    "@formidable-webview/ersatz-testing": "^2.0.5",
+    "@microsoft/api-documenter": "^7.11.0",
+    "@microsoft/api-extractor": "7.12.0",
+    "@react-native-community/bob": "^0.16.2",
+    "@release-it/conventional-changelog": "^2.0.0",
+    "@testing-library/react-native": "^7.0.2",
+    "@types/jest": "^26.0.14",
+    "@types/react": "^16.9.49",
+    "@types/react-native": "^0.63.22",
+    "@types/react-test-renderer": "^16.9.3",
+    "babel-jest": "^26.6.3",
+    "eslint": "^7.14.0",
+    "jest": "^26.6.3",
+    "metro-react-native-babel-preset": "^0.64.0",
+    "metro-react-native-babel-transformer": "^0.64.0",
+    "react": "16.14.0",
+    "react-native": "^0.63.2",
+    "react-native-render-html": "^4.2.4",
+    "react-native-webview": "^10.9.0",
+    "react-test-renderer": "16.13.1",
+    "release-it": "^14.2.2",
+    "typescript": "~3.9.7"
+  },
+  "dependencies": {
+    "@formidable-webview/webshell": "2.0.2",
+    "@types/prop-types": "^15.7.3",
+    "prop-types": "^15.7.2"
+  },
+  "peerDependencies": {
+    "react": ">= 16.8.0",
+    "react-native": ">= 0.59.0",
+    "react-native-render-html": ">= 5.0.0"
+  },
+  "author": "Jules Sam. Randolph <jules.sam.randolph@gmail.com> (https://github.com/jsamr)",
+  "homepage": "https://github.com/native-html/plugins/tree/master/packages/iframe-plugin#readme",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/native-html/plugins.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "chore: release ${version}",
+      "tagName": "v${version}"
+    },
+    "npm": {
+      "publish": true
+    },
+    "github": {
+      "release": true
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "preset": "angular",
+        "infile": "./CHANGELOG.md",
+        "skipUnstable": true
+      }
+    }
+  },
+  "@react-native-community/bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      [
+        "module",
+        {
+          "babelrc": false
+        }
+      ],
+      [
+        "commonjs",
+        {
+          "babelrc": false
+        }
+      ],
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  }
+}

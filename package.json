@@ -6,8 +6,11 @@
     "android": "yarn workspace example android",
     "ios": "yarn workspace example ios",
     "build:table": "yarn workspace @native-html/table-plugin build",
+    "build:iframe": "yarn workspace @native-html/iframe-plugin build",
     "test:table": "yarn workspace @native-html/table-plugin test",
+    "test:iframe": "yarn workspace @native-html/iframe-plugin test",
     "release:table": "yarn workspace @native-html/table-plugin release-it",
+    "release:iframe": "yarn workspace @native-html/iframe-plugin release-it",
     "publish:example": "yarn workspace example expo publish"
   },
   "devDependencies": {
