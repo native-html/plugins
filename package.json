@@ -31,7 +31,9 @@
     "react-dom": "16.13.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-39.0.3.tar.gz",
     "react-test-renderer": "16.13.1",
-    "react-native-webview": "10.7.0"
+    "react-native-webview": "10.7.0",
+    "@release-it/conventional-changelog": "patch:@release-it/conventional-changelog@2.0.0#patches/@release-it-conventional-changelog.patch",
+    "release-it": "patch:release-it@14.0.4#patches/release-it.patch"
   },
   "author": "Jules Sam. Randolph <jules.sam.randolph@gmail.com> (https://github.com/jsamr)",
   "license": "MIT",
