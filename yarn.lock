@@ -2247,7 +2247,7 @@ __metadata:
     prop-types: ^15.7.2
     react: 16.14.0
     react-native: ^0.63.2
-    react-native-render-html: 5.0.0-alpha.5
+    react-native-render-html: 5.0.0-alpha.6
     react-native-webview: ^10.9.0
     react-test-renderer: 16.13.1
     release-it: ^14.2.2
@@ -12855,9 +12855,9 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"react-native-render-html@npm:5.0.0-alpha.5":
-  version: 5.0.0-alpha.5
-  resolution: "react-native-render-html@npm:5.0.0-alpha.5"
+"react-native-render-html@npm:5.0.0-alpha.6":
+  version: 5.0.0-alpha.6
+  resolution: "react-native-render-html@npm:5.0.0-alpha.6"
   dependencies:
     deprecated-prop-type: ^1.0.0
     htmlparser2: 5.0.1
@@ -12865,7 +12865,7 @@ fsevents@^1.2.7:
   peerDependencies:
     react: "*"
     react-native: "*"
-  checksum: e631b2f4e2304a9e4bc5f08bdcf3425461d1dd6c5c44e3e7b53c780846f960a33481815d9b365b58216f6f6aae2f2d0622f47c65eda1a9ee068882b46867bf2f
+  checksum: dc53a2b7d2a6c20f9f1fece22cb139f42f8fe85b72e13294f567826ba5c90575d431fafd4d25a10382d47df1e6c800533ed44806f20e4ecbd76a4eca4362f2bb
   languageName: node
   linkType: hard
 
