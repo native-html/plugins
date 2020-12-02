@@ -13,19 +13,15 @@
   /></a>
   <a href="https://codecov.io/gh/native-html/plugins?flags=iframe-plugin"
     ><img
-      src="https://codecov.io/gh/native-html/plugins/branch/master/graph/badge.svg"
+      src="https://codecov.io/gh/native-html/plugins/branch/master/graph/badge.svg?flags=iframe-plugin"
       alt="codecov"
   /></a>
   <a
-    href="https://github.com/native-html/iframe-plugin/actions?query=branch%3Amaster+workflow%3ACI"
+    href="https://github.com/native-html/plugin/actions?query=branch%3Amaster+workflow%3Aiframe"
     ><img
-      src="https://github.com/native-html/iframe-plugin/workflows/CI/badge.svg?branch=master"
+      src="https://github.com/native-html/plugins/workflows/iframe/badge.svg?branch=master"
       alt="CI"
   /></a>
-  <img
-    src="https://img.shields.io/npm/dm/@native-html/iframe-plugin.svg"
-    alt="DL/month"
-  />
 </p>
 
 <p align="center">
