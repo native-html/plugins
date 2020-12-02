@@ -16,21 +16,23 @@
       src="https://img.shields.io/badge/semver-2.0.0-e10079.svg"
       alt="semver"
   /></a>
-  <a href="https://codecov.io/gh/native-html/table-plugin"
+  <a href="https://codecov.io/gh/native-html/plugins?flag=table-plugin"
     ><img
-      src="https://codecov.io/gh/native-html/table-plugin/branch/master/graph/badge.svg"
+      src="https://codecov.io/gh/native-html/plugins/branch/master/graph/badge.svg?flag=table-plugin"
       alt="codecov"
   /></a>
   <a
-    href="https://github.com/native-html/table-plugin/actions?query=branch%3Amaster+workflow%3ACI"
+    href="https://github.com/native-html/plugins/actions?query=branch%3Amaster+workflow%3Atable"
     ><img
-      src="https://github.com/native-html/table-plugin/workflows/CI/badge.svg?branch=master"
+      src="https://github.com/native-html/plugins/workflows/table/badge.svg?branch=master"
       alt="CI"
   /></a>
-  <img
-    src="https://img.shields.io/npm/dm/@native-html/table-plugin.svg"
-    alt="DL/month"
-  />
+  <a href="https://www.npmjs.com/package/@native-html/table-plugin">
+    <img
+      src="https://img.shields.io/npm/dm/@native-html/table-plugin.svg"
+      alt="DL/month"
+    />
+  </a>
 </p>
 
 <p align="center">
@@ -39,7 +41,7 @@
 
 <p align="center">
   <img
-    src="https://github.com/native-html/table-plugin/raw/master/images/expo-example.png"
+    src="https://github.com/native-html/plugins/raw/master/images/expo-example.png"
   />
 </p>
 <div align="center">
@@ -76,9 +78,22 @@ yarn add @native-html/table-plugin
 - Limited support of Expo &lt;33 version ; full support [&ge;33 versions](https://github.com/expo/expo/milestone/22) (see bellow limitation)
 - Autoheight behavior and `onLinkPress` config options only work with [`WebView` &ge; `v5.0.0` community edition](https://github.com/react-native-community/react-native-webview/releases/tag/v5.0.0)
 
+## Compat Table
+
+> :warning: The API is significantly different depending on target
+> react-native-render-html version.
+> **Make sure you check the appropriate version documentation before
+> proceeding.**
+
+| react-native-render-html | @native-html/table-plugin | Documentation |
+| ------------------------ | ------------------------- | ------------- |
+| ≥ 4.2.1 &lt; 5.0.0       | 2.x                       | `rnrh/4.x`    |
+| ≥ 5.0.0 &lt; 6.0.0       | 3.x                       | `rnrh/5.x`    |
+| ≥ 6.0.0                  | 4.x                       | `rnrh/6.x`    |
+
 ## Minimal working example
 
-_[Full example](example/SimpleExample.js)_
+_[Full example](https://github.com/native-html/plugins/blob/master/example/SimpleExample.js)_
 
 You need 3 conditions to get to a working example:
 
@@ -129,22 +144,22 @@ export const Example = () => (
 
 ## API Reference
 
-**The complete API reference is available here: [docs/table-plugin.md](docs/table-plugin.md).**
-Most notably, check [`TableConfig`](docs/table-plugin.tableconfig.md) to see how you can customize the table behavior.
+**The complete API reference is available here: [docs/table-plugin.md](https://github.com/native-html/plugins/blob/master/packages/table-plugin/table-plugin.md).**
+Most notably, check [`TableConfig`](https://github.com/native-html/plugins/blob/master/packages/table-plugin/table-plugin.tableconfig.md) to see how you can customize the table behavior.
 
 **Landmark exports**:
 
-- [`makeTableRenderer`](docs/table-plugin.maketablerenderer.md)
-- [`makeCustomTableRenderer`](docs/table-plugin.makecustomtablerenderer.md)
-- [`alterNode`](docs/table-plugin.alternode.md)
-- [`IGNORED_TAGS`](docs/table-plugin.ignored_tags.md)
+- [`makeTableRenderer`](https://github.com/native-html/plugins/blob/master/packages/table-plugin/table-plugin.maketablerenderer.md)
+- [`makeCustomTableRenderer`](https://github.com/native-html/plugins/blob/master/packages/table-plugin/table-plugin.makecustomtablerenderer.md)
+- [`alterNode`](https://github.com/native-html/plugins/blob/master/packages/table-plugin/table-plugin.alternode.md)
+- [`IGNORED_TAGS`](https://github.com/native-html/plugins/blob/master/packages/table-plugin/table-plugin.ignored_tags.md)
 
 Other exports:
 
-- [`HTMLTable`](docs/table-plugin.htmltable.md)
-- [`defaultTableStylesSpecs`](docs/table-plugin.defaulttablestylesspecs.md)
-- [`cssRulesFromSpecs`](docs/table-plugin.cssrulesfromspecs.md)
-- [`TABLE_TAGS`](docs/table-plugin.table_tags.md)
+- [`HTMLTable`](https://github.com/native-html/plugins/blob/master/packages/table-plugin/table-plugin.htmltable.md)
+- [`defaultTableStylesSpecs`](https://github.com/native-html/plugins/blob/master/packages/table-plugin/table-plugin.defaulttablestylesspecs.md)
+- [`cssRulesFromSpecs`](https://github.com/native-html/plugins/blob/master/packages/table-plugin/table-plugin.cssrulesfromspecs.md)
+- [`TABLE_TAGS`](https://github.com/native-html/plugins/blob/master/packages/table-plugin/table-plugin.table_tags.md)
 
 ## Troubleshooting
 
@@ -177,7 +192,7 @@ If you encounter typescript errors, chances are you are not following `peerDepen
 
 Use `TableConfig.tableStyleSpecs`. The options will get merged with defaults,
 so you are not required to pass every field. See
-[documentation](docs/table-plugin.tablestylespecs.md).
+[documentation](https://github.com/native-html/plugins/blob/master/packages/table-plugin/table-plugin.tablestylespecs.md).
 
 ```javascript
 import {
@@ -242,7 +257,7 @@ const renderers = {
 
 ### How to customize the Table component?
 
-**A**: Use `makeCustomTableRenderer` function. [See custom example](example/CustomExample.js).
+**A**: Use `makeCustomTableRenderer` function. [See custom example](https://github.com/native-html/plugins/blob/master/example/CustomExample.js).
 
 <img src="https://github.com/native-html/table-plugin/raw/master/images/adaptative.jpeg" width="300">
 

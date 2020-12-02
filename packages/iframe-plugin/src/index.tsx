@@ -8,13 +8,37 @@ function normalizeUri(uri: string): string {
   return uri.startsWith('//') ? `https:${uri}` : uri;
 }
 
-const iframe: RendererFunction = function iframe(
+/**
+ * The renderer function for the iframe element. This renderer is fully
+ * scalable, and will adjust to `contentWidth` and `computeEmbeddedMaxWidth`.
+ * It also features `onLinkPress`.
+ *
+ * @param htmlAttribs - HTML attributes of the element.
+ * @param children - The children (ignored)
+ * @param convertedCSSStyles - Inline styles
+ * @param passProps - Passed props from the root component.
+ *
+ * @public
+ */
+const iframe: RendererFunction<any> = function iframe(
   htmlAttribs,
-  _children,
+  children,
   convertedCSSStyles,
   passProps
 ) {
-  const { WebView, contentWidth, onLinkPress } = passProps;
+  const {
+    WebView,
+    contentWidth,
+    onLinkPress,
+    computeEmbeddedMaxWidth
+  } = passProps;
+  const resolvedContentWidth =
+    typeof contentWidth === 'number'
+      ? contentWidth
+      : Dimensions.get('window').width;
+  const availableWidth =
+    computeEmbeddedMaxWidth?.call(null, resolvedContentWidth, 'iframe') ||
+    resolvedContentWidth;
   const { width, height, ...restStyle } = StyleSheet.flatten(
     constructStyles({
       tagName: 'iframe',
@@ -33,7 +57,7 @@ const iframe: RendererFunction = function iframe(
     attrHeight: Number.isNaN(attrHeight) ? null : attrHeight,
     styleWidth: width,
     styleHeight: height,
-    contentWidth: contentWidth || Dimensions.get('window').width
+    contentWidth: availableWidth
   });
 
   const source = htmlAttribs.srcdoc

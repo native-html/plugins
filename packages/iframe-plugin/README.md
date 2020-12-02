@@ -11,9 +11,9 @@
       src="https://img.shields.io/badge/semver-2.0.0-e10079.svg"
       alt="semver"
   /></a>
-  <a href="https://codecov.io/gh/native-html/plugins?flags=iframe-plugin"
+  <a href="https://codecov.io/gh/native-html/plugins?flag=iframe-plugin"
     ><img
-      src="https://codecov.io/gh/native-html/plugins/branch/master/graph/badge.svg?flags=iframe-plugin"
+      src="https://codecov.io/gh/native-html/plugins/branch/master/graph/badge.svg?flag=iframe-plugin"
       alt="codecov"
   /></a>
   <a
@@ -25,12 +25,12 @@
 </p>
 
 <p align="center">
-  🔠 A WebView-based plugin to render iframe in react-native-render-html.
+  🌐 A WebView-based plugin to render iframes in react-native-render-html.
 </p>
 
 <p align="center">
   <img
-    src="https://github.com/native-html/iframe-plugin/raw/master/images/expo-example.png"
+    src="expo-example"
   />
 </p>
 <div align="center">
@@ -60,10 +60,10 @@ yarn add @native-html/iframe-plugin
 
 ## Compat Table
 
-| react-native-render-html | @native-html/iframe-plugin |
-| ------------------------ | -------------------------- |
-| ≥ 5.0.0 &lt; 6.0.0       | 1.x                        |
-| ≥ 6.0.0                  | ≥ 2.x                      |
+| react-native-render-html | @native-html/iframe-plugin | Documentation |
+| ------------------------ | -------------------------- | ------------- |
+| ≥ 5.0.0 &lt; 6.0.0       | 1.x                        | `rnrh/5.x`    |
+| ≥ 6.0.0                  | 2.x                        | `rnrh/6.x`    |
 
 ## Minimal working example
 

@@ -1,7 +1,7 @@
 {
   "name": "@native-html/iframe-plugin",
   "version": "2.1.4",
-  "description": "🔠 A WebView-based plugin to render iframes in react-native-render-html",
+  "description": "🌐 A WebView-based plugin to render iframes in react-native-render-html",
   "main": "lib/commonjs/index.js",
   "module": "lib/module/index.js",
   "types": "types/@native-html/iframe-plugin/index.d.ts",
@@ -16,17 +16,17 @@
     "test:jest": "jest src/",
     "test:ts": "tsc --noEmit",
     "test:lint": "eslint --ext ts,tsx src/",
-    "build": "yarn build:source && yarn build:defs && yarn build:doc",
+    "build": "yarn build:source && yarn build:defs",
     "build:source": "bob build",
     "build:defs": "api-extractor run --local --verbose",
-    "build:doc": "api-documenter markdown --input-folder temp --output-folder ./docs",
     "prepack": "yarn run build"
   },
   "keywords": [
     "react-native",
     "react-native-render-html",
     "html",
-    "table"
+    "iframe",
+    "plugins"
   ],
   "devDependencies": {
     "@babel/cli": "^7.12.8",

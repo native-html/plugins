@@ -26,7 +26,8 @@
     "react-native",
     "react-native-render-html",
     "html",
-    "table"
+    "table",
+    "plugins"
   ],
   "devDependencies": {
     "@babel/cli": "^7.12.8",
