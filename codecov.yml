@@ -18,7 +18,7 @@ coverage:
 flags:
   table-plugin:
     paths:
-      - packages/table-plugin/coverage/cover.xml
+      - packages/table-plugin/
   iframe-plugin:
     paths:
-      - packages/iframe-plugin/coverage/cover.xml
+      - packages/iframe-plugin/
