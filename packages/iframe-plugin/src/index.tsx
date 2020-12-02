@@ -1,7 +1,7 @@
 import React from 'react';
 import { Dimensions, StyleSheet } from 'react-native';
 import { RendererFunction, constructStyles } from 'react-native-render-html';
-import extractPrintDimensions from './extractPrintWidth';
+import extractPrintDimensions from './extractPrintDimensions';
 import HTMLIframe from './HTMLIframe';
 
 function normalizeUri(uri: string): string {
