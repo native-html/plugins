@@ -28,35 +28,32 @@
   🌐 A WebView-based plugin to render iframes in react-native-render-html.
 </p>
 
-<p align="center">
-  <img
-    src="expo-example"
-  />
-</p>
-<div align="center">
-  <a href="https://expo.io/@jsamr/native-html-iframe-plugin-example"
-    >Try it on Expo!</a
-  >
-</div>
-<div align="center">
-  <img
-    src="https://github.com/native-html/iframe-plugin/raw/master/images/android.gif"
-    width="300"
-  />
-</div>
 <hr/>
 
+**Install**:
+
+> :warning: With expo, use `expo install` instead to grab a compatible
+> `react-native-webview` version.
+
 ```sh
-npm add --save @native-html/iframe-plugin
+npm add --save @native-html/iframe-plugin react-native-webview
 ```
 
 ```sh
-yarn add @native-html/iframe-plugin
+yarn add @native-html/iframe-plugin react-native-webview
 ```
 
 **Features**:
 
+- Supports `onLinkPress`;
+- Supports `defaultWebViewProps`;
+- Compliance with [RFC001](https://github.com/archriss/react-native-render-html/blob/master/rfc/001-A-deterministic-approach-to-embedded-content-scaling.adoc#L13): scales to available width;
+- A single renderer function exported as default, super easy to plug-in!
+- Compatible with `react-native-web` via [`@formidable-webview/web`](https://github.com/formidable-webview/ubiquitous/tree/master/packages/web#readme)
+
 **Known Limitations**:
+
+- With `react-native-web`, `onLinkPress` will not work for external domains.
 
 ## Compat Table
 
@@ -67,8 +64,23 @@ yarn add @native-html/iframe-plugin
 
 ## Minimal working example
 
-## API Reference
+> :warning: This plugin requires `react-native-render-html` version 5 or greater
 
-**The complete API reference is available here: [docs/iframe-plugin.md](docs/iframe-plugin.md).**
+```jsx
+import iframe from '@native-html/iframe-plugin';
+import HTML from 'react-native-render-html';
+import WebView from 'react-native-webview';
 
-## Troubleshooting
+const renderers = {
+  iframe
+}
+
+// ...
+
+<HTML renderers={renderers}
+      WebView={WebView}
+      source={{ html: '<iframe ...></iframe>' }}
+      defaultWebViewProps={{ /* Any prop you want to pass to WebView */ }}
+/>
+
+```

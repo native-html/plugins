@@ -30,7 +30,8 @@ const iframe: RendererFunction<any> = function iframe(
     WebView,
     contentWidth,
     onLinkPress,
-    computeEmbeddedMaxWidth
+    computeEmbeddedMaxWidth,
+    defaultWebViewProps
   } = passProps;
   const resolvedContentWidth =
     typeof contentWidth === 'number'
@@ -78,6 +79,7 @@ const iframe: RendererFunction<any> = function iframe(
       WebView={WebView}
       htmlAttribs={htmlAttribs}
       onLinkPress={onLinkPress}
+      webViewProps={defaultWebViewProps}
     />
   ) : null;
 };
