@@ -5,14 +5,14 @@
 ```ts
 
 import { ComponentType } from 'react';
-import { HTMLNode } from 'react-native-render-html';
+import { ContainerProps } from 'react-native-render-html';
+import { HtmlAttributesDictionary } from 'react-native-render-html';
 import { MinimalWebViewProps } from '@formidable-webview/webshell';
-import { RendererDeclaration } from 'react-native-render-html';
+import { PassProps } from 'react-native-render-html';
+import { default as React_2 } from 'react';
+import { RendererFunction } from 'react-native-render-html';
 import { StyleProp } from 'react-native';
 import { ViewStyle } from 'react-native';
-
-// @public
-export function alterNode(node: HTMLNode): false;
 
 // @public
 export function cssRulesFromSpecs(specs?: TableStyleSpecs): string;
@@ -21,13 +21,16 @@ export function cssRulesFromSpecs(specs?: TableStyleSpecs): string;
 export const defaultTableStylesSpecs: TableStyleSpecs;
 
 // @public
-export function HTMLTable({ WebView, tableStyleSpecs, cssRules, html, sourceBaseUrl, animationType, computeHeuristicContentHeight, computeContainerHeight, webViewProps: userWebViewProps, style, onLinkPress, animationDuration, renderersProps, maxScale, ...stats }: HTMLTableProps<MinimalWebViewProps>): JSX.Element;
+export function extractHtmlTableProps(htmlAttribs: HtmlAttributesDictionary, convertedCSSStyles: StyleProp<any>, passProps: PassProps<any>): HTMLTableProps<any>;
+
+// @public
+export const HTMLTable: React_2.NamedExoticComponent<HTMLTableProps<MinimalWebViewProps>>;
 
 // @public
 export interface HTMLTableBaseProps extends HTMLTableStats {
     html: string;
-    onLinkPress?: (url: string) => void;
-    renderersProps?: any;
+    htmlAttribs?: HtmlAttributesDictionary;
+    onLinkPress?: ContainerProps['onLinkPress'];
 }
 
 // @public
@@ -45,10 +48,9 @@ export interface HTMLTableStats {
 export const IGNORED_TAGS: string[];
 
 // @public
-export function makeCustomTableRenderer(TableComponent: ComponentType<HTMLTableBaseProps>): RendererDeclaration;
+const table: RendererFunction<any>;
 
-// @public
-export function makeTableRenderer(tableConfig: TableConfig): RendererDeclaration;
+export default table;
 
 // @public
 export const TABLE_TAGS: string[];

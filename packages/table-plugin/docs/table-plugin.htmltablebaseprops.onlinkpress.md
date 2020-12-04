@@ -6,10 +6,8 @@
 
 Intercept links press.
 
-\*\*Info\*\*: `makeTableRenderer` uses `HTML.onLinkPress` prop.
-
 <b>Signature:</b>
 
 ```typescript
-onLinkPress?: (url: string) => void;
+onLinkPress?: ContainerProps['onLinkPress'];
 ```

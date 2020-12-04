@@ -8,7 +8,9 @@
     "build:table": "yarn workspace @native-html/table-plugin build",
     "build:iframe": "yarn workspace @native-html/iframe-plugin build",
     "test:table": "yarn workspace @native-html/table-plugin test",
+    "test:table:jest": "yarn workspace @native-html/table-plugin test:jest",
     "test:iframe": "yarn workspace @native-html/iframe-plugin test",
+    "test:iframe:jest": "yarn workspace @native-html/iframe-plugin test:jest",
     "release:table": "yarn workspace @native-html/table-plugin release-it",
     "release:iframe": "yarn workspace @native-html/iframe-plugin release-it",
     "publish:example": "yarn workspace example expo publish"

@@ -1,11 +1,8 @@
 import React from 'react';
 import HTML from 'react-native-render-html';
-import {
-  IGNORED_TAGS,
-  alterNode,
-  makeCustomTableRenderer
-} from '@native-html/table-plugin';
+import { extractHtmlTableProps, IGNORED_TAGS } from '@native-html/table-plugin';
 import ClickTable from './ClickTable';
+import WebView from 'react-native-webview';
 
 const table1 = `
 
@@ -160,13 +157,18 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 </p>
 `;
 
-const renderers = {
-  table: makeCustomTableRenderer(ClickTable)
-};
-
 const htmlConfig = {
-  alterNode,
-  renderers,
+  renderers: {
+    table(htmlAttribs, children, convertedCSSStyles, passProps) {
+      const props = extractHtmlTableProps(
+        htmlAttribs,
+        convertedCSSStyles,
+        passProps
+      );
+      return React.createElement(ClickTable, props);
+    }
+  },
+  WebView,
   ignoredTags: IGNORED_TAGS
 };
 
@@ -174,7 +176,7 @@ export default function CustomExample({ instance, onLinkPress }) {
   return (
     <HTML
       key={`custom-${instance}`}
-      html={table1}
+      source={{ html: table1 }}
       onLinkPress={onLinkPress}
       {...htmlConfig}
     />

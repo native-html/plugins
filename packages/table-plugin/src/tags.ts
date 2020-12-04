@@ -1,4 +1,4 @@
-import { IGNORED_TAGS as ORIGINAL_IGNORED_TAGS } from 'react-native-render-html/src/HTMLUtils';
+import { IGNORED_TAGS as ORIGINAL_IGNORED_TAGS } from 'react-native-render-html';
 
 function without<T>(undesired: T[], original: T[]): T[] {
   return original.filter((v) => undesired.indexOf(v) === -1);

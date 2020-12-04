@@ -1,22 +1,22 @@
-import React, {PureComponent} from 'react';
-import {View, Modal, Button, Text, StyleSheet} from 'react-native';
-import {HTMLTable} from '@native-html/table-plugin';
+import React, { PureComponent } from 'react';
+import { View, Modal, Button, Text, StyleSheet } from 'react-native';
+import { HTMLTable } from '@native-html/table-plugin';
 import WebView from 'react-native-webview';
 
 const tableConfig = {
   WebView,
-  animationType: 'animated',
+  animationType: 'animated'
 };
 
 const unconstrainedHeight = () => null;
 
 export default class ClickTable extends PureComponent {
   state = {
-    modalVisible: false,
+    modalVisible: false
   };
 
   render() {
-    const {numOfRows, numOfColumns, numOfChars} = this.props;
+    const { numOfRows, numOfColumns, numOfChars } = this.props;
     // If table contains less then 100 chars or has less then 4 columns and 8 rows,
     // show table inline
     const shouldRenderTableInline =
@@ -49,7 +49,7 @@ export default class ClickTable extends PureComponent {
         {description}
         <Button
           title="Show table"
-          onPress={() => this.setState({modalVisible: true})}
+          onPress={() => this.setState({ modalVisible: true })}
         />
         <Modal visible={this.state.modalVisible}>
           <View style={styles.modalContainer}>
@@ -60,7 +60,7 @@ export default class ClickTable extends PureComponent {
             />
             <Button
               title="Close"
-              onPress={() => this.setState({modalVisible: false})}
+              onPress={() => this.setState({ modalVisible: false })}
             />
           </View>
         </Modal>
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
     fontSize: 11,
     textAlign: 'center',
-    marginBottom: 20,
+    marginBottom: 20
   },
-  modalContainer: {flex: 1, position: 'relative'},
+  modalContainer: { flex: 1, position: 'relative' }
 });

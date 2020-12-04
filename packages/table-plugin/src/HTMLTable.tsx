@@ -7,12 +7,13 @@ import {
   LayoutAnimation,
   Animated
 } from 'react-native';
-import makeWebshell, {
+import {
   useAutoheight,
   HandleHTMLDimensionsFeature,
   HandleLinkPressFeature,
   MinimalWebViewProps,
-  LinkPressTarget
+  LinkPressTarget,
+  useWebshell
 } from '@formidable-webview/webshell';
 import { cssRulesFromSpecs, defaultTableStylesSpecs } from './css-rules';
 import {
@@ -242,6 +243,11 @@ function useSource({
   );
 }
 
+const features = [
+  new HandleLinkPressFeature(),
+  new HandleHTMLDimensionsFeature()
+];
+
 /**
  * A component capable of rendering a html string which root tag is a table
  * tag. This component should not be used directly, except with custom
@@ -249,7 +255,7 @@ function useSource({
  *
  * @public
  */
-export function HTMLTable({
+export const HTMLTable = function HTMLTable({
   WebView,
   tableStyleSpecs,
   cssRules,
@@ -262,24 +268,14 @@ export function HTMLTable({
   style,
   onLinkPress,
   animationDuration,
-  renderersProps,
+  htmlAttribs = {},
   maxScale,
   ...stats
 }: HTMLTableProps<MinimalWebViewProps>) {
-  const Webshell = useMemo(
-    () =>
-      makeWebshell(
-        WebView,
-        new HandleLinkPressFeature(),
-        new HandleHTMLDimensionsFeature()
-      ),
-    [WebView]
-  );
   const onDOMLinkPress = useCallback(
-    (t: LinkPressTarget) => {
-      onLinkPress?.(t.uri);
-    },
-    [onLinkPress]
+    ({ uri }: LinkPressTarget) =>
+      onLinkPress?.call(null, { nativeEvent: {} } as any, uri, htmlAttribs),
+    [onLinkPress, htmlAttribs]
   );
   const { autoheightWebshellProps, containerStyle } = useAnimatedAutoheight({
     ...stats,
@@ -293,26 +289,28 @@ export function HTMLTable({
       scrollEnabled: true,
       contentInset: defaultInsets,
       ...userWebViewProps,
+      onDOMLinkPress,
       source: useSource({
         html,
         cssRules,
         sourceBaseUrl,
         tableStyleSpecs
-      })
+      }),
+      webshellDebug: false
     }
+  });
+  const webViewProps = useWebshell({
+    features,
+    props: autoheightWebshellProps
   });
   return (
     <Animated.View
       testID="html-table-container"
       style={[containerStyle, styles.container, style]}>
-      <Webshell
-        onDOMLinkPress={onDOMLinkPress}
-        {...autoheightWebshellProps}
-        webshellDebug
-      />
+      {React.createElement(WebView, webViewProps)}
     </Animated.View>
   );
-}
+};
 
 const propTypes: Record<keyof HTMLTableProps<any>, any> = {
   animationDuration: PropTypes.number.isRequired,
@@ -323,15 +321,15 @@ const propTypes: Record<keyof HTMLTableProps<any>, any> = {
   numOfChars: PropTypes.number.isRequired,
   numOfColumns: PropTypes.number.isRequired,
   numOfRows: PropTypes.number.isRequired,
-  WebView: PropTypes.oneOfType([PropTypes.func, PropTypes.object]).isRequired,
+  WebView: PropTypes.elementType.isRequired,
   onLinkPress: PropTypes.func,
   style: PropTypes.any,
   tableStyleSpecs: PropTypes.shape(tableStylePropTypeSpec),
   cssRules: PropTypes.string,
   webViewProps: PropTypes.object,
   sourceBaseUrl: PropTypes.string,
-  renderersProps: PropTypes.any,
-  maxScale: PropTypes.number.isRequired
+  maxScale: PropTypes.number.isRequired,
+  htmlAttribs: PropTypes.any
 };
 
 const defaultProps = {

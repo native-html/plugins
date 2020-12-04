@@ -1,5 +1,9 @@
 import { ComponentType } from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
+import {
+  ContainerProps,
+  HtmlAttributesDictionary
+} from 'react-native-render-html';
 
 /**
  * An object describing how to generate styles. See {@link cssRulesFromSpecs}.
@@ -306,15 +310,13 @@ export interface HTMLTableBaseProps extends HTMLTableStats {
 
   /**
    * Intercept links press.
-   *
-   * **Info**: `makeTableRenderer` uses `HTML.onLinkPress` prop.
    */
-  onLinkPress?: (url: string) => void;
+  onLinkPress?: ContainerProps['onLinkPress'];
 
   /**
-   * Renderers props.
+   * Html attributes for this table node.
    */
-  renderersProps?: any;
+  htmlAttribs?: HtmlAttributesDictionary;
 }
 
 /**

@@ -98,6 +98,7 @@ export function cssRulesFromSpecs(
       ${spanToContainerWidthRule}
       ${spanToContainerHeightRule}
       padding: 0;
+      border-collapse: collapse;
     }
     th, td {
       padding: ${cellPaddingEm}em;

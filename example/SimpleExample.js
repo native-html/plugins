@@ -1,10 +1,6 @@
 import React from 'react';
 import HTML from 'react-native-render-html';
-import {
-  IGNORED_TAGS,
-  alterNode,
-  makeTableRenderer
-} from '@native-html/table-plugin';
+import table, { IGNORED_TAGS } from '@native-html/table-plugin';
 import WebView from 'react-native-webview';
 
 const table1 = `
@@ -155,29 +151,34 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 </p>
 `;
 
+const tableConfig = {
+  animationType: 'animated',
+  tableStyleSpecs: {
+    outerBorderWidthPx: 1,
+    rowsBorderWidthPx: 1,
+    columnsBorderWidthPx: 1
+  }
+};
+
 const renderers = {
-  table: makeTableRenderer({
-    WebView,
-    animationType: 'animated',
-    tableStyleSpecs: {
-      outerBorderWidthPx: 1,
-      rowsBorderWidthPx: 1,
-      columnsBorderWidthPx: 1
-    }
-  })
+  table
 };
 
 const htmlConfig = {
-  alterNode,
   renderers,
-  ignoredTags: IGNORED_TAGS
+  WebView,
+  ignoredTags: IGNORED_TAGS,
+  renderersProps: {
+    table: tableConfig
+  },
+  defaultWebViewProps: {}
 };
 
 export default function SimpleExample({ instance, onLinkPress }) {
   return (
     <HTML
       key={`simple-${instance}`}
-      html={table1}
+      source={{ html: table1 }}
       onLinkPress={onLinkPress}
       {...htmlConfig}
     />

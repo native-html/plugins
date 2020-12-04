@@ -21,7 +21,7 @@ const Stack = createStackNavigator();
 function SimpleExampleDescription() {
   return (
     <Text style={styles.welcome}>
-      This Table renderer was created with makeTableRenderer function, and will
+      This Table renderer was created with extractHtmlProps function, and will
       render HTML tables in the body of the HTML component.
     </Text>
   );
@@ -30,7 +30,7 @@ function SimpleExampleDescription() {
 function CustomExampleDescription() {
   return (
     <Text style={styles.welcome}>
-      This Table renderer was created with makeCustomTableRenderer function to
+      This Table renderer was created with extractHtmlTableProps function to
       register a custom component. Depending on the table complexity, it will
       display the HTLM table in the content or through an actionable modal.
     </Text>

@@ -3,10 +3,8 @@ import { HTMLTable } from '../HTMLTable';
 import { render } from '@testing-library/react-native';
 import WebView from 'react-native-webview';
 import HTML, { ContainerProps } from 'react-native-render-html';
-import { makeTableRenderer } from '../make-table-renderer';
-import { alterNode } from '../alter-node';
 import { IGNORED_TAGS } from '../tags';
-import { TableConfig } from '../types';
+import table from '../table';
 
 const simpleHTML = `
 <table>
@@ -18,31 +16,25 @@ const simpleHTML = `
 </table>
 `;
 
-function createConfig(
-  extraneousConfig: Partial<TableConfig> = {}
-): Partial<ContainerProps> {
+function createConfig(): Partial<ContainerProps> {
   const renderers = {
-    table: makeTableRenderer({
-      WebView,
-      animationType: 'none',
-      ...extraneousConfig
-    })
+    table: table
   };
   return {
-    alterNode,
     renderers,
-    ignoredTags: IGNORED_TAGS
+    ignoredTags: IGNORED_TAGS,
+    WebView
   };
 }
 
 describe('integration with react-native-webview', () => {
   it('should let a HTMLTable component appear in the tree', () => {
     const { UNSAFE_getByType } = render(
-      <HTML html={simpleHTML} {...createConfig()} />
+      <HTML source={{ html: simpleHTML }} {...createConfig()} />
     );
-    const table = UNSAFE_getByType(HTMLTable);
-    expect(table).toBeTruthy();
-    const webview = table.findByType(WebView);
+    const tableTest = UNSAFE_getByType(HTMLTable);
+    expect(tableTest).toBeTruthy();
+    const webview = tableTest.findByType(WebView);
     expect(webview).toBeTruthy();
   });
 });
