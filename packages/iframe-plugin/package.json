@@ -59,7 +59,7 @@
     "typescript": "~3.9.7"
   },
   "dependencies": {
-    "@formidable-webview/webshell": "^2.1.0",
+    "@formidable-webview/webshell": "^2.2.0",
     "@types/prop-types": "^15.7.3",
     "prop-types": "^15.7.2"
   },

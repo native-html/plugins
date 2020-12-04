@@ -48,6 +48,7 @@ yarn add @native-html/iframe-plugin react-native-webview
 - Supports `onLinkPress`;
 - Supports `defaultWebViewProps`;
 - Compliance with [RFC001](https://github.com/archriss/react-native-render-html/blob/master/rfc/001-A-deterministic-approach-to-embedded-content-scaling.adoc#L13): scales to available width;
+- Autoscale feature (adapt zoom level to available width! Enabled by default.);
 - A single renderer function exported as default, super easy to plug-in!
 - Compatible with `react-native-web` via [`@formidable-webview/web`](https://github.com/formidable-webview/ubiquitous/tree/master/packages/web#readme)
 
@@ -81,6 +82,7 @@ const renderers = {
       WebView={WebView}
       source={{ html: '<iframe ...></iframe>' }}
       defaultWebViewProps={{ /* Any prop you want to pass to WebView */ }}
+      renderersProps={{ iframe: { autoscale: true /* enabled by default */ }}}
 />
 
 ```

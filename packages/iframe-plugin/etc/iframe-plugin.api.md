@@ -4,7 +4,44 @@
 
 ```ts
 
+import { ComponentType } from 'react';
+import { ContainerProps } from 'react-native-render-html';
+import { HtmlAttributesDictionary } from 'react-native-render-html';
+import { PassProps } from 'react-native-render-html';
+import { default as React_2 } from 'react';
 import { RendererFunction } from 'react-native-render-html';
+import { StyleProp } from 'react-native';
+import { ViewStyle } from 'react-native';
+
+// @public
+export function extractHtmlIframeProps(htmlAttribs: HtmlAttributesDictionary, convertedCSSStyles: StyleProp<any>, passProps: PassProps<any>): HTMLIframeProps;
+
+// @public
+export function HTMLIframe({ WebView, webViewProps: userWebViewProps, source, style, onLinkPress, htmlAttribs, scaleFactor, autoscale }: HTMLIframeProps): React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, string | any | (new (props: any) => React_2.Component<any, any, any>)> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
+
+// @public
+export interface HTMLIframeConfig {
+    autoscale: boolean;
+}
+
+// @public
+export interface HTMLIframeProps<WebViewProps = any> extends HTMLIframeConfig {
+    // (undocumented)
+    htmlAttribs: HtmlAttributesDictionary;
+    // (undocumented)
+    onLinkPress?: ContainerProps['onLinkPress'];
+    scaleFactor: number;
+    // (undocumented)
+    source: {
+        uri?: string;
+        html?: string;
+    };
+    // (undocumented)
+    style: StyleProp<ViewStyle>;
+    WebView: ComponentType<WebViewProps>;
+    // (undocumented)
+    webViewProps?: WebViewProps;
+}
 
 // @public
 const iframe: RendererFunction<any>;
