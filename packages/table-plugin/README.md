@@ -85,11 +85,11 @@ yarn add @native-html/table-plugin
 > **Make sure you check the appropriate version documentation before
 > proceeding.**
 
-| react-native-render-html | @native-html/table-plugin | Documentation |
-| ------------------------ | ------------------------- | ------------- |
-| ≥ 4.2.1 &lt; 5.0.0       | 2.x                       | `rnrh/4.x`    |
-| ≥ 5.0.0 &lt; 6.0.0       | 3.x                       | `rnrh/5.x`    |
-| ≥ 6.0.0                  | 4.x                       | `rnrh/6.x`    |
+| react-native-render-html | @native-html/table-plugin | Documentation                                                                                   |
+| ------------------------ | ------------------------- | ----------------------------------------------------------------------------------------------- |
+| ≥ 4.2.1 &lt; 5.0.0       | 2.x                       | [`rnrh/4.x`](https://github.com/native-html/plugins/tree/rnrh/4.x#readme)                       |
+| ≥ 5.0.0 &lt; 6.0.0       | 3.x                       | [`rnrh/5.x`](https://github.com/native-html/plugins/tree/rnrh/5.x/packages/table-plugin#readme) |
+| ≥ 6.0.0                  | 4.x                       | `rnrh/6.x` (_in development_)                                                                   |
 
 ## Minimal working example
 
