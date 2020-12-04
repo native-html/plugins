@@ -8,13 +8,15 @@ import {
   ScrollView,
   UIManager,
   Platform,
-  Button
+  Button,
+  useWindowDimensions
 } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import SnackBar from 'react-native-snackbar-component';
 import SimpleExample from './SimpleExample';
 import CustomExample from './CustomExample';
+import YoutubeExample from './YoutubeExample';
 
 const Stack = createStackNavigator();
 
@@ -37,7 +39,16 @@ function CustomExampleDescription() {
   );
 }
 
-function CustomExampleScreen({ onLinkPress }) {
+function YoutubeExampleDescription() {
+  return (
+    <Text style={styles.welcome}>
+      This Iframe renderer has the autoscale option set to true (default). It
+      will zoom down to a level that allows the whole viewport to be visible.
+    </Text>
+  );
+}
+
+function CustomExampleScreen({ onLinkPress, availableWidth }) {
   const [instance, setInstance] = useState(0);
   return (
     <ScrollView
@@ -46,13 +57,17 @@ function CustomExampleScreen({ onLinkPress }) {
       <CustomExampleDescription />
       <Button title="reload" onPress={() => setInstance((i) => i + 1)} />
       <View style={styles.example}>
-        <CustomExample onLinkPress={onLinkPress} instance={instance} />
+        <CustomExample
+          availableWidth={availableWidth}
+          onLinkPress={onLinkPress}
+          instance={instance}
+        />
       </View>
     </ScrollView>
   );
 }
 
-function SimpleExampleScreen({ onLinkPress }) {
+function SimpleExampleScreen({ onLinkPress, availableWidth }) {
   const [instance, setInstance] = useState(0);
   return (
     <ScrollView
@@ -61,7 +76,26 @@ function SimpleExampleScreen({ onLinkPress }) {
       <SimpleExampleDescription />
       <Button title="reload" onPress={() => setInstance((i) => i + 1)} />
       <View style={styles.example}>
-        <SimpleExample onLinkPress={onLinkPress} instance={instance} />
+        <SimpleExample
+          availableWidth={availableWidth}
+          onLinkPress={onLinkPress}
+          instance={instance}
+        />
+      </View>
+    </ScrollView>
+  );
+}
+
+function YoutubeExampleScreen({ availableWidth }) {
+  const [instance, setInstance] = useState(0);
+  return (
+    <ScrollView
+      contentContainerStyle={styles.contentStyle}
+      style={styles.scrollViewStyle}>
+      <YoutubeExampleDescription />
+      <Button title="reload" onPress={() => setInstance((i) => i + 1)} />
+      <View style={styles.example}>
+        <YoutubeExample availableWidth={availableWidth} instance={instance} />
       </View>
     </ScrollView>
   );
@@ -71,13 +105,22 @@ function HomeScreen() {
   const navigation = useNavigation();
   return (
     <View style={styles.buttonsContainer}>
+      <View style={styles.button}>
+        <Button
+          title="Open simple table example"
+          onPress={() => navigation.navigate('SimpleExample')}
+          style={styles.button}
+        />
+      </View>
+      <View style={styles.button}>
+        <Button
+          title="Open custom table example"
+          onPress={() => navigation.navigate('CustomExample')}
+        />
+      </View>
       <Button
-        title="Open simple example"
-        onPress={() => navigation.navigate('SimpleExample')}
-      />
-      <Button
-        title="Open custom example"
-        onPress={() => navigation.navigate('CustomExample')}
+        title="Open Youtube iframe example"
+        onPress={() => navigation.navigate('YoutubeExample')}
       />
     </View>
   );
@@ -91,6 +134,8 @@ if (Platform.OS === 'android') {
 export default function App() {
   const [url, setUrl] = useState(null);
   const [isSnackVisible, setIsSnackVisible] = useState(false);
+  const { width: windowWidth } = useWindowDimensions();
+  const availableWidth = windowWidth - 40;
   useEffect(() => {
     if (url) {
       setIsSnackVisible(true);
@@ -107,24 +152,39 @@ export default function App() {
         <Stack.Navigator>
           <Stack.Screen
             options={{
-              title: '@native-html/table-plugin'
+              title: '@native-html/plugins'
             }}
             name="Home"
             component={HomeScreen}
           />
           <Stack.Screen
             options={{
-              title: 'Simple Example'
+              title: 'Simple Table Example'
             }}
             name="SimpleExample">
-            {() => <SimpleExampleScreen onLinkPress={onLinkPress} />}
+            {() => (
+              <SimpleExampleScreen
+                availableWidth={availableWidth}
+                onLinkPress={onLinkPress}
+              />
+            )}
           </Stack.Screen>
           <Stack.Screen
             options={{
-              title: 'Custom Example'
+              title: 'Custom Table Example'
             }}
             name="CustomExample">
-            {() => <CustomExampleScreen onLinkPress={onLinkPress} />}
+            {() => (
+              <CustomExampleScreen
+                availableWidth={availableWidth}
+                onLinkPress={onLinkPress}
+              />
+            )}
+          </Stack.Screen>
+          <Stack.Screen
+            name="YoutubeExample"
+            options={{ title: 'Youtube Example' }}>
+            {() => <YoutubeExampleScreen availableWidth={availableWidth} />}
           </Stack.Screen>
         </Stack.Navigator>
       </NavigationContainer>
@@ -146,6 +206,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#F5FCFF'
   },
+  button: {
+    marginBottom: 10
+  },
   buttonsContainer: {
     justifyContent: 'space-between',
     alignItems: 'stretch',
@@ -157,6 +220,7 @@ const styles = StyleSheet.create({
     margin: 10
   },
   example: {
+    marginTop: 10,
     flex: 1,
     width: '100%'
   },

@@ -168,16 +168,26 @@ const htmlConfig = {
       return React.createElement(ClickTable, props);
     }
   },
+  tagsStyles: {
+    table: {
+      backgroundColor: 'red'
+    }
+  },
   WebView,
   ignoredTags: IGNORED_TAGS
 };
 
-export default function CustomExample({ instance, onLinkPress }) {
+export default function CustomExample({
+  instance,
+  onLinkPress,
+  availableWidth
+}) {
   return (
     <HTML
       key={`custom-${instance}`}
       source={{ html: table1 }}
       onLinkPress={onLinkPress}
+      contentWidth={availableWidth}
       {...htmlConfig}
     />
   );

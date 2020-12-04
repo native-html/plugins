@@ -151,15 +151,6 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 </p>
 `;
 
-const tableConfig = {
-  animationType: 'animated',
-  tableStyleSpecs: {
-    outerBorderWidthPx: 1,
-    rowsBorderWidthPx: 1,
-    columnsBorderWidthPx: 1
-  }
-};
-
 const renderers = {
   table
 };
@@ -169,17 +160,42 @@ const htmlConfig = {
   WebView,
   ignoredTags: IGNORED_TAGS,
   renderersProps: {
-    table: tableConfig
+    table: {
+      animationType: 'animated',
+      tableStyleSpecs: {
+        outerBorderWidthPx: 1,
+        rowsBorderWidthPx: 1,
+        columnsBorderWidthPx: 1
+      },
+      displayMode: 'expand'
+    }
   },
-  defaultWebViewProps: {}
+  tagsStyles: {
+    table: {
+      // Use displayMode: 'expand'
+      alignSelf: 'center'
+    }
+  },
+  defaultWebViewProps: {},
+  computeEmbeddedMaxWidth: (contentWidth, tagName) => {
+    if (tagName === 'table') {
+      return Math.min(contentWidth, 500);
+    }
+    return contentWidth;
+  }
 };
 
-export default function SimpleExample({ instance, onLinkPress }) {
+export default function SimpleExample({
+  instance,
+  onLinkPress,
+  availableWidth
+}) {
   return (
     <HTML
       key={`simple-${instance}`}
       source={{ html: table1 }}
       onLinkPress={onLinkPress}
+      contentWidth={availableWidth}
       {...htmlConfig}
     />
   );

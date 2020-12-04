@@ -2,7 +2,10 @@ const path = require('path');
 
 module.exports = {
   projectRoot: __dirname,
-  watchFolders: [path.resolve('../packages/table-plugin')],
+  watchFolders: [
+    path.resolve('../packages/table-plugin'),
+    path.resolve('../packages/iframe-plugin')
+  ],
   resolver: {
     extraNodeModules: new Proxy(
       {},
