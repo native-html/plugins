@@ -72,7 +72,6 @@ xdescribe('HTMLTable component', () => {
       const computeContainerHeight = jest.fn((s: TableContentHeightState) => {
         return s.contentHeight;
       });
-      console.info(Ersatz);
       render(
         <HTMLTable
           html={simpleHTML}

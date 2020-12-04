@@ -9,7 +9,6 @@ import { ContainerProps } from 'react-native-render-html';
 import { HtmlAttributesDictionary } from 'react-native-render-html';
 import { MinimalWebViewProps } from '@formidable-webview/webshell';
 import { PassProps } from 'react-native-render-html';
-import { default as React_2 } from 'react';
 import { RendererFunction } from 'react-native-render-html';
 import { StyleProp } from 'react-native';
 import { ViewStyle } from 'react-native';
@@ -24,7 +23,7 @@ export const defaultTableStylesSpecs: TableStyleSpecs;
 export function extractHtmlTableProps(htmlAttribs: HtmlAttributesDictionary, convertedCSSStyles: StyleProp<any>, passProps: PassProps<any>): HTMLTableProps<any>;
 
 // @public
-export const HTMLTable: React_2.NamedExoticComponent<HTMLTableProps<MinimalWebViewProps>>;
+export const HTMLTable: ({ WebView, tableStyleSpecs, cssRules, html, sourceBaseUrl, animationType, computeHeuristicContentHeight, computeContainerHeight, webViewProps: userWebViewProps, style, onLinkPress, animationDuration, htmlAttribs, maxScale, ...stats }: HTMLTableProps<MinimalWebViewProps>) => JSX.Element;
 
 // @public
 export interface HTMLTableBaseProps extends HTMLTableStats {
@@ -70,6 +69,7 @@ export interface TableConfig<WebViewProps = any> {
     computeContainerHeight?: (state: TableContentHeightState) => number | null;
     computeHeuristicContentHeight?: (state: HTMLTableStats) => number;
     cssRules?: string;
+    displayMode: 'flex' | 'expand';
     maxScale?: boolean;
     sourceBaseUrl?: string;
     style?: StyleProp<ViewStyle>;

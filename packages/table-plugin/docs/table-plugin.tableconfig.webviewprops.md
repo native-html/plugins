@@ -14,5 +14,5 @@ webViewProps?: WebViewProps;
 
 ## Remarks
 
-`source` and `javascriptEnabled` will be ignored and overriden. Also, you should pass a stable or memoized object to avoid extraneous renderings. See `React.useMemo`<!-- -->.
+`source` and `javascriptEnabled` will be ignored and overriden.
 

@@ -329,7 +329,8 @@ const propTypes: Record<keyof HTMLTableProps<any>, any> = {
   webViewProps: PropTypes.object,
   sourceBaseUrl: PropTypes.string,
   maxScale: PropTypes.number.isRequired,
-  htmlAttribs: PropTypes.any
+  htmlAttribs: PropTypes.any,
+  displayMode: PropTypes.oneOf(['flex', 'expand'])
 };
 
 const defaultProps = {

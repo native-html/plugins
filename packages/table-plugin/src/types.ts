@@ -268,11 +268,19 @@ export interface TableConfig<WebViewProps = any> {
    * Any props you'd like to pass to {@link TableConfig.WebView}.
    *
    * @remarks
-   * `source` and `javascriptEnabled` will be ignored and overriden. Also, you
-   * should pass a stable or memoized object to avoid extraneous renderings.
-   * See `React.useMemo`.
+   * `source` and `javascriptEnabled` will be ignored and overriden.
    */
   webViewProps?: WebViewProps;
+  /**
+   * In expand mode, the table width will always be the maxWidth as per React
+   * Native Render HTML RFC001 standard. In flex mode, the width will not be
+   * enforced, but the maxWidth will still be set from
+   * `computeEmbeddedMaxWidth`. If you need to set a style rule such as
+   * `alignSelf: 'center'` for tables, you should use 'expand' mode.
+   *
+   * @defaultvalue 'flex'
+   */
+  displayMode: 'flex' | 'expand';
 }
 
 /**

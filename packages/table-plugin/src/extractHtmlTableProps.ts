@@ -1,4 +1,4 @@
-import { StyleProp } from 'react-native';
+import { Dimensions, StyleProp } from 'react-native';
 import {
   constructStyles,
   HtmlAttributesDictionary,
@@ -28,15 +28,30 @@ export default function extractHtmlTableProps(
     defaultWebViewProps,
     key,
     domNode,
+    contentWidth,
+    computeEmbeddedMaxWidth,
     renderersProps: { table: tableConfig } = {}
   } = passProps;
+  const resolvedContentWidth =
+    typeof contentWidth === 'number'
+      ? contentWidth
+      : Dimensions.get('window').width;
+  const availableWidth =
+    computeEmbeddedMaxWidth?.call(null, resolvedContentWidth, 'table') ||
+    resolvedContentWidth;
   const { html, stats } = extractHtmlAndStatsFromTableDomNode(domNode);
+  const displayMode = tableConfig?.displayMode || 'flex';
   const style = constructStyles({
     tagName: 'table',
     htmlAttribs,
     passProps,
     styleSet: 'VIEW',
-    additionalStyles: convertedCSSStyles,
+    additionalStyles: [
+      convertedCSSStyles,
+      displayMode === 'expand'
+        ? { width: availableWidth }
+        : { maxWidth: availableWidth }
+    ],
     baseFontStyle: passProps.baseFontStyle
   });
 
