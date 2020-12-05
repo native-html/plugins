@@ -92,8 +92,8 @@ const renderers = {
 <HTML renderers={renderers}
       WebView={WebView}
       source={{ html: '<iframe ...></iframe>' }}
-      defaultWebViewProps={{ /* Any prop you want to pass to WebView */ }}
-      renderersProps={{ iframe: { scalesPageToFit: true /* enabled by default */ }}}
+      defaultWebViewProps={{ /* Any prop you want to pass to all WebViews */ }}
+      renderersProps={{ iframe: { scalesPageToFit: true, webViewProps: { /* Any prop you want to pass to iframe WebViews */ } }}}
 />
 
 ```
