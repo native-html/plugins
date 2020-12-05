@@ -169,11 +169,12 @@ const htmlConfig = {
     }
   },
   tagsStyles: {
-    table: {
-      backgroundColor: 'red'
-    }
+    table: {}
   },
   WebView,
+  defaultWebViewProps: {
+    androidHardwareAccelerationDisabled: true
+  },
   ignoredTags: IGNORED_TAGS
 };
 

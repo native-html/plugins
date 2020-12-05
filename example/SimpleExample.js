@@ -176,7 +176,9 @@ const htmlConfig = {
       alignSelf: 'center'
     }
   },
-  defaultWebViewProps: {},
+  defaultWebViewProps: {
+    androidHardwareAccelerationDisabled: true
+  },
   computeEmbeddedMaxWidth: (contentWidth, tagName) => {
     if (tagName === 'table') {
       return Math.min(contentWidth, 500);

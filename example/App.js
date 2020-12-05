@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import * as WebBrowser from 'expo-web-browser';
 import {
@@ -13,7 +13,11 @@ import {
 } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
-import SnackBar from 'react-native-snackbar-component';
+import {
+  Snackbar,
+  Portal,
+  Provider as PaperProvider
+} from 'react-native-paper';
 import SimpleExample from './SimpleExample';
 import CustomExample from './CustomExample';
 import YoutubeExample from './YoutubeExample';
@@ -136,67 +140,71 @@ export default function App() {
   const [isSnackVisible, setIsSnackVisible] = useState(false);
   const { width: windowWidth } = useWindowDimensions();
   const availableWidth = windowWidth - 40;
-  useEffect(() => {
-    if (url) {
-      setIsSnackVisible(true);
-    }
-    let timeout = setTimeout(setIsSnackVisible.bind(null, false), 3000);
-    return clearTimeout.bind(null, timeout);
-  }, [url]);
   const onLinkPress = useCallback((e, url) => {
     setUrl(url);
   }, []);
+  React.useEffect(() => {
+    url && setIsSnackVisible(true);
+  }, [url]);
   return (
-    <>
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen
-            options={{
-              title: '@native-html/plugins'
-            }}
-            name="Home"
-            component={HomeScreen}
-          />
-          <Stack.Screen
-            options={{
-              title: 'Simple Table Example'
-            }}
-            name="SimpleExample">
-            {() => (
-              <SimpleExampleScreen
-                availableWidth={availableWidth}
-                onLinkPress={onLinkPress}
-              />
-            )}
-          </Stack.Screen>
-          <Stack.Screen
-            options={{
-              title: 'Custom Table Example'
-            }}
-            name="CustomExample">
-            {() => (
-              <CustomExampleScreen
-                availableWidth={availableWidth}
-                onLinkPress={onLinkPress}
-              />
-            )}
-          </Stack.Screen>
-          <Stack.Screen
-            name="YoutubeExample"
-            options={{ title: 'Youtube Example' }}>
-            {() => <YoutubeExampleScreen availableWidth={availableWidth} />}
-          </Stack.Screen>
-        </Stack.Navigator>
-      </NavigationContainer>
-      <SnackBar
-        visible={isSnackVisible}
-        textMessage={url}
-        autoHidingTime={3000}
-        actionHandler={() => WebBrowser.openBrowserAsync(url)}
-        actionText="Open in Browser"
-      />
-      <StatusBar style="auto" />
-    </>
+    <PaperProvider>
+      <View style={{ flex: 1 }}>
+        <NavigationContainer>
+          <Stack.Navigator>
+            <Stack.Screen
+              options={{
+                title: '@native-html/plugins'
+              }}
+              name="Home"
+              component={HomeScreen}
+            />
+            <Stack.Screen
+              options={{
+                title: 'Simple Table Example'
+              }}
+              name="SimpleExample">
+              {() => (
+                <SimpleExampleScreen
+                  availableWidth={availableWidth}
+                  onLinkPress={onLinkPress}
+                />
+              )}
+            </Stack.Screen>
+            <Stack.Screen
+              options={{
+                title: 'Custom Table Example'
+              }}
+              name="CustomExample">
+              {() => (
+                <CustomExampleScreen
+                  availableWidth={availableWidth}
+                  onLinkPress={onLinkPress}
+                />
+              )}
+            </Stack.Screen>
+            <Stack.Screen
+              name="YoutubeExample"
+              options={{ title: 'Youtube Example' }}>
+              {() => <YoutubeExampleScreen availableWidth={availableWidth} />}
+            </Stack.Screen>
+          </Stack.Navigator>
+        </NavigationContainer>
+        <Portal>
+          <Snackbar
+            visible={isSnackVisible}
+            onDismiss={() => setIsSnackVisible(false)}
+            duration={2800}
+            style={{ zIndex: 10000, position: 'absolute', bottom: 0 }}
+            action={{
+              label: 'Browse',
+              onPress: () => WebBrowser.openBrowserAsync(url)
+            }}>
+            {url}
+          </Snackbar>
+        </Portal>
+        <StatusBar style="auto" />
+      </View>
+    </PaperProvider>
   );
 }
 
