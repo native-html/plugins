@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/native-html/plugins/compare/@native-html/iframe-plugin@1.1.0...@native-html/iframe-plugin@1.1.1) (2020-12-05)
+
+
+### Bug Fixes
+
+* **iframe-plugin:** resolve TypeError when renderersProp is not defined ([54e650b](https://github.com/native-html/plugins/commit/54e650b9046aeae12f63ed94c41d19347e97d725))
+
 # [1.1.0](https://github.com/native-html/plugins/compare/@native-html/iframe-plugin@1.0.0...@native-html/iframe-plugin@1.1.0) (2020-12-05)
 
 
