@@ -86,3 +86,14 @@ const renderers = {
 />
 
 ```
+
+## Autoscale feature
+
+When `autoscale` is set to true, if the iframe width (as determined by the
+`width` element attribute) is greater than the available width (as determined
+by HTML props `contentWidth` and `computeEmbeddedMaxWidth`), the `WebView` will
+be zoomed out by just the right amount to have no horizontal cropping. This is
+equivalent to `resizeMode: 'contain'` for images. See example below with
+`autoscale` disabled (left) and enabled (right):
+
+![](https://github.com/native-html/plugins/blob/master/images/autoscale.png)
