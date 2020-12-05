@@ -2482,7 +2482,7 @@ __metadata:
   peerDependencies:
     react: ">= 16.8.0"
     react-native: ">= 0.59.0"
-    react-native-render-html: ">= 5.0.0 <= 6.0.0"
+    react-native-render-html: ">= 5.0.0-alpha.8 || 5.x"
   languageName: unknown
   linkType: soft
 
