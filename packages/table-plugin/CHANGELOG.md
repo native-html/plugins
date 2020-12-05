@@ -1,3 +1,22 @@
+# 3.0.0 (2020-12-05)
+
+
+### Features
+
+* **table-plugin:** new displayMode prop and compliance with RFC001 ([1de3df0](https://github.com/native-html/plugins/commit/1de3df06ac5a81b70f544c3fcbf3d735dea95de7))
+* **table-plugin:** new lightweight API for react-native-render-html v5.0 ([a7fa70a](https://github.com/native-html/plugins/commit/a7fa70aa36d7a5f3b1d3a6dcc44e3358af321f52))
+
+
+### BREAKING CHANGES
+
+* **table-plugin:** `makeTableRenderer` and `makeCustomTableRenderer` have
+been dropped in favor of the default `table` renderer export and
+`extractHtmlTableProp` function for custom renderers. This release takes
+advantage of the availability of `domNode` in custom renderers and the
+new `domNodeToHTMLString` utility available in react-native-render-html.
+Configuration for the table renderer is now read from
+`renderersProps.table` prop of the `HTML` component.
+
 ## [2.1.4](https://github.com/native-html/table-plugin/compare/v2.1.3...v2.1.4) (2020-10-08)
 
 ### Misc
