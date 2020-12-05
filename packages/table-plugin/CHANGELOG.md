@@ -1,3 +1,11 @@
+# [3.1.0](https://github.com/native-html/plugins/compare/@native-html/table-plugin@3.0.1...@native-html/table-plugin@3.1.0) (2020-12-05)
+
+
+### Features
+
+* **table-plugin:** add new `tableConfig` argument to extractHtmlTableProps ([366c156](https://github.com/native-html/plugins/commit/366c15625d76b75799387ed7a41fa0fb504fe5e0))
+* **table-plugin:** new `displayMode` value, "embedded" ([0ec4937](https://github.com/native-html/plugins/commit/0ec49370dc29b54572d2c03b638d7568c1d5bd7d))
+
 ## [3.0.1](https://github.com/native-html/plugins/compare/@native-html/table-plugin@3.0.0...@native-html/table-plugin@3.0.1) (2020-12-05)
 
 ## Misc
