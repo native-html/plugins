@@ -118,7 +118,7 @@ function useAnimatedAutoheight<WVP extends MinimalWebViewProps>({
   numOfColumns,
   numOfRows
 }: Pick<
-  HTMLTableProps<any>,
+  HTMLTableProps,
   | 'animationType'
   | 'animationDuration'
   | 'numOfChars'
@@ -126,7 +126,7 @@ function useAnimatedAutoheight<WVP extends MinimalWebViewProps>({
   | 'numOfRows'
 > & { webViewProps: any } & Required<
     Pick<
-      HTMLTableProps<any>,
+      HTMLTableProps,
       'computeContainerHeight' | 'computeHeuristicContentHeight'
     >
   >) {
@@ -207,7 +207,7 @@ function useSource({
   html,
   maxScale
 }: Pick<
-  HTMLTableProps<any>,
+  HTMLTableProps,
   'html' | 'cssRules' | 'tableStyleSpecs' | 'sourceBaseUrl' | 'maxScale'
 >) {
   const injectedHtml = useMemo(() => {
@@ -271,7 +271,7 @@ export const HTMLTable = function HTMLTable({
   htmlAttribs = {},
   maxScale,
   ...stats
-}: HTMLTableProps<MinimalWebViewProps>) {
+}: HTMLTableProps) {
   const onDOMLinkPress = useCallback(
     ({ uri }: LinkPressTarget) =>
       onLinkPress?.call(null, { nativeEvent: {} } as any, uri, htmlAttribs),
@@ -312,7 +312,7 @@ export const HTMLTable = function HTMLTable({
   );
 };
 
-const propTypes: Record<keyof HTMLTableProps<any>, any> = {
+const propTypes: Record<keyof HTMLTableProps, any> = {
   animationDuration: PropTypes.number.isRequired,
   animationType: PropTypes.oneOf(['none', 'animated', 'layout']),
   computeContainerHeight: PropTypes.func.isRequired,

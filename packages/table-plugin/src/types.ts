@@ -148,7 +148,7 @@ export type TableContentHeightState =
  *
  * @public
  */
-export interface TableConfig<WebViewProps = any> {
+export interface TableConfig {
   /**
    * What kind of animation should be used when height is changed?
    * <ul>
@@ -260,27 +260,32 @@ export interface TableConfig<WebViewProps = any> {
   tableStyleSpecs?: TableStyleSpecs;
 
   /**
-   * The `WebView` Component you wish to use.
-   */
-  WebView: ComponentType<WebViewProps>;
-
-  /**
-   * Any props you'd like to pass to {@link TableConfig.WebView}.
+   * Any props you'd like to pass to the `WebView` component.
    *
    * @remarks
    * `source` and `javascriptEnabled` will be ignored and overriden.
    */
-  webViewProps?: WebViewProps;
+  webViewProps?: any;
   /**
-   * In expand mode, the table width will always be the maxWidth as per React
-   * Native Render HTML RFC001 standard. In flex mode, the width will not be
-   * enforced, but the maxWidth will still be set from
-   * `computeEmbeddedMaxWidth`. If you need to set a style rule such as
-   * `alignSelf: 'center'` for tables, you should use 'expand' mode.
+   * Determine how the width of the table is constrained (or not).
    *
-   * @defaultvalue 'flex'
+   * <ul>
+   *   <li>
+   *     <b>normal</b>: the table will have no peculiar constrain on <code>width</code> or <code>maxWidth</code>.
+   *   </li>
+   *   <li>
+   *     <b>embedded</b>: the table acts like a width-constrained embedded (React Native Render HTML RFC001), with
+   *     <code>maxWidth</code> determined by <code>contentWidth</code> and <code>computeEmbeddedMaxWidth</code>.
+   *   </li>
+   *   <li>
+   *     <b>expand</b>: like <b>embedded</b>, but with <code>width</code> set to <code>maxWidth</code>. This can
+   *     be useful to have a center-aligned table on wide screens.
+   *   </li>
+   * </ul>
+   *
+   * @defaultvalue 'normal'
    */
-  displayMode: 'flex' | 'expand';
+  displayMode: 'normal' | 'embedded' | 'expand';
 }
 
 /**
@@ -325,6 +330,10 @@ export interface HTMLTableBaseProps extends HTMLTableStats {
    * Html attributes for this table node.
    */
   htmlAttribs?: HtmlAttributesDictionary;
+  /**
+   * The `WebView` Component you wish to use.
+   */
+  WebView: ComponentType<any>;
 }
 
 /**
@@ -332,6 +341,4 @@ export interface HTMLTableBaseProps extends HTMLTableStats {
  *
  * @public
  */
-export interface HTMLTableProps<WVP>
-  extends TableConfig<WVP>,
-    HTMLTableBaseProps {}
+export interface HTMLTableProps extends TableConfig, HTMLTableBaseProps {}
