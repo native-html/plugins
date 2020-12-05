@@ -8,6 +8,8 @@ export default {
     slug: 'native-html-plugins-examples',
     version: pluginVersion,
     orientation: 'default',
+    description:
+      'Try out official plugins for react-native-render-html on your device!',
     icon: './assets/icon.png',
     splash: {
       backgroundColor: '#ffffff'
