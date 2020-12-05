@@ -1,3 +1,5 @@
+## [3.0.1](https://github.com/native-html/plugins/compare/@native-html/table-plugin@3.0.0...@native-html/table-plugin@3.0.1) (2020-12-05)
+
 # 3.0.0 (2020-12-05)
 
 This release requires `react-native-render-html` ≥ 5.0.0! Be aware, its API has changed a little:
