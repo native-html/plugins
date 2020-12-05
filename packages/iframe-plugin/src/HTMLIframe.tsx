@@ -23,9 +23,19 @@ export interface HTMLIframeConfig {
    * When the iframe attribute width is wider than the contentWidth, scales
    * down the viewport so that it doesn't overflows horizontally.
    *
+   * @remarks Although it looks like the eponymous `WebView` prop, it works
+   * both on iOS and Android.
+   *
    * @defaultvalue false
    */
-  scalesPageToFit: boolean;
+  scalesPageToFit?: boolean;
+  /**
+   * Any props you'd like to pass to the `WebView` component.
+   *
+   * @remarks
+   * `source` and `javascriptEnabled` will be ignored and overriden.
+   */
+  webViewProps?: any;
 }
 
 /**
@@ -90,8 +100,7 @@ export default function HTMLIframe({
       onDOMLinkPress,
       style,
       source,
-      testID: 'iframe',
-      allowsFullscreenVideo: true
+      testID: 'iframe'
     }
   });
   return React.createElement(WebView, webViewProps);

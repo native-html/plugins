@@ -11,6 +11,12 @@ function normalizeUri(uri: string): string {
   return uri.startsWith('//') ? `https:${uri}` : uri;
 }
 
+const defaultIframeConfig: HTMLIframeConfig = {
+  webViewProps: {
+    allowsFullscreenVideo: true
+  }
+};
+
 /**
  * Extract props for the HTMLIframe component from renderer function arguments.
  * This function is especially usefull for custom iframe renderers.
@@ -38,8 +44,15 @@ export default function extractHtmlIframeProps(
     renderersProps: { iframe: globalIframeConfig }
   } = passProps;
   const resolvedConfig = {
+    ...defaultIframeConfig,
     ...globalIframeConfig,
-    ...iframeConfig
+    ...iframeConfig,
+    webViewProps: {
+      ...defaultWebViewProps,
+      ...defaultIframeConfig.webViewProps,
+      ...globalIframeConfig?.webViewProps,
+      ...iframeConfig?.webViewProps
+    }
   };
   const resolvedContentWidth =
     typeof contentWidth === 'number'
@@ -92,10 +105,6 @@ export default function extractHtmlIframeProps(
     htmlAttribs,
     scaleFactor,
     style: [restStyle, { width: printWidth, height: printHeight }],
-    webViewProps: {
-      ...defaultWebViewProps,
-      ...resolvedConfig.webViewProps
-    },
     WebView
   };
 }
