@@ -9,7 +9,7 @@ Props for HTMLTable component.
 <b>Signature:</b>
 
 ```typescript
-export interface HTMLTableProps<WVP> extends TableConfig<WVP>, HTMLTableBaseProps 
+export interface HTMLTableProps extends TableConfig, HTMLTableBaseProps 
 ```
-<b>Extends:</b> [TableConfig](./table-plugin.tableconfig.md)<!-- -->&lt;WVP&gt;, [HTMLTableBaseProps](./table-plugin.htmltablebaseprops.md)
+<b>Extends:</b> [TableConfig](./table-plugin.tableconfig.md)<!-- -->, [HTMLTableBaseProps](./table-plugin.htmltablebaseprops.md)
 

@@ -4,12 +4,12 @@
 
 ## TableConfig.webViewProps property
 
-Any props you'd like to pass to [TableConfig.WebView](./table-plugin.tableconfig.webview.md)<!-- -->.
+Any props you'd like to pass to the `WebView` component.
 
 <b>Signature:</b>
 
 ```typescript
-webViewProps?: WebViewProps;
+webViewProps?: any;
 ```
 
 ## Remarks

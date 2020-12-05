@@ -7,7 +7,6 @@
 import { ComponentType } from 'react';
 import { ContainerProps } from 'react-native-render-html';
 import { HtmlAttributesDictionary } from 'react-native-render-html';
-import { MinimalWebViewProps } from '@formidable-webview/webshell';
 import { PassProps } from 'react-native-render-html';
 import { RendererFunction } from 'react-native-render-html';
 import { StyleProp } from 'react-native';
@@ -20,20 +19,23 @@ export function cssRulesFromSpecs(specs?: TableStyleSpecs): string;
 export const defaultTableStylesSpecs: TableStyleSpecs;
 
 // @public
-export function extractHtmlTableProps(htmlAttribs: HtmlAttributesDictionary, convertedCSSStyles: StyleProp<any>, passProps: PassProps<any>): HTMLTableProps<any>;
+export function extractHtmlTableProps(htmlAttribs: HtmlAttributesDictionary, convertedCSSStyles: StyleProp<any>, passProps: PassProps<any>, tableConfig?: TableConfig): HTMLTableProps & {
+    key: string | number;
+};
 
 // @public
-export const HTMLTable: ({ WebView, tableStyleSpecs, cssRules, html, sourceBaseUrl, animationType, computeHeuristicContentHeight, computeContainerHeight, webViewProps: userWebViewProps, style, onLinkPress, animationDuration, htmlAttribs, maxScale, ...stats }: HTMLTableProps<MinimalWebViewProps>) => JSX.Element;
+export const HTMLTable: ({ WebView, tableStyleSpecs, cssRules, html, sourceBaseUrl, animationType, computeHeuristicContentHeight, computeContainerHeight, webViewProps: userWebViewProps, style, onLinkPress, animationDuration, htmlAttribs, maxScale, ...stats }: HTMLTableProps) => JSX.Element;
 
 // @public
 export interface HTMLTableBaseProps extends HTMLTableStats {
     html: string;
     htmlAttribs?: HtmlAttributesDictionary;
     onLinkPress?: ContainerProps['onLinkPress'];
+    WebView: ComponentType<any>;
 }
 
 // @public
-export interface HTMLTableProps<WVP> extends TableConfig<WVP>, HTMLTableBaseProps {
+export interface HTMLTableProps extends TableConfig, HTMLTableBaseProps {
 }
 
 // @public
@@ -63,19 +65,18 @@ export interface TableAccurateContentHeightState {
 }
 
 // @public
-export interface TableConfig<WebViewProps = any> {
+export interface TableConfig {
     animationDuration?: number;
     animationType?: 'none' | 'layout' | 'animated';
     computeContainerHeight?: (state: TableContentHeightState) => number | null;
     computeHeuristicContentHeight?: (state: HTMLTableStats) => number;
     cssRules?: string;
-    displayMode: 'flex' | 'expand';
+    displayMode: 'normal' | 'embedded' | 'expand';
     maxScale?: boolean;
     sourceBaseUrl?: string;
     style?: StyleProp<ViewStyle>;
     tableStyleSpecs?: TableStyleSpecs;
-    WebView: ComponentType<WebViewProps>;
-    webViewProps?: WebViewProps;
+    webViewProps?: any;
 }
 
 // @public

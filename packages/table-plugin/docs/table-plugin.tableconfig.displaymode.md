@@ -4,10 +4,12 @@
 
 ## TableConfig.displayMode property
 
-In expand mode, the table width will always be the maxWidth as per React Native Render HTML RFC001 standard. In flex mode, the width will not be enforced, but the maxWidth will still be set from `computeEmbeddedMaxWidth`<!-- -->. If you need to set a style rule such as `alignSelf: 'center'` for tables, you should use 'expand' mode.
+Determine how the width of the table is constrained (or not).
+
+<ul> <li> <b>normal</b>: the table will have no peculiar constrain on <code>width</code> or <code>maxWidth</code>. </li> <li> <b>embedded</b>: the table acts like a width-constrained embedded (React Native Render HTML RFC001), with <code>maxWidth</code> determined by <code>contentWidth</code> and <code>computeEmbeddedMaxWidth</code>. </li> <li> <b>expand</b>: like <b>embedded</b>, but with <code>width</code> set to <code>maxWidth</code>. This can be useful to have a center-aligned table on wide screens. </li> </ul>
 
 <b>Signature:</b>
 
 ```typescript
-displayMode: 'flex' | 'expand';
+displayMode: 'normal' | 'embedded' | 'expand';
 ```

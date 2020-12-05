@@ -9,7 +9,7 @@ This object defines how the table component can be customized.
 <b>Signature:</b>
 
 ```typescript
-export interface TableConfig<WebViewProps = any> 
+export interface TableConfig 
 ```
 
 ## Properties
@@ -21,11 +21,10 @@ export interface TableConfig<WebViewProps = any>
 |  [computeContainerHeight?](./table-plugin.tableconfig.computecontainerheight.md) | (state: [TableContentHeightState](./table-plugin.tablecontentheightstate.md)<!-- -->) =&gt; number \| null | <i>(Optional)</i> A function which will compute container's height given the table content height. |
 |  [computeHeuristicContentHeight?](./table-plugin.tableconfig.computeheuristiccontentheight.md) | (state: [HTMLTableStats](./table-plugin.htmltablestats.md)<!-- -->) =&gt; number | <i>(Optional)</i> A function to compute approximate content height before the real content height has been fetched on DOM mount. |
 |  [cssRules?](./table-plugin.tableconfig.cssrules.md) | string | <i>(Optional)</i> Override default CSS rules with this prop. |
-|  [displayMode](./table-plugin.tableconfig.displaymode.md) | 'flex' \| 'expand' | In expand mode, the table width will always be the maxWidth as per React Native Render HTML RFC001 standard. In flex mode, the width will not be enforced, but the maxWidth will still be set from <code>computeEmbeddedMaxWidth</code>. If you need to set a style rule such as <code>alignSelf: 'center'</code> for tables, you should use 'expand' mode. |
+|  [displayMode](./table-plugin.tableconfig.displaymode.md) | 'normal' \| 'embedded' \| 'expand' | Determine how the width of the table is constrained (or not).<ul> <li> <b>normal</b>: the table will have no peculiar constrain on <code>width</code> or <code>maxWidth</code>. </li> <li> <b>embedded</b>: the table acts like a width-constrained embedded (React Native Render HTML RFC001), with <code>maxWidth</code> determined by <code>contentWidth</code> and <code>computeEmbeddedMaxWidth</code>. </li> <li> <b>expand</b>: like <b>embedded</b>, but with <code>width</code> set to <code>maxWidth</code>. This can be useful to have a center-aligned table on wide screens. </li> </ul> |
 |  [maxScale?](./table-plugin.tableconfig.maxscale.md) | boolean | <i>(Optional)</i> Max zoom scale (must be greater than 1). |
 |  [sourceBaseUrl?](./table-plugin.tableconfig.sourcebaseurl.md) | string | <i>(Optional)</i> See https://git.io/JeCAG |
 |  [style?](./table-plugin.tableconfig.style.md) | StyleProp&lt;ViewStyle&gt; | <i>(Optional)</i> Container style. |
 |  [tableStyleSpecs?](./table-plugin.tableconfig.tablestylespecs.md) | [TableStyleSpecs](./table-plugin.tablestylespecs.md) | <i>(Optional)</i> Specs to generate css rules.<img src="https://raw.githubusercontent.com/native-html/table-plugin/master/images/TableStyleSpecs.png" /> |
-|  [WebView](./table-plugin.tableconfig.webview.md) | ComponentType&lt;WebViewProps&gt; | The <code>WebView</code> Component you wish to use. |
-|  [webViewProps?](./table-plugin.tableconfig.webviewprops.md) | WebViewProps | <i>(Optional)</i> Any props you'd like to pass to [TableConfig.WebView](./table-plugin.tableconfig.webview.md)<!-- -->. |
+|  [webViewProps?](./table-plugin.tableconfig.webviewprops.md) | any | <i>(Optional)</i> Any props you'd like to pass to the <code>WebView</code> component. |
 

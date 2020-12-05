@@ -9,7 +9,9 @@ Extract props for the HTMLTable component from renderer function arguments. This
 <b>Signature:</b>
 
 ```typescript
-export default function extractHtmlTableProps(htmlAttribs: HtmlAttributesDictionary, convertedCSSStyles: StyleProp<any>, passProps: PassProps<any>): HTMLTableProps<any>;
+export default function extractHtmlTableProps(htmlAttribs: HtmlAttributesDictionary, convertedCSSStyles: StyleProp<any>, passProps: PassProps<any>, tableConfig?: TableConfig): HTMLTableProps & {
+    key: string | number;
+};
 ```
 
 ## Parameters
@@ -19,8 +21,9 @@ export default function extractHtmlTableProps(htmlAttribs: HtmlAttributesDiction
 |  htmlAttribs | HtmlAttributesDictionary | The HTML node attributes. |
 |  convertedCSSStyles | StyleProp&lt;any&gt; | Converted inline styles. |
 |  passProps | PassProps&lt;any&gt; | Passed props. |
+|  tableConfig | [TableConfig](./table-plugin.tableconfig.md) | Override config options. |
 
 <b>Returns:</b>
 
-[HTMLTableProps](./table-plugin.htmltableprops.md)<!-- -->&lt;any&gt;
+[HTMLTableProps](./table-plugin.htmltableprops.md) &amp; { key: string \| number; }
 
