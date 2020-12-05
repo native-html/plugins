@@ -58,10 +58,10 @@ yarn add @native-html/iframe-plugin react-native-webview
 
 ## Compat Table
 
-| react-native-render-html | @native-html/iframe-plugin | Documentation                                                                                    |
-| ------------------------ | -------------------------- | ------------------------------------------------------------------------------------------------ |
-| ≥ 5.0.0 &lt; 6.0.0       | 1.x                        | [`rnrh/5.x`](https://github.com/native-html/plugins/tree/rnrh/5.x/packages/iframe-plugin#readme) |
-| ≥ 6.0.0                  | 2.x                        | `rnrh/6.x` (_in development_)                                                                    |
+| react-native-render-html | @native-html/iframe-plugin                                                                                |
+| ------------------------ | --------------------------------------------------------------------------------------------------------- |
+| ≥ 5.0.0 &lt; 6.0.0       | 1.x ([documentation](https://github.com/native-html/plugins/tree/rnrh/5.x/packages/iframe-plugin#readme)) |
+| ≥ 6.0.0                  | 2.x (_in development_)                                                                                    |
 
 ## Minimal working example
 
