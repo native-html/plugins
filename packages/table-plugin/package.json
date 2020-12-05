@@ -66,8 +66,7 @@
   "dependencies": {
     "@formidable-webview/webshell": "2.2.0",
     "@types/prop-types": "^15.7.3",
-    "prop-types": "^15.7.2",
-    "stringify-entities": "^3.1.0"
+    "prop-types": "^15.7.2"
   },
   "peerDependencies": {
     "react": ">= 16.8.0",
@@ -83,25 +82,6 @@
   },
   "publishConfig": {
     "access": "public"
-  },
-  "release-it": {
-    "git": {
-      "commitMessage": "chore: release ${version}",
-      "tagName": "v${version}"
-    },
-    "npm": {
-      "publish": true
-    },
-    "github": {
-      "release": true
-    },
-    "plugins": {
-      "@release-it/conventional-changelog": {
-        "preset": "angular",
-        "infile": "./CHANGELOG.md",
-        "skipUnstable": true
-      }
-    }
   },
   "@react-native-community/bob": {
     "source": "src",
@@ -126,10 +106,5 @@
         }
       ]
     ]
-  },
-  "husky": {
-    "hooks": {
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-    }
   }
 }

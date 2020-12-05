@@ -2477,7 +2477,6 @@ __metadata:
     react-native-webview: ^10.9.0
     react-test-renderer: 16.13.1
     release-it: ^14.2.2
-    stringify-entities: ^3.1.0
     typescript: ~3.9.7
   peerDependencies:
     react: ">= 16.8.0"
