@@ -78,25 +78,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "release-it": {
-    "git": {
-      "commitMessage": "chore: release ${version}",
-      "tagName": "v${version}"
-    },
-    "npm": {
-      "publish": true
-    },
-    "github": {
-      "release": true
-    },
-    "plugins": {
-      "@release-it/conventional-changelog": {
-        "preset": "angular",
-        "infile": "./CHANGELOG.md",
-        "skipUnstable": true
-      }
-    }
-  },
   "@react-native-community/bob": {
     "source": "src",
     "output": "lib",
@@ -120,10 +101,5 @@
         }
       ]
     ]
-  },
-  "husky": {
-    "hooks": {
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-    }
   }
 }
