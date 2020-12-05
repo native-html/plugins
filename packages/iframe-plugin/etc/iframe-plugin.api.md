@@ -14,18 +14,13 @@ import { StyleProp } from 'react-native';
 import { ViewStyle } from 'react-native';
 
 // @public
-export function extractHtmlIframeProps(htmlAttribs: HtmlAttributesDictionary, convertedCSSStyles: StyleProp<any>, passProps: PassProps<any>): HTMLIframeProps;
+export function extractHtmlIframeProps(htmlAttribs: HtmlAttributesDictionary, convertedCSSStyles: StyleProp<any>, passProps: PassProps<any>, iframeConfig?: IframeConfig): HTMLIframeProps;
 
 // @public
 export function HTMLIframe({ WebView, webViewProps: userWebViewProps, source, style, onLinkPress, htmlAttribs, scaleFactor, scalesPageToFit }: HTMLIframeProps): React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, string | any | (new (props: any) => React_2.Component<any, any, any>)> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
 
 // @public
-export interface HTMLIframeConfig {
-    scalesPageToFit: boolean;
-}
-
-// @public
-export interface HTMLIframeProps<WebViewProps = any> extends HTMLIframeConfig {
+export interface HTMLIframeProps<WebViewProps = any> extends IframeConfig {
     // (undocumented)
     htmlAttribs: HtmlAttributesDictionary;
     // (undocumented)
@@ -47,6 +42,12 @@ export interface HTMLIframeProps<WebViewProps = any> extends HTMLIframeConfig {
 const iframe: RendererFunction<any>;
 
 export default iframe;
+
+// @public
+export interface IframeConfig {
+    scalesPageToFit?: boolean;
+    webViewProps?: any;
+}
 
 
 // (No @packageDocumentation comment for this package)

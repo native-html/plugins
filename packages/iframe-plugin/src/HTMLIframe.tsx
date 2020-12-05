@@ -18,7 +18,7 @@ import {
  *
  * @public
  */
-export interface HTMLIframeConfig {
+export interface IframeConfig {
   /**
    * When the iframe attribute width is wider than the contentWidth, scales
    * down the viewport so that it doesn't overflows horizontally.
@@ -43,7 +43,7 @@ export interface HTMLIframeConfig {
  *
  * @public
  */
-export interface HTMLIframeProps<WebViewProps = any> extends HTMLIframeConfig {
+export interface HTMLIframeProps<WebViewProps = any> extends IframeConfig {
   /**
    * The `WebView` Component you wish to use.
    */

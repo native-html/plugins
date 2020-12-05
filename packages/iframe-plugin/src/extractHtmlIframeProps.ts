@@ -5,13 +5,13 @@ import {
   PassProps
 } from 'react-native-render-html';
 import extractPrintDimensions from './extractPrintDimensions';
-import { HTMLIframeConfig, HTMLIframeProps } from './HTMLIframe';
+import { IframeConfig, HTMLIframeProps } from './HTMLIframe';
 
 function normalizeUri(uri: string): string {
   return uri.startsWith('//') ? `https:${uri}` : uri;
 }
 
-const defaultIframeConfig: HTMLIframeConfig = {
+const defaultIframeConfig: IframeConfig = {
   webViewProps: {
     allowsFullscreenVideo: true
   }
@@ -32,7 +32,7 @@ export default function extractHtmlIframeProps(
   htmlAttribs: HtmlAttributesDictionary,
   convertedCSSStyles: StyleProp<any>,
   passProps: PassProps<any>,
-  iframeConfig?: HTMLIframeConfig
+  iframeConfig?: IframeConfig
 ): HTMLIframeProps {
   const {
     WebView,
