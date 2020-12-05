@@ -46,8 +46,9 @@ function CustomExampleDescription() {
 function YoutubeExampleDescription() {
   return (
     <Text style={styles.welcome}>
-      This Iframe renderer has the autoscale option set to true (default). It
-      will zoom down to a level that allows the whole content to be visible.
+      This Iframe renderer has the scalesPageToFit option set to true. It will
+      zoom down to a level that allows the whole content to be visible. Default
+      is false.
     </Text>
   );
 }

@@ -9,7 +9,7 @@ const htmlConfig = {
   },
   renderersProps: {
     iframe: {
-      autoscale: true
+      scalesPageToFit: true
     }
   },
   tagsStyles: {
