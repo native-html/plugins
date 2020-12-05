@@ -1,3 +1,11 @@
+# [1.1.0](https://github.com/native-html/plugins/compare/@native-html/iframe-plugin@1.0.0...@native-html/iframe-plugin@1.1.0) (2020-12-05)
+
+
+### Features
+
+* **iframe-config:** new config option `webViewProps` ([b7d16f8](https://github.com/native-html/plugins/commit/b7d16f80d6fd110bc09889a4767e10c43fdec401))
+* **iframe-plugin:** allow to override config in extractHtmlIframeProps ([ee25f4b](https://github.com/native-html/plugins/commit/ee25f4b8fa5e819d22ddcb01e0d24ae8ec8f6712))
+
 # 1.0.0 (2020-12-05)
 
 Here comes a brand new renderer for `iframe`, which has been extracted from
