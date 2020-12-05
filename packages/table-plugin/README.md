@@ -45,7 +45,7 @@
   />
 </p>
 <div align="center">
-  <a href="https://expo.io/@jsamr/native-html-table-plugin-example"
+  <a href="https://expo.io/@jsamr/projects/native-html-plugins-examples"
     >Try it on Expo!</a
   >
 </div>

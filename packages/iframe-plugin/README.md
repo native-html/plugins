@@ -28,6 +28,17 @@
   🌐 A WebView-based plugin to render iframes in react-native-render-html.
 </p>
 
+<p align="center">
+  <img
+    src="https://github.com/native-html/plugins/raw/master/images/expo-example.png"
+  />
+</p>
+<div align="center">
+  <a href="https://expo.io/@jsamr/projects/native-html-plugins-examples"
+    >Try it on Expo!</a
+  >
+</div>
+
 <hr/>
 
 **Install**:
