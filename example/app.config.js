@@ -1,11 +1,11 @@
 const pluginVersion = require('@native-html/table-plugin/package.json').version;
 
 export default {
-  name: 'RNTableExample',
-  displayName: '@native-html/table-plugin Example',
+  name: 'RNPluginsExamples',
+  displayName: '@native-html/plugins Examples',
   expo: {
-    name: 'Table Example',
-    slug: 'native-html-table-plugin-example',
+    name: 'Plugins Examples',
+    slug: 'native-html-plugins-examples',
     version: pluginVersion,
     orientation: 'default',
     icon: './assets/icon.png',

@@ -47,7 +47,7 @@ function YoutubeExampleDescription() {
   return (
     <Text style={styles.welcome}>
       This Iframe renderer has the autoscale option set to true (default). It
-      will zoom down to a level that allows the whole viewport to be visible.
+      will zoom down to a level that allows the whole content to be visible.
     </Text>
   );
 }
@@ -150,7 +150,7 @@ export default function App() {
     <PaperProvider>
       <View style={{ flex: 1 }}>
         <NavigationContainer>
-          <Stack.Navigator>
+          <Stack.Navigator screenOptions={{ animationEnabled: false }}>
             <Stack.Screen
               options={{
                 title: '@native-html/plugins'
@@ -194,7 +194,6 @@ export default function App() {
             visible={isSnackVisible}
             onDismiss={() => setIsSnackVisible(false)}
             duration={2800}
-            style={{ zIndex: 10000, position: 'absolute', bottom: 0 }}
             action={{
               label: 'Browse',
               onPress: () => WebBrowser.openBrowserAsync(url)

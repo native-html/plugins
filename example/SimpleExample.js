@@ -166,19 +166,13 @@ const htmlConfig = {
         outerBorderWidthPx: 1,
         rowsBorderWidthPx: 1,
         columnsBorderWidthPx: 1
-      },
-      displayMode: 'expand'
+      }
     }
   },
   tagsStyles: {
-    table: {
-      // Use displayMode: 'expand'
-      alignSelf: 'center'
-    }
+    table: {}
   },
-  defaultWebViewProps: {
-    androidHardwareAccelerationDisabled: true
-  },
+  defaultWebViewProps: {},
   computeEmbeddedMaxWidth: (contentWidth, tagName) => {
     if (tagName === 'table') {
       return Math.min(contentWidth, 500);

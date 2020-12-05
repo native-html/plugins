@@ -1,13 +1,10 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, { PureComponent, useState } from 'react';
+import React, { useState } from 'react';
 import { View, Button, Text, StyleSheet } from 'react-native';
 import { Modal, Portal } from 'react-native-paper';
 import { HTMLTable } from '@native-html/table-plugin';
 import WebView from 'react-native-webview';
-import {
-  SafeAreaView,
-  useSafeAreaInsets
-} from 'react-native-safe-area-context';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const tableConfig = {
   WebView,

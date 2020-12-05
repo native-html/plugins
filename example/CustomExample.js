@@ -172,9 +172,7 @@ const htmlConfig = {
     table: {}
   },
   WebView,
-  defaultWebViewProps: {
-    androidHardwareAccelerationDisabled: true
-  },
+  defaultWebViewProps: {},
   ignoredTags: IGNORED_TAGS
 };
 
