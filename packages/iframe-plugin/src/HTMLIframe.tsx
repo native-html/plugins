@@ -23,9 +23,9 @@ export interface HTMLIframeConfig {
    * When the iframe attribute width is wider than the contentWidth, scales
    * down the viewport so that it doesn't overflows horizontally.
    *
-   * @defaultvalue true
+   * @defaultvalue false
    */
-  autoscale: boolean;
+  scalesPageToFit: boolean;
 }
 
 /**
@@ -44,7 +44,7 @@ export interface HTMLIframeProps<WebViewProps = any> extends HTMLIframeConfig {
   onLinkPress?: ContainerProps['onLinkPress'];
   htmlAttribs: HtmlAttributesDictionary;
   /**
-   * When autoscale is enabled, scales the WebView zoom level to make sure the
+   * When scalesPageToFit is enabled, scales the WebView zoom level to make sure the
    * viewport fits contentWidth.
    */
   scaleFactor: number;
@@ -65,18 +65,18 @@ export default function HTMLIframe({
   onLinkPress,
   htmlAttribs,
   scaleFactor,
-  autoscale = true
+  scalesPageToFit = false
 }: HTMLIframeProps) {
   const scaleFeature = useMemo(
     () =>
-      autoscale
+      scalesPageToFit
         ? new ForceResponsiveViewportFeature({
             initScale: scaleFactor,
             maxScale: scaleFactor,
             minScale: scaleFactor
           })
         : null,
-    [scaleFactor, autoscale]
+    [scaleFactor, scalesPageToFit]
   );
   const onDOMLinkPress = useCallback(
     ({ uri }: LinkPressTarget) =>

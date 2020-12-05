@@ -93,18 +93,18 @@ const renderers = {
       WebView={WebView}
       source={{ html: '<iframe ...></iframe>' }}
       defaultWebViewProps={{ /* Any prop you want to pass to WebView */ }}
-      renderersProps={{ iframe: { autoscale: true /* enabled by default */ }}}
+      renderersProps={{ iframe: { scalesPageToFit: true /* enabled by default */ }}}
 />
 
 ```
 
 ## Autoscale feature
 
-When `autoscale` is set to true, if the iframe width (as determined by the
+When `scalesPageToFit` is set to true, if the iframe width (as determined by the
 `width` element attribute) is greater than the available width (as determined
 by HTML props `contentWidth` and `computeEmbeddedMaxWidth`), the `WebView` will
 be zoomed out by just the right amount to have no horizontal cropping. This is
 equivalent to `resizeMode: 'contain'` for images. See example below with
-`autoscale` disabled (left) and enabled (right):
+`scalesPageToFit` disabled (left) and enabled (right):
 
-![](https://github.com/native-html/plugins/blob/master/images/autoscale.png)
+![](https://github.com/native-html/plugins/blob/master/images/scalesPageToFit.png)

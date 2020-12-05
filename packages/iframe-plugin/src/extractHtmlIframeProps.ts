@@ -5,7 +5,7 @@ import {
   PassProps
 } from 'react-native-render-html';
 import extractPrintDimensions from './extractPrintDimensions';
-import { HTMLIframeProps } from './HTMLIframe';
+import { HTMLIframeConfig, HTMLIframeProps } from './HTMLIframe';
 
 function normalizeUri(uri: string): string {
   return uri.startsWith('//') ? `https:${uri}` : uri;
@@ -18,13 +18,15 @@ function normalizeUri(uri: string): string {
  * @param htmlAttribs - The HTML node attributes.
  * @param convertedCSSStyles - Converted inline styles.
  * @param passProps - Passed props.
+ * @param iframeConfig - Override config options.
  *
  * @public
  */
 export default function extractHtmlIframeProps(
   htmlAttribs: HtmlAttributesDictionary,
   convertedCSSStyles: StyleProp<any>,
-  passProps: PassProps<any>
+  passProps: PassProps<any>,
+  iframeConfig?: HTMLIframeConfig
 ): HTMLIframeProps {
   const {
     WebView,
@@ -33,8 +35,12 @@ export default function extractHtmlIframeProps(
     computeEmbeddedMaxWidth,
     defaultWebViewProps,
     key,
-    renderersProps: { iframe: iframeConfig }
+    renderersProps: { iframe: globalIframeConfig }
   } = passProps;
+  const resolvedConfig = {
+    ...globalIframeConfig,
+    ...iframeConfig
+  };
   const resolvedContentWidth =
     typeof contentWidth === 'number'
       ? contentWidth
@@ -79,14 +85,17 @@ export default function extractHtmlIframeProps(
     );
   }
   return {
-    ...iframeConfig,
+    ...resolvedConfig,
     key,
     source,
     onLinkPress,
     htmlAttribs,
     scaleFactor,
     style: [restStyle, { width: printWidth, height: printHeight }],
-    webViewProps: defaultWebViewProps,
+    webViewProps: {
+      ...defaultWebViewProps,
+      ...resolvedConfig.webViewProps
+    },
     WebView
   };
 }
