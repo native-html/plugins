@@ -9,10 +9,11 @@
 # 1.0.0 (2020-12-05)
 
 Here comes a brand new renderer for `iframe`, which has been extracted from
-`react-native-render-html`. It has a new powerful feature: `scalesPageToFit` (enabled
-by default) which will zoom-out just the right amount when the width of the
-iframe is greater than the available width on screen (as determined by HTML
-`contentWidth` prop.) In the screenshot below, scalesPageToFit is disabled (left), and enabled (right):
+`react-native-render-html`. It has a new powerful feature: `scalesPageToFit`
+(disabled by default) which will zoom-out just the right amount when the width
+of the iframe is greater than the available width on screen (as determined by
+HTML `contentWidth` prop.) In the screenshot below, scalesPageToFit is disabled
+(left), and enabled (right):
 
 ![](https://github.com/native-html/plugins/blob/master/images/scalesPageToFit.png)
 
