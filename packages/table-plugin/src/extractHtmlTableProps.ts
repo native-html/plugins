@@ -5,7 +5,7 @@ import {
   PassProps
 } from 'react-native-render-html';
 import extractHtmlAndStatsFromTableDomNode from './extractHtmlAndStatsFromTableDomNode';
-import { HTMLTableProps } from './types';
+import { HTMLTableProps, TableConfig } from './types';
 
 /**
  * Extract props for the HTMLTable component from renderer function arguments.
@@ -14,14 +14,16 @@ import { HTMLTableProps } from './types';
  * @param htmlAttribs - The HTML node attributes.
  * @param convertedCSSStyles - Converted inline styles.
  * @param passProps - Passed props.
+ * @param tableConfig - Override config options.
  *
  * @public
  */
 export default function extractHtmlTableProps(
   htmlAttribs: HtmlAttributesDictionary,
   convertedCSSStyles: StyleProp<any>,
-  passProps: PassProps<any>
-): HTMLTableProps<any> {
+  passProps: PassProps<any>,
+  tableConfig?: TableConfig
+): HTMLTableProps & { key: string | number } {
   const {
     WebView,
     onLinkPress,
@@ -30,8 +32,17 @@ export default function extractHtmlTableProps(
     domNode,
     contentWidth,
     computeEmbeddedMaxWidth,
-    renderersProps: { table: tableConfig } = {}
+    renderersProps: { table: globalTableConfig } = {}
   } = passProps;
+  const resolvedConfig: TableConfig = {
+    ...globalTableConfig,
+    ...tableConfig,
+    webViewProps: {
+      ...defaultWebViewProps,
+      ...globalTableConfig?.webViewProps,
+      ...tableConfig?.webViewProps
+    }
+  };
   const resolvedContentWidth =
     typeof contentWidth === 'number'
       ? contentWidth
@@ -40,7 +51,7 @@ export default function extractHtmlTableProps(
     computeEmbeddedMaxWidth?.call(null, resolvedContentWidth, 'table') ||
     resolvedContentWidth;
   const { html, stats } = extractHtmlAndStatsFromTableDomNode(domNode);
-  const displayMode = tableConfig?.displayMode || 'flex';
+  const displayMode = resolvedConfig.displayMode || 'normal';
   const style = constructStyles({
     tagName: 'table',
     htmlAttribs,
@@ -50,7 +61,9 @@ export default function extractHtmlTableProps(
       convertedCSSStyles,
       displayMode === 'expand'
         ? { width: availableWidth }
-        : { maxWidth: availableWidth }
+        : displayMode === 'embedded'
+        ? { maxWidth: availableWidth }
+        : null
     ],
     baseFontStyle: passProps.baseFontStyle
   });
@@ -61,13 +74,12 @@ export default function extractHtmlTableProps(
     );
   }
   return {
-    ...tableConfig,
+    ...resolvedConfig,
     ...stats,
     key,
     html,
     style,
     onLinkPress,
-    webViewProps: defaultWebViewProps,
-    WebView
+    WebView: WebView as any
   };
 }
