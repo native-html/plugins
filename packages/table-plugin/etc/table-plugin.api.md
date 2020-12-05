@@ -71,7 +71,7 @@ export interface TableConfig {
     computeContainerHeight?: (state: TableContentHeightState) => number | null;
     computeHeuristicContentHeight?: (state: HTMLTableStats) => number;
     cssRules?: string;
-    displayMode: 'normal' | 'embedded' | 'expand';
+    displayMode?: 'normal' | 'embedded' | 'expand';
     maxScale?: boolean;
     sourceBaseUrl?: string;
     style?: StyleProp<ViewStyle>;

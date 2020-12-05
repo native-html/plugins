@@ -11,5 +11,5 @@ Determine how the width of the table is constrained (or not).
 <b>Signature:</b>
 
 ```typescript
-displayMode: 'normal' | 'embedded' | 'expand';
+displayMode?: 'normal' | 'embedded' | 'expand';
 ```

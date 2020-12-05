@@ -285,7 +285,7 @@ export interface TableConfig {
    *
    * @defaultvalue 'normal'
    */
-  displayMode: 'normal' | 'embedded' | 'expand';
+  displayMode?: 'normal' | 'embedded' | 'expand';
 }
 
 /**
