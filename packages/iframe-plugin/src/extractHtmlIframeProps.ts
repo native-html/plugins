@@ -41,7 +41,7 @@ export default function extractHtmlIframeProps(
     computeEmbeddedMaxWidth,
     defaultWebViewProps,
     key,
-    renderersProps: { iframe: globalIframeConfig }
+    renderersProps: { iframe: globalIframeConfig } = {}
   } = passProps;
   const resolvedConfig = {
     ...defaultIframeConfig,
