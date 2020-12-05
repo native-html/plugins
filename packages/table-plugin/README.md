@@ -111,8 +111,6 @@ import HTML from 'react-native-render-html';
 import table, { IGNORED_TAGS } from '@native-html/table-plugin';
 import WebView from 'react-native-webview';
 
-const tableConfig = {};
-
 const html = `
 <table>
   <tr>
@@ -133,7 +131,10 @@ const htmlProps = {
   },
   ignoredTags: IGNORED_TAGS,
   renderersProps: {
-    table: tableConfig
+    table: {
+      // Put the table config here (previously,
+      // the first argument of makeTableRenderer)
+    }
   }
 };
 

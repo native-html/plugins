@@ -1,11 +1,54 @@
 # 3.0.0 (2020-12-05)
 
+This release requires `react-native-render-html` ≥ 5.0.0! Be aware, its API has changed a little:
+
+
+```javascript
+import React from 'react';
+import { ScrollView } from 'react-native';
+import HTML from 'react-native-render-html';
+import table, { IGNORED_TAGS } from '@native-html/table-plugin';
+import WebView from 'react-native-webview';
+
+const html = `
+<table>
+  <tr>
+    <th>Entry Header 1</th>
+    <th>Entry Header 2</th>
+  </tr>
+  <tr>
+    <td>Entry First Line 1</td>
+    <td>Entry First Line 2</td>
+  </tr>
+</table>
+`;
+
+const htmlProps = {
+  WebView,
+  renderers: {
+    table
+  },
+  ignoredTags: IGNORED_TAGS,
+  renderersProps: {
+    table: {
+      // Put the table config here (previously,
+      // the first argument of makeTableRenderer)
+    }
+  }
+};
+
+export const Example = () => (
+  <ScrollView>
+    <HTML source={{ html }} {...htmlProps} />
+  </ScrollView>
+);
+```
 
 ### Features
 
-* **table-plugin:** new displayMode prop and compliance with RFC001 ([1de3df0](https://github.com/native-html/plugins/commit/1de3df06ac5a81b70f544c3fcbf3d735dea95de7))
 * **table-plugin:** new lightweight API for react-native-render-html v5.0 ([a7fa70a](https://github.com/native-html/plugins/commit/a7fa70aa36d7a5f3b1d3a6dcc44e3358af321f52))
-
+* **table-plugin:** new displayMode prop and compliance with RFC001 ([1de3df0](https://github.com/native-html/plugins/commit/1de3df06ac5a81b70f544c3fcbf3d735dea95de7))
+* **table-plugin:** the component now inherits from `tagsStyles` and `classesStyles` when matched
 
 ### BREAKING CHANGES
 
