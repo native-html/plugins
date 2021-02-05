@@ -5,11 +5,12 @@
 ```ts
 
 import { ComponentType } from 'react';
-import { ContainerProps } from 'react-native-render-html';
+import { CustomBlockRenderer } from 'react-native-render-html';
+import { CustomTagRendererProps } from 'react-native-render-html';
 import { HtmlAttributesDictionary } from 'react-native-render-html';
-import { PassProps } from 'react-native-render-html';
-import { RendererFunction } from 'react-native-render-html';
+import { RenderHTMLPassedProps } from 'react-native-render-html';
 import { StyleProp } from 'react-native';
+import type { TBlock } from '@native-html/transient-render-engine';
 import { ViewStyle } from 'react-native';
 
 // @public
@@ -19,18 +20,13 @@ export function cssRulesFromSpecs(specs?: TableStyleSpecs): string;
 export const defaultTableStylesSpecs: TableStyleSpecs;
 
 // @public
-export function extractHtmlTableProps(htmlAttribs: HtmlAttributesDictionary, convertedCSSStyles: StyleProp<any>, passProps: PassProps<any>, tableConfig?: TableConfig): HTMLTableProps & {
-    key: string | number;
-};
-
-// @public
 export const HTMLTable: ({ WebView, tableStyleSpecs, cssRules, html, sourceBaseUrl, animationType, computeHeuristicContentHeight, computeContainerHeight, webViewProps: userWebViewProps, style, onLinkPress, animationDuration, htmlAttribs, maxScale, ...stats }: HTMLTableProps) => JSX.Element;
 
 // @public
 export interface HTMLTableBaseProps extends HTMLTableStats {
     html: string;
     htmlAttribs?: HtmlAttributesDictionary;
-    onLinkPress?: ContainerProps['onLinkPress'];
+    onLinkPress?: RenderHTMLPassedProps['onLinkPress'];
     WebView: ComponentType<any>;
 }
 
@@ -44,17 +40,6 @@ export interface HTMLTableStats {
     numOfColumns: number;
     numOfRows: number;
 }
-
-// @public
-export const IGNORED_TAGS: string[];
-
-// @public
-const table: RendererFunction<any>;
-
-export default table;
-
-// @public
-export const TABLE_TAGS: string[];
 
 // @public
 export interface TableAccurateContentHeightState {
@@ -91,6 +76,11 @@ export interface TableHeuristicContentHeightState {
 }
 
 // @public
+const TableRenderer: CustomBlockRenderer;
+
+export default TableRenderer;
+
+// @public
 export interface TableStyleSpecs {
     cellPaddingEm: number;
     columnsBorderWidthPx: number;
@@ -114,6 +104,11 @@ export interface TableStyleSpecs {
     trOddBackground: string;
     trOddColor: string;
 }
+
+// @public
+export function useHtmlTableProps({ key, style, tnode }: CustomTagRendererProps<TBlock>, tableConfig?: TableConfig): HTMLTableProps & {
+    key?: string | number;
+};
 
 
 // (No @packageDocumentation comment for this package)

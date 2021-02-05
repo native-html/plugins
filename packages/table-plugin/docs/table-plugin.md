@@ -9,7 +9,7 @@
 |  Function | Description |
 |  --- | --- |
 |  [cssRulesFromSpecs(specs)](./table-plugin.cssrulesfromspecs.md) | Create css rules from a specification object. |
-|  [extractHtmlTableProps(htmlAttribs, convertedCSSStyles, passProps, tableConfig)](./table-plugin.extracthtmltableprops.md) | Extract props for the HTMLTable component from renderer function arguments. This function is especially usefull for custom table renderers. |
+|  [useHtmlTableProps({ key, style, tnode }, tableConfig)](./table-plugin.usehtmltableprops.md) | Extract props for the HTMLTable component from renderer function arguments. This function is especially usefull for custom table renderers. |
 
 ## Interfaces
 
@@ -29,9 +29,7 @@
 |  --- | --- |
 |  [defaultTableStylesSpecs](./table-plugin.defaulttablestylesspecs.md) | Default styles attributes.<img src="https://raw.githubusercontent.com/native-html/table-plugin/master/images/TableStyleSpecs.png" /> |
 |  [HTMLTable](./table-plugin.htmltable.md) | A component capable of rendering a html string which root tag is a table tag. This component should not be used directly, except with custom renderers. |
-|  [IGNORED\_TAGS](./table-plugin.ignored_tags.md) | A new list of tags to ignore, which exclude [TABLE\_TAGS](./table-plugin.table_tags.md)<!-- -->. |
-|  [TABLE\_TAGS](./table-plugin.table_tags.md) | All HTML tags associated with a table element. |
-|  [table](./table-plugin.table.md) | The renderer function for the iframe element. This renderer is fully scalable, and will adjust to <code>contentWidth</code> and <code>computeEmbeddedMaxWidth</code>. It also features <code>onLinkPress</code>. |
+|  [TableRenderer](./table-plugin.tablerenderer.md) | The renderer component for the table element. This renderer is fully scalable, and will adjust to <code>contentWidth</code> and <code>computeEmbeddedMaxWidth</code>. It also features <code>onLinkPress</code>. |
 
 ## Type Aliases
 

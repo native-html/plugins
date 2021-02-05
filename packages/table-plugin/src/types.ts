@@ -1,7 +1,7 @@
 import { ComponentType } from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
 import {
-  ContainerProps,
+  RenderHTMLPassedProps,
   HtmlAttributesDictionary
 } from 'react-native-render-html';
 
@@ -324,7 +324,7 @@ export interface HTMLTableBaseProps extends HTMLTableStats {
   /**
    * Intercept links press.
    */
-  onLinkPress?: ContainerProps['onLinkPress'];
+  onLinkPress?: RenderHTMLPassedProps['onLinkPress'];
 
   /**
    * Html attributes for this table node.

@@ -1,7 +1,4 @@
-> **:warning: as of version 1.0.0, this package name has been changed from
-> `react-native-render-html-table-bridge` to `@native-html/table-plugin`**. To
-> migrate, you must add the new package in your project and change imports.
-> Also, [check all breaking changes here](https://github.com/native-html/table-plugin/blob/master/packages/table-plugin/CHANGELOG.md#100-2020-08-19).
+> :warning: This documentation is for **react-native-render-html v6**. For v5 and below, [go here](https://github.com/native-html/plugins/tree/rnrh/5.x/packages/table-plugin#readme).
 
 <h1 align="center">@native-html/table-plugin</h1>
 
@@ -89,26 +86,22 @@ yarn add @native-html/table-plugin
 | ------------------------ | -------------------------------------------------------------------------------------------------------- |
 | ≥ 4.2.1 &lt; 5.0.0       | 2.x ([documentation](https://github.com/native-html/plugins/tree/rnrh/4.x#readme))                       |
 | ≥ 5.0.0 &lt; 6.0.0       | 3.x ([documentation](https://github.com/native-html/plugins/tree/rnrh/5.x/packages/table-plugin#readme)) |
-| ≥ 6.0.0                  | 4.x (_in development_)                                                                                   |
+| ≥ 6.0.0                  | 4.x ([documentation](https://github.com/native-html/plugins/tree/rnrh/6.x/packages/table-plugin#readme)) |
 
 ## Minimal working example
 
 _[Full example](https://github.com/native-html/plugins/blob/master/example/SimpleExample.js)_
 
-> :warning: The API has changed as of table-plugin@3 /
-> react-native-render-html@5. If you need to pass config options to the
-> `HTMLTable` component, assign this config to `renderersProps.table` prop.
-
 You need 2 steps to get to a working example:
 
 1. Import the `WebView` component. [Instructions will differ depending on your setup](#errors-when-importing-webview-component);
-2. Inject `ignoredTags`, `renderers` and `WebView` props to the `HTML` component;
+2. Inject `renderers` and `WebView` props to the `HTML` component;
 
 ```javascript
 import React from 'react';
 import { ScrollView } from 'react-native';
 import HTML from 'react-native-render-html';
-import table, { IGNORED_TAGS } from '@native-html/table-plugin';
+import TableRenderer from '@native-html/table-plugin';
 import WebView from 'react-native-webview';
 
 const html = `
@@ -127,13 +120,11 @@ const html = `
 const htmlProps = {
   WebView,
   renderers: {
-    table
+    table: TableRenderer
   },
-  ignoredTags: IGNORED_TAGS,
   renderersProps: {
     table: {
-      // Put the table config here (previously,
-      // the first argument of makeTableRenderer)
+      // Put the table config here
     }
   }
 };
@@ -152,16 +143,14 @@ Most notably, check [`TableConfig`](https://github.com/native-html/plugins/blob/
 
 **Landmark exports**:
 
-- [`table`](https://github.com/native-html/plugins/blob/master/packages/table-plugin/docs/table-plugin.table.md)
-- [`extractHtmlTableProps`](https://github.com/native-html/plugins/blob/master/packages/table-plugin/docs/table-plugin.extracthtmltableprops.md)
-- [`IGNORED_TAGS`](https://github.com/native-html/plugins/blob/master/packages/table-plugin/docs/table-plugin.ignored_tags.md)
+- [`TableRenderer(default)`](https://github.com/native-html/plugins/blob/master/packages/table-plugin/docs/table-plugin.tablerenderer.md)
+- [`useHtmlTableProps`](https://github.com/native-html/plugins/blob/master/packages/table-plugin/docs/table-plugin.usehtmltableprops.md)
 
 Other exports:
 
 - [`HTMLTable`](https://github.com/native-html/plugins/blob/master/packages/table-plugin/docs/table-plugin.htmltable.md)
 - [`defaultTableStylesSpecs`](https://github.com/native-html/plugins/blob/master/packages/table-plugin/docs/table-plugin.defaulttablestylesspecs.md)
 - [`cssRulesFromSpecs`](https://github.com/native-html/plugins/blob/master/packages/table-plugin/docs/table-plugin.cssrulesfromspecs.md)
-- [`TABLE_TAGS`](https://github.com/native-html/plugins/blob/master/packages/table-plugin/docs/table-plugin.table_tags.md)
 
 ## Troubleshooting
 
@@ -188,21 +177,19 @@ so you are not required to pass every field. See
 [documentation](https://github.com/native-html/plugins/blob/master/packages/table-plugin/docs/table-plugin.tablestylespecs.md).
 
 ```javascript
-import table {
+import TableRenderer {
   defaultTableStylesSpecs,
   cssRulesFromSpecs
 } from '@native-html/table-plugin';
 
-const tableConfig = {
-  tableStyleSpecs: {
-    // my style specs
-  }
-}
-
 const htmlProps = {
-  renderers: { table },
+  renderers: { table: TableRenderer },
   renderersProps: {
-    table: tableConfig
+    table: {
+      tableStyleSpecs: {
+        // my style specs
+      }
+    }
   }
 };
 ```
@@ -212,21 +199,19 @@ const htmlProps = {
 Pass `computeContainerHeight` option with a function returning `null`:
 
 ```javascript
-import table {
+import TableRenderer {
   defaultTableStylesSpecs,
   cssRulesFromSpecs
 } from '@native-html/table-plugin';
 
-const tableConfig = {
-  computeContainerHeight() {
-    return null;
-  }
-}
-
 const htmlProps = {
-  renderers: { table },
+  renderers: { table: TableRenderer },
   renderersProps: {
-    table: tableConfig
+    table: {
+      computeContainerHeight() {
+        return null;
+      }
+    }
   }
 };
 
@@ -239,7 +224,7 @@ const htmlProps = {
 **A**: Use `cssRulesFromSpecs` function and override `cssRules` config.
 
 ```javascript
-import table {
+import TableRenderer {
   defaultTableStylesSpecs,
   cssRulesFromSpecs
 } from '@native-html/table-plugin';
@@ -257,9 +242,11 @@ const tableConfig = {
 }
 
 const htmlProps = {
-  renderers: { table },
+  renderers: { table: TableRenderer },
   renderersProps: {
-    table: tableConfig
+    table: {
+      cssRules
+    }
   }
 };
 
@@ -267,7 +254,7 @@ const htmlProps = {
 
 ### How to customize the Table component?
 
-**A**: Use `extractHtmlTableProps` function. [See custom example](https://github.com/native-html/plugins/blob/master/example/CustomExample.js).
+**A**: See `useHtmlTableProps` hook. [See custom example](https://github.com/native-html/plugins/blob/master/example/CustomExample.js).
 
 <img src="https://github.com/native-html/table-plugin/raw/master/images/adaptative.jpeg" width="300">
 
@@ -276,7 +263,7 @@ const htmlProps = {
 **A**: Extend styles and add `@font-face` rules.
 
 ```javascript
-import {
+import TableRenderer, {
   defaultTableStylesSpecs,
   cssRulesFromSpecs
 } from '@native-html/table-plugin';
@@ -309,14 +296,12 @@ const cssRules =
 }
 `;
 
-const tableConfig = {
-  cssRules
-};
-
 const htmlProps = {
-  renderers: { table },
+  renderers: { table: TableRenderer },
   renderersProps: {
-    table: tableConfig
+    table: {
+      cssRules
+    }
   }
 };
 ```

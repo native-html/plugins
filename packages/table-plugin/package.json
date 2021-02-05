@@ -57,7 +57,7 @@
     "metro-react-native-babel-transformer": "^0.64.0",
     "react": "16.14.0",
     "react-native": "^0.63.2",
-    "react-native-render-html": "5.0.0-alpha.8",
+    "react-native-render-html": "6.0.0-alpha.12",
     "react-native-webview": "^10.9.0",
     "react-test-renderer": "16.13.1",
     "release-it": "^14.2.2",
@@ -70,8 +70,8 @@
   },
   "peerDependencies": {
     "react": ">= 16.8.0",
-    "react-native": ">= 0.59.0",
-    "react-native-render-html": ">= 5.0.0-alpha.8 || 5.x"
+    "react-native": ">= 0.63.0",
+    "react-native-render-html": ">= 6.0.0-alpha.12 || 6.x"
   },
   "author": "Jules Sam. Randolph <jules.sam.randolph@gmail.com> (https://github.com/jsamr)",
   "homepage": "https://github.com/native-html/plugins/tree/master/packages/table-plugin#readme",

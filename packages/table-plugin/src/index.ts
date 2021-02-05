@@ -10,6 +10,5 @@ export type {
 } from './types';
 export { defaultTableStylesSpecs, cssRulesFromSpecs } from './css-rules';
 export { HTMLTable } from './HTMLTable';
-export { IGNORED_TAGS, TABLE_TAGS } from './tags';
-export { default as extractHtmlTableProps } from './extractHtmlTableProps';
-export { default } from './table';
+export { default as useHtmlTableProps } from './useHtmlTableProps';
+export { default, tableModel } from './TableRenderer';
