@@ -7,11 +7,6 @@ const htmlConfig = {
   renderers: {
     iframe
   },
-  renderersProps: {
-    iframe: {
-      scalesPageToFit: true
-    }
-  },
   tagsStyles: {
     iframe: {
       alignSelf: 'center'
@@ -36,7 +31,8 @@ const youtubeIframe = `
 export default function YoutubeExample({
   instance,
   onLinkPress,
-  availableWidth
+  availableWidth,
+  scalesPageToFit = true
 }) {
   return (
     <HTML
@@ -45,6 +41,11 @@ export default function YoutubeExample({
       source={{ html: youtubeIframe }}
       onLinkPress={onLinkPress}
       {...htmlConfig}
+      renderersProps={{
+        iframe: {
+          scalesPageToFit
+        }
+      }}
     />
   );
 }

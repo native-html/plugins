@@ -6,6 +6,7 @@
     "composite": false,
     "noEmit": false,
     "declaration": true,
-    "noImplicitAny": false
+    "noImplicitAny": false,
+    "isolatedModules": false
   }
 }

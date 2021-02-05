@@ -1,6 +1,6 @@
 import React from 'react';
 import HTML from 'react-native-render-html';
-import table, { IGNORED_TAGS } from '@native-html/table-plugin';
+import table from '@native-html/table-plugin';
 import WebView from 'react-native-webview';
 
 const table1 = `
@@ -158,7 +158,6 @@ const renderers = {
 const htmlConfig = {
   renderers,
   WebView,
-  ignoredTags: IGNORED_TAGS,
   renderersProps: {
     table: {
       animationType: 'animated',
@@ -170,7 +169,9 @@ const htmlConfig = {
     }
   },
   tagsStyles: {
-    table: {}
+    table: {
+      flex: 1
+    }
   },
   defaultWebViewProps: {},
   computeEmbeddedMaxWidth: (contentWidth, tagName) => {

@@ -1,6 +1,6 @@
 import React from 'react';
 import HTML from 'react-native-render-html';
-import { extractHtmlTableProps, IGNORED_TAGS } from '@native-html/table-plugin';
+import { useHtmlTableProps, tableModel } from '@native-html/table-plugin';
 import ClickTable from './ClickTable';
 import WebView from 'react-native-webview';
 
@@ -157,23 +157,22 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 </p>
 `;
 
+function TableRenderer(props) {
+  const tableProps = useHtmlTableProps(props);
+  return React.createElement(ClickTable, tableProps);
+}
+
+TableRenderer.model = tableModel;
+
 const htmlConfig = {
   renderers: {
-    table(htmlAttribs, children, convertedCSSStyles, passProps) {
-      const props = extractHtmlTableProps(
-        htmlAttribs,
-        convertedCSSStyles,
-        passProps
-      );
-      return React.createElement(ClickTable, props);
-    }
+    table: TableRenderer
   },
   tagsStyles: {
     table: {}
   },
   WebView,
-  defaultWebViewProps: {},
-  ignoredTags: IGNORED_TAGS
+  defaultWebViewProps: {}
 };
 
 export default function CustomExample({

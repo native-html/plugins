@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, { useCallback, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import * as WebBrowser from 'expo-web-browser';
@@ -24,11 +25,25 @@ import YoutubeExample from './YoutubeExample';
 
 const Stack = createStackNavigator();
 
+function Monospace({ children }) {
+  return (
+    <Text
+      style={{
+        fontFamily: Platform.select({ default: 'monospace', ios: 'Menlo' }),
+        fontWeight: 'bold'
+      }}>
+      {children}
+    </Text>
+  );
+}
+
 function SimpleExampleDescription() {
   return (
     <Text style={styles.welcome}>
-      This Table renderer was created with extractHtmlProps function, and will
-      render HTML tables in the body of the HTML component.
+      This <Monospace>TableRenderer</Monospace> is the default export of{' '}
+      <Monospace>@native-html/table-plugin</Monospace>, and will render HTML
+      tables in the body of the HTML component via a{' '}
+      <Monospace>WebView</Monospace>.
     </Text>
   );
 }
@@ -36,19 +51,21 @@ function SimpleExampleDescription() {
 function CustomExampleDescription() {
   return (
     <Text style={styles.welcome}>
-      This Table renderer was created with extractHtmlTableProps function to
-      register a custom component. Depending on the table complexity, it will
-      display the HTLM table in the content or through an actionable modal.
+      This Table renderer was created with{' '}
+      <Monospace>useHtmlTableProps</Monospace> hook to register a custom
+      component. Depending on the table complexity, it will display the HTLM
+      table in the content or through an actionable modal.
     </Text>
   );
 }
 
-function YoutubeExampleDescription() {
+function YoutubeExampleDescription({ scalesPageToFit }) {
   return (
     <Text style={styles.welcome}>
-      This Iframe renderer has the scalesPageToFit option set to true. It will
-      zoom down to a level that allows the whole content to be visible. Default
-      is false.
+      This <Monospace>IframeRenderer</Monospace> has the{' '}
+      <Monospace>scalesPageToFit</Monospace> option set to{' '}
+      <Monospace children={scalesPageToFit + ''} />. It will zoom down to a
+      level that allows the whole content to be visible. Default is false.
     </Text>
   );
 }
@@ -91,16 +108,20 @@ function SimpleExampleScreen({ onLinkPress, availableWidth }) {
   );
 }
 
-function YoutubeExampleScreen({ availableWidth }) {
+function YoutubeExampleScreen({ availableWidth, scalesPageToFit }) {
   const [instance, setInstance] = useState(0);
   return (
     <ScrollView
       contentContainerStyle={styles.contentStyle}
       style={styles.scrollViewStyle}>
-      <YoutubeExampleDescription />
+      <YoutubeExampleDescription scalesPageToFit={scalesPageToFit} />
       <Button title="reload" onPress={() => setInstance((i) => i + 1)} />
       <View style={styles.example}>
-        <YoutubeExample availableWidth={availableWidth} instance={instance} />
+        <YoutubeExample
+          scalesPageToFit={scalesPageToFit}
+          availableWidth={availableWidth}
+          instance={instance}
+        />
       </View>
     </ScrollView>
   );
@@ -112,21 +133,29 @@ function HomeScreen() {
     <View style={styles.buttonsContainer}>
       <View style={styles.button}>
         <Button
-          title="Open simple table example"
+          title="simple table example"
           onPress={() => navigation.navigate('SimpleExample')}
           style={styles.button}
         />
       </View>
       <View style={styles.button}>
         <Button
-          title="Open custom table example"
+          title="custom table example"
           onPress={() => navigation.navigate('CustomExample')}
         />
       </View>
-      <Button
-        title="Open Youtube iframe example"
-        onPress={() => navigation.navigate('YoutubeExample')}
-      />
+      <View style={styles.button}>
+        <Button
+          title="Youtube iframe example (scaling ON)"
+          onPress={() => navigation.navigate('YoutubeExampleScaleOn')}
+        />
+      </View>
+      <View style={styles.button}>
+        <Button
+          title="Youtube iframe example (scaling OFF)"
+          onPress={() => navigation.navigate('YoutubeExampleScaleOff')}
+        />
+      </View>
     </View>
   );
 }
@@ -184,9 +213,24 @@ export default function App() {
               )}
             </Stack.Screen>
             <Stack.Screen
-              name="YoutubeExample"
-              options={{ title: 'Youtube Example' }}>
-              {() => <YoutubeExampleScreen availableWidth={availableWidth} />}
+              name="YoutubeExampleScaleOn"
+              options={{ title: 'Youtube Example', scalesPageToFit: true }}>
+              {() => (
+                <YoutubeExampleScreen
+                  availableWidth={availableWidth}
+                  scalesPageToFit={true}
+                />
+              )}
+            </Stack.Screen>
+            <Stack.Screen
+              name="YoutubeExampleScaleOff"
+              options={{ title: 'Youtube Example', scalesPageToFit: false }}>
+              {() => (
+                <YoutubeExampleScreen
+                  availableWidth={availableWidth}
+                  scalesPageToFit={false}
+                />
+              )}
             </Stack.Screen>
           </Stack.Navigator>
         </NavigationContainer>

@@ -2409,6 +2409,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@native-html/css-processor@npm:1.6.1":
+  version: 1.6.1
+  resolution: "@native-html/css-processor@npm:1.6.1"
+  dependencies:
+    css-to-react-native: ^3.0.0
+  peerDependencies:
+    "@types/react-native": "*"
+    csstype: ^3.0.4
+  checksum: 8cbb5bc0d82044fcb6b52224b55454f3e55d14731b1cf3bb3b520257df20d114547f327badee0e236f83fe1dc6151ea38638b7c74770cdd929cbf7e0f2796e1d
+  languageName: node
+  linkType: hard
+
 "@native-html/iframe-plugin@workspace:packages/iframe-plugin":
   version: 0.0.0-use.local
   resolution: "@native-html/iframe-plugin@workspace:packages/iframe-plugin"
@@ -2439,7 +2451,7 @@ __metadata:
     prop-types: ^15.7.2
     react: 16.14.0
     react-native: ^0.63.2
-    react-native-render-html: 5.0.0-alpha.8
+    react-native-render-html: 6.0.0-alpha.12
     react-native-webview: ^10.9.0
     react-test-renderer: 16.13.1
     release-it: ^14.2.2
@@ -2447,7 +2459,7 @@ __metadata:
   peerDependencies:
     react: ">= 16.8.0"
     react-native: ">= 0.59.0"
-    react-native-render-html: ">= 5.0.0-alpha.8 || 5.x"
+    react-native-render-html: ">= 6.0.0-alpha.12 || 6.x"
   languageName: unknown
   linkType: soft
 
@@ -2485,17 +2497,32 @@ __metadata:
     prop-types: ^15.7.2
     react: 16.14.0
     react-native: ^0.63.2
-    react-native-render-html: 5.0.0-alpha.8
+    react-native-render-html: 6.0.0-alpha.12
     react-native-webview: ^10.9.0
     react-test-renderer: 16.13.1
     release-it: ^14.2.2
     typescript: ~3.9.7
   peerDependencies:
     react: ">= 16.8.0"
-    react-native: ">= 0.59.0"
-    react-native-render-html: ">= 5.0.0-alpha.8 || 5.x"
+    react-native: ">= 0.63.0"
+    react-native-render-html: ">= 6.0.0-alpha.12 || 6.x"
   languageName: unknown
   linkType: soft
+
+"@native-html/transient-render-engine@npm:4.1.0":
+  version: 4.1.0
+  resolution: "@native-html/transient-render-engine@npm:4.1.0"
+  dependencies:
+    "@native-html/css-processor": 1.6.1
+    "@types/ramda": ^0.27.32
+    htmlparser2: ^5.0.1
+    ramda: ^0.27.1
+  peerDependencies:
+    "@types/react-native": "*"
+    react-native: ^0.63.0
+  checksum: 0a095a3ad1ed52c78e019a6da2f477e8f5d0b8c2040dc6f95da32ed98a6d6788789b3f076918c1deb8933dca619e91b08341ac71de7ef3ca826047014f3724cb
+  languageName: node
+  linkType: hard
 
 "@nicolo-ribaudo/chokidar-2@npm:2.1.8-no-fsevents":
   version: 2.1.8-no-fsevents
@@ -3331,6 +3358,15 @@ __metadata:
   version: 15.7.3
   resolution: "@types/prop-types@npm:15.7.3"
   checksum: bd0eab69d5120ad3784d0c9985f902653d5924707a7f2b3702a330e762dfd61b6494954cb54ad0c52b918ffd6f1e7e27c9270e4442bc15250de348596f2f60cb
+  languageName: node
+  linkType: hard
+
+"@types/ramda@npm:^0.27.32":
+  version: 0.27.36
+  resolution: "@types/ramda@npm:0.27.36"
+  dependencies:
+    ts-toolbelt: ^6.15.1
+  checksum: 8edfb5f9bbc7c246074947cad936c473592b4dfc40f2e1a55139f972cabcb76650b48523971800337775b820a54eca170b64df566a949c8642af6f4b3b32b345
   languageName: node
   linkType: hard
 
@@ -4886,6 +4922,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"camelize@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "camelize@npm:1.0.0"
+  checksum: 6891ec64c7f4cf6a6182040d592915dc36770ec9f3e96e4dd03925f93f72aa92fc90b59b314ad3ebce406426955b1b8aded52bbb26e5d96242a724f324c95871
+  languageName: node
+  linkType: hard
+
 "caniuse-db@npm:^1.0.30001090":
   version: 1.0.30001161
   resolution: "caniuse-db@npm:1.0.30001161"
@@ -5772,6 +5815,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"css-color-keywords@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "css-color-keywords@npm:1.0.0"
+  checksum: a820d3a6ebb826571e541c4127197ab92bbac652b6d8a875a14faff4e3a2e81b35b61083da60a471c059c1f94bb09f26cd3553aefffa3e571257ac3cd8758ce2
+  languageName: node
+  linkType: hard
+
 "css-in-js-utils@npm:^2.0.0":
   version: 2.0.1
   resolution: "css-in-js-utils@npm:2.0.1"
@@ -5779,6 +5829,17 @@ __metadata:
     hyphenate-style-name: ^1.0.2
     isobject: ^3.0.1
   checksum: 85ea5c716f3a9f95148cbf4a9cabe46fb08c6c034b015f9e3c6b7abadb384b5833ab348697f2327ce4c3181c951d7a339c118f05e9e3ba8b680f84857c039c6d
+  languageName: node
+  linkType: hard
+
+"css-to-react-native@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "css-to-react-native@npm:3.0.0"
+  dependencies:
+    camelize: ^1.0.0
+    css-color-keywords: ^1.0.0
+    postcss-value-parser: ^4.0.2
+  checksum: d035e1a126cdec0cc52eba94c2294fae2474fdc9b8c971aa64e883f429791cc121726f7a9f390f9b593432691dd21c615c1a85c248ba5085b576e718fc6f739d
   languageName: node
   linkType: hard
 
@@ -6166,15 +6227,6 @@ __metadata:
     flat: ^5.0.2
     lodash: ^4.17.20
   checksum: 0f094af18e7f9e7c06d40c814d95b30960a93f6a9a886e6ca9d7d27f27897002cbdf7c302e3fd9e4a040b1e43efa0ae0ad14305b129244f03052bddc5ca1a5ac
-  languageName: node
-  linkType: hard
-
-"deprecated-prop-type@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "deprecated-prop-type@npm:1.0.0"
-  dependencies:
-    warning: 4.0.1
-  checksum: 7d1b89c2572e8a6df04a162efb35040874fc421e78fbe282ebd29af25c33da32c0b9a8fc1c4bc930def363237829d4f7964ce78639425f449493a2253ea3ec9f
   languageName: node
   linkType: hard
 
@@ -6901,7 +6953,7 @@ __metadata:
     react-native-paper: ^4.4.1
     react-native-picker-select: ^8.0.0
     react-native-reanimated: ~1.13.0
-    react-native-render-html: 5.0.0-alpha.8
+    react-native-render-html: 6.0.0-alpha.12
     react-native-safe-area-context: 3.1.4
     react-native-screens: ~2.10.1
     react-native-web: ~0.13.7
@@ -8495,7 +8547,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"htmlparser2@npm:5.0.1":
+"htmlparser2@npm:^5.0.1":
   version: 5.0.1
   resolution: "htmlparser2@npm:5.0.1"
   dependencies:
@@ -13273,6 +13325,13 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"postcss-value-parser@npm:^4.0.2":
+  version: 4.1.0
+  resolution: "postcss-value-parser@npm:4.1.0"
+  checksum: 70831403886859289f650550a38889857022c5bbe264fd5d39cfad5207b3e1d33422edc031c1a922f3ae29d0dff98837a8bf126c840374d2b0079e7d57cf7d71
+  languageName: node
+  linkType: hard
+
 "pouchdb-collections@npm:^1.0.1":
   version: 1.0.1
   resolution: "pouchdb-collections@npm:1.0.1"
@@ -13546,6 +13605,13 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"ramda@npm:^0.27.1":
+  version: 0.27.1
+  resolution: "ramda@npm:0.27.1"
+  checksum: 9aa4655dffdca66f8ba2ceabebe51996d6c75f6a2fb901a150885ace22c5950c211dd589868780b7a91c1443771702634d4370e7572d8c63c60e4b4f61aa57a9
+  languageName: node
+  linkType: hard
+
 "range-parser@npm:~1.2.1":
   version: 1.2.1
   resolution: "range-parser@npm:1.2.1"
@@ -13663,18 +13729,19 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"react-native-render-html@npm:5.0.0-alpha.8":
-  version: 5.0.0-alpha.8
-  resolution: "react-native-render-html@npm:5.0.0-alpha.8"
+"react-native-render-html@npm:6.0.0-alpha.12":
+  version: 6.0.0-alpha.12
+  resolution: "react-native-render-html@npm:6.0.0-alpha.12"
   dependencies:
-    deprecated-prop-type: ^1.0.0
-    htmlparser2: 5.0.1
-    prop-types: ^15.7.2
+    "@native-html/transient-render-engine": 4.1.0
+    "@types/ramda": ^0.27.32
+    ramda: ^0.27.1
     stringify-entities: ^3.1.0
   peerDependencies:
+    prop-types: "*"
     react: "*"
-    react-native: "*"
-  checksum: cbacdfec325f6a4d4b0dd2c03b2dd64bc965da5bfdf9763817bf4299ba2a4a76019e6136c72c17fc040967eb13c42573cd94a35edc00ab4ddcfd63ed95347def
+    react-native: ^0.63.0
+  checksum: 673be6b4fe64be2f5e0eaad69b1a1def208d0b28b96ea3101c8d003bddf88e6b2d0d2400aa9675c76dd0537ff09d2f0d8f6ffcf91a9e535e6a0f56af784d9e06
   languageName: node
   linkType: hard
 
@@ -15836,6 +15903,13 @@ resolve@~1.17.0:
   languageName: node
   linkType: hard
 
+"ts-toolbelt@npm:^6.15.1":
+  version: 6.15.5
+  resolution: "ts-toolbelt@npm:6.15.5"
+  checksum: d2f585ee3439ae7a72dd7c00630491195b2a4f34107c595d567242482b9fa911b5a9b5921fb4984506c2f7d8efce61351c7f48519438df67b6c0a8dcd40c862c
+  languageName: node
+  linkType: hard
+
 "tslib@npm:^1.8.1, tslib@npm:^1.9.0":
   version: 1.14.1
   resolution: "tslib@npm:1.14.1"
@@ -16461,15 +16535,6 @@ typescript@~4.0.5:
   dependencies:
     makeerror: 1.0.x
   checksum: c014f264c473fc4464ba8f59eb9f7ffa1c0cf2c83b65353de28a6012d8dd29e974bf2b0fbd5c71231f56762a3ea0d970b635f7d6f6d670ff83f426741ce6a4da
-  languageName: node
-  linkType: hard
-
-"warning@npm:4.0.1":
-  version: 4.0.1
-  resolution: "warning@npm:4.0.1"
-  dependencies:
-    loose-envify: ^1.0.0
-  checksum: 9575a07a0e75e5b42baa9823b08314d06e8f4f46deddc4c4c349a8a436738f16fd04d21b60a98cc68b13894802c85a5bf412ac9ff3cc999935df04ee36f35603
   languageName: node
   linkType: hard
 

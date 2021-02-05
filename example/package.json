@@ -23,7 +23,7 @@
     "react-native-paper": "^4.4.1",
     "react-native-picker-select": "^8.0.0",
     "react-native-reanimated": "~1.13.0",
-    "react-native-render-html": "5.0.0-alpha.8",
+    "react-native-render-html": "6.0.0-alpha.12",
     "react-native-safe-area-context": "3.1.4",
     "react-native-screens": "~2.10.1",
     "react-native-web": "~0.13.7",
