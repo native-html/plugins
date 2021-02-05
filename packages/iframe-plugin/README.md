@@ -1,3 +1,5 @@
+> :warning: This documentation is for **react-native-render-html v6**. For v5, [go here](https://github.com/native-html/plugins/tree/rnrh/5.x/packages/iframe-plugin#readme).
+
 <h1 align="center">@native-html/iframe-plugin</h1>
 
 <p align="center">
@@ -59,8 +61,8 @@ yarn add @native-html/iframe-plugin react-native-webview
 - Supports `onLinkPress`;
 - Supports `defaultWebViewProps`;
 - Compliance with [RFC001](https://github.com/archriss/react-native-render-html/blob/master/rfc/001-A-deterministic-approach-to-embedded-content-scaling.adoc#L13): scales to available width;
-- Autoscale feature (adapt zoom level to available width! Enabled by default.);
-- A single renderer function exported as default, super easy to plug-in!
+- Autoscale feature (adapt zoom level to available width! Disabled by default.);
+- A single renderer component exported as default, super easy to plug-in!
 - Compatible with `react-native-web` via [`@formidable-webview/web`](https://github.com/formidable-webview/ubiquitous/tree/master/packages/web#readme)
 
 **Known Limitations**:
@@ -72,24 +74,22 @@ yarn add @native-html/iframe-plugin react-native-webview
 | react-native-render-html | @native-html/iframe-plugin                                                                                |
 | ------------------------ | --------------------------------------------------------------------------------------------------------- |
 | ≥ 5.0.0 &lt; 6.0.0       | 1.x ([documentation](https://github.com/native-html/plugins/tree/rnrh/5.x/packages/iframe-plugin#readme)) |
-| ≥ 6.0.0                  | 2.x (_in development_)                                                                                    |
+| ≥ 6.0.0                  | 2.x ([documentation](https://github.com/native-html/plugins/tree/rnrh/6.x/packages/iframe-plugin#readme)  |
 
 ## Minimal working example
 
-> :warning: This plugin requires `react-native-render-html` version 5 or greater
-
 ```jsx
-import iframe from '@native-html/iframe-plugin';
-import HTML from 'react-native-render-html';
+import IframeRenderer from '@native-html/iframe-plugin';
+import RenderHTML from 'react-native-render-html';
 import WebView from 'react-native-webview';
 
 const renderers = {
-  iframe
+  iframe: IframeRenderer
 }
 
 // ...
 
-<HTML renderers={renderers}
+<RenderHTML renderers={renderers}
       WebView={WebView}
       source={{ html: '<iframe ...></iframe>' }}
       defaultWebViewProps={{ /* Any prop you want to pass to all WebViews */ }}
@@ -107,4 +107,26 @@ be zoomed out by just the right amount to have no horizontal cropping. This is
 equivalent to `resizeMode: 'contain'` for images. See example below with
 `scalesPageToFit` disabled (left) and enabled (right):
 
-![](https://github.com/native-html/plugins/blob/master/images/scalesPageToFit.png)
+![](https://github.com/native-html/plugins/blob/master/images/scalesPageToFit.jpg)
+
+## Customizing the renderer
+
+You can customize the renderer logic thanks to `useHtmlIframeProps` hook, `iframeModel` and `HTMLIframe` exports:
+
+```jsx
+import {useHtmlIframeProps, HTMLIframe, iframeModel} from '@native-html/iframe-plugin';
+
+const IframeRenderer = function IframeRenderer(props) {
+  const iframeProps = useHtmlIframeProps(props);
+  // Do customize the props here; wrap with your own container...
+  return iframeProps ? <HTMLIframe {..iframeProps} /> : null;
+};
+
+IframeRenderer.model = iframeModel;
+
+const renderers = {
+  iframe: IframeRenderer
+}
+
+// use "renderers" prop in your RenderHTML instance
+```

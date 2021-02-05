@@ -1,8 +1,8 @@
 export interface ExtractPrintDimensionsParams {
-  attrWidth: number | null;
-  attrHeight: number | null;
-  styleWidth: number | null;
-  styleHeight: number | null;
+  attrWidth?: number | null;
+  attrHeight?: number | null;
+  styleWidth?: number | null;
+  styleHeight?: number | null;
   contentWidth: number;
 }
 

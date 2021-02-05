@@ -1,11 +1,13 @@
-import { Dimensions, StyleProp, StyleSheet } from 'react-native';
+import { Dimensions } from 'react-native';
 import {
-  constructStyles,
-  HtmlAttributesDictionary,
-  PassProps
+  CustomTagRendererProps,
+  useSharedProps
 } from 'react-native-render-html';
-import extractPrintDimensions from './extractPrintDimensions';
+import extractPrintDimensions, {
+  ExtractPrintDimensionsParams
+} from './extractPrintDimensions';
 import { IframeConfig, HTMLIframeProps } from './HTMLIframe';
+import type { TBlock } from '@native-html/transient-render-engine';
 
 function normalizeUri(uri: string): string {
   return uri.startsWith('//') ? `https:${uri}` : uri;
@@ -21,28 +23,23 @@ const defaultIframeConfig: IframeConfig = {
  * Extract props for the HTMLIframe component from renderer function arguments.
  * This function is especially usefull for custom iframe renderers.
  *
- * @param htmlAttribs - The HTML node attributes.
- * @param convertedCSSStyles - Converted inline styles.
- * @param passProps - Passed props.
+ * @param props - The props of a custom block renderer.
  * @param iframeConfig - Override config options.
  *
  * @public
  */
-export default function extractHtmlIframeProps(
-  htmlAttribs: HtmlAttributesDictionary,
-  convertedCSSStyles: StyleProp<any>,
-  passProps: PassProps<any>,
+export default function useHtmlIframeProps(
+  { key, style, tnode }: CustomTagRendererProps<TBlock>,
   iframeConfig?: IframeConfig
-): HTMLIframeProps {
+): HTMLIframeProps | null {
   const {
     WebView,
-    contentWidth,
     onLinkPress,
-    computeEmbeddedMaxWidth,
     defaultWebViewProps,
-    key,
+    contentWidth,
+    computeEmbeddedMaxWidth,
     renderersProps: { iframe: globalIframeConfig } = {}
-  } = passProps;
+  } = useSharedProps();
   const resolvedConfig = {
     ...defaultIframeConfig,
     ...globalIframeConfig,
@@ -61,24 +58,15 @@ export default function extractHtmlIframeProps(
   const availableWidth =
     computeEmbeddedMaxWidth?.call(null, resolvedContentWidth, 'iframe') ||
     resolvedContentWidth;
-  const { width, height, ...restStyle } = StyleSheet.flatten(
-    constructStyles({
-      tagName: 'iframe',
-      htmlAttribs,
-      passProps,
-      styleSet: 'VIEW',
-      additionalStyles: [convertedCSSStyles],
-      baseFontStyle: passProps.baseFontStyle || ({} as any)
-    })
-  );
-
+  const htmlAttribs = tnode.attributes;
+  const { width, height, ...restStyle } = style;
   const attrWidth = Number(htmlAttribs.width);
   const attrHeight = Number(htmlAttribs.height);
-  const printConfig = {
+  const printConfig: ExtractPrintDimensionsParams = {
     attrWidth: Number.isNaN(attrWidth) ? null : attrWidth,
     attrHeight: Number.isNaN(attrHeight) ? null : attrHeight,
-    styleWidth: width,
-    styleHeight: height,
+    styleWidth: typeof width === 'string' ? null : width,
+    styleHeight: typeof height === 'string' ? null : height,
     contentWidth: availableWidth
   };
   const { printWidth, printHeight } = extractPrintDimensions(printConfig);
@@ -97,14 +85,16 @@ export default function extractHtmlIframeProps(
       "@native-html/iframe-plugin: You must pass a WebView component from react-native-webview as a prop to the HTML component. The iframe won't be rendered."
     );
   }
-  return {
-    ...resolvedConfig,
-    key,
-    source,
-    onLinkPress,
-    htmlAttribs,
-    scaleFactor,
-    style: [restStyle, { width: printWidth, height: printHeight }],
-    WebView
-  };
+  return WebView
+    ? {
+        ...resolvedConfig,
+        key,
+        source,
+        onLinkPress,
+        htmlAttribs,
+        scaleFactor,
+        style: [restStyle, { width: printWidth, height: printHeight }],
+        WebView
+      }
+    : null;
 }

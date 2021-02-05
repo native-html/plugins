@@ -22,7 +22,7 @@ of the iframe is greater than the available width on screen (as determined by
 HTML `contentWidth` prop.) In the screenshot below, scalesPageToFit is disabled
 (left), and enabled (right):
 
-![](https://github.com/native-html/plugins/blob/master/images/scalesPageToFit.png)
+![](https://github.com/native-html/plugins/blob/master/images/scalesPageToFit.jpg)
 
 ### Features
 

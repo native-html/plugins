@@ -7,7 +7,7 @@ import {
 } from '@formidable-webview/webshell';
 import { StyleProp, ViewStyle } from 'react-native';
 import {
-  ContainerProps,
+  RenderHTMLPassedProps,
   HtmlAttributesDictionary
 } from 'react-native-render-html';
 
@@ -51,7 +51,7 @@ export interface HTMLIframeProps<WebViewProps = any> extends IframeConfig {
   webViewProps?: WebViewProps;
   source: { uri?: string; html?: string };
   style: StyleProp<ViewStyle>;
-  onLinkPress?: ContainerProps['onLinkPress'];
+  onLinkPress?: RenderHTMLPassedProps['onLinkPress'];
   htmlAttribs: HtmlAttributesDictionary;
   /**
    * When scalesPageToFit is enabled, scales the WebView zoom level to make sure the
@@ -90,7 +90,13 @@ export default function HTMLIframe({
   );
   const onDOMLinkPress = useCallback(
     ({ uri }: LinkPressTarget) =>
-      onLinkPress?.call(null, { nativeEvent: {} } as any, uri, htmlAttribs),
+      onLinkPress?.call(
+        null,
+        { nativeEvent: {} } as any,
+        uri,
+        htmlAttribs,
+        (htmlAttribs.target as any) || '_self'
+      ),
     [onLinkPress, htmlAttribs]
   );
   const webViewProps = useWebshell({

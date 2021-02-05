@@ -5,16 +5,16 @@
 ```ts
 
 import { ComponentType } from 'react';
-import { ContainerProps } from 'react-native-render-html';
+import { CustomBlockRenderer } from 'react-native-render-html';
+import { CustomTagRendererProps } from 'react-native-render-html';
 import { HtmlAttributesDictionary } from 'react-native-render-html';
-import { PassProps } from 'react-native-render-html';
+import { HTMLContentModel } from 'react-native-render-html';
+import { HTMLElementModel } from '@native-html/transient-render-engine';
 import { default as React_2 } from 'react';
-import { RendererFunction } from 'react-native-render-html';
+import { RenderHTMLPassedProps } from 'react-native-render-html';
 import { StyleProp } from 'react-native';
+import type { TBlock } from '@native-html/transient-render-engine';
 import { ViewStyle } from 'react-native';
-
-// @public
-export function extractHtmlIframeProps(htmlAttribs: HtmlAttributesDictionary, convertedCSSStyles: StyleProp<any>, passProps: PassProps<any>, iframeConfig?: IframeConfig): HTMLIframeProps;
 
 // @public
 export function HTMLIframe({ WebView, webViewProps: userWebViewProps, source, style, onLinkPress, htmlAttribs, scaleFactor, scalesPageToFit }: HTMLIframeProps): React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, string | any | (new (props: any) => React_2.Component<any, any, any>)> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
@@ -24,7 +24,7 @@ export interface HTMLIframeProps<WebViewProps = any> extends IframeConfig {
     // (undocumented)
     htmlAttribs: HtmlAttributesDictionary;
     // (undocumented)
-    onLinkPress?: ContainerProps['onLinkPress'];
+    onLinkPress?: RenderHTMLPassedProps['onLinkPress'];
     scaleFactor: number;
     // (undocumented)
     source: {
@@ -39,15 +39,21 @@ export interface HTMLIframeProps<WebViewProps = any> extends IframeConfig {
 }
 
 // @public
-const iframe: RendererFunction<any>;
-
-export default iframe;
-
-// @public
 export interface IframeConfig {
     scalesPageToFit?: boolean;
     webViewProps?: any;
 }
+
+// @public (undocumented)
+export const iframeModel: HTMLElementModel<'iframe', HTMLContentModel.block>;
+
+// @public
+const IframeRenderer: CustomBlockRenderer;
+
+export default IframeRenderer;
+
+// @public
+export function useHtmlIframeProps({ key, style, tnode }: CustomTagRendererProps<TBlock>, iframeConfig?: IframeConfig): HTMLIframeProps | null;
 
 
 // (No @packageDocumentation comment for this package)
