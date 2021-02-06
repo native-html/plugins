@@ -44,7 +44,7 @@ export interface IframeConfig {
     webViewProps?: any;
 }
 
-// @public (undocumented)
+// @public
 export const iframeModel: HTMLElementModel<'iframe', HTMLContentModel.block>;
 
 // @public
