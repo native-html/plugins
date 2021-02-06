@@ -1,13 +1,13 @@
 import { domNodeToHTMLString } from 'react-native-render-html';
 import {
-  SerializableElement,
+  SerializableNode,
   isSerializableElement,
-  isSerializableText
+  isSerializableText,
 } from '@native-html/transient-render-engine';
 import { HTMLTableStats } from './types';
 
 export default function extractHtmlAndStatsFromTableDomNode(
-  domNode: SerializableElement | null
+  domNode: SerializableNode | null
 ) {
   let stats: HTMLTableStats = {
     numOfChars: 0,

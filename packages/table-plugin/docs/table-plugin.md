@@ -29,6 +29,7 @@
 |  --- | --- |
 |  [defaultTableStylesSpecs](./table-plugin.defaulttablestylesspecs.md) | Default styles attributes.<img src="https://raw.githubusercontent.com/native-html/table-plugin/master/images/TableStyleSpecs.png" /> |
 |  [HTMLTable](./table-plugin.htmltable.md) | A component capable of rendering a html string which root tag is a table tag. This component should not be used directly, except with custom renderers. |
+|  [tableModel](./table-plugin.tablemodel.md) | The model to attach to custom table renderers. |
 |  [TableRenderer](./table-plugin.tablerenderer.md) | The renderer component for the table element. This renderer is fully scalable, and will adjust to <code>contentWidth</code> and <code>computeEmbeddedMaxWidth</code>. It also features <code>onLinkPress</code>. |
 
 ## Type Aliases

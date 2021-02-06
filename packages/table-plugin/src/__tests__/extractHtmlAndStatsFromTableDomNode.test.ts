@@ -1,4 +1,5 @@
 import { parseDOM } from 'htmlparser2';
+import { toSerializableNode } from '@native-html/transient-render-engine';
 import extractHtmlAndStatsFromTableDomNode from '../extractHtmlAndStatsFromTableDomNode';
 
 const simpleHTML =
@@ -7,12 +8,12 @@ const simpleHTML =
 describe('extractHtmlAndStatsFromTableDomNode', () => {
   //
   it('should preserve HTML', () => {
-    const domRoot = parseDOM(simpleHTML)[0];
+    const domRoot = toSerializableNode(parseDOM(simpleHTML)[0]);
     expect(domRoot).toMatchObject({
-      type: 'tag',
+      type: 'element',
       tagName: 'table'
     });
-    expect(extractHtmlAndStatsFromTableDomNode(domRoot as any)).toMatchObject({
+    expect(extractHtmlAndStatsFromTableDomNode(domRoot)).toMatchObject({
       html: simpleHTML,
       stats: {
         numOfRows: 1,

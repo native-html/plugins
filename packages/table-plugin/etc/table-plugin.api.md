@@ -8,6 +8,8 @@ import { ComponentType } from 'react';
 import { CustomBlockRenderer } from 'react-native-render-html';
 import { CustomTagRendererProps } from 'react-native-render-html';
 import { HtmlAttributesDictionary } from 'react-native-render-html';
+import { HTMLContentModel } from 'react-native-render-html';
+import { HTMLElementModel } from '@native-html/transient-render-engine';
 import { RenderHTMLPassedProps } from 'react-native-render-html';
 import { StyleProp } from 'react-native';
 import type { TBlock } from '@native-html/transient-render-engine';
@@ -76,6 +78,9 @@ export interface TableHeuristicContentHeightState {
 }
 
 // @public
+export const tableModel: HTMLElementModel<'table', HTMLContentModel.block>;
+
+// @public
 const TableRenderer: CustomBlockRenderer;
 
 export default TableRenderer;
@@ -106,9 +111,9 @@ export interface TableStyleSpecs {
 }
 
 // @public
-export function useHtmlTableProps({ key, style, tnode }: CustomTagRendererProps<TBlock>, tableConfig?: TableConfig): HTMLTableProps & {
+export function useHtmlTableProps({ key, style, tnode }: CustomTagRendererProps<TBlock>, tableConfig?: TableConfig): (HTMLTableProps & {
     key?: string | number;
-};
+}) | null;
 
 
 // (No @packageDocumentation comment for this package)

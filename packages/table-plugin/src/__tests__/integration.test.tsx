@@ -2,9 +2,8 @@ import React from 'react';
 import { HTMLTable } from '../HTMLTable';
 import { render } from '@testing-library/react-native';
 import WebView from 'react-native-webview';
-import HTML, { ContainerProps } from 'react-native-render-html';
-import { IGNORED_TAGS } from '../tags';
-import table from '../table';
+import HTML, { RenderHTMLProps } from 'react-native-render-html';
+import TableRenderer from '../TableRenderer';
 
 const simpleHTML = `
 <table>
@@ -16,13 +15,12 @@ const simpleHTML = `
 </table>
 `;
 
-function createConfig(): Partial<ContainerProps> {
+function createConfig(): Partial<RenderHTMLProps> {
   const renderers = {
-    table: table
+    table: TableRenderer
   };
   return {
     renderers,
-    ignoredTags: IGNORED_TAGS,
     WebView
   };
 }

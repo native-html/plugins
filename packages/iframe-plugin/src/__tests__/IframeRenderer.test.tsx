@@ -2,7 +2,7 @@ import React from 'react';
 import HTML from 'react-native-render-html';
 import renderer from 'react-test-renderer';
 import WebView from 'react-native-webview';
-import iframe from '../iframe';
+import IframeRenderer from '../IframeRenderer';
 
 describe('iframe renderer', () => {
   it('should render without errors', () => {
@@ -11,7 +11,7 @@ describe('iframe renderer', () => {
         <HTML
           WebView={WebView}
           renderers={{
-            iframe
+            iframe: IframeRenderer
           }}
           source={{
             html:

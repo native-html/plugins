@@ -6,13 +6,16 @@ import { render } from '@testing-library/react-native';
 import WebView from 'react-native-webview';
 import Ersatz from '@formidable-webview/ersatz';
 import { waitForErsatz } from '@formidable-webview/ersatz-testing';
-import { TableConfig, HTMLTableStats } from '../types';
+import { HTMLTableStats } from '../types';
 import './setup';
-import { TableContentHeightState } from '@native-html/table-plugin';
+import {
+  TableConfig,
+  TableContentHeightState
+} from '@native-html/table-plugin';
 
-const defaultTestConfig: TableConfig = {
+const defaultTestConfig = {
   WebView,
-  animationType: 'none'
+  animationType: 'none' as TableConfig['animationType']
 };
 
 const simpleHTML = `
