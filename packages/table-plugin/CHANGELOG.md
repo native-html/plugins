@@ -1,3 +1,24 @@
+# [4.0.0](https://github.com/native-html/plugins/compare/@native-html/table-plugin@3.1.0...@native-html/table-plugin@4.0.0) (2021-02-06)
+
+
+### Bug Fixes
+
+* **table-plugin:** mark displayMode field as optional ([b395a49](https://github.com/native-html/plugins/commit/b395a49f0e5d439a799a84393e2c8fd50a239c2c))
+
+
+### Features
+
+* **table-plugin:** support react-native-render-html 6.x ([1526efe](https://github.com/native-html/plugins/commit/1526efe18b8fd67a51235dca341b34c7227dafa3))
+
+
+### BREAKING CHANGES
+
+* **table-plugin:** - `extractHtmlTableProps` has been dropped in favor of
+`useHtmlTableProps` hook for reusability.
+- `IGNORED_TAGS` is not exported anymore, and not necessary.
+- requires `react-native` 0.63.x and above
+- new `tableModel` export for the new custom renderers API
+
 # [3.1.0](https://github.com/native-html/plugins/compare/@native-html/table-plugin@3.0.1...@native-html/table-plugin@3.1.0) (2020-12-05)
 
 
