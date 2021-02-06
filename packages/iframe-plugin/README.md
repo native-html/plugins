@@ -105,7 +105,7 @@ When `scalesPageToFit` is set to true, if the iframe width (as determined by the
 by HTML props `contentWidth` and `computeEmbeddedMaxWidth`), the `WebView` will
 be zoomed out by just the right amount to have no horizontal cropping. This is
 equivalent to `resizeMode: 'contain'` for images. See example below with
-`scalesPageToFit` disabled (left) and enabled (right):
+`scalesPageToFit` enabled (left) and disabled (right):
 
 ![](https://github.com/native-html/plugins/blob/master/images/scalesPageToFit.jpg)
 
