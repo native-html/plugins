@@ -1,3 +1,18 @@
+# [2.0.0](https://github.com/native-html/plugins/compare/@native-html/iframe-plugin@1.1.1...@native-html/iframe-plugin@2.0.0) (2021-02-06)
+
+
+### Features
+
+* **iframe-plugin:** support react-native-render-html 6.x ([11a8ca0](https://github.com/native-html/plugins/commit/11a8ca04e2e864de145b9189cfb526fb345782ae))
+
+
+### BREAKING CHANGES
+
+* **iframe-plugin:** - `extractHtmlIframeProps` has been dropped in favor of
+`useHtmlIframeProps` hook for reusability.
+- requires `react-native` 0.63.x and above
+- new `iframeModel` export for the new custom renderers API
+
 ## [1.1.1](https://github.com/native-html/plugins/compare/@native-html/iframe-plugin@1.1.0...@native-html/iframe-plugin@1.1.1) (2020-12-05)
 
 
