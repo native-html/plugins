@@ -2,7 +2,7 @@ import { domNodeToHTMLString } from 'react-native-render-html';
 import {
   SerializableNode,
   isSerializableElement,
-  isSerializableText,
+  isSerializableText
 } from '@native-html/transient-render-engine';
 import { HTMLTableStats } from './types';
 
