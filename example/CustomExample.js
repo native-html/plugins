@@ -1,5 +1,5 @@
 import React from 'react';
-import HTML from 'react-native-render-html';
+import RenderHTML from 'react-native-render-html';
 import { useHtmlTableProps, tableModel } from '@native-html/table-plugin';
 import ClickTable from './ClickTable';
 import WebView from 'react-native-webview';
@@ -181,12 +181,13 @@ export default function CustomExample({
   availableWidth
 }) {
   return (
-    <HTML
+    <RenderHTML
       key={`custom-${instance}`}
       source={{ html: table1 }}
       onLinkPress={onLinkPress}
       contentWidth={availableWidth}
       {...htmlConfig}
+      debug={false}
     />
   );
 }

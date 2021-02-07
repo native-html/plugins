@@ -1,5 +1,5 @@
 import React from 'react';
-import HTML from 'react-native-render-html';
+import RenderHTML from 'react-native-render-html';
 import iframe from '@native-html/iframe-plugin';
 import WebView from 'react-native-webview';
 
@@ -35,7 +35,7 @@ export default function YoutubeExample({
   scalesPageToFit = true
 }) {
   return (
-    <HTML
+    <RenderHTML
       key={`youtube-${instance}`}
       contentWidth={availableWidth}
       source={{ html: youtubeIframe }}
@@ -46,6 +46,7 @@ export default function YoutubeExample({
           scalesPageToFit
         }
       }}
+      debug={false}
     />
   );
 }

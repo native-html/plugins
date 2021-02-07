@@ -1,5 +1,5 @@
 import React from 'react';
-import HTML from 'react-native-render-html';
+import RenderHTML from 'react-native-render-html';
 import table from '@native-html/table-plugin';
 import WebView from 'react-native-webview';
 
@@ -188,12 +188,13 @@ export default function SimpleExample({
   availableWidth
 }) {
   return (
-    <HTML
+    <RenderHTML
       key={`simple-${instance}`}
       source={{ html: table1 }}
       onLinkPress={onLinkPress}
       contentWidth={availableWidth}
       {...htmlConfig}
+      debug={false}
     />
   );
 }
