@@ -21,6 +21,7 @@ import {
   LinkPressTarget,
   useWebshell
 } from '@formidable-webview/webshell';
+import { linkPressTargetToOnDOMLinkPressArgs } from '@native-html/plugins-core';
 import { cssRulesFromSpecs, defaultTableStylesSpecs } from './css-rules';
 import {
   TableStyleSpecs,
@@ -274,20 +275,14 @@ export const HTMLTable = function HTMLTable({
   style,
   onLinkPress,
   animationDuration,
-  htmlAttribs = {},
+  htmlAttribs,
   maxScale,
   ...stats
 }: HTMLTableProps) {
   const onDOMLinkPress = useCallback(
-    ({ uri }: LinkPressTarget) =>
-      onLinkPress?.call(
-        null,
-        { nativeEvent: {} } as any,
-        uri,
-        htmlAttribs,
-        (htmlAttribs.target as any) || '_self'
-      ),
-    [onLinkPress, htmlAttribs]
+    (event: LinkPressTarget) =>
+      onLinkPress?.apply(null, linkPressTargetToOnDOMLinkPressArgs(event)),
+    [onLinkPress]
   );
   const { autoheightWebshellProps, containerStyle } = useAnimatedAutoheight({
     ...stats,
