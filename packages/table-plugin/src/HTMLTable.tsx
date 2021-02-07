@@ -1,10 +1,4 @@
-import React, {
-  useMemo,
-  useRef,
-  useLayoutEffect,
-  useCallback,
-  ComponentType
-} from 'react';
+import React, { useMemo, useRef, useLayoutEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import {
   Platform,
