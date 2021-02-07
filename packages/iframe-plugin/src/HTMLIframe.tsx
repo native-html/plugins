@@ -7,9 +7,10 @@ import {
 } from '@formidable-webview/webshell';
 import { StyleProp, ViewStyle } from 'react-native';
 import {
-  RenderHTMLPassedProps,
-  HtmlAttributesDictionary
+  HtmlAttributesDictionary,
+  RenderHTMLPassedProps
 } from 'react-native-render-html';
+import { linkPressTargetToOnDOMLinkPressArgs } from '@native-html/plugins-core';
 
 /**
  * Configuration options for the HTMLIframe component.
@@ -48,11 +49,32 @@ export interface HTMLIframeProps<WebViewProps = any> extends IframeConfig {
    * The `WebView` Component you wish to use.
    */
   WebView: ComponentType<WebViewProps>;
+
+  /**
+   * Props to be passed to the `WebView` component;
+   */
   webViewProps?: WebViewProps;
+
+  /**
+   * The source for the iframe.
+   */
   source: { uri?: string; html?: string };
+
+  /**
+   * Container style.
+   */
   style: StyleProp<ViewStyle>;
+
+  /**
+   * Handle link press events.
+   */
   onLinkPress?: RenderHTMLPassedProps['onLinkPress'];
+
+  /**
+   * Html attributes for this iframe node.
+   */
   htmlAttribs: HtmlAttributesDictionary;
+
   /**
    * When scalesPageToFit is enabled, scales the WebView zoom level to make sure the
    * viewport fits contentWidth.
@@ -73,7 +95,6 @@ export default function HTMLIframe({
   source,
   style,
   onLinkPress,
-  htmlAttribs,
   scaleFactor,
   scalesPageToFit = false
 }: HTMLIframeProps) {
@@ -89,15 +110,9 @@ export default function HTMLIframe({
     [scaleFactor, scalesPageToFit]
   );
   const onDOMLinkPress = useCallback(
-    ({ uri }: LinkPressTarget) =>
-      onLinkPress?.call(
-        null,
-        { nativeEvent: {} } as any,
-        uri,
-        htmlAttribs,
-        (htmlAttribs.target as any) || '_self'
-      ),
-    [onLinkPress, htmlAttribs]
+    (event: LinkPressTarget) =>
+      onLinkPress?.apply(null, linkPressTargetToOnDOMLinkPressArgs(event)),
+    [onLinkPress]
   );
   const webViewProps = useWebshell({
     features: [...features, scaleFeature as any],
