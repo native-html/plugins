@@ -1,3 +1,5 @@
+## [2.0.2](https://github.com/native-html/plugins/compare/@native-html/iframe-plugin@2.0.1...@native-html/iframe-plugin@2.0.2) (2021-02-07)
+
 ## [2.0.1](https://github.com/native-html/plugins/compare/@native-html/iframe-plugin@2.0.0...@native-html/iframe-plugin@2.0.1) (2021-02-07)
 
 
