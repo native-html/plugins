@@ -330,6 +330,7 @@ export interface HTMLTableBaseProps extends HTMLTableStats {
    * Html attributes for this table node.
    */
   htmlAttribs?: HtmlAttributesDictionary;
+
   /**
    * The `WebView` Component you wish to use.
    */

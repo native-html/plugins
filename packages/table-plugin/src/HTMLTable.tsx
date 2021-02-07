@@ -1,4 +1,10 @@
-import React, { useMemo, useRef, useLayoutEffect, useCallback } from 'react';
+import React, {
+  useMemo,
+  useRef,
+  useLayoutEffect,
+  useCallback,
+  ComponentType
+} from 'react';
 import PropTypes from 'prop-types';
 import {
   Platform,
@@ -160,7 +166,7 @@ function useAnimatedAutoheight<WVP extends MinimalWebViewProps>({
     ]
   );
   const oldContainerHeightRef = useRef<number | null>(containerHeight);
-  const containerStyle = useMemo(
+  const containerStyle: { height: any } = useMemo(
     () =>
       animationType === 'animated' && containerHeight !== null
         ? {
