@@ -1,3 +1,11 @@
+## [2.0.1](https://github.com/native-html/plugins/compare/@native-html/iframe-plugin@2.0.0...@native-html/iframe-plugin@2.0.1) (2021-02-07)
+
+
+### Bug Fixes
+
+* **iframe-plugin:** pass anchor attributes and target to `onLinkPress` ([a5c22e8](https://github.com/native-html/plugins/commit/a5c22e81f8cff0eba82c363ac453e7118a5e200d))
+* **iframe-plugin:** upgrade webshell to v2.3.0 fixing potential infinite re-renders ([a3d9248](https://github.com/native-html/plugins/commit/a3d92486ecd75e30c48d18f14042ec435ca9678d))
+
 # [2.0.0](https://github.com/native-html/plugins/compare/@native-html/iframe-plugin@1.1.1...@native-html/iframe-plugin@2.0.0) (2021-02-06)
 
 
