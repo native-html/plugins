@@ -20,6 +20,7 @@ I swear that I have completed these tasks before submitting:
 
 - [ ] I have read the README
 - [ ] I have checked that the issue has not been reported yet
+- [ ] I have prefixed this issue title with the plugin suffix (e.g: [iframe-plugin]) depending on the affected plugin
 
 ### Bug Report 
 
@@ -47,11 +48,12 @@ I swear that I have completed these tasks before submitting:
 ##### Libraries
 
 <!--
-  Print the versions of each library.
+  Print the versions of each library (remove unused)
 -->
 
 - react-native-render-html:
 - @native-html/table-plugin:
+- @native-html/iframe-plugin:
 - react-native-webview:
 
 <!--
