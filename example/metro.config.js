@@ -1,11 +1,10 @@
 const path = require('path');
 
+const commonModulePath = path.resolve(__dirname, '../packages');
+
 module.exports = {
   projectRoot: __dirname,
-  watchFolders: [
-    path.resolve('../packages/table-plugin'),
-    path.resolve('../packages/iframe-plugin')
-  ],
+  watchFolders: [commonModulePath],
   resolver: {
     extraNodeModules: new Proxy(
       {},
@@ -18,7 +17,7 @@ module.exports = {
     getTransformOptions: async () => ({
       transform: {
         experimentalImportSupport: false,
-        inlineRequires: false
+        inlineRequires: true
       }
     })
   }

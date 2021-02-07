@@ -170,8 +170,8 @@ export default function App() {
   const [isSnackVisible, setIsSnackVisible] = useState(false);
   const { width: windowWidth } = useWindowDimensions();
   const availableWidth = windowWidth - 40;
-  const onLinkPress = useCallback((e, url) => {
-    setUrl(url);
+  const onLinkPress = useCallback((e, href) => {
+    setUrl(href);
   }, []);
   React.useEffect(() => {
     url && setIsSnackVisible(true);

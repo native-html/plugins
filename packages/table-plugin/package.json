@@ -55,7 +55,7 @@
     "jest": "^25",
     "metro-react-native-babel-preset": "^0.64.0",
     "metro-react-native-babel-transformer": "^0.64.0",
-    "react": "16.14.0",
+    "react": "16.13.1",
     "react-native": "^0.63.2",
     "react-native-render-html": "6.0.0-alpha.12",
     "react-native-webview": "^10.9.0",
@@ -65,6 +65,7 @@
   },
   "dependencies": {
     "@formidable-webview/webshell": "2.3.0",
+    "@native-html/plugins-core": "workspace:*",
     "@types/prop-types": "^15.7.3",
     "prop-types": "^15.7.2"
   },
@@ -106,8 +107,5 @@
         }
       ]
     ]
-  },
-  "installConfig": {
-    "hoistingLimits": "workspaces"
   }
 }
