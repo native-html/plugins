@@ -17,7 +17,7 @@ import { ViewStyle } from 'react-native';
 export function extractHtmlIframeProps(htmlAttribs: HtmlAttributesDictionary, convertedCSSStyles: StyleProp<any>, passProps: PassProps<any>, iframeConfig?: IframeConfig): HTMLIframeProps;
 
 // @public
-export function HTMLIframe({ WebView, webViewProps: userWebViewProps, source, style, onLinkPress, htmlAttribs, scaleFactor, scalesPageToFit }: HTMLIframeProps): React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, string | any | (new (props: any) => React_2.Component<any, any, any>)> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
+export function HTMLIframe({ WebView, webViewProps: userWebViewProps, source, style, onLinkPress, scaleFactor, scalesPageToFit }: HTMLIframeProps): React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, string | any | (new (props: any) => React_2.Component<any, any, any>)> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
 
 // @public
 export interface HTMLIframeProps<WebViewProps = any> extends IframeConfig {

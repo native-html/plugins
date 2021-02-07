@@ -82,7 +82,7 @@
   },
   "publishConfig": {
     "access": "public",
-    "tag": "3.x"
+    "tag": "3x"
   },
   "@react-native-community/bob": {
     "source": "src",

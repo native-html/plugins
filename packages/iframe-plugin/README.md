@@ -47,11 +47,11 @@
 > `react-native-webview` version.
 
 ```sh
-npm add --save @native-html/iframe-plugin@1.x react-native-webview
+npm add --save @native-html/iframe-plugin@1x react-native-webview
 ```
 
 ```sh
-yarn add @native-html/iframe-plugin@1.x react-native-webview
+yarn add @native-html/iframe-plugin@1x react-native-webview
 ```
 
 **Features**:

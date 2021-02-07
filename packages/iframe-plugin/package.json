@@ -77,7 +77,7 @@
   },
   "publishConfig": {
     "access": "public",
-    "tag": "1.x"
+    "tag": "1x"
   },
   "@react-native-community/bob": {
     "source": "src",

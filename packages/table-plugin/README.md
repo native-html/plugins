@@ -58,11 +58,11 @@
 <hr/>
 
 ```sh
-npm add --save @native-html/table-plugin@3.x
+npm add --save @native-html/table-plugin@3x
 ```
 
 ```sh
-yarn add @native-html/table-plugin@3.x
+yarn add @native-html/table-plugin@3x
 ```
 
 **Features**:
@@ -88,7 +88,7 @@ yarn add @native-html/table-plugin@3.x
 | react-native-render-html | @native-html/table-plugin                                                                                |
 | ------------------------ | -------------------------------------------------------------------------------------------------------- |
 | ≥ 4.2.1 &lt; 5.0.0       | 2.x ([documentation](https://github.com/native-html/plugins/tree/rnrh/4.x#readme))                       |
-| ≥ 5.0.0 &lt; 6.0.0       | 3.x ([documentation](https://github.com/native-html/plugins/tree/rnrh/5.x/packages/table-plugin#readme)) |
+| ≥ 5.0.0 &lt; 6.0.0       | 3x ([documentation](https://github.com/native-html/plugins/tree/rnrh/5.x/packages/table-plugin#readme)) |
 | ≥ 6.0.0                  | 4.x (_in development_)                                                                                   |
 
 ## Minimal working example
