@@ -1,0 +1,13 @@
+diff --git a/lib/plugin/npm/npm.js b/lib/plugin/npm/npm.js
+index 12a28d26db8d78fa7ce011d8d201668fb21b8f97..65be3f3bd7fb370cf95cee794c288ded15149558 100644
+--- a/lib/plugin/npm/npm.js
++++ b/lib/plugin/npm/npm.js
+@@ -229,7 +229,7 @@ class npm extends Plugin {
+       this.log.warn('Skip publish: package is private.');
+       return false;
+     }
+-    return this.exec(`npm publish ${publishPath} --tag ${tag} ${otpArg} ${dryRunArg}`, { options })
++    return (this.config.isDryRun ? this.exec(`npm publish ${publishPath} --tag ${tag} ${otpArg} ${dryRunArg}`, { options }) : this.exec(`yarn npm publish --tag ${tag}`, { options }))
+       .then(() => {
+         this.setContext({ isReleased: true });
+       })
