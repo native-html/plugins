@@ -17,24 +17,19 @@ import type { TBlock } from '@native-html/transient-render-engine';
 import { ViewStyle } from 'react-native';
 
 // @public
-export function HTMLIframe({ WebView, webViewProps: userWebViewProps, source, style, onLinkPress, htmlAttribs, scaleFactor, scalesPageToFit }: HTMLIframeProps): React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, string | any | (new (props: any) => React_2.Component<any, any, any>)> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
+export function HTMLIframe({ WebView, webViewProps: userWebViewProps, source, style, onLinkPress, scaleFactor, scalesPageToFit }: HTMLIframeProps): React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, string | any | (new (props: any) => React_2.Component<any, any, any>)> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
 
 // @public
 export interface HTMLIframeProps<WebViewProps = any> extends IframeConfig {
-    // (undocumented)
     htmlAttribs: HtmlAttributesDictionary;
-    // (undocumented)
     onLinkPress?: RenderHTMLPassedProps['onLinkPress'];
     scaleFactor: number;
-    // (undocumented)
     source: {
         uri?: string;
         html?: string;
     };
-    // (undocumented)
     style: StyleProp<ViewStyle>;
     WebView: ComponentType<WebViewProps>;
-    // (undocumented)
     webViewProps?: WebViewProps;
 }
 
