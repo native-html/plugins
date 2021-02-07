@@ -76,7 +76,8 @@
     "url": "git+ssh://git@github.com/native-html/plugins.git"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "tag": "1.x"
   },
   "@react-native-community/bob": {
     "source": "src",

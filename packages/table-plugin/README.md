@@ -58,11 +58,11 @@
 <hr/>
 
 ```sh
-npm add --save @native-html/table-plugin
+npm add --save @native-html/table-plugin@3.x
 ```
 
 ```sh
-yarn add @native-html/table-plugin
+yarn add @native-html/table-plugin@3.x
 ```
 
 **Features**:
