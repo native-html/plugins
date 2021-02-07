@@ -7,12 +7,16 @@
     "ios": "yarn workspace example ios",
     "build:table": "yarn workspace @native-html/table-plugin build",
     "build:iframe": "yarn workspace @native-html/iframe-plugin build",
+    "build:core": "yarn workspace @native-html/plugins-core build",
     "test:table": "yarn workspace @native-html/table-plugin test",
     "test:table:jest": "yarn workspace @native-html/table-plugin test:jest",
     "test:iframe": "yarn workspace @native-html/iframe-plugin test",
     "test:iframe:jest": "yarn workspace @native-html/iframe-plugin test:jest",
+    "test:core": "yarn workspace @native-html/plugins-core test",
+    "test:core:jest": "yarn workspace @native-html/plugins-core test:jest",
     "release:table": "yarn workspace @native-html/table-plugin release-it",
     "release:iframe": "yarn workspace @native-html/iframe-plugin release-it",
+    "release:core": "yarn workspace @native-html/plugins-core release-it",
     "publish:example": "yarn workspace example expo publish"
   },
   "devDependencies": {

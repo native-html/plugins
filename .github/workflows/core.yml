@@ -1,7 +1,7 @@
 # This workflow will do a clean install of node dependencies, run JS and Typescript tests.
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: iframe
+name: table
 
 on: [push, pull_request]
 
@@ -21,17 +21,15 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - run: yarn install --immutable
-    - run: yarn build:core
-      name: Build core
-    - run: yarn workspace @native-html/iframe-plugin test:ts
+    - run: yarn workspace @native-html/plugins-core test:ts
       name: Typescript Tests
-    - run: yarn workspace @native-html/iframe-plugin test:lint
+    - run: yarn workspace @native-html/plugins-core test:lint
       name: Linting Tests
-    - run: yarn workspace @native-html/iframe-plugin test:jest --coverage
+    - run: yarn workspace @native-html/plugins-core test:jest --coverage
       name: Behavior Tests
-    - run: yarn workspace @native-html/iframe-plugin build
+    - run: yarn workspace @native-html/plugins-core build
       name: Build
     - uses: codecov/codecov-action@v1
       with:
-        flags: iframe-plugin
+        flags: plugins-core
         fail_ci_if_error: true

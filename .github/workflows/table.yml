@@ -21,6 +21,8 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - run: yarn install --immutable
+    - run: yarn build:core
+      name: Build core
     - run: yarn workspace @native-html/table-plugin test:ts
       name: Typescript Tests
     - run: yarn workspace @native-html/table-plugin test:lint

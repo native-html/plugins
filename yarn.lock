@@ -1814,13 +1814,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@formidable-webview/webshell@npm:2.2.0, @formidable-webview/webshell@npm:^2.2.0":
-  version: 2.2.0
-  resolution: "@formidable-webview/webshell@npm:2.2.0"
+"@formidable-webview/webshell@npm:2.3.0, @formidable-webview/webshell@npm:^2.3.0":
+  version: 2.3.0
+  resolution: "@formidable-webview/webshell@npm:2.3.0"
   peerDependencies:
     react: "*"
     react-native: ">= 0.59.0"
-  checksum: 4936ffed79a6cd2a78c57015815d7be619acd3c5868ed4744ce514cda2a699fc2cdfda60c0a173684ed5a43d1e1564be2a1b38274d76953929ca4d07cf7ff5d8
+  checksum: d72595268e4156e1d213be729589f6016a1b0002df6fbdd8198a53204e1af6031354d6cbca8b20f43863f7a4bc9da5bf92a4833a9b920d5e11d11969e57f4c37
   languageName: node
   linkType: hard
 
@@ -2432,9 +2432,10 @@ __metadata:
     "@babel/runtime": ^7.12.5
     "@formidable-webview/ersatz": ^2.1.2
     "@formidable-webview/ersatz-testing": ^2.0.5
-    "@formidable-webview/webshell": ^2.2.0
+    "@formidable-webview/webshell": ^2.3.0
     "@microsoft/api-documenter": ^7.11.0
     "@microsoft/api-extractor": 7.12.0
+    "@native-html/plugins-core": "workspace:*"
     "@react-native-community/bob": ^0.16.2
     "@release-it/conventional-changelog": ^2.0.0
     "@testing-library/react-native": ^7.1.0
@@ -2463,6 +2464,49 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@native-html/plugins-core@workspace:*, @native-html/plugins-core@workspace:packages/plugins-core":
+  version: 0.0.0-use.local
+  resolution: "@native-html/plugins-core@workspace:packages/plugins-core"
+  dependencies:
+    "@babel/cli": ^7.12.8
+    "@babel/core": ^7.12.9
+    "@babel/plugin-transform-react-jsx": ^7.12.7
+    "@babel/preset-typescript": ^7.12.7
+    "@babel/runtime": ^7.12.5
+    "@formidable-webview/ersatz": ^2.1.2
+    "@formidable-webview/ersatz-testing": ^2.0.5
+    "@formidable-webview/webshell": ^2.3.0
+    "@microsoft/api-extractor": 7.12.0
+    "@react-native-community/bob": ^0.16.2
+    "@release-it/conventional-changelog": ^2.0.0
+    "@testing-library/react-native": ^7.1.0
+    "@tsconfig/react-native": ^1.0.2
+    "@types/html-validator": ^5.0.0
+    "@types/jest": ^26.0.14
+    "@types/react": ^16.9.49
+    "@types/react-native": ^0.63.22
+    "@types/react-test-renderer": ^16.9.3
+    babel-jest: ^25
+    babel-plugin-inline-import: ^3.0.0
+    eslint: ^7.14.0
+    html-validator: ^5.1.17
+    jest: ^25
+    metro-react-native-babel-preset: ^0.64.0
+    metro-react-native-babel-transformer: ^0.64.0
+    react: 16.14.0
+    react-native: ^0.63.2
+    react-native-render-html: 6.0.0-alpha.12
+    react-test-renderer: 16.13.1
+    release-it: ^14.2.2
+    typescript: ~3.9.7
+  peerDependencies:
+    "@formidable-webview/webshell": ^2.3.0
+    react: ">= 16.8.0"
+    react-native: ">= 0.63.0"
+    react-native-render-html: ">= 6.0.0-alpha.12 || 6.x"
+  languageName: unknown
+  linkType: soft
+
 "@native-html/table-plugin@workspace:*, @native-html/table-plugin@workspace:packages/table-plugin":
   version: 0.0.0-use.local
   resolution: "@native-html/table-plugin@workspace:packages/table-plugin"
@@ -2474,7 +2518,7 @@ __metadata:
     "@babel/runtime": ^7.12.5
     "@formidable-webview/ersatz": ^2.1.2
     "@formidable-webview/ersatz-testing": ^2.0.5
-    "@formidable-webview/webshell": 2.2.0
+    "@formidable-webview/webshell": 2.3.0
     "@microsoft/api-documenter": ^7.11.0
     "@microsoft/api-extractor": 7.12.0
     "@react-native-community/bob": ^0.16.2

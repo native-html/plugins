@@ -14,6 +14,10 @@ coverage:
         target: auto
         flags:
           - iframe-plugin
+      plugins-core:
+        target: auto
+        flags:
+          - plugins-core
 
 flags:
   table-plugin:
@@ -22,3 +26,6 @@ flags:
   iframe-plugin:
     paths:
       - packages/iframe-plugin/
+  plugins-core:
+    paths:
+      - packages/plugins-core/
