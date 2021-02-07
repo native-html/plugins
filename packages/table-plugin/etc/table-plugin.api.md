@@ -24,7 +24,7 @@ export function extractHtmlTableProps(htmlAttribs: HtmlAttributesDictionary, con
 };
 
 // @public
-export const HTMLTable: ({ WebView, tableStyleSpecs, cssRules, html, sourceBaseUrl, animationType, computeHeuristicContentHeight, computeContainerHeight, webViewProps: userWebViewProps, style, onLinkPress, animationDuration, htmlAttribs, maxScale, ...stats }: HTMLTableProps) => JSX.Element;
+export const HTMLTable: ({ WebView, tableStyleSpecs, cssRules, html, sourceBaseUrl, animationType, computeHeuristicContentHeight, computeContainerHeight, webViewProps: userWebViewProps, style, onLinkPress, animationDuration, maxScale, ...stats }: HTMLTableProps) => JSX.Element;
 
 // @public
 export interface HTMLTableBaseProps extends HTMLTableStats {
