@@ -1,4 +1,4 @@
-> :warning: This documentation is for **react-native-render-html v6**. For v5 and below, [go here](https://github.com/native-html/plugins/tree/rnrh/5.x/packages/table-plugin#readme).
+> :warning: This documentation is for **react-native-render-html v6** (@native-html/table-plugin@4.x). For v5 and below, [go here](https://github.com/native-html/plugins/tree/rnrh/5.x/packages/table-plugin#readme).
 
 <h1 align="center">@native-html/table-plugin</h1>
 

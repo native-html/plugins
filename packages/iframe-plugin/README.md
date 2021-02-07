@@ -1,4 +1,4 @@
-> :warning: This documentation is for **react-native-render-html v6**. For v5, [go here](https://github.com/native-html/plugins/tree/rnrh/5.x/packages/iframe-plugin#readme).
+> :warning: This documentation is for **react-native-render-html v6** (@native-html/iframe-plugin@2.x). For v5, [go here](https://github.com/native-html/plugins/tree/rnrh/5.x/packages/iframe-plugin#readme).
 
 <h1 align="center">@native-html/iframe-plugin</h1>
 
