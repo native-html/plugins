@@ -268,14 +268,13 @@ export const HTMLTable = function HTMLTable({
   style,
   onLinkPress,
   animationDuration,
-  htmlAttribs = {},
   maxScale,
   ...stats
 }: HTMLTableProps) {
   const onDOMLinkPress = useCallback(
     ({ uri }: LinkPressTarget) =>
-      onLinkPress?.call(null, { nativeEvent: {} } as any, uri, htmlAttribs),
-    [onLinkPress, htmlAttribs]
+      onLinkPress?.call(null, { nativeEvent: {} } as any, uri, {}),
+    [onLinkPress]
   );
   const { autoheightWebshellProps, containerStyle } = useAnimatedAutoheight({
     ...stats,
