@@ -39,7 +39,7 @@
     "react-test-renderer": "16.13.1",
     "react-native-webview": "11.0.0",
     "@release-it/conventional-changelog": "patch:@release-it/conventional-changelog@2.0.0#patches/@release-it-conventional-changelog.patch",
-    "release-it": "patch:release-it@14.0.4#patches/release-it.patch"
+    "release-it": "14.3.0"
   },
   "author": "Jules Sam. Randolph <jules.sam.randolph@gmail.com> (https://github.com/jsamr)",
   "license": "MIT",
