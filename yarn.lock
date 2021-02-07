@@ -2473,8 +2473,6 @@ __metadata:
     "@babel/plugin-transform-react-jsx": ^7.12.7
     "@babel/preset-typescript": ^7.12.7
     "@babel/runtime": ^7.12.5
-    "@formidable-webview/ersatz": ^2.1.2
-    "@formidable-webview/ersatz-testing": ^2.0.5
     "@formidable-webview/webshell": ^2.3.0
     "@microsoft/api-extractor": 7.12.0
     "@react-native-community/bob": ^0.16.2
@@ -2487,9 +2485,7 @@ __metadata:
     "@types/react-native": ^0.63.22
     "@types/react-test-renderer": ^16.9.3
     babel-jest: ^25
-    babel-plugin-inline-import: ^3.0.0
     eslint: ^7.14.0
-    html-validator: ^5.1.17
     jest: ^25
     metro-react-native-babel-preset: ^0.64.0
     metro-react-native-babel-transformer: ^0.64.0
