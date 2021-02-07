@@ -1,9 +1,9 @@
+/* eslint-disable compat/compat */
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import validator from 'html-validator';
 import { HTMLTable } from '../HTMLTable';
-import { render } from '@testing-library/react-native';
-import WebView from 'react-native-webview';
+import { act, render } from '@testing-library/react-native';
 import Ersatz from '@formidable-webview/ersatz';
 import { waitForErsatz } from '@formidable-webview/ersatz-testing';
 import { HTMLTableStats } from '../types';
@@ -14,8 +14,9 @@ import {
 } from '@native-html/table-plugin';
 
 const defaultTestConfig = {
-  WebView,
-  animationType: 'none' as TableConfig['animationType']
+  WebView: Ersatz,
+  animationType: 'none' as TableConfig['animationType'],
+  debug: false
 };
 
 const simpleHTML = `
@@ -34,68 +35,62 @@ const dummyStats: HTMLTableStats = {
   numOfRows: 2
 };
 
+function waitForRender(timeMs: number = 1000) {
+  return act(() => new Promise((res) => setTimeout(res, timeMs)));
+}
+
 // We have to exclude those tests until an upstream bug in jest
 // regarding forwarded ref components is fixed.
 // See https://github.com/callstack/react-native-testing-library/issues/539
 // eslint-disable-next-line jest/no-disabled-tests
-xdescribe('HTMLTable component', () => {
+describe('HTMLTable component', () => {
   it('should produce w3-compliant HTML code', async () => {
     const webview = await waitForErsatz(
-      render(
-        <HTMLTable
-          html={'<table></table>'}
-          WebView={Ersatz}
-          numOfChars={0}
-          numOfColumns={0}
-          numOfRows={0}
-        />
-      )
+      render(<HTMLTable html={simpleHTML} WebView={Ersatz} {...dummyStats} />)
     );
     const validated = await validator({
       data: webview.props.source.html,
       format: 'json'
     });
     expect(validated).toBeValidHTML();
+    await waitForRender();
   });
 
   describe('computeContainerHeight prop', () => {
-    it('should be called twice when there is no DOM mounting', () => {
-      const computeContainerHeight = jest.fn(() => 40);
-      render(
-        <HTMLTable
-          html={simpleHTML}
-          computeContainerHeight={computeContainerHeight}
-          {...dummyStats}
-          {...defaultTestConfig}
-        />
-      );
-      expect(computeContainerHeight).toHaveBeenCalledTimes(2);
-    });
     it('should be called three times when there is DOM mounting', async () => {
       const computeContainerHeight = jest.fn((s: TableContentHeightState) => {
         return s.contentHeight;
       });
-      render(
-        <HTMLTable
-          html={simpleHTML}
-          computeContainerHeight={computeContainerHeight}
-          {...dummyStats}
-          {...defaultTestConfig}
-          WebView={Ersatz}
-        />
+      await waitForErsatz(
+        render(
+          <HTMLTable
+            html={simpleHTML}
+            computeContainerHeight={computeContainerHeight}
+            {...dummyStats}
+            {...defaultTestConfig}
+          />
+        )
       );
+      // eslint-disable-next-line compat/compat
+      // await act(() => new Promise((res) => setTimeout(res, 10)));
       expect(computeContainerHeight).toHaveBeenCalledTimes(3);
-      expect(computeContainerHeight).toHaveBeenNthCalledWith(1, {
-        type: 'heuristic',
-        contentHeight: expect.any(Number)
-      });
-      expect(computeContainerHeight).toHaveBeenNthCalledWith(3, {
-        type: 'accurate',
-        contentHeight: expect.any(Number)
-      });
+      expect(computeContainerHeight).toHaveBeenNthCalledWith(
+        1,
+        expect.objectContaining({
+          type: 'heuristic',
+          contentHeight: expect.any(Number)
+        })
+      );
+      expect(computeContainerHeight).toHaveBeenNthCalledWith(
+        3,
+        expect.objectContaining({
+          type: 'accurate',
+          contentHeight: expect.any(Number)
+        })
+      );
     });
-    it("should be used to set container's height", () => {
-      const { getByTestId } = render(
+    it("should be used to set container's height", async () => {
+      const { getByTestId, findByTestId } = render(
         <HTMLTable
           html={simpleHTML}
           computeContainerHeight={() => 40}
@@ -103,17 +98,19 @@ xdescribe('HTMLTable component', () => {
           {...defaultTestConfig}
         />
       );
+      await findByTestId('backend-loaded-0');
       const container = getByTestId('html-table-container');
       expect(container).toBeTruthy();
       expect(StyleSheet.flatten(container.props.style)).toMatchObject({
         height: 40
       });
+      await waitForRender();
     });
   });
   describe('computeHeuristicHeight prop', () => {
-    it("should be used on two initial rendering cycles to determine container's height", () => {
+    it("should be used on two initial rendering cycles to determine container's height", async () => {
       const computeHeuristicContentHeight = jest.fn(() => 2);
-      const { getByTestId } = render(
+      const { getByTestId, findByTestId } = render(
         <HTMLTable
           html={simpleHTML}
           computeHeuristicContentHeight={computeHeuristicContentHeight}
@@ -127,6 +124,8 @@ xdescribe('HTMLTable component', () => {
       expect(StyleSheet.flatten(container.props.style)).toMatchObject({
         height: 2
       });
+      await findByTestId('backend-loaded-0');
+      await waitForRender();
     });
   });
 });
