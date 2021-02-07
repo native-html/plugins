@@ -1,3 +1,5 @@
+> :warning: This documentation is for **react-native-render-html v5** (@native-html/iframe-plugin@1.x)
+
 <h1 align="center">@native-html/iframe-plugin</h1>
 
 <p align="center">
@@ -107,4 +109,4 @@ be zoomed out by just the right amount to have no horizontal cropping. This is
 equivalent to `resizeMode: 'contain'` for images. See example below with
 `scalesPageToFit` disabled (left) and enabled (right):
 
-![](https://github.com/native-html/plugins/blob/master/images/scalesPageToFit.png)
+![](https://github.com/native-html/plugins/blob/rnrh/5.x/images/scalesPageToFit.png)

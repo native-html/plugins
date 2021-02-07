@@ -1,7 +1,4 @@
-> **:warning: as of version 1.0.0, this package name has been changed from
-> `react-native-render-html-table-bridge` to `@native-html/table-plugin`**. To
-> migrate, you must add the new package in your project and change imports.
-> Also, [check all breaking changes here](https://github.com/native-html/table-plugin/blob/master/packages/table-plugin/CHANGELOG.md#100-2020-08-19).
+> :warning: This documentation is for **react-native-render-html v5** (@native-html/table-plugin@3.x)
 
 <h1 align="center">@native-html/table-plugin</h1>
 
@@ -93,7 +90,7 @@ yarn add @native-html/table-plugin@3x
 
 ## Minimal working example
 
-_[Full example](https://github.com/native-html/plugins/blob/master/example/SimpleExample.js)_
+_[Full example](https://github.com/native-html/plugins/blob/rnrh/5.x/example/SimpleExample.js)_
 
 > :warning: The API has changed as of table-plugin@3 /
 > react-native-render-html@5. If you need to pass config options to the
@@ -147,21 +144,21 @@ export const Example = () => (
 
 ## API Reference
 
-**The complete API reference is available here: [docs/table-plugin.md](https://github.com/native-html/plugins/blob/master/packages/table-plugin/docs/table-plugin.md).**
-Most notably, check [`TableConfig`](https://github.com/native-html/plugins/blob/master/packages/table-plugin/docs/table-plugin.tableconfig.md) to see how you can customize the table behavior.
+**The complete API reference is available here: [docs/table-plugin.md](https://github.com/native-html/plugins/blob/rnrh/5.x/packages/table-plugin/docs/table-plugin.md).**
+Most notably, check [`TableConfig`](https://github.com/native-html/plugins/blob/rnrh/5.x/packages/table-plugin/docs/table-plugin.tableconfig.md) to see how you can customize the table behavior.
 
 **Landmark exports**:
 
-- [`table`](https://github.com/native-html/plugins/blob/master/packages/table-plugin/docs/table-plugin.table.md)
-- [`extractHtmlTableProps`](https://github.com/native-html/plugins/blob/master/packages/table-plugin/docs/table-plugin.extracthtmltableprops.md)
-- [`IGNORED_TAGS`](https://github.com/native-html/plugins/blob/master/packages/table-plugin/docs/table-plugin.ignored_tags.md)
+- [`table`](https://github.com/native-html/plugins/blob/rnrh/5.x/packages/table-plugin/docs/table-plugin.table.md)
+- [`extractHtmlTableProps`](https://github.com/native-html/plugins/blob/rnrh/5.x/packages/table-plugin/docs/table-plugin.extracthtmltableprops.md)
+- [`IGNORED_TAGS`](https://github.com/native-html/plugins/blob/rnrh/5.x/packages/table-plugin/docs/table-plugin.ignored_tags.md)
 
 Other exports:
 
-- [`HTMLTable`](https://github.com/native-html/plugins/blob/master/packages/table-plugin/docs/table-plugin.htmltable.md)
-- [`defaultTableStylesSpecs`](https://github.com/native-html/plugins/blob/master/packages/table-plugin/docs/table-plugin.defaulttablestylesspecs.md)
-- [`cssRulesFromSpecs`](https://github.com/native-html/plugins/blob/master/packages/table-plugin/docs/table-plugin.cssrulesfromspecs.md)
-- [`TABLE_TAGS`](https://github.com/native-html/plugins/blob/master/packages/table-plugin/docs/table-plugin.table_tags.md)
+- [`HTMLTable`](https://github.com/native-html/plugins/blob/rnrh/5.x/packages/table-plugin/docs/table-plugin.htmltable.md)
+- [`defaultTableStylesSpecs`](https://github.com/native-html/plugins/blob/rnrh/5.x/packages/table-plugin/docs/table-plugin.defaulttablestylesspecs.md)
+- [`cssRulesFromSpecs`](https://github.com/native-html/plugins/blob/rnrh/5.x/packages/table-plugin/docs/table-plugin.cssrulesfromspecs.md)
+- [`TABLE_TAGS`](https://github.com/native-html/plugins/blob/rnrh/5.x/packages/table-plugin/docs/table-plugin.table_tags.md)
 
 ## Troubleshooting
 
@@ -185,7 +182,7 @@ Please refer to the official documentation and make sure you have selected your 
 
 Use `TableConfig.tableStyleSpecs`. The options will get merged with defaults,
 so you are not required to pass every field. See
-[documentation](https://github.com/native-html/plugins/blob/master/packages/table-plugin/docs/table-plugin.tablestylespecs.md).
+[documentation](https://github.com/native-html/plugins/blob/rnrh/5.x/packages/table-plugin/docs/table-plugin.tablestylespecs.md).
 
 ```javascript
 import table {
@@ -267,7 +264,7 @@ const htmlProps = {
 
 ### How to customize the Table component?
 
-**A**: Use `extractHtmlTableProps` function. [See custom example](https://github.com/native-html/plugins/blob/master/example/CustomExample.js).
+**A**: Use `extractHtmlTableProps` function. [See custom example](https://github.com/native-html/plugins/blob/rnrh/5.x/example/CustomExample.js).
 
 <img src="https://github.com/native-html/table-plugin/raw/master/images/adaptative.jpeg" width="300">
 
