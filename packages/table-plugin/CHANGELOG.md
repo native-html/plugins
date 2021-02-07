@@ -1,3 +1,12 @@
+## [3.1.1](https://github.com/native-html/plugins/compare/@native-html/table-plugin@3.1.0...@native-html/table-plugin@3.1.1) (2021-02-07)
+
+
+### Bug Fixes
+
+* **table-plugin:** mark displayMode field as optional ([b395a49](https://github.com/native-html/plugins/commit/b395a49f0e5d439a799a84393e2c8fd50a239c2c))
+* **table-plugin:** replace `htmlAttribs` in `onLinkPress` with empty object ([faec28b](https://github.com/native-html/plugins/commit/faec28b98e5723325da108d1463aab673887275e))
+* **table-plugin:** upgrade webshell to v2.3.0 fixing potential infinte re-renders ([cd15194](https://github.com/native-html/plugins/commit/cd1519463ea0e0b0ca78af14bb3de7304f567dbd))
+
 # [3.1.0](https://github.com/native-html/plugins/compare/@native-html/table-plugin@3.0.1...@native-html/table-plugin@3.1.0) (2020-12-05)
 
 
