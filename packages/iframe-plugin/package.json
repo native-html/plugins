@@ -59,7 +59,8 @@
     "typescript": "~3.9.7"
   },
   "dependencies": {
-    "@formidable-webview/webshell": "^2.2.0",
+    "@formidable-webview/webshell": "^2.3.0",
+    "@native-html/plugins-core": "workspace:*",
     "@types/prop-types": "^15.7.3",
     "prop-types": "^15.7.2"
   },
@@ -101,5 +102,8 @@
         }
       ]
     ]
+  },
+  "installConfig": {
+    "hoistingLimits": "workspaces"
   }
 }
