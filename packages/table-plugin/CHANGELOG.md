@@ -1,3 +1,12 @@
+## [4.0.1](https://github.com/native-html/plugins/compare/@native-html/table-plugin@4.0.0...@native-html/table-plugin@4.0.1) (2021-02-07)
+
+
+### Bug Fixes
+
+* **table-plugin:** default htmlAttribs would cause infinite re-renders ([cb23e01](https://github.com/native-html/plugins/commit/cb23e01d50af19374686632b51d47aa4bd6f532b))
+* **table-plugin:** pass anchor attributes and target to `onLinkPress` ([0e45cde](https://github.com/native-html/plugins/commit/0e45cde4be33ccc17f86056800356ad3c0dd2b70))
+* **table-plugin:** upgrade webshell to v2.3.0 fixing potential infinite re-renders ([ffd8343](https://github.com/native-html/plugins/commit/ffd8343743d6dec64a1081a09f5a86b06a1e8784))
+
 # [4.0.0](https://github.com/native-html/plugins/compare/@native-html/table-plugin@3.1.0...@native-html/table-plugin@4.0.0) (2021-02-06)
 
 
