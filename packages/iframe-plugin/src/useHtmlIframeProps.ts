@@ -2,17 +2,14 @@ import { Dimensions } from 'react-native';
 import {
   CustomTagRendererProps,
   useDocumentMetadata,
-  useSharedProps
+  useSharedProps,
+  useNormalizedUrl
 } from 'react-native-render-html';
 import extractPrintDimensions, {
   ExtractPrintDimensionsParams
 } from './extractPrintDimensions';
 import { IframeConfig, HTMLIframeProps } from './HTMLIframe';
 import type { TBlock } from '@native-html/transient-render-engine';
-
-function normalizeUri(uri: string): string {
-  return uri.startsWith('//') ? `https:${uri}` : uri;
-}
 
 const defaultIframeConfig: IframeConfig = {
   webViewProps: {
@@ -61,6 +58,7 @@ export default function useHtmlIframeProps(
     computeEmbeddedMaxWidth?.call(null, resolvedContentWidth, 'iframe') ||
     resolvedContentWidth;
   const htmlAttribs = tnode.attributes;
+  const normalizedUrl = useNormalizedUrl(htmlAttribs.src);
   const { width, height, ...restStyle } = style;
   const attrWidth = Number(htmlAttribs.width);
   const attrHeight = Number(htmlAttribs.height);
@@ -80,7 +78,7 @@ export default function useHtmlIframeProps(
 
   const source = htmlAttribs.srcdoc
     ? { html: htmlAttribs.srcdoc as string, baseUrl: documentBaseUrl }
-    : { uri: normalizeUri(htmlAttribs.src as string) };
+    : { uri: normalizedUrl };
 
   if (__DEV__ && !WebView) {
     console.warn(
