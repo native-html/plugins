@@ -1,6 +1,7 @@
 import { Dimensions } from 'react-native';
 import {
   CustomTagRendererProps,
+  useDocumentMetadata,
   useSharedProps
 } from 'react-native-render-html';
 import extractPrintDimensions, {
@@ -55,6 +56,7 @@ export default function useHtmlIframeProps(
     typeof contentWidth === 'number'
       ? contentWidth
       : Dimensions.get('window').width;
+  const documentBaseUrl = useDocumentMetadata().baseUrl;
   const availableWidth =
     computeEmbeddedMaxWidth?.call(null, resolvedContentWidth, 'iframe') ||
     resolvedContentWidth;
@@ -77,7 +79,7 @@ export default function useHtmlIframeProps(
       : 1;
 
   const source = htmlAttribs.srcdoc
-    ? { html: htmlAttribs.srcdoc as string }
+    ? { html: htmlAttribs.srcdoc as string, baseUrl: documentBaseUrl }
     : { uri: normalizeUri(htmlAttribs.src as string) };
 
   if (__DEV__ && !WebView) {
