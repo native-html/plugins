@@ -29,6 +29,7 @@ export interface HTMLTableBaseProps extends HTMLTableStats {
     html: string;
     htmlAttribs?: HtmlAttributesDictionary;
     onLinkPress?: RenderHTMLPassedProps['onLinkPress'];
+    sourceBaseUrl?: string;
     WebView: ComponentType<any>;
 }
 
@@ -60,7 +61,6 @@ export interface TableConfig {
     cssRules?: string;
     displayMode?: 'normal' | 'embedded' | 'expand';
     maxScale?: boolean;
-    sourceBaseUrl?: string;
     style?: StyleProp<ViewStyle>;
     tableStyleSpecs?: TableStyleSpecs;
     webViewProps?: any;

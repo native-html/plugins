@@ -240,11 +240,6 @@ export interface TableConfig {
   maxScale?: boolean;
 
   /**
-   * See https://git.io/JeCAG
-   */
-  sourceBaseUrl?: string;
-
-  /**
    * Container style.
    */
   style?: StyleProp<ViewStyle>;
@@ -320,6 +315,11 @@ export interface HTMLTableBaseProps extends HTMLTableStats {
    * The outerHtml of <table> tag.
    */
   html: string;
+
+  /**
+   * The base to resolve relative URLs.
+   */
+  sourceBaseUrl?: string;
 
   /**
    * Intercept links press.

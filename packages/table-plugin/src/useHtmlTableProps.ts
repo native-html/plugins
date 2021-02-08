@@ -1,7 +1,8 @@
 import { Dimensions } from 'react-native';
 import {
   CustomTagRendererProps,
-  useSharedProps
+  useSharedProps,
+  useDocumentMetadata
 } from 'react-native-render-html';
 import extractHtmlAndStatsFromTableDomNode from './extractHtmlAndStatsFromTableDomNode';
 import { HTMLTableProps, TableConfig } from './types';
@@ -41,6 +42,7 @@ export default function useHtmlTableProps(
     typeof contentWidth === 'number'
       ? contentWidth
       : Dimensions.get('window').width;
+  const documentBaseUrl = useDocumentMetadata().baseUrl;
   const availableWidth =
     computeEmbeddedMaxWidth?.call(null, resolvedContentWidth, 'table') ||
     resolvedContentWidth;
@@ -66,6 +68,7 @@ export default function useHtmlTableProps(
         ...stats,
         key,
         html,
+        sourceBaseUrl: documentBaseUrl,
         style: composedStyles,
         onLinkPress,
         WebView
