@@ -1,3 +1,11 @@
+# [2.1.0](https://github.com/native-html/plugins/compare/@native-html/iframe-plugin@2.0.2...@native-html/iframe-plugin@2.1.0) (2021-02-08)
+
+
+### Features
+
+* **iframe-plugin:** handle baseUrl for inline iframe source ([ac0d125](https://github.com/native-html/plugins/commit/ac0d125e0ba30aeadbb3314fab40c478b824ee99))
+* **iframe-plugin:** support relative `src` URLs ([3f13d68](https://github.com/native-html/plugins/commit/3f13d684827242f169ff5e8f9e7dca3d1c92d823))
+
 ## [2.0.2](https://github.com/native-html/plugins/compare/@native-html/iframe-plugin@2.0.1...@native-html/iframe-plugin@2.0.2) (2021-02-07)
 
 ## [2.0.1](https://github.com/native-html/plugins/compare/@native-html/iframe-plugin@2.0.0...@native-html/iframe-plugin@2.0.1) (2021-02-07)
