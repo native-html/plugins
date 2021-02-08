@@ -1,3 +1,22 @@
+# [5.0.0](https://github.com/native-html/plugins/compare/@native-html/table-plugin@4.0.3...@native-html/table-plugin@5.0.0) (2021-02-08)
+
+
+### Features
+
+* **table-plugin:** automatically handle relative URLs ([000b9b4](https://github.com/native-html/plugins/commit/000b9b44de3adb924901bee7fa131542af2b4bc4))
+
+
+### BREAKING CHANGES
+
+* **table-plugin:** `sourceBaseUrl` has been moved from `TableConfig` to
+`HTMLTableBaseProps`. It means you cannot override this value with
+`renderersProps.table.sourceBaseUrl` anymore. Use a custom renderer with
+`useHtmlTableProps` hook and HTMLTable component to override this value
+manually, but you probably shouldn't since the new foundry engines
+allows it automatically. If your html source is inline, use
+`source.baseUrl` instead, so that every relative URL will be normalized
+against this base. Read https://git.io/JtwG0 for a detailed description.
+
 ## [4.0.3](https://github.com/native-html/plugins/compare/@native-html/table-plugin@4.0.2...@native-html/table-plugin@4.0.3) (2021-02-07)
 
 ## [4.0.2](https://github.com/native-html/plugins/compare/@native-html/table-plugin@4.0.1...@native-html/table-plugin@4.0.2) (2021-02-07)
