@@ -82,11 +82,11 @@ yarn add @native-html/table-plugin
 > **Make sure you check the appropriate version documentation before
 > proceeding.**
 
-| react-native-render-html | @native-html/table-plugin                                                                                |
-| ------------------------ | -------------------------------------------------------------------------------------------------------- |
-| ≥ 4.2.1 &lt; 5.0.0       | 2.x ([documentation](https://github.com/native-html/plugins/tree/rnrh/4.x#readme))                       |
-| ≥ 5.0.0 &lt; 6.0.0       | 3.x ([documentation](https://github.com/native-html/plugins/tree/rnrh/5.x/packages/table-plugin#readme)) |
-| ≥ 6.0.0                  | 4.x ([documentation](https://github.com/native-html/plugins/tree/rnrh/6.x/packages/table-plugin#readme)) |
+| react-native-render-html | @native-html/table-plugin                                                                                                                                                                                                                     |
+| ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ≥ 4.2.1 &lt; 5.0.0       | 2.x ([documentation](https://github.com/native-html/plugins/tree/rnrh/4.x#readme))                                                                                                                                                            |
+| ≥ 5.0.0 &lt; 6.0.0       | 3.x ([documentation](https://github.com/native-html/plugins/tree/rnrh/5.x/packages/table-plugin#readme))                                                                                                                                      |
+| ≥ 6.0.0                  | 4.x ([documentation](https://github.com/native-html/plugins/tree/@native-html/table-plugin@4.0.3/packages/table-plugin#readme)) <br> 5.x ([documentation](https://github.com/native-html/plugins/tree/rnrh/6.x/packages/table-plugin#readme)) |
 
 ## Minimal working example
 
