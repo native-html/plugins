@@ -57,7 +57,7 @@
     "react": "16.13.1",
     "react-native": "^0.63.2",
     "react-native-builder-bob": "^0.17.1",
-    "react-native-render-html": "6.0.0-alpha.13",
+    "react-native-render-html": "6.0.0-alpha.17",
     "react-native-webview": "11.0.0",
     "react-test-renderer": "16.13.1",
     "release-it": "^14.3.0",
