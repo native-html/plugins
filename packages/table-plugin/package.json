@@ -79,6 +79,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
+    "directory": "packages/table-plugin",
     "url": "git+ssh://git@github.com/native-html/plugins.git"
   },
   "publishConfig": {

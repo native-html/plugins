@@ -62,6 +62,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
+    "directory": "packages/plugins-core",
     "url": "git+ssh://git@github.com/native-html/plugins.git"
   },
   "publishConfig": {

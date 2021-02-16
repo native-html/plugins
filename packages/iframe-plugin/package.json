@@ -74,6 +74,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
+    "directory": "packages/iframe-plugin",
     "url": "git+ssh://git@github.com/native-html/plugins.git"
   },
   "publishConfig": {
