@@ -1,5 +1,8 @@
 # Plugins for react-native-render-html
 
+[![](https://img.shields.io/discord/736906960041148476?label=discord)](https://discord.gg/3B9twTMEzb)
+
+
 ## Packages
 
 | Package                                                     | Release                                                                                                                     | Build Status                                                                                                                                                                     | Coverage                                                                                                                                                               |

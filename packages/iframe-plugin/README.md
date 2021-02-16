@@ -24,6 +24,12 @@
       src="https://github.com/native-html/plugins/workflows/iframe/badge.svg?branch=master"
       alt="CI"
   /></a>
+  <a href="https://discord.gg/3B9twTMEzb">
+    <img
+    src="https://img.shields.io/discord/736906960041148476?label=discord"
+    alt="Discord"
+  />
+</a>
 </p>
 
 <p align="center">

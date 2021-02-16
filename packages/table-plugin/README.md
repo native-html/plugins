@@ -30,6 +30,12 @@
       alt="DL/month"
     />
   </a>
+  <a href="https://discord.gg/3B9twTMEzb">
+      <img
+      src="https://img.shields.io/discord/736906960041148476?label=discord"
+      alt="Discord"
+    />
+  </a>
 </p>
 
 <p align="center">
