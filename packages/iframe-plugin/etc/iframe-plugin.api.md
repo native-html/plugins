@@ -11,7 +11,7 @@ import { HtmlAttributesDictionary } from 'react-native-render-html';
 import { HTMLContentModel } from 'react-native-render-html';
 import { HTMLElementModel } from '@native-html/transient-render-engine';
 import { default as React_2 } from 'react';
-import { RenderHTMLPassedProps } from 'react-native-render-html';
+import { RenderHTMLProps } from 'react-native-render-html';
 import { StyleProp } from 'react-native';
 import type { TBlock } from '@native-html/transient-render-engine';
 import { ViewStyle } from 'react-native';
@@ -22,7 +22,7 @@ export function HTMLIframe({ WebView, webViewProps: userWebViewProps, source, st
 // @public
 export interface HTMLIframeProps<WebViewProps = any> extends IframeConfig {
     htmlAttribs: HtmlAttributesDictionary;
-    onLinkPress?: RenderHTMLPassedProps['onLinkPress'];
+    onLinkPress?: RenderHTMLProps['onLinkPress'];
     scaleFactor: number;
     source: {
         uri?: string;

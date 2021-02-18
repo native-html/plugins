@@ -8,7 +8,7 @@ import {
 import { StyleProp, ViewStyle } from 'react-native';
 import {
   HtmlAttributesDictionary,
-  RenderHTMLPassedProps
+  RenderHTMLProps
 } from 'react-native-render-html';
 import { linkPressTargetToOnDOMLinkPressArgs } from '@native-html/plugins-core';
 
@@ -68,7 +68,7 @@ export interface HTMLIframeProps<WebViewProps = any> extends IframeConfig {
   /**
    * Handle link press events.
    */
-  onLinkPress?: RenderHTMLPassedProps['onLinkPress'];
+  onLinkPress?: RenderHTMLProps['onLinkPress'];
 
   /**
    * Html attributes for this iframe node.

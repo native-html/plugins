@@ -5,10 +5,10 @@
 ```ts
 
 import { LinkPressTarget } from '@formidable-webview/webshell';
-import { RenderHTMLPassedProps } from 'react-native-render-html';
+import { RenderHTMLProps } from 'react-native-render-html';
 
 // @public
-export function linkPressTargetToOnDOMLinkPressArgs({ uri, classAttribute, downloadAttribute, hrefAttribute, hreflangAttribute, targetAttribute, idAttribute, nameAttribute, referrerpolicyAttribute, relAttribute, typeAttribute }: LinkPressTarget): Parameters<Required<RenderHTMLPassedProps>['onLinkPress']>;
+export function linkPressTargetToOnDOMLinkPressArgs({ uri, classAttribute, downloadAttribute, hrefAttribute, hreflangAttribute, targetAttribute, idAttribute, nameAttribute, referrerpolicyAttribute, relAttribute, typeAttribute }: LinkPressTarget): Parameters<Required<RenderHTMLProps>['onLinkPress']>;
 
 
 // (No @packageDocumentation comment for this package)

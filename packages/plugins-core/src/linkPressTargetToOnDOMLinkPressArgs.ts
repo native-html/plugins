@@ -1,4 +1,4 @@
-import { RenderHTMLPassedProps } from 'react-native-render-html';
+import { RenderHTMLProps } from 'react-native-render-html';
 import { LinkPressTarget } from '@formidable-webview/webshell';
 
 /**
@@ -20,9 +20,7 @@ export default function linkPressTargetToOnDOMLinkPressArgs({
   referrerpolicyAttribute,
   relAttribute,
   typeAttribute
-}: LinkPressTarget): Parameters<
-  Required<RenderHTMLPassedProps>['onLinkPress']
-> {
+}: LinkPressTarget): Parameters<Required<RenderHTMLProps>['onLinkPress']> {
   const attributes = {
     class: classAttribute,
     download: downloadAttribute,
