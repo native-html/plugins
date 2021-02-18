@@ -1,6 +1,6 @@
 {
   "name": "@native-html/plugins-core",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A set of shared utilities for plugins",
   "main": "lib/commonjs/index.js",
   "module": "lib/module/index.js",
