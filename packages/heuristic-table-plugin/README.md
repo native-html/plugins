@@ -19,9 +19,9 @@
       alt="codecov"
   /></a>
   <a
-    href="https://github.com/native-html/plugins/actions?query=branch%3Amaster+workflow%3Atable"
+    href="https://github.com/native-html/plugins/actions?query=branch%3Amaster+workflow%3Aheuristic-table"
     ><img
-      src="https://github.com/native-html/plugins/workflows/table/badge.svg?branch=master"
+      src="https://github.com/native-html/plugins/workflows/heuristic-table/badge.svg?branch=master"
       alt="CI"
   /></a>
   <a href="https://www.npmjs.com/package/@native-html/heuristic-table-plugin">
