@@ -1,0 +1,109 @@
+{
+  "name": "@native-html/heuristic-table-plugin",
+  "version": "0.0.0",
+  "description": "🔠 A 100% native component using heuristics to render tables in react-native-render-html",
+  "main": "lib/commonjs/index.js",
+  "module": "lib/module/index.js",
+  "react-native": "src/",
+  "types": "types/@native-html/heuristic-table-plugin/index.d.ts",
+  "files": [
+    "lib",
+    "src",
+    "types",
+    "docs"
+  ],
+  "scripts": {
+    "test": "yarn test:ts && yarn test:lint && yarn test:jest",
+    "test:jest": "jest src/",
+    "test:ts": "tsc --noEmit",
+    "test:lint": "eslint --ext ts,tsx src/",
+    "build": "yarn build:source && yarn build:defs && yarn build:doc",
+    "build:source": "bob build",
+    "build:defs": "api-extractor run --local --verbose",
+    "build:doc": "api-documenter markdown --input-folder temp --output-folder ./docs",
+    "prepack": "yarn run build"
+  },
+  "keywords": [
+    "react-native",
+    "react-native-render-html",
+    "html",
+    "table",
+    "plugins"
+  ],
+  "devDependencies": {
+    "@babel/cli": "^7.12.13",
+    "@babel/core": "^7.12.13",
+    "@babel/plugin-transform-react-jsx": "^7.12.13",
+    "@babel/preset-typescript": "^7.12.13",
+    "@babel/runtime": "^7.12.13",
+    "@microsoft/api-documenter": "^7.12.7",
+    "@microsoft/api-extractor": "7.13.1",
+    "@release-it/conventional-changelog": "^2.0.0",
+    "@testing-library/react-native": "^7.1.0",
+    "@tsconfig/react-native": "^1.0.2",
+    "@types/html-validator": "^5.0.0",
+    "@types/jest": "^26.0.14",
+    "@types/react": "^16.9.49",
+    "@types/react-native": "^0.63.22",
+    "@types/react-test-renderer": "^16.9.3",
+    "babel-jest": "^26.6.3",
+    "babel-plugin-inline-import": "^3.0.0",
+    "eslint": "^7.14.0",
+    "jest": "^26.6.3",
+    "metro-react-native-babel-preset": "^0.64.0",
+    "metro-react-native-babel-transformer": "^0.64.0",
+    "react": "16.13.1",
+    "react-native": "^0.63.2",
+    "react-native-builder-bob": "^0.17.1",
+    "react-native-render-html": "6.0.0-alpha.18",
+    "react-test-renderer": "16.13.1",
+    "release-it": "^14.3.0",
+    "typescript": "~4.1.3"
+  },
+  "dependencies": {
+    "@types/prop-types": "^15.7.3",
+    "@types/ramda": "^0.27.38",
+    "prop-types": "^15.7.2",
+    "ramda": "^0.27.1"
+  },
+  "peerDependencies": {
+    "react": ">= 16.8.0",
+    "react-native": ">= 0.63.0",
+    "react-native-render-html": ">= 6.0.0-alpha.12 || 6.x"
+  },
+  "author": "Jules Sam. Randolph <jules.sam.randolph@gmail.com> (https://github.com/jsamr)",
+  "homepage": "https://github.com/native-html/plugins/tree/master/packages/heuristic-table-plugin#readme",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "directory": "packages/heuristic-table-plugin",
+    "url": "git+ssh://git@github.com/native-html/plugins.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      [
+        "module",
+        {
+          "babelrc": false
+        }
+      ],
+      [
+        "commonjs",
+        {
+          "babelrc": false
+        }
+      ],
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  }
+}

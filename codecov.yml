@@ -14,6 +14,10 @@ coverage:
         target: auto
         flags:
           - iframe-plugin
+      heuristic-table-plugin:
+        target: auto
+        flags:
+          - heuristic-table-plugin
       plugins-core:
         target: auto
         flags:
@@ -23,6 +27,9 @@ flags:
   table-plugin:
     paths:
       - packages/table-plugin/
+  heuristic-table-plugin:
+    paths:
+      - packages/heuristic-table-plugin/
   iframe-plugin:
     paths:
       - packages/iframe-plugin/

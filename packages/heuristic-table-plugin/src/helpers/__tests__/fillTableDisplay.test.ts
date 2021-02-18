@@ -1,0 +1,210 @@
+import fillTableDisplay, { createEmptyDisplay } from '../fillTableDisplay';
+import { createTableTNode } from './utils';
+
+describe('fillTableDisplay', () => {
+  it('should parse cells', () => {
+    const table = `
+    <table>
+      <tr>
+        <th>A</th>
+        <th>B</th>
+      </tr>
+      <tr>
+        <td>C</td>
+        <td>C</td>
+      </tr>
+    </table>
+    `;
+    const tnode = createTableTNode(table);
+    const display = createEmptyDisplay();
+    fillTableDisplay(tnode, display);
+    expect(display.maxX).toBe(1);
+    expect(display.maxY).toBe(1);
+    expect(display.cells).toMatchObject([
+      {
+        lenX: 1,
+        lenY: 1,
+        x: 0,
+        y: 0
+      },
+      {
+        lenX: 1,
+        lenY: 1,
+        x: 1,
+        y: 0
+      },
+      {
+        lenX: 1,
+        lenY: 1,
+        x: 0,
+        y: 1
+      },
+      {
+        lenX: 1,
+        lenY: 1,
+        x: 1,
+        y: 1
+      }
+    ]);
+  });
+  it('should take colspan into account to compute cell coordinates', () => {
+    const table = `
+    <table>
+      <tr>
+        <th>A</th>
+        <th colspan="2">B</th>
+        <th>C</th>
+      </tr>
+      <tr>
+        <td>D</td>
+      </tr>
+    </table>`;
+    const tnode = createTableTNode(table);
+    const display = createEmptyDisplay();
+    fillTableDisplay(tnode, display);
+    expect(display.offsetX).toBe(0);
+    expect(display.maxX).toBe(3);
+    expect(display.maxY).toBe(1);
+    expect(display.cells).toMatchObject([
+      {
+        lenX: 1,
+        lenY: 1,
+        x: 0,
+        y: 0
+      },
+      {
+        lenX: 2,
+        lenY: 1,
+        x: 1,
+        y: 0
+      },
+      {
+        lenX: 1,
+        lenY: 1,
+        x: 3,
+        y: 0
+      },
+      {
+        lenX: 1,
+        lenY: 1,
+        x: 0,
+        y: 1
+      }
+    ]);
+  });
+  it('should take rowspan into account to compute cell coordinates', () => {
+    const table = `
+    <table>
+      <tr>
+        <th>A</th>
+        <th rowspan="2">B</th>
+        <th>C</th>
+      </tr>
+      <tr>
+        <td>D</td>
+        <td>F</td>
+      </tr>
+    </table>`;
+    const tnode = createTableTNode(table);
+    const display = createEmptyDisplay();
+    fillTableDisplay(tnode, display);
+    expect(display.maxX).toBe(2);
+    expect(display.maxY).toBe(1);
+    expect(display.offsetX).toBe(0);
+    expect(display.occupiedCoordinates).toMatchObject([{ x: 1, y: 1 }]);
+    expect(display.cells).toMatchObject([
+      {
+        lenX: 1,
+        lenY: 1,
+        x: 0,
+        y: 0
+      },
+      {
+        lenX: 1,
+        lenY: 2,
+        x: 1,
+        y: 0
+      },
+      {
+        lenX: 1,
+        lenY: 1,
+        x: 2,
+        y: 0
+      },
+      {
+        lenX: 1,
+        lenY: 1,
+        x: 0,
+        y: 1
+      },
+      {
+        lenX: 1,
+        lenY: 1,
+        x: 2,
+        y: 1
+      }
+    ]);
+  });
+  it('should handle cells with both colspan and rowspan set', () => {
+    const table = `
+    <table>
+      <tr>
+        <th>0</th>
+        <th>1</th>
+        <th>2</th>
+      </tr>
+      <tr>
+        <td>A</td>
+        <td rowspan="2" colspan="2">B</td>
+      </tr>
+      <tr>
+        <td>C</td>
+      </tr>
+    </table>
+    `;
+    const tnode = createTableTNode(table);
+    const display = createEmptyDisplay();
+    fillTableDisplay(tnode, display);
+    expect(display.maxX).toBe(2);
+    expect(display.maxY).toBe(2);
+    expect(display.offsetX).toBe(0);
+    expect(display.cells).toMatchObject([
+      {
+        lenX: 1,
+        lenY: 1,
+        x: 0,
+        y: 0
+      },
+      {
+        lenX: 1,
+        lenY: 1,
+        x: 1,
+        y: 0
+      },
+      {
+        lenX: 1,
+        lenY: 1,
+        x: 2,
+        y: 0
+      },
+      {
+        lenX: 1,
+        lenY: 1,
+        x: 0,
+        y: 1
+      },
+      {
+        lenX: 2,
+        lenY: 2,
+        x: 1,
+        y: 1
+      },
+      {
+        lenX: 1,
+        lenY: 1,
+        x: 0,
+        y: 2
+      }
+    ]);
+  });
+});

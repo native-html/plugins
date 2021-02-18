@@ -3865,7 +3865,50 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@native-html/iframe-plugin@workspace:packages/iframe-plugin":
+"@native-html/heuristic-table-plugin@workspace:*, @native-html/heuristic-table-plugin@workspace:packages/heuristic-table-plugin":
+  version: 0.0.0-use.local
+  resolution: "@native-html/heuristic-table-plugin@workspace:packages/heuristic-table-plugin"
+  dependencies:
+    "@babel/cli": ^7.12.13
+    "@babel/core": ^7.12.13
+    "@babel/plugin-transform-react-jsx": ^7.12.13
+    "@babel/preset-typescript": ^7.12.13
+    "@babel/runtime": ^7.12.13
+    "@microsoft/api-documenter": ^7.12.7
+    "@microsoft/api-extractor": 7.13.1
+    "@release-it/conventional-changelog": ^2.0.0
+    "@testing-library/react-native": ^7.1.0
+    "@tsconfig/react-native": ^1.0.2
+    "@types/html-validator": ^5.0.0
+    "@types/jest": ^26.0.14
+    "@types/prop-types": ^15.7.3
+    "@types/ramda": ^0.27.38
+    "@types/react": ^16.9.49
+    "@types/react-native": ^0.63.22
+    "@types/react-test-renderer": ^16.9.3
+    babel-jest: ^26.6.3
+    babel-plugin-inline-import: ^3.0.0
+    eslint: ^7.14.0
+    jest: ^26.6.3
+    metro-react-native-babel-preset: ^0.64.0
+    metro-react-native-babel-transformer: ^0.64.0
+    prop-types: ^15.7.2
+    ramda: ^0.27.1
+    react: 16.13.1
+    react-native: ^0.63.2
+    react-native-builder-bob: ^0.17.1
+    react-native-render-html: 6.0.0-alpha.18
+    react-test-renderer: 16.13.1
+    release-it: ^14.3.0
+    typescript: ~4.1.3
+  peerDependencies:
+    react: ">= 16.8.0"
+    react-native: ">= 0.63.0"
+    react-native-render-html: ">= 6.0.0-alpha.12 || 6.x"
+  languageName: unknown
+  linkType: soft
+
+"@native-html/iframe-plugin@workspace:*, @native-html/iframe-plugin@workspace:packages/iframe-plugin":
   version: 0.0.0-use.local
   resolution: "@native-html/iframe-plugin@workspace:packages/iframe-plugin"
   dependencies:
@@ -3896,7 +3939,7 @@ __metadata:
     react: 16.13.1
     react-native: ^0.63.2
     react-native-builder-bob: ^0.17.1
-    react-native-render-html: 6.0.0-alpha.17
+    react-native-render-html: 6.0.0-alpha.18
     react-native-webview: 11.0.0
     react-test-renderer: 16.13.1
     release-it: ^14.3.0
@@ -3935,7 +3978,7 @@ __metadata:
     react: 16.13.1
     react-native: ^0.63.2
     react-native-builder-bob: ^0.17.1
-    react-native-render-html: 6.0.0-alpha.17
+    react-native-render-html: 6.0.0-alpha.18
     react-test-renderer: 16.13.1
     release-it: ^14.3.0
     typescript: ~4.1.3
@@ -3982,7 +4025,7 @@ __metadata:
     react: 16.13.1
     react-native: ^0.63.2
     react-native-builder-bob: ^0.17.1
-    react-native-render-html: 6.0.0-alpha.17
+    react-native-render-html: 6.0.0-alpha.18
     react-native-webview: 11.0.0
     react-test-renderer: 16.13.1
     release-it: ^14.3.0
@@ -3994,9 +4037,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@native-html/transient-render-engine@npm:4.4.0":
-  version: 4.4.0
-  resolution: "@native-html/transient-render-engine@npm:4.4.0"
+"@native-html/transient-render-engine@npm:4.4.1":
+  version: 4.4.1
+  resolution: "@native-html/transient-render-engine@npm:4.4.1"
   dependencies:
     "@native-html/css-processor": 1.6.1
     "@types/ramda": ^0.27.32
@@ -4007,7 +4050,7 @@ __metadata:
   peerDependencies:
     "@types/react-native": "*"
     react-native: ^0.63.0
-  checksum: 407ec06d1915010bac98c2525f29f09c02431fd13c4ce0334024a1fcd01e2e99d178a62b0095141ea3d85ca14e0998f1f94fa40d8e325db49364d15181e12b38
+  checksum: be86a0d33b79dae83df2d58cd6ef2a2fa795a7a03df49f1e7b18cf54c2ad15c28049020cadb4d910970f8b14011d254c74d5a0c51f9736ba997014e843289dd0
   languageName: node
   linkType: hard
 
@@ -4819,6 +4862,15 @@ __metadata:
   dependencies:
     ts-toolbelt: ^6.15.1
   checksum: 8edfb5f9bbc7c246074947cad936c473592b4dfc40f2e1a55139f972cabcb76650b48523971800337775b820a54eca170b64df566a949c8642af6f4b3b32b345
+  languageName: node
+  linkType: hard
+
+"@types/ramda@npm:^0.27.38":
+  version: 0.27.38
+  resolution: "@types/ramda@npm:0.27.38"
+  dependencies:
+    ts-toolbelt: ^6.15.1
+  checksum: ae9aea690c18803f8c582adbdcb525839177e97b7ac590a19c1327eb17ab7d2cc7c3adc63d5d6a60a9f78354017de35fa0d66a262e04ec9307d45e302d60fee2
   languageName: node
   linkType: hard
 
@@ -8364,6 +8416,8 @@ __metadata:
   resolution: "example@workspace:example"
   dependencies:
     "@babel/core": ~7.12.13
+    "@native-html/heuristic-table-plugin": "workspace:*"
+    "@native-html/iframe-plugin": "workspace:*"
     "@native-html/table-plugin": "workspace:*"
     "@react-native-community/masked-view": 0.1.10
     "@react-navigation/native": ^5.9.2
@@ -8377,7 +8431,7 @@ __metadata:
     react-native-gesture-handler: ~1.8.0
     react-native-paper: ^4.7.1
     react-native-reanimated: ~1.13.2
-    react-native-render-html: 6.0.0-alpha.17
+    react-native-render-html: 6.0.0-alpha.18
     react-native-safe-area-context: 3.1.9
     react-native-screens: ~2.15.2
     react-native-web: ~0.13.18
@@ -14900,11 +14954,11 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"react-native-render-html@npm:6.0.0-alpha.17":
-  version: 6.0.0-alpha.17
-  resolution: "react-native-render-html@npm:6.0.0-alpha.17"
+"react-native-render-html@npm:6.0.0-alpha.18":
+  version: 6.0.0-alpha.18
+  resolution: "react-native-render-html@npm:6.0.0-alpha.18"
   dependencies:
-    "@native-html/transient-render-engine": 4.4.0
+    "@native-html/transient-render-engine": 4.4.1
     "@types/ramda": ^0.27.32
     "@types/urijs": ^1.19.14
     prop-types: ^15.5.7
@@ -14914,7 +14968,7 @@ fsevents@^1.2.7:
   peerDependencies:
     react: "*"
     react-native: ^0.63.0
-  checksum: f5fe827b59b53b01d19c622b7f40b5a4a007ff0cd7ae612f292af74866d7681b59405b71f27434e681bc280ba2e4560d365a6a09f7f8a212b5e71a17e3490893
+  checksum: 5809d51121c672784612c125367970c562f3d7e4413eff0544528daf13857b3617854cf0fe2506f12c20d2106e8c6d0747bf35559abb9ecf517d5a80997b0e5f
   languageName: node
   linkType: hard
 

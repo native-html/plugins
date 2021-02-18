@@ -22,6 +22,7 @@ import {
 import SimpleExample from './SimpleExample';
 import CustomExample from './CustomExample';
 import YoutubeExample from './YoutubeExample';
+import HeuristicTableExample from './HeuristicTableExample';
 
 const Stack = createStackNavigator();
 
@@ -127,6 +128,24 @@ function YoutubeExampleScreen({ availableWidth, scalesPageToFit }) {
   );
 }
 
+function HeuristicTableScreen({ availableWidth, onLinkPress }) {
+  const [instance, setInstance] = useState(0);
+  return (
+    <ScrollView
+      contentContainerStyle={styles.contentStyle}
+      style={styles.scrollViewStyle}>
+      <Button title="reload" onPress={() => setInstance((i) => i + 1)} />
+      <View style={styles.example}>
+        <HeuristicTableExample
+          availableWidth={availableWidth}
+          onLinkPress={onLinkPress}
+          instance={instance}
+        />
+      </View>
+    </ScrollView>
+  );
+}
+
 function HomeScreen() {
   const navigation = useNavigation();
   return (
@@ -154,6 +173,12 @@ function HomeScreen() {
         <Button
           title="Youtube iframe example (scaling OFF)"
           onPress={() => navigation.navigate('YoutubeExampleScaleOff')}
+        />
+      </View>
+      <View style={styles.button}>
+        <Button
+          title="heuristic table example (alpha)"
+          onPress={() => navigation.navigate('HeuristicTable')}
         />
       </View>
     </View>
@@ -229,6 +254,16 @@ export default function App() {
                 <YoutubeExampleScreen
                   availableWidth={availableWidth}
                   scalesPageToFit={false}
+                />
+              )}
+            </Stack.Screen>
+            <Stack.Screen
+              name="HeuristicTable"
+              options={{ title: 'Heuristic Table' }}>
+              {() => (
+                <HeuristicTableScreen
+                  onLinkPress={onLinkPress}
+                  availableWidth={availableWidth}
                 />
               )}
             </Stack.Screen>
