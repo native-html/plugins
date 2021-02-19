@@ -100,13 +100,11 @@ export default function HTMLIframe({
 }: HTMLIframeProps) {
   const scaleFeature = useMemo(
     () =>
-      scalesPageToFit
-        ? new ForceResponsiveViewportFeature({
-            initScale: scaleFactor,
-            maxScale: scaleFactor,
-            minScale: scaleFactor
-          })
-        : null,
+      new ForceResponsiveViewportFeature({
+        initScale: scalesPageToFit ? scaleFactor : 1,
+        maxScale: scalesPageToFit ? scaleFactor : 1,
+        minScale: scalesPageToFit ? scaleFactor : 1
+      }),
     [scaleFactor, scalesPageToFit]
   );
   const onDOMLinkPress = useCallback(
