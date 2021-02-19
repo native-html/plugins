@@ -143,3 +143,7 @@ const renderers = {
 
 // use "renderers" prop in your RenderHTML instance
 ```
+
+## API Reference
+
+Documentation for all exports of this library [is available here](docs/iframe-plugin.md).

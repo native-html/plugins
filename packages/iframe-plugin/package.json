@@ -16,9 +16,10 @@
     "test:jest": "jest src/",
     "test:ts": "tsc --noEmit",
     "test:lint": "eslint --ext ts,tsx src/",
-    "build": "yarn build:source && yarn build:defs",
+    "build": "yarn build:source && yarn build:defs && yarn build:doc",
     "build:source": "bob build",
     "build:defs": "api-extractor run --local --verbose",
+    "build:doc": "api-documenter markdown --input-folder temp --output-folder ./docs",
     "prepack": "yarn run build"
   },
   "keywords": [
