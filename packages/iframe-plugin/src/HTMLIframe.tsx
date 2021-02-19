@@ -3,7 +3,8 @@ import {
   HandleLinkPressFeature,
   ForceResponsiveViewportFeature,
   LinkPressTarget,
-  useWebshell
+  useWebshell,
+  FeatureBuilder
 } from '@formidable-webview/webshell';
 import { StyleProp, ViewStyle } from 'react-native';
 import {
@@ -30,6 +31,18 @@ export interface IframeConfig {
    * @defaultvalue false
    */
   scalesPageToFit?: boolean;
+
+  /**
+   * When `true`, a stylesheet will be inserted in the `WebView` to remove
+   * padding and margins for the `body` element.
+   */
+  removeBodySpacing?: boolean;
+
+  /**
+   * When defined, the provided CSS will be injected in a `style` element.
+   */
+  injectedCSSStyles?: string;
+
   /**
    * Any props you'd like to pass to the `WebView` component.
    *
@@ -82,6 +95,30 @@ export interface HTMLIframeProps<WebViewProps = any> extends IframeConfig {
   scaleFactor: number;
 }
 
+interface InjectStyleFeatureOptions {
+  css: string;
+}
+
+const InjectStyleFeatureOptions = new FeatureBuilder<InjectStyleFeatureOptions>(
+  {
+    defaultOptions: { css: '' },
+    identifier: '@native-html/iframe-strip-body-spacing',
+    script: `
+function InjectStyleFeature(context) {
+  var options = context.options || {},
+    css = options.css || "",
+    head = document.head || document.getElementsByTagName("head")[0],
+    style = document.createElement("style");
+  style.type = 'text/css';
+  style.appendChild(document.createTextNode(css));
+  head.appendChild(style);
+}`
+  }
+).build();
+
+const RM_BODY_SPACING_CSS =
+  'body{padding: 0 !important; margin: 0 !important;}';
+
 const features = [new HandleLinkPressFeature({ preventDefault: true })];
 
 /**
@@ -96,24 +133,42 @@ export default function HTMLIframe({
   style,
   onLinkPress,
   scaleFactor,
+  injectedCSSStyles,
+  removeBodySpacing,
   scalesPageToFit = false
 }: HTMLIframeProps) {
-  const scaleFeature = useMemo(
-    () =>
-      new ForceResponsiveViewportFeature({
-        initScale: scalesPageToFit ? scaleFactor : 1,
-        maxScale: scalesPageToFit ? scaleFactor : 1,
-        minScale: scalesPageToFit ? scaleFactor : 1
-      }),
-    [scaleFactor, scalesPageToFit]
-  );
   const onDOMLinkPress = useCallback(
     (event: LinkPressTarget) =>
       onLinkPress?.apply(null, linkPressTargetToOnDOMLinkPressArgs(event)),
     [onLinkPress]
   );
+  const injectedCss = useMemo(
+    () =>
+      ((removeBodySpacing && RM_BODY_SPACING_CSS) || '').concat(
+        injectedCSSStyles || ''
+      ),
+    [injectedCSSStyles, removeBodySpacing]
+  );
+  const assembledFeatures = useMemo(() => {
+    const feats = [
+      ...features,
+      new ForceResponsiveViewportFeature({
+        initScale: scalesPageToFit ? scaleFactor : 1,
+        maxScale: scalesPageToFit ? scaleFactor : 1,
+        minScale: scalesPageToFit ? scaleFactor : 1
+      })
+    ];
+    if (injectedCss) {
+      feats.push(
+        new InjectStyleFeatureOptions({
+          css: injectedCss
+        }) as any
+      );
+    }
+    return feats;
+  }, [injectedCss, scaleFactor, scalesPageToFit]);
   const webViewProps = useWebshell({
-    features: [...features, scaleFeature as any],
+    features: assembledFeatures,
     props: {
       ...userWebViewProps,
       onDOMLinkPress,
