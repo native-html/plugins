@@ -1,3 +1,15 @@
+# [2.2.0](https://github.com/native-html/plugins/compare/@native-html/iframe-plugin@2.1.1...@native-html/iframe-plugin@2.2.0) (2021-02-19)
+
+
+### Bug Fixes
+
+* force responsive layout when scalesPageToFit = false (1:1) ([1233104](https://github.com/native-html/plugins/commit/12331044fd9f21e443086ca7bd50d37c3ceaa8eb))
+
+
+### Features
+
+* **iframe:** new `removeBodySpacing` and `injectedCSSStyles` options ([2166dc6](https://github.com/native-html/plugins/commit/2166dc6139065d19a8d1bf914f9bad055c59389b))
+
 ## [2.1.1](https://github.com/native-html/plugins/compare/@native-html/iframe-plugin@2.1.0...@native-html/iframe-plugin@2.1.1) (2021-02-18)
 
 
