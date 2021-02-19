@@ -66,7 +66,7 @@ yarn add @native-html/iframe-plugin react-native-webview
 
 - Supports `onLinkPress`;
 - Supports `defaultWebViewProps`;
-- Compliance with [RFC001](https://github.com/archriss/react-native-render-html/blob/master/rfc/001-A-deterministic-approach-to-embedded-content-scaling.adoc#L13): scales to available width;
+- Compliance with [RFC001](https://github.com/meliorence/react-native-render-html/blob/master/rfc/001-A-deterministic-approach-to-embedded-content-scaling.adoc#L13): scales to available width;
 - Autoscale feature (adapt zoom level to available width! Disabled by default.);
 - A single renderer component exported as default, super easy to plug-in!
 - Compatible with `react-native-web` via [`@formidable-webview/web`](https://github.com/formidable-webview/ubiquitous/tree/master/packages/web#readme)
@@ -77,10 +77,10 @@ yarn add @native-html/iframe-plugin react-native-webview
 
 ## Compat Table
 
-| react-native-render-html | @native-html/iframe-plugin                                                                                |
-| ------------------------ | --------------------------------------------------------------------------------------------------------- |
-| ≥ 5.0.0 &lt; 6.0.0       | 1.x ([documentation](https://github.com/native-html/plugins/tree/rnrh/5.x/packages/iframe-plugin#readme)) |
-| ≥ 6.0.0                  | 2.x ([documentation](https://github.com/native-html/plugins/tree/rnrh/6.x/packages/iframe-plugin#readme)  |
+| react-native-render-html | @native-html/iframe-plugin                                          |
+| ------------------------ | ------------------------------------------------------------------- |
+| ≥ 5.0.0 &lt; 6.0.0       | 1.x ([documentation](/tree/rnrh/5.x/packages/iframe-plugin#readme)) |
+| ≥ 6.0.0                  | 2.x ([documentation](/tree/rnrh/6.x/packages/iframe-plugin#readme)  |
 
 ## Minimal working example
 
@@ -104,7 +104,14 @@ const renderers = {
 
 ```
 
-## Autoscale feature
+## Customizing
+
+To customize the behavior of this renderer, you can pass a config object
+to the `renderersProps.iframe` prop of `RenderHTML` component.
+
+See the documentation for this object here: [`IframeConfig`](docs/iframe-plugin.iframeconfig.md).
+
+## Zoom on the autoscale feature
 
 When `scalesPageToFit` is set to true, if the iframe width (as determined by the
 `width` element attribute) is greater than the available width (as determined
@@ -113,7 +120,7 @@ be zoomed out by just the right amount to have no horizontal cropping. This is
 equivalent to `resizeMode: 'contain'` for images. See example below with
 `scalesPageToFit` enabled (left) and disabled (right):
 
-![](https://github.com/native-html/plugins/blob/master/images/scalesPageToFit.jpg)
+![](/blob/master/images/scalesPageToFit.jpg)
 
 ## Customizing the renderer
 
