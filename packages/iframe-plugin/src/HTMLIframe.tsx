@@ -1,10 +1,10 @@
 import React, { ComponentType, useCallback, useMemo } from 'react';
 import {
   HandleLinkPressFeature,
+  InjectStyleFeature,
   ForceResponsiveViewportFeature,
   LinkPressTarget,
-  useWebshell,
-  FeatureBuilder
+  useWebshell
 } from '@formidable-webview/webshell';
 import { StyleProp, ViewStyle } from 'react-native';
 import {
@@ -95,27 +95,6 @@ export interface HTMLIframeProps<WebViewProps = any> extends IframeConfig {
   scaleFactor: number;
 }
 
-interface InjectStyleFeatureOptions {
-  css: string;
-}
-
-const InjectStyleFeatureOptions = new FeatureBuilder<InjectStyleFeatureOptions>(
-  {
-    defaultOptions: { css: '' },
-    identifier: '@native-html/iframe-strip-body-spacing',
-    script: `
-function InjectStyleFeature(context) {
-  var options = context.options || {},
-    css = options.css || "",
-    head = document.head || document.getElementsByTagName("head")[0],
-    style = document.createElement("style");
-  style.type = 'text/css';
-  style.appendChild(document.createTextNode(css));
-  head.appendChild(style);
-}`
-  }
-).build();
-
 const RM_BODY_SPACING_CSS =
   'body{padding: 0 !important; margin: 0 !important;}';
 
@@ -160,7 +139,7 @@ export default function HTMLIframe({
     ];
     if (injectedCss) {
       feats.push(
-        new InjectStyleFeatureOptions({
+        new InjectStyleFeature({
           css: injectedCss
         }) as any
       );
