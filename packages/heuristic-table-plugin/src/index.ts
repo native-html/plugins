@@ -1,15 +1,22 @@
 import { CustomBlockRenderer } from 'react-native-render-html';
-import RenderTable from './RenderTable';
-import RenderTd from './RenderTd';
-import RenderTh from './RenderTh';
+import TableRenderer from './TableRenderer';
+import TdRenderer from './TdRenderer';
+import ThRenderer from './ThRenderer';
 
 export {
-  TableCell,
-  DisplayCell,
   CellProperties,
   Coordinates,
-  HeuristicTablePluginConfig
+  DisplayCell,
+  HeuristicTablePluginConfig,
+  HTMLTableProps,
+  TableCell,
+  TableFlexColumnContainer,
+  TableFlexRowContainer,
+  TableCellPropsFromParent,
+  TableRoot
 } from './shared-types';
+
+export { TableRenderer, ThRenderer, TdRenderer };
 
 /**
  * Renderers to be merged in the `renderers` prop of `RenderHTML` component.
@@ -17,9 +24,15 @@ export {
  * @public
  */
 const renderers: Record<'th' | 'td' | 'table', CustomBlockRenderer> = {
-  table: RenderTable,
-  th: RenderTh,
-  td: RenderTd
+  table: TableRenderer,
+  th: ThRenderer as any,
+  td: TdRenderer as any
 };
+
+export * from './models';
+
+export { default as useHtmlTableProps } from './useHtmlTableProps';
+export { default as useHtmlTableCellProps } from './useHtmlTableCellProps';
+export { default as HTMLTable } from './HTMLTable';
 
 export default renderers;

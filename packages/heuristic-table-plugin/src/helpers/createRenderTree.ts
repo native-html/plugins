@@ -2,9 +2,9 @@ import {
   TableCell,
   Display,
   DisplayCell,
-  FlexColumnContainer,
-  FlexRowContainer,
-  Root
+  TableFlexColumnContainer,
+  TableFlexRowContainer,
+  TableRoot
 } from '../shared-types';
 import pipe from 'ramda/src/pipe';
 import prop from 'ramda/src/prop';
@@ -35,14 +35,14 @@ function groupCellsByVGroup(cellsByRow: TableCell[][]) {
   return cellsByVGroup;
 }
 
-function makeRowContainer(cells: TableCell[]): FlexRowContainer {
+function makeRowContainer(cells: TableCell[]): TableFlexRowContainer {
   return {
     type: 'row-container',
     children: cells
   };
 }
 
-function makeColContainer(cells: TableCell[]): FlexColumnContainer {
+function makeColContainer(cells: TableCell[]): TableFlexColumnContainer {
   return {
     type: 'col-container',
     children: makeRows(cells).map(makeRowContainer)
@@ -52,8 +52,8 @@ function makeColContainer(cells: TableCell[]): FlexColumnContainer {
 const splitToColumnContainers = pipe<
   TableCell[][],
   TableCell[],
-  FlexColumnContainer[]
->(flatten, function (cells: TableCell[]): FlexColumnContainer[] {
+  TableFlexColumnContainer[]
+>(flatten, function (cells: TableCell[]): TableFlexColumnContainer[] {
   let breakpointsX: number[] = pipe<TableCell[], TableCell[], number[]>(
     filter((cell: TableCell) => cell.lenY > 1),
     map(prop('x'))
@@ -78,8 +78,8 @@ const splitToColumnContainers = pipe<
 
 function translateVGroups(
   virtualRowGroups: TableCell[][][]
-): FlexRowContainer[] {
-  const flattenRows: FlexRowContainer[] = [];
+): TableFlexRowContainer[] {
+  const flattenRows: TableFlexRowContainer[] = [];
   for (const rowGroup of virtualRowGroups) {
     if (rowGroup.length === 1) {
       flattenRows.push({
@@ -87,7 +87,7 @@ function translateVGroups(
         children: rowGroup[0]
       });
     } else {
-      const container: FlexRowContainer = {
+      const container: TableFlexRowContainer = {
         type: 'row-container',
         children: splitToColumnContainers(rowGroup)
       };
@@ -108,7 +108,7 @@ function makeCell(columnWidths: number[], cell: DisplayCell): TableCell {
 export default function createRenderTree(
   display: Display,
   columnWidths: number[]
-): Root {
+): TableRoot {
   const children = pipe(
     map(partial(makeCell, [columnWidths])),
     makeRows,

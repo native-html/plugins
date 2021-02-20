@@ -56,7 +56,7 @@ yarn add @native-html/heuristic-table-plugin
 
 | react-native-render-html | @native-html/heuristic-table-plugin                                                                                |
 | ------------------------ | ------------------------------------------------------------------------------------------------------------------ |
-| &lt; 6.0.0               | -                                                                                                        |
+| &lt; 6.0.0               | -                                                                                                                  |
 | ≥ 6.0.0                  | 6.x ([documentation](https://github.com/native-html/plugins/tree/rnrh/6.x/packages/heuristic-table-plugin#readme)) |
 
 ## Minimal working example
@@ -99,9 +99,78 @@ export const Example = () => (
 );
 ```
 
-## Customizing
+## Configuration
 
 To change the layout of cells and other options, you can pass a config object
 to the `renderersProps.table` prop of `RenderHTML` component.
 
 See the documentation for this object here: [`HeuristicTablePluginConfig`](docs/heuristic-table-plugin.heuristictablepluginconfig.md)
+
+## Custom Renderers
+
+### Customizing Root renderer
+
+You can customize the renderer logic thanks to `useHtmlTableProps` hook, `tableModel` and `HTMLTable` exports:
+
+```jsx
+import React from 'react';
+import tableRenderers, {useHtmlTableProps, HTMLTable, tableModel} from '@native-html/heuristic-table-plugin';
+
+function TableRenderer(props) {
+  const tableProps = useHtmlTableProps(props, /* config */);
+  // Do customize the props here; wrap with your own container...
+  return <HTMLTable {..tableProps} />;
+};
+
+TableRenderer.model = tableModel;
+
+const renderers = {
+  ...tableRenderers,
+  table: TableRenderer
+}
+
+// use "renderers" prop in your RenderHTML instance
+```
+
+### Customizing Th and Td renderers
+
+You can customize cell rendering via `useHtmlTableCellProps`, `thModel` and
+`tdModel` exports. This renderer will receive a special `propsFromParent` of
+type
+[`TableCellPropsFromParent`](docs/heuristic-table-plugin.tablecellpropsfromparent.md).
+You can take advantage of this information to customize depending on the
+position of the cell in the grid system coordinate, as shown below:
+
+```jsx
+import React from 'react';
+import {
+  TableRenderer,
+  ThRenderer,
+  useHtmlTableCellProps,
+  tdModel
+} from '@native-html/heuristic-table-plugin';
+
+function TdRenderer(props) {
+  const cellProps = useHtmlTableCellProps(props);
+  // The cell parent prop contains information about this cell,
+  // especially its position (x, y) and lengths (lenX, lenY).
+  // In this example, we customize the background depending on the
+  // y coordinate (row index).
+  const { cell } = cellProps.propsFromParent;
+  const style = [
+    cellProps.style,
+    backgroundColor: cell.x % 2 === 0 ? 'lightgray' : 'white'
+  ]
+  return React.createElement(cellProps.TDefaultRenderer, { ...cellProps, style });
+}
+
+TdRenderer.model = tdModel;
+
+const renderers = {
+  table: TableRenderer,
+  td: TdRenderer,
+  th: ThRenderer
+}
+
+// use "renderers" prop in your RenderHTML instance
+```

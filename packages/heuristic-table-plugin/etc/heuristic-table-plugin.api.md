@@ -5,6 +5,11 @@
 ```ts
 
 import { CustomBlockRenderer } from 'react-native-render-html';
+import { CustomTagRendererProps } from 'react-native-render-html';
+import { DefaultHTMLElementModels } from 'react-native-render-html';
+import { DefaultTagRendererProps } from 'react-native-render-html';
+import { PropsFromParent } from 'react-native-render-html';
+import { TBlock } from 'react-native-render-html';
 import { TNode } from 'react-native-render-html';
 import { ViewStyle } from 'react-native';
 
@@ -38,6 +43,19 @@ export interface HeuristicTablePluginConfig {
 }
 
 // @public
+export function HTMLTable({ root: tree, contentWidth, TDefaultRenderer, config, ...props }: HTMLTableProps): JSX.Element;
+
+// @public
+export interface HTMLTableProps extends CustomTagRendererProps<TBlock> {
+    // (undocumented)
+    config: HeuristicTablePluginConfig;
+    // (undocumented)
+    contentWidth: number;
+    // (undocumented)
+    root: TableRoot;
+}
+
+// @public
 const renderers: Record<'th' | 'td' | 'table', CustomBlockRenderer>;
 
 export default renderers;
@@ -49,6 +67,64 @@ export interface TableCell extends DisplayCell {
     // (undocumented)
     width: number;
 }
+
+// @public
+export interface TableCellPropsFromParent extends PropsFromParent {
+    // (undocumented)
+    cell: TableCell;
+    // (undocumented)
+    config?: HeuristicTablePluginConfig;
+}
+
+// @public
+export interface TableFlexColumnContainer {
+    // (undocumented)
+    children: (TableFlexRowContainer | TableCell)[];
+    // (undocumented)
+    type: 'col-container';
+}
+
+// @public
+export interface TableFlexRowContainer {
+    // (undocumented)
+    children: (TableFlexColumnContainer | TableCell)[];
+    // (undocumented)
+    type: 'row-container';
+}
+
+// @public (undocumented)
+export const tableModel: DefaultHTMLElementModels['table'];
+
+// @public
+export const TableRenderer: CustomBlockRenderer;
+
+// @public (undocumented)
+export interface TableRoot {
+    // (undocumented)
+    children: TableFlexRowContainer[];
+    // (undocumented)
+    type: 'root';
+}
+
+// @public (undocumented)
+export const tdModel: DefaultHTMLElementModels['td'];
+
+// @public
+export const TdRenderer: CustomBlockRenderer<TableCellPropsFromParent>;
+
+// @public (undocumented)
+export const thModel: DefaultHTMLElementModels['th'];
+
+// @public
+export const ThRenderer: CustomBlockRenderer<TableCellPropsFromParent>;
+
+// @public
+export function useHtmlTableCellProps({ propsFromParent, ...props }: DefaultTagRendererProps<TBlock, TableCellPropsFromParent>): DefaultTagRendererProps<TBlock, TableCellPropsFromParent>;
+
+// @public
+export function useHtmlTableProps({ sharedProps, tnode, ...props }: CustomTagRendererProps<TBlock>, options?: {
+    overrideContentWidth?: number;
+}): HTMLTableProps;
 
 
 // (No @packageDocumentation comment for this package)

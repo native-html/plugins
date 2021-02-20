@@ -4,6 +4,14 @@
 
 ## heuristic-table-plugin package
 
+## Functions
+
+|  Function | Description |
+|  --- | --- |
+|  [HTMLTable({ root: tree, contentWidth, TDefaultRenderer, config, ...props })](./heuristic-table-plugin.htmltable.md) | A component layout to render tables. |
+|  [useHtmlTableCellProps({ propsFromParent, ...props })](./heuristic-table-plugin.usehtmltablecellprops.md) | Customize <code>td</code> and <code>th</code> renderers while reusing default cell renderer logic. |
+|  [useHtmlTableProps({ sharedProps, tnode, ...props }, options)](./heuristic-table-plugin.usehtmltableprops.md) | Customize the rendering logic of the table renderer via this hook. |
+
 ## Interfaces
 
 |  Interface | Description |
@@ -12,11 +20,22 @@
 |  [Coordinates](./heuristic-table-plugin.coordinates.md) |  |
 |  [DisplayCell](./heuristic-table-plugin.displaycell.md) |  |
 |  [HeuristicTablePluginConfig](./heuristic-table-plugin.heuristictablepluginconfig.md) | Options to customize this plugin renderers. |
+|  [HTMLTableProps](./heuristic-table-plugin.htmltableprops.md) | Props for the [HTMLTable()](./heuristic-table-plugin.htmltable.md) component. |
 |  [TableCell](./heuristic-table-plugin.tablecell.md) | A cell is a unit of display for one <code>th</code> or <code>td</code> in a table, with coordinates and lengths relative to the matrix (rows, columns) coordinate system.<pre> 0 1 2 → x 1 . . 2 . . ↓ y </pre> |
+|  [TableCellPropsFromParent](./heuristic-table-plugin.tablecellpropsfromparent.md) | Props received by td and th custom renderers in <code>propsFromParent</code> prop field. |
+|  [TableFlexColumnContainer](./heuristic-table-plugin.tableflexcolumncontainer.md) | A container to display items in columns (think 'flex-dierection: column') |
+|  [TableFlexRowContainer](./heuristic-table-plugin.tableflexrowcontainer.md) | A container to display items in row. (think 'flex-direction: row') |
+|  [TableRoot](./heuristic-table-plugin.tableroot.md) |  |
 
 ## Variables
 
 |  Variable | Description |
 |  --- | --- |
 |  [renderers](./heuristic-table-plugin.renderers.md) | Renderers to be merged in the <code>renderers</code> prop of <code>RenderHTML</code> component. |
+|  [tableModel](./heuristic-table-plugin.tablemodel.md) |  |
+|  [TableRenderer](./heuristic-table-plugin.tablerenderer.md) | A 100% native renderer component for <code>table</code> tag. |
+|  [tdModel](./heuristic-table-plugin.tdmodel.md) |  |
+|  [TdRenderer](./heuristic-table-plugin.tdrenderer.md) | The renderer component for <code>td</code> tag. |
+|  [thModel](./heuristic-table-plugin.thmodel.md) |  |
+|  [ThRenderer](./heuristic-table-plugin.threnderer.md) | The renderer component for <code>th</code> tag. |
 

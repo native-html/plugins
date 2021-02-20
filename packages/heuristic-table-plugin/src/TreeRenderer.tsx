@@ -1,18 +1,18 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { TNodeRenderer } from 'react-native-render-html';
-import { HeuristicTablePluginConfig, RenderNode } from './shared-types';
+import { HeuristicTablePluginConfig, TableRenderNode } from './shared-types';
 
 const styles = StyleSheet.create({
   colContainer: { flexDirection: 'column', flexGrow: 1 },
   rowContainer: { flexDirection: 'row', flexGrow: 1 }
 });
 
-export default function RenderTree({
+export default function TreeRenderer({
   node,
   config
 }: {
-  node: RenderNode;
+  node: TableRenderNode;
   config?: HeuristicTablePluginConfig;
 }) {
   if (node.type === 'cell') {
@@ -29,8 +29,8 @@ export default function RenderTree({
     );
   }
   if (node.type === 'root' || node.type === 'col-container') {
-    const children = (node.children as RenderNode[]).map((v, i) =>
-      React.createElement(RenderTree, { node: v, key: i, config })
+    const children = (node.children as TableRenderNode[]).map((v, i) =>
+      React.createElement(TreeRenderer, { node: v, key: i, config })
     );
     return <View style={styles.colContainer}>{children}</View>;
   }
@@ -38,7 +38,7 @@ export default function RenderTree({
     return (
       <View style={styles.rowContainer}>
         {node.children.map((v, i) =>
-          React.createElement(RenderTree, { node: v, key: i, config })
+          React.createElement(TreeRenderer, { node: v, key: i, config })
         )}
       </View>
     );

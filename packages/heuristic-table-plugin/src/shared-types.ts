@@ -1,5 +1,10 @@
 import { ViewStyle } from 'react-native';
-import { TNode } from 'react-native-render-html';
+import {
+  CustomTagRendererProps,
+  PropsFromParent,
+  TBlock,
+  TNode
+} from 'react-native-render-html';
 
 /**
  * @public
@@ -28,24 +33,31 @@ export interface DisplayCell extends CellProperties {
 /**
  * A container to display items in row.
  * (think 'flex-direction: row')
+ *
+ * @public
  */
-export interface FlexRowContainer {
+export interface TableFlexRowContainer {
   type: 'row-container';
-  children: (FlexColumnContainer | TableCell)[];
+  children: (TableFlexColumnContainer | TableCell)[];
 }
 
 /**
  * A container to display items in columns
  * (think 'flex-dierection: column')
+ *
+ * @public
  */
-export interface FlexColumnContainer {
+export interface TableFlexColumnContainer {
   type: 'col-container';
-  children: (FlexRowContainer | TableCell)[];
+  children: (TableFlexRowContainer | TableCell)[];
 }
 
-export interface Root {
+/**
+ * @public
+ */
+export interface TableRoot {
   type: 'root';
-  children: FlexRowContainer[];
+  children: TableFlexRowContainer[];
 }
 
 /**
@@ -69,11 +81,11 @@ export interface TableCell extends DisplayCell {
   width: number;
 }
 
-export type RenderNode =
+export type TableRenderNode =
   | TableCell
-  | FlexColumnContainer
-  | FlexRowContainer
-  | Root;
+  | TableFlexColumnContainer
+  | TableFlexRowContainer
+  | TableRoot;
 
 export interface Display {
   maxY: number;
@@ -95,4 +107,26 @@ export interface HeuristicTablePluginConfig {
    * @param cell - The cell for which styles should be provided.
    */
   getStyleForCell?(cell: TableCell): ViewStyle | null;
+}
+
+/**
+ * Props for the {@link HTMLTable} component.
+ *
+ * @public
+ */
+export interface HTMLTableProps extends CustomTagRendererProps<TBlock> {
+  root: TableRoot;
+  contentWidth: number;
+  config: HeuristicTablePluginConfig;
+}
+
+/**
+ * Props received by td and th custom renderers in `propsFromParent` prop
+ * field.
+ *
+ * @public
+ */
+export interface TableCellPropsFromParent extends PropsFromParent {
+  config?: HeuristicTablePluginConfig;
+  cell: TableCell;
 }
