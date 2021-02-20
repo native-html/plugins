@@ -35,13 +35,13 @@ const dummyStats: HTMLTableStats = {
 };
 
 function waitForRender(timeMs: number = 1000) {
+  // eslint-disable-next-line compat/compat
   return act(() => new Promise((res) => setTimeout(res, timeMs)));
 }
 
 // We have to exclude those tests until an upstream bug in jest
 // regarding forwarded ref components is fixed.
 // See https://github.com/callstack/react-native-testing-library/issues/539
-// eslint-disable-next-line jest/no-disabled-tests
 describe('HTMLTable component', () => {
   it('should produce w3-compliant HTML code', async () => {
     const webview = await waitForErsatz(
@@ -70,8 +70,6 @@ describe('HTMLTable component', () => {
           />
         )
       );
-      // eslint-disable-next-line compat/compat
-      // await act(() => new Promise((res) => setTimeout(res, 10)));
       expect(computeContainerHeight).toHaveBeenCalledTimes(3);
       expect(computeContainerHeight).toHaveBeenNthCalledWith(
         1,
