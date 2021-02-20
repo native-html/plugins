@@ -3015,13 +3015,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@formidable-webview/webshell@npm:2.3.0, @formidable-webview/webshell@npm:^2.3.0":
-  version: 2.3.0
-  resolution: "@formidable-webview/webshell@npm:2.3.0"
+"@formidable-webview/webshell@npm:2.4.0, @formidable-webview/webshell@npm:^2.4.0":
+  version: 2.4.0
+  resolution: "@formidable-webview/webshell@npm:2.4.0"
   peerDependencies:
     react: "*"
     react-native: ">= 0.59.0"
-  checksum: d72595268e4156e1d213be729589f6016a1b0002df6fbdd8198a53204e1af6031354d6cbca8b20f43863f7a4bc9da5bf92a4833a9b920d5e11d11969e57f4c37
+  checksum: 197de25275efa7e43bc6cc96de839a617f836c4702bc48bd205e4d0cbac64509f43ddf49792b6970f959e99651b06367ea96bf42c868aa148b58b97f7209f634
   languageName: node
   linkType: hard
 
@@ -3919,7 +3919,7 @@ __metadata:
     "@babel/runtime": ^7.12.13
     "@formidable-webview/ersatz": ^2.1.2
     "@formidable-webview/ersatz-testing": ^2.0.5
-    "@formidable-webview/webshell": ^2.3.0
+    "@formidable-webview/webshell": ^2.4.0
     "@microsoft/api-documenter": ^7.12.7
     "@microsoft/api-extractor": 7.13.1
     "@native-html/plugins-core": "workspace:*"
@@ -3960,7 +3960,7 @@ __metadata:
     "@babel/plugin-transform-react-jsx": ^7.12.13
     "@babel/preset-typescript": ^7.12.13
     "@babel/runtime": ^7.12.13
-    "@formidable-webview/webshell": ^2.3.0
+    "@formidable-webview/webshell": ^2.4.0
     "@microsoft/api-extractor": 7.13.1
     "@release-it/conventional-changelog": ^2.0.0
     "@testing-library/react-native": ^7.1.0
@@ -4001,7 +4001,7 @@ __metadata:
     "@babel/runtime": ^7.12.13
     "@formidable-webview/ersatz": ^2.1.2
     "@formidable-webview/ersatz-testing": ^2.0.5
-    "@formidable-webview/webshell": 2.3.0
+    "@formidable-webview/webshell": 2.4.0
     "@microsoft/api-documenter": ^7.12.7
     "@microsoft/api-extractor": 7.13.1
     "@native-html/plugins-core": "workspace:*"

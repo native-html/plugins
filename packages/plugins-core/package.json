@@ -28,7 +28,7 @@
     "@babel/plugin-transform-react-jsx": "^7.12.13",
     "@babel/preset-typescript": "^7.12.13",
     "@babel/runtime": "^7.12.13",
-    "@formidable-webview/webshell": "^2.3.0",
+    "@formidable-webview/webshell": "^2.4.0",
     "@microsoft/api-extractor": "7.13.1",
     "@release-it/conventional-changelog": "^2.0.0",
     "@testing-library/react-native": "^7.1.0",
