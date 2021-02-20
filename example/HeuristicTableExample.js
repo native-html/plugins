@@ -217,8 +217,7 @@ const htmlConfig = {
       borderColor: '#dfdfdf',
       borderWidth: 0.5
     }
-  },
-  defaultWebViewProps: {}
+  }
 };
 
 export default function HeuristicTable({
@@ -234,7 +233,6 @@ export default function HeuristicTable({
       contentWidth={availableWidth}
       {...htmlConfig}
       debug={false}
-      triggerTREInvalidationPropNames={['tagsStyles']}
     />
   );
 }
