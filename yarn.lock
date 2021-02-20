@@ -3897,7 +3897,7 @@ __metadata:
     react: 16.13.1
     react-native: ^0.63.2
     react-native-builder-bob: ^0.17.1
-    react-native-render-html: 6.0.0-alpha.18
+    react-native-render-html: 6.0.0-alpha.20
     react-test-renderer: 16.13.1
     release-it: ^14.3.0
     typescript: ~4.1.3
@@ -3939,7 +3939,7 @@ __metadata:
     react: 16.13.1
     react-native: ^0.63.2
     react-native-builder-bob: ^0.17.1
-    react-native-render-html: 6.0.0-alpha.18
+    react-native-render-html: 6.0.0-alpha.20
     react-native-webview: 11.0.0
     react-test-renderer: 16.13.1
     release-it: ^14.3.0
@@ -3978,7 +3978,7 @@ __metadata:
     react: 16.13.1
     react-native: ^0.63.2
     react-native-builder-bob: ^0.17.1
-    react-native-render-html: 6.0.0-alpha.18
+    react-native-render-html: 6.0.0-alpha.20
     react-test-renderer: 16.13.1
     release-it: ^14.3.0
     typescript: ~4.1.3
@@ -4025,7 +4025,7 @@ __metadata:
     react: 16.13.1
     react-native: ^0.63.2
     react-native-builder-bob: ^0.17.1
-    react-native-render-html: 6.0.0-alpha.18
+    react-native-render-html: 6.0.0-alpha.20
     react-native-webview: 11.0.0
     react-test-renderer: 16.13.1
     release-it: ^14.3.0
@@ -8431,7 +8431,7 @@ __metadata:
     react-native-gesture-handler: ~1.8.0
     react-native-paper: ^4.7.1
     react-native-reanimated: ~1.13.2
-    react-native-render-html: 6.0.0-alpha.18
+    react-native-render-html: 6.0.0-alpha.20
     react-native-safe-area-context: 3.1.9
     react-native-screens: ~2.15.2
     react-native-web: ~0.13.18
@@ -14954,9 +14954,9 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"react-native-render-html@npm:6.0.0-alpha.18":
-  version: 6.0.0-alpha.18
-  resolution: "react-native-render-html@npm:6.0.0-alpha.18"
+"react-native-render-html@npm:6.0.0-alpha.20":
+  version: 6.0.0-alpha.20
+  resolution: "react-native-render-html@npm:6.0.0-alpha.20"
   dependencies:
     "@native-html/transient-render-engine": 4.4.1
     "@types/ramda": ^0.27.32
@@ -14968,7 +14968,7 @@ fsevents@^1.2.7:
   peerDependencies:
     react: "*"
     react-native: ^0.63.0
-  checksum: 5809d51121c672784612c125367970c562f3d7e4413eff0544528daf13857b3617854cf0fe2506f12c20d2106e8c6d0747bf35559abb9ecf517d5a80997b0e5f
+  checksum: 2228c05ba6f337ffdf2d6f861411977cc5189ef2b9e7212e64d4977543d921e25349b83db329aa3a3ba39357b4f90959aa6ed335459840b4131b2110f576a443
   languageName: node
   linkType: hard
 
