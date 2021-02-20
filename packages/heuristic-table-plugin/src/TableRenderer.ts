@@ -6,7 +6,6 @@ import { HeuristicTablePluginConfig } from './shared-types';
 import useHtmlTableProps from './useHtmlTableProps';
 
 declare module 'react-native-render-html' {
-  // eslint-disable-next-line no-shadow
   interface RenderersPropsBase {
     table?: HeuristicTablePluginConfig;
   }

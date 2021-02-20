@@ -1,4 +1,3 @@
-/* eslint-disable compat/compat */
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import validator from 'html-validator';

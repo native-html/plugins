@@ -10,7 +10,9 @@ import useHtmlTableCellProps from './useHtmlTableCellProps';
  * @param props - Component props.
  * @public
  */
-const ThRenderer: CustomBlockRenderer<TableCellPropsFromParent> = function (props) {
+const ThRenderer: CustomBlockRenderer<TableCellPropsFromParent> = function (
+  props
+) {
   return React.createElement(
     props.TDefaultRenderer,
     useHtmlTableCellProps(props)

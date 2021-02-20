@@ -11,7 +11,7 @@
     "build:core": "yarn workspace @native-html/plugins-core build",
     "test:table": "yarn workspace @native-html/table-plugin test",
     "test:table:jest": "yarn workspace @native-html/table-plugin test:jest",
-    "test:heuristic-table": "yarn workspace @native-html/table-plugin test",
+    "test:heuristic-table": "yarn workspace @native-html/heuristic-table-plugin test",
     "test:heuristic-table:jest": "yarn workspace @native-html/heuristic-table-plugin test:jest",
     "test:iframe": "yarn workspace @native-html/iframe-plugin test",
     "test:iframe:jest": "yarn workspace @native-html/iframe-plugin test:jest",
