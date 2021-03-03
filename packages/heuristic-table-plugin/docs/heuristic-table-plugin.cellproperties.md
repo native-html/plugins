@@ -16,7 +16,7 @@ export interface CellProperties extends Coordinates
 
 |  Property | Type | Description |
 |  --- | --- | --- |
+|  [constraints](./heuristic-table-plugin.cellproperties.constraints.md) | TCellConstraints |  |
 |  [lenX](./heuristic-table-plugin.cellproperties.lenx.md) | number |  |
 |  [lenY](./heuristic-table-plugin.cellproperties.leny.md) | number |  |
-|  [weight](./heuristic-table-plugin.cellproperties.weight.md) | number |  |
 

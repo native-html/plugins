@@ -4,7 +4,7 @@
 
 ## TableFlexColumnContainer interface
 
-A container to display items in columns (think 'flex-dierection: column')
+A container to display items in columns (think 'flex-direction: column')
 
 <b>Signature:</b>
 

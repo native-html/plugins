@@ -1,14 +1,15 @@
 import { TNode } from 'react-native-render-html';
-import { Display } from '../shared-types';
-import computeTNodeWeight from './computeTNodeWeight';
+import { Display, DisplayCell, Settings } from '../shared-types';
+import TCellConstraintsComputer from './TCellConstraintsComputer';
 
-export function createEmptyDisplay(): Display {
+export function createEmptyDisplay(config: Settings): Display {
   return {
     offsetX: 0,
     occupiedCoordinates: [],
-    maxY: 0,
-    maxX: 0,
-    cells: []
+    maxY: -1,
+    maxX: -1,
+    cells: [],
+    ...config
   };
 }
 
@@ -21,9 +22,13 @@ function computeOffsetX(display: Display, startX: number, startY: number) {
   }, 0);
 }
 
-export default function fillTableDisplay(tnode: TNode, display: Display) {
+export default function fillTableDisplay(
+  tnode: TNode,
+  display: Display,
+  computer: TCellConstraintsComputer
+) {
   if (tnode.tagName === 'tr') {
-    display.maxY = tnode.nodeIndex;
+    display.maxY = display.maxY + 1;
     display.offsetX = 0;
   }
   if (tnode.tagName === 'th' || tnode.tagName === 'td') {
@@ -35,14 +40,14 @@ export default function fillTableDisplay(tnode: TNode, display: Display) {
     const startY = display.maxY;
     const startX =
       computeOffsetX(display, initialStartX, display.maxY) + initialStartX;
-    const weight = computeTNodeWeight(tnode);
-    const cell = {
+    const constraints = computer.computeCellConstraints(tnode);
+    const cell: DisplayCell = {
       lenX,
       lenY,
       x: startX,
       y: startY,
       tnode,
-      weight
+      constraints
     };
     display.cells.push(cell);
     display.offsetX += lenX - 1;
@@ -53,6 +58,8 @@ export default function fillTableDisplay(tnode: TNode, display: Display) {
     }
     display.maxX = Math.max(display.maxX, initialStartX);
   } else {
-    tnode.children.forEach((child) => fillTableDisplay(child, display));
+    tnode.children.forEach((child) =>
+      fillTableDisplay(child, display, computer)
+    );
   }
 }

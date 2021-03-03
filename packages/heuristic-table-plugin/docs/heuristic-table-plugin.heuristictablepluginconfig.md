@@ -12,6 +12,12 @@ Options to customize this plugin renderers.
 export interface HeuristicTablePluginConfig 
 ```
 
+## Properties
+
+|  Property | Type | Description |
+|  --- | --- | --- |
+|  [forceStretch?](./heuristic-table-plugin.heuristictablepluginconfig.forcestretch.md) | boolean | <i>(Optional)</i> When true, force the table to stretch to the available width. |
+
 ## Methods
 
 |  Method | Description |

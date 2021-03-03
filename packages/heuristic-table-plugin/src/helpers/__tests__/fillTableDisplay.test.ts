@@ -1,5 +1,13 @@
+import { TNode } from 'react-native-render-html';
 import fillTableDisplay, { createEmptyDisplay } from '../fillTableDisplay';
+import TCellConstraintsComputer from '../TCellConstraintsComputer';
 import { createTableTNode } from './utils';
+
+function createDisplay(tnode: TNode) {
+  const display = createEmptyDisplay({ contentWidth: 1000 });
+  fillTableDisplay(tnode, display, new TCellConstraintsComputer({}));
+  return display;
+}
 
 describe('fillTableDisplay', () => {
   it('should parse cells', () => {
@@ -16,8 +24,7 @@ describe('fillTableDisplay', () => {
     </table>
     `;
     const tnode = createTableTNode(table);
-    const display = createEmptyDisplay();
-    fillTableDisplay(tnode, display);
+    const display = createDisplay(tnode);
     expect(display.maxX).toBe(1);
     expect(display.maxY).toBe(1);
     expect(display.cells).toMatchObject([
@@ -60,8 +67,7 @@ describe('fillTableDisplay', () => {
       </tr>
     </table>`;
     const tnode = createTableTNode(table);
-    const display = createEmptyDisplay();
-    fillTableDisplay(tnode, display);
+    const display = createDisplay(tnode);
     expect(display.offsetX).toBe(0);
     expect(display.maxX).toBe(3);
     expect(display.maxY).toBe(1);
@@ -106,8 +112,7 @@ describe('fillTableDisplay', () => {
       </tr>
     </table>`;
     const tnode = createTableTNode(table);
-    const display = createEmptyDisplay();
-    fillTableDisplay(tnode, display);
+    const display = createDisplay(tnode);
     expect(display.maxX).toBe(2);
     expect(display.maxY).toBe(1);
     expect(display.offsetX).toBe(0);
@@ -163,8 +168,7 @@ describe('fillTableDisplay', () => {
     </table>
     `;
     const tnode = createTableTNode(table);
-    const display = createEmptyDisplay();
-    fillTableDisplay(tnode, display);
+    const display = createDisplay(tnode);
     expect(display.maxX).toBe(2);
     expect(display.maxY).toBe(2);
     expect(display.offsetX).toBe(0);

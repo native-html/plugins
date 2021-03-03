@@ -4,7 +4,7 @@
 
 ## HTMLTableProps interface
 
-Props for the [HTMLTable()](./heuristic-table-plugin.htmltable.md) component.
+Props for the [HTMLTable](./heuristic-table-plugin.htmltable.md) component.
 
 <b>Signature:</b>
 
@@ -18,6 +18,5 @@ export interface HTMLTableProps extends CustomTagRendererProps<TBlock>
 |  Property | Type | Description |
 |  --- | --- | --- |
 |  [config](./heuristic-table-plugin.htmltableprops.config.md) | [HeuristicTablePluginConfig](./heuristic-table-plugin.heuristictablepluginconfig.md) |  |
-|  [contentWidth](./heuristic-table-plugin.htmltableprops.contentwidth.md) | number |  |
-|  [root](./heuristic-table-plugin.htmltableprops.root.md) | [TableRoot](./heuristic-table-plugin.tableroot.md) |  |
+|  [layout](./heuristic-table-plugin.htmltableprops.layout.md) | TableLayout |  |
 

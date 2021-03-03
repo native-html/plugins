@@ -2,23 +2,12 @@
 
 [Home](./index.md) &gt; [@native-html/heuristic-table-plugin](./heuristic-table-plugin.md) &gt; [HTMLTable](./heuristic-table-plugin.htmltable.md)
 
-## HTMLTable() function
+## HTMLTable variable
 
-A component layout to render tables.
+A component to render tables.
 
 <b>Signature:</b>
 
 ```typescript
-export default function HTMLTable({ root: tree, contentWidth, TDefaultRenderer, config, ...props }: HTMLTableProps): JSX.Element;
+HTMLTable: React.NamedExoticComponent<HTMLTableProps>
 ```
-
-## Parameters
-
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  { root: tree, contentWidth, TDefaultRenderer, config, ...props } | [HTMLTableProps](./heuristic-table-plugin.htmltableprops.md) |  |
-
-<b>Returns:</b>
-
-JSX.Element
-

@@ -5,6 +5,7 @@ import {
   TBlock,
   TNode
 } from 'react-native-render-html';
+import TableLayout from './TableLayout';
 
 /**
  * @public
@@ -17,10 +18,44 @@ export interface Coordinates {
 /**
  * @public
  */
+export interface TConstraintsBase {
+  /**
+   * The minimum width for this text.
+   */
+  minWidth: number;
+  /**
+   * The total textual density for one column (or cell).
+   */
+  contentDensity: number;
+}
+
+/**
+ * @public
+ */
+export interface TColumnConstraints extends TConstraintsBase {
+  /**
+   * The minimum number for the text in one column to hold in one line.
+   *
+   * @remarks spread and contentDensity only differ when applied to a
+   * whole column. Spread width will be the maximum of cell content densities,
+   * while the column content density will be the sum of the cell content
+   * densities.
+   */
+  spread: number;
+}
+
+/**
+ * @public
+ */
+export interface TCellConstraints extends TConstraintsBase {}
+
+/**
+ * @public
+ */
 export interface CellProperties extends Coordinates {
   lenX: number;
   lenY: number;
-  weight: number;
+  constraints: TCellConstraints;
 }
 
 /**
@@ -43,7 +78,7 @@ export interface TableFlexRowContainer {
 
 /**
  * A container to display items in columns
- * (think 'flex-dierection: column')
+ * (think 'flex-direction: column')
  *
  * @public
  */
@@ -87,7 +122,18 @@ export type TableRenderNode =
   | TableFlexRowContainer
   | TableRoot;
 
-export interface Display {
+export interface Settings {
+  /**
+   * When true, force the table to stretch to the available width.
+   */
+  forceStretch?: boolean;
+  /**
+   * Available width prior to scrolling.
+   */
+  contentWidth: number;
+}
+
+export interface Display extends Settings {
   maxY: number;
   maxX: number;
   occupiedCoordinates: Array<Coordinates>;
@@ -102,6 +148,10 @@ export interface Display {
  */
 export interface HeuristicTablePluginConfig {
   /**
+   * When true, force the table to stretch to the available width.
+   */
+  forceStretch?: boolean;
+  /**
    * Customize cells appearance with this function.
    *
    * @param cell - The cell for which styles should be provided.
@@ -115,8 +165,7 @@ export interface HeuristicTablePluginConfig {
  * @public
  */
 export interface HTMLTableProps extends CustomTagRendererProps<TBlock> {
-  root: TableRoot;
-  contentWidth: number;
+  layout: TableLayout;
   config: HeuristicTablePluginConfig;
 }
 

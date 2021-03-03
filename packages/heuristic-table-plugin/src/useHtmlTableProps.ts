@@ -4,26 +4,19 @@ import {
   TBlock,
   TNode
 } from 'react-native-render-html';
-import computeColumnWidths from './helpers/computeColumnWidths';
-import createRenderTree from './helpers/createRenderTree';
-import fillTableDisplay, {
-  createEmptyDisplay
-} from './helpers/fillTableDisplay';
-import { HTMLTableProps } from './shared-types';
+import { Settings, HTMLTableProps } from './shared-types';
+import TableLayout from './TableLayout';
 
-function useRenderTree({
+function useTableLayout({
   tnode,
-  contentWidth
+  settings
 }: {
   tnode: TNode;
-  contentWidth: number;
+  settings: Settings;
 }) {
   return useMemo(() => {
-    const display = createEmptyDisplay();
-    fillTableDisplay(tnode, display);
-    const columnWidths = computeColumnWidths(display, contentWidth);
-    return createRenderTree(display, columnWidths);
-  }, [tnode, contentWidth]);
+    return new TableLayout(tnode, settings);
+  }, [tnode, settings]);
 }
 
 /**
@@ -36,7 +29,6 @@ function useRenderTree({
  *
  * @public
  */
-
 export default function useHtmlTableProps(
   { sharedProps, tnode, ...props }: CustomTagRendererProps<TBlock>,
   options: {
@@ -49,15 +41,19 @@ export default function useHtmlTableProps(
   const {
     renderersProps: { table }
   } = sharedProps;
+  const forceStretch = table?.forceStretch ?? false;
   const contentWidth =
     typeof options.overrideContentWidth === 'number'
       ? options.overrideContentWidth
       : sharedProps.contentWidth;
-  const tree = useRenderTree({ tnode, contentWidth });
-  return {
-    root: tree,
-    config: table || {},
+  const settings = useMemo(() => ({ contentWidth, forceStretch }), [
     contentWidth,
+    forceStretch
+  ]);
+  const layout = useTableLayout({ tnode, settings });
+  return {
+    layout,
+    config: table || {},
     sharedProps,
     tnode,
     ...props

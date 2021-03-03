@@ -9,7 +9,10 @@ function cell(y: number, x: number = 0): TableCell {
     lenY: 1,
     tnode: ({} as unknown) as TNode,
     type: 'cell',
-    weight: 1,
+    constraints: {
+      contentDensity: 0,
+      minWidth: 0
+    },
     width: 10,
     x,
     y

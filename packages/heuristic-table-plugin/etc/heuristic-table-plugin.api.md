@@ -9,18 +9,21 @@ import { CustomTagRendererProps } from 'react-native-render-html';
 import { DefaultHTMLElementModels } from 'react-native-render-html';
 import { DefaultTagRendererProps } from 'react-native-render-html';
 import { PropsFromParent } from 'react-native-render-html';
+import { default as React_2 } from 'react';
 import { TBlock } from 'react-native-render-html';
 import { TNode } from 'react-native-render-html';
 import { ViewStyle } from 'react-native';
 
 // @public (undocumented)
 export interface CellProperties extends Coordinates {
+    // Warning: (ae-forgotten-export) The symbol "TCellConstraints" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    constraints: TCellConstraints;
     // (undocumented)
     lenX: number;
     // (undocumented)
     lenY: number;
-    // (undocumented)
-    weight: number;
 }
 
 // @public (undocumented)
@@ -39,20 +42,21 @@ export interface DisplayCell extends CellProperties {
 
 // @public
 export interface HeuristicTablePluginConfig {
+    forceStretch?: boolean;
     getStyleForCell?(cell: TableCell): ViewStyle | null;
 }
 
 // @public
-export function HTMLTable({ root: tree, contentWidth, TDefaultRenderer, config, ...props }: HTMLTableProps): JSX.Element;
+export const HTMLTable: React_2.NamedExoticComponent<HTMLTableProps>;
 
 // @public
 export interface HTMLTableProps extends CustomTagRendererProps<TBlock> {
     // (undocumented)
     config: HeuristicTablePluginConfig;
+    // Warning: (ae-forgotten-export) The symbol "TableLayout" needs to be exported by the entry point index.d.ts
+    //
     // (undocumented)
-    contentWidth: number;
-    // (undocumented)
-    root: TableRoot;
+    layout: TableLayout;
 }
 
 // @public

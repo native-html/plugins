@@ -98,7 +98,6 @@ export const Example = () => (
   </ScrollView>
 );
 ```
-
 ## Configuration
 
 To change the layout of cells and other options, you can pass a config object
@@ -174,3 +173,39 @@ const renderers = {
 
 // use "renderers" prop in your RenderHTML instance
 ```
+
+
+## The heuristic layout algorithm
+
+Finding the cell sizes which result in the table of the least height given a
+fixed width is [a NP complete
+problem](https://dl.acm.org/doi/abs/10.1145/304893.304937).
+
+To resolve this problem, this library uses a dumb and cheap algorithm, which
+won't find the *best* solution but instead a visually acceptable layout.
+
+### 1. Cell constraints extraction
+
+In the first step, each cell of the table is parsed to extract two metrics:
+`minWidth` and `contentDensity`. `minWidth` is an estimation of the width taken
+by the longest word in the cell, or the explicit width or min-width of any
+block in the cell, or the greatest of the two. `contentDensity` is the width
+taken by all the text displayed in one line.
+
+### 2. Column constraints reduction
+
+In the second step, cell constraints are reduced per column. Three metrics come out:
+
+- `minWidth`, the maximum of each cell `minWidth`;
+- `contentDensity`, the sum of each cell `contentDensity`;
+- `spread`, the maximum of each cell `contentDensity`.
+
+### 3. Column widths calculation
+
+Let `minTableWidth` be the sum of all column `minWidth`. If `minTableWidth >
+contentWidth`, assign to each column a width corresponding to its `minWidth`
+constraint.
+
+Otherwise, let `spaceToAllocate = contentWidth - minTableWidth`. Allocate to each column a width equal to its `minWidth` constraint + `spaceToAllocate * gamma`, with `gamma = (normalContentDensity) / sum(normalContentDensities)`. The `normalContentDensity` is `contentDensity - min(contentDensities)`.
+
+Finally, clamp the assign width to the `spread` constraint for this column, unless `forceStretch` parameter is set to `true`.

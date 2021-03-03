@@ -29,7 +29,12 @@ export default function useHtmlTableCellProps({
     flexGrow: 1,
     flexShrink: 0,
     ...spanStyles,
-    ...styleFromConfig
+    ...styleFromConfig,
+    width: cell.width,
+    marginLeft: 0,
+    marginRight: 0,
+    marginTop: 0,
+    marginBottom: 0
   };
   return {
     ...props,

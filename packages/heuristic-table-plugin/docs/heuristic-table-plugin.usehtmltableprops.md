@@ -25,5 +25,5 @@ export default function useHtmlTableProps({ sharedProps, tnode, ...props }: Cust
 
 [HTMLTableProps](./heuristic-table-plugin.htmltableprops.md)
 
-props for the [HTMLTable()](./heuristic-table-plugin.htmltable.md) component.
+props for the [HTMLTable](./heuristic-table-plugin.htmltable.md) component.
 
