@@ -1,3 +1,11 @@
+# [0.3.0](https://github.com/native-html/plugins/compare/@native-html/heuristic-table-plugin@0.2.0...@native-html/heuristic-table-plugin@0.3.0) (2021-03-04)
+
+
+### Features
+
+* advanced layout algorithm ([05eeb6e](https://github.com/native-html/plugins/commit/05eeb6ed33375284fe9d18c70aec5b4633ded484))
+* pass markers from table root to cells ([fcfd4b7](https://github.com/native-html/plugins/commit/fcfd4b7be07da5fe22e63574a3695c65c598b035))
+
 # [0.2.0](https://github.com/native-html/plugins/compare/@native-html/heuristic-table-plugin@0.1.0...@native-html/heuristic-table-plugin@0.2.0) (2021-02-20)
 
 
