@@ -1,3 +1,10 @@
+## [0.3.1](https://github.com/native-html/plugins/compare/@native-html/heuristic-table-plugin@0.3.0...@native-html/heuristic-table-plugin@0.3.1) (2021-03-04)
+
+
+### Bug Fixes
+
+* **heuristic-table:** ignoring `overrideContentWidth` option ([8d9224a](https://github.com/native-html/plugins/commit/8d9224ac324e816243d680ae35b05cc66a669d45))
+
 # [0.3.0](https://github.com/native-html/plugins/compare/@native-html/heuristic-table-plugin@0.2.0...@native-html/heuristic-table-plugin@0.3.0) (2021-03-04)
 
 
