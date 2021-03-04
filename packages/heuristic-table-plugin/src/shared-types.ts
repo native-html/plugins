@@ -167,6 +167,7 @@ export interface HeuristicTablePluginConfig {
 export interface HTMLTableProps extends CustomTagRendererProps<TBlock> {
   layout: TableLayout;
   config: HeuristicTablePluginConfig;
+  settings: Settings;
 }
 
 /**

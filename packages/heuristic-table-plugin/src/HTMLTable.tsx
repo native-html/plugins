@@ -36,11 +36,12 @@ function Container({
 const HTMLTable = memo(function HTMLTable({
   layout,
   TDefaultRenderer,
+  settings,
   config,
   ...props
 }: HTMLTableProps) {
   const tableWidth = layout.totalWidth;
-  const containerWidth = props.sharedProps.contentWidth;
+  const containerWidth = settings.contentWidth;
   return (
     <TDefaultRenderer
       {...props}

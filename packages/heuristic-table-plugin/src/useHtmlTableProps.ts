@@ -53,6 +53,7 @@ export default function useHtmlTableProps(
   const layout = useTableLayout({ tnode, settings });
   return {
     layout,
+    settings,
     config: table || {},
     sharedProps,
     tnode,
