@@ -105,7 +105,6 @@ but it should be a good enough approximation for a majority of use cases.
 `;
 
 const tableSpan = `
-
 <h2>Table with colspan cell</h2>
 
 <table>
@@ -177,143 +176,168 @@ const tableSpan = `
 </table>
 `;
 
-const tableTest = `
-<table>
-    <tbody>
-      <tr>
-        <td><u>Cinq étapes d'évaluation</u></td>
-        <td><u>Critères de gravité</u></td>
-      </tr>
-      <tr>
-        <td>1. Variables physiologiques</td>
-        <td>GCS &lt; 13<br />PAS &lt; 90 mmHg<br />SpO<sub>2</sub> &lt; 90%</td>
-      </tr>
-      <tr>
-        <td>2. Eléments de cinétique</td>
-        <td>
-          Éjection d'un véhicule<br />Autre passager décédé dans le même
-          véhicule<br />Chute &gt; 6 m<br />Victime projetée ou écrasée<br />Appréciation
-          globale (déformation du véhicule, vitesse estimée, absence de casque,
-          absence de ceinture de sécurité)<br />Blast
-        </td>
-      </tr>
-      <tr>
-        <td>3. Lésions anatomiques</td>
-        <td>
-          Trauma pénétrant de la tête, du cou, du thorax, de l'abdomen, du bassin,
-          du bras ou de la cuisse<br />Volet thoracique<br />Brûlure sévère,
-          inhalation de fumée associée<br />Fracas du bassin<br />Suspicion
-          d'atteinte médullaire<br />Amputation au niveau du poignet, de la
-          cheville, ou au dessus<br />Ischémie aiguë de membre
-        </td>
-      </tr>
-      <tr>
-        <td>4. Réanimation préhospitalière</td>
-        <td>
-          Ventilation assistée<br />Remplissage &gt; 1000 ml de colloïdes<br />Catécholamines<br />Pantalon
-          antichoc gonflé
-        </td>
-      </tr>
-      <tr>
-        <td>5. Terrain (à évaluer)</td>
-        <td>
-          Age &gt; 65 ans<br />Insuffisance cardiaque ou coronarienne<br />Insuffisance
-          respiratoire<br />Grossesse (2<sup>ème</sup> et
-          3<sup>ème</sup>trimestres)<br />Troubles de la crase sanguine
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  `;
-
-const htmlTest3 = `
+const wideTable = `
+<h2>Wide table overflowing horizontaly</h2>
 <table
   id="example"
   class="display nowrap dataTable dtr-inline collapsed"
   role="grid"
   aria-describedby="example_info">
-<thead>
-  <tr role="row">
-    <th
-      class="sorting sorting_asc"
-      tabindex="0"
-      aria-controls="example"
-      rowspan="1"
-      colspan="1"
-      style="width: 104px"
-      aria-sort="ascending"
-      aria-label="Name: activate to sort column descending"
-    >
-      Name
-    </th>
-    <th
-      class="sorting"
-      tabindex="0"
-      aria-controls="example"
-      rowspan="1"
-      colspan="1"
-      style="width: 170px;"
-      aria-label="Position: activate to sort column ascending"
-    >
-      Position
-    </th>
-    <th
-      class="sorting"
-      tabindex="0"
-      aria-controls="example"
-      rowspan="1"
-      colspan="1"
-      style="width: 76px;"
-      aria-label="Office: activate to sort column ascending"
-    >
-      Office
-    </th>
-    <th
-      class="dt-body-right sorting"
-      tabindex="0"
-      aria-controls="example"
-      rowspan="1"
-      colspan="1"
-      style="width: 38px;"
-      aria-label="Age: activate to sort column ascending"
-    >
-      Age
-    </th>
-    <th
-      class="sorting"
-      tabindex="0"
-      aria-controls="example"
-      rowspan="1"
-      colspan="1"
-      style="width: 67px;"
-      aria-label="Start date: activate to sort column ascending"
-    >
-      Start date
-    </th>
-    <th
-      class="dt-body-right sorting"
-      tabindex="0"
-      aria-controls="example"
-      rowspan="1"
-      colspan="1"
-      style=""
-      aria-label="Salary: activate to sort column ascending"
-    >
-      Salary
-    </th>
-  </tr>
-</thead>
-<tbody>
-  <tr class="odd">
-    <td tabindex="0" class="sorting_1">Airi Satou</td>
-    <td style="">Accountant</td>
-    <td style="">Tokyo</td>
-    <td class="dt-body-right" style="">33</td>
-    <td style="">2008/11/28</td>
-    <td class="dt-body-right" style="">$162,700</td>
-  </tr>
-</tbody>
-</table>`;
+  <thead>
+    <tr role="row">
+      <th
+        class="sorting sorting_asc"
+        tabindex="0"
+        aria-controls="example"
+        rowspan="1"
+        colspan="1"
+        style="width: 104px"
+        aria-sort="ascending"
+        aria-label="Name: activate to sort column descending"
+      >
+        Name
+      </th>
+      <th
+        class="sorting"
+        tabindex="0"
+        aria-controls="example"
+        rowspan="1"
+        colspan="1"
+        style="width: 170px;"
+        aria-label="Position: activate to sort column ascending"
+      >
+        Position
+      </th>
+      <th
+        class="sorting"
+        tabindex="0"
+        aria-controls="example"
+        rowspan="1"
+        colspan="1"
+        style="width: 76px;"
+        aria-label="Office: activate to sort column ascending"
+      >
+        Office
+      </th>
+      <th
+        class="dt-body-right sorting"
+        tabindex="0"
+        aria-controls="example"
+        rowspan="1"
+        colspan="1"
+        style="width: 38px;"
+        aria-label="Age: activate to sort column ascending"
+      >
+        Age
+      </th>
+      <th
+        class="sorting"
+        tabindex="0"
+        aria-controls="example"
+        rowspan="1"
+        colspan="1"
+        style="width: 110px;"
+        aria-label="Start date: activate to sort column ascending"
+      >
+        Start date
+      </th>
+      <th
+        class="dt-body-right sorting"
+        tabindex="0"
+        aria-controls="example"
+        rowspan="1"
+        colspan="1"
+        style=""
+        aria-label="Salary: activate to sort column ascending"
+      >
+        Salary
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="odd">
+      <td tabindex="0" class="sorting_1">Airi Satou</td>
+      <td style="">Accountant</td>
+      <td style="">Tokyo</td>
+      <td class="dt-body-right" style="">33</td>
+      <td style="">2008/11/28</td>
+      <td class="dt-body-right" >$162,700</td>
+    </tr>
+    <tr class="even">
+      <td class="sorting_1" tabindex="0">Angelica Ramos</td>
+      <td style="">Chief Executive Officer (CEO)</td>
+      <td style="">London</td>
+      <td class="dt-body-right" style="">47</td>
+      <td style="">2009/10/09</td>
+      <td class="dt-body-right" >$1,200,000</td>
+    </tr>
+    <tr class="odd">
+      <td tabindex="0" class="sorting_1">Ashton Cox</td>
+      <td style="">Junior Technical Author</td>
+      <td style="">San Francisco</td>
+      <td class="dt-body-right" style="">66</td>
+      <td style="">2009/01/12</td>
+      <td class="dt-body-right" >$86,000</td>
+    </tr>
+    <tr class="even">
+      <td class="sorting_1" tabindex="0">Bradley Greer</td>
+      <td style="">Software Engineer</td>
+      <td style="">London</td>
+      <td class="dt-body-right" style="">41</td>
+      <td style="">2012/10/13</td>
+      <td class="dt-body-right" >$132,000</td>
+    </tr>
+    <tr class="odd">
+      <td class="sorting_1" tabindex="0">Brenden Wagner</td>
+      <td style="">Software Engineer</td>
+      <td style="">San Francisco</td>
+      <td class="dt-body-right" style="">28</td>
+      <td style="">2011/06/07</td>
+      <td class="dt-body-right" >$206,850</td>
+    </tr>
+    <tr class="even">
+      <td tabindex="0" class="sorting_1">Brielle Williamson</td>
+      <td style="">Integration Specialist</td>
+      <td style="">New York</td>
+      <td class="dt-body-right" style="">61</td>
+      <td style="">2012/12/02</td>
+      <td class="dt-body-right" >$372,000</td>
+    </tr>
+    <tr class="odd">
+      <td class="sorting_1" tabindex="0">Bruno Nash</td>
+      <td style="">Software Engineer</td>
+      <td style="">London</td>
+      <td class="dt-body-right" style="">38</td>
+      <td style="">2011/05/03</td>
+      <td class="dt-body-right" >$163,500</td>
+    </tr>
+    <tr class="even">
+      <td class="sorting_1" tabindex="0" style="outline: none">Caesar Vance</td>
+      <td style="">Pre-Sales Support</td>
+      <td style="">New York</td>
+      <td class="dt-body-right" style="">21</td>
+      <td style="">2011/12/12</td>
+      <td class="dt-body-right" >$106,450</td>
+    </tr>
+    <tr class="odd">
+      <td class="sorting_1" tabindex="0">Cara Stevens</td>
+      <td style="">Sales Assistant</td>
+      <td style="">New York</td>
+      <td class="dt-body-right" style="">46</td>
+      <td style="">2011/12/06</td>
+      <td class="dt-body-right" >$145,600</td>
+    </tr>
+    <tr class="even">
+      <td tabindex="0" class="sorting_1">Cedric Kelly</td>
+      <td style="">Senior Javascript Developer</td>
+      <td style="">Edinburgh</td>
+      <td class="dt-body-right" style="">22</td>
+      <td style="">2012/03/29</td>
+      <td class="dt-body-right" >$433,060</td>
+    </tr>
+  </tbody>
+</table>
+`;
 
 const htmlConfig = {
   renderers: tableRenderers,
@@ -367,7 +391,7 @@ export default function HeuristicTable({
   return (
     <RenderHTML
       key={`custom-${instance}`}
-      source={{ html: htmlTest3 }}
+      source={{ html: `${table1}${wideTable}${tableSpan}` }}
       onLinkPress={onLinkPress}
       contentWidth={availableWidth}
       enableExperimentalMarginCollapsing
