@@ -177,7 +177,7 @@ function HomeScreen() {
       </View>
       <View style={styles.button}>
         <Button
-          title="heuristic table example (alpha)"
+          title="heuristic table example"
           onPress={() => navigation.navigate('HeuristicTable')}
         />
       </View>
