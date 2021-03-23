@@ -1,3 +1,10 @@
+## [0.3.2](https://github.com/native-html/plugins/compare/@native-html/heuristic-table-plugin@0.3.1...@native-html/heuristic-table-plugin@0.3.2) (2021-03-23)
+
+
+### Bug Fixes
+
+* **heuristic-table:** display glich with multiple rowspan in the same column ([bab4daf](https://github.com/native-html/plugins/commit/bab4daf3ec2954c8b9e273db175980f7533b738b))
+
 ## [0.3.1](https://github.com/native-html/plugins/compare/@native-html/heuristic-table-plugin@0.3.0...@native-html/heuristic-table-plugin@0.3.1) (2021-03-04)
 
 
