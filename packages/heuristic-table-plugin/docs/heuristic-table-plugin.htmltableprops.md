@@ -19,4 +19,5 @@ export interface HTMLTableProps extends CustomTagRendererProps<TBlock>
 |  --- | --- | --- |
 |  [config](./heuristic-table-plugin.htmltableprops.config.md) | [HeuristicTablePluginConfig](./heuristic-table-plugin.heuristictablepluginconfig.md) |  |
 |  [layout](./heuristic-table-plugin.htmltableprops.layout.md) | TableLayout |  |
+|  [settings](./heuristic-table-plugin.htmltableprops.settings.md) | Settings |  |
 

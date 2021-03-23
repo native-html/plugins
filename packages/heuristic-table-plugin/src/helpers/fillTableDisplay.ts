@@ -18,7 +18,7 @@ function computeOffsetX(display: Display, startX: number, startY: number) {
     if (coordinates.x <= startX && coordinates.y === startY) {
       return prev + 1;
     }
-    return 0;
+    return prev;
   }, 0);
 }
 

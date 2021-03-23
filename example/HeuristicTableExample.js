@@ -383,6 +383,8 @@ const htmlConfig = {
   }
 };
 
+const html = `${table1}${wideTable}${tableSpan}`;
+
 export default function HeuristicTable({
   instance,
   onLinkPress,
@@ -391,7 +393,7 @@ export default function HeuristicTable({
   return (
     <RenderHTML
       key={`custom-${instance}`}
-      source={{ html: `${table1}${wideTable}${tableSpan}` }}
+      source={{ html: html }}
       onLinkPress={onLinkPress}
       contentWidth={availableWidth}
       enableExperimentalMarginCollapsing

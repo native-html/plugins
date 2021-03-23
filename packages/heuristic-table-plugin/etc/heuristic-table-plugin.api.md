@@ -57,6 +57,10 @@ export interface HTMLTableProps extends CustomTagRendererProps<TBlock> {
     //
     // (undocumented)
     layout: TableLayout;
+    // Warning: (ae-forgotten-export) The symbol "Settings" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    settings: Settings;
 }
 
 // @public
