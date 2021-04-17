@@ -1,3 +1,10 @@
+# [0.4.0](https://github.com/native-html/plugins/compare/@native-html/heuristic-table-plugin@0.3.4...@native-html/heuristic-table-plugin@0.4.0) (2021-04-17)
+
+
+### Features
+
+* **heuristic-table:** support react-native-render-html@6.0.0-alpha.23 ([0edee7a](https://github.com/native-html/plugins/commit/0edee7ac2bce532a3f11e7aa5f076b8428694ad3))
+
 ## [0.3.4](https://github.com/native-html/plugins/compare/@native-html/heuristic-table-plugin@0.3.3...@native-html/heuristic-table-plugin@0.3.4) (2021-04-17)
 
 
