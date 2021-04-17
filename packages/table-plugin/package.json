@@ -72,7 +72,7 @@
   "peerDependencies": {
     "react": ">= 16.8.0",
     "react-native": ">= 0.63.0",
-    "react-native-render-html": "*"
+    "react-native-render-html": ">= 6.0.0-alpha.20 < 6.0.0-alpha.23"
   },
   "author": "Jules Sam. Randolph <jules.sam.randolph@gmail.com> (https://github.com/jsamr)",
   "homepage": "https://github.com/native-html/plugins/tree/master/packages/table-plugin#readme",
