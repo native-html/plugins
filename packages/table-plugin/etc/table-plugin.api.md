@@ -7,10 +7,9 @@
 import { ComponentType } from 'react';
 import { CustomBlockRenderer } from 'react-native-render-html';
 import { CustomTagRendererProps } from 'react-native-render-html';
-import { HtmlAttributesDictionary } from 'react-native-render-html';
 import { HTMLContentModel } from 'react-native-render-html';
 import { HTMLElementModel } from '@native-html/transient-render-engine';
-import { RenderHTMLProps } from 'react-native-render-html';
+import { RenderersPropsBase } from 'react-native-render-html';
 import { StyleProp } from 'react-native';
 import type { TBlock } from '@native-html/transient-render-engine';
 import { ViewStyle } from 'react-native';
@@ -27,8 +26,8 @@ export const HTMLTable: ({ WebView, tableStyleSpecs, cssRules, html, sourceBaseU
 // @public
 export interface HTMLTableBaseProps extends HTMLTableStats {
     html: string;
-    htmlAttribs?: HtmlAttributesDictionary;
-    onLinkPress?: RenderHTMLProps['onLinkPress'];
+    htmlAttribs?: Record<string, string>;
+    onLinkPress?: RenderersPropsBase['a']['onPress'];
     sourceBaseUrl?: string;
     WebView: ComponentType<any>;
 }

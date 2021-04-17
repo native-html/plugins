@@ -18,8 +18,8 @@ export interface HTMLTableBaseProps extends HTMLTableStats
 |  Property | Type | Description |
 |  --- | --- | --- |
 |  [html](./table-plugin.htmltablebaseprops.html.md) | string | The outerHtml of <table> tag. |
-|  [htmlAttribs?](./table-plugin.htmltablebaseprops.htmlattribs.md) | HtmlAttributesDictionary | <i>(Optional)</i> Html attributes for this table node. |
-|  [onLinkPress?](./table-plugin.htmltablebaseprops.onlinkpress.md) | RenderHTMLProps\['onLinkPress'\] | <i>(Optional)</i> Intercept links press. |
+|  [htmlAttribs?](./table-plugin.htmltablebaseprops.htmlattribs.md) | Record&lt;string, string&gt; | <i>(Optional)</i> Html attributes for this table node. |
+|  [onLinkPress?](./table-plugin.htmltablebaseprops.onlinkpress.md) | RenderersPropsBase\['a'\]\['onPress'\] | <i>(Optional)</i> Intercept links press. |
 |  [sourceBaseUrl?](./table-plugin.htmltablebaseprops.sourcebaseurl.md) | string | <i>(Optional)</i> The base to resolve relative URLs. |
 |  [WebView](./table-plugin.htmltablebaseprops.webview.md) | ComponentType&lt;any&gt; | The <code>WebView</code> Component you wish to use. |
 
