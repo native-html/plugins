@@ -9,5 +9,5 @@ Html attributes for this iframe node.
 <b>Signature:</b>
 
 ```typescript
-htmlAttribs: HtmlAttributesDictionary;
+htmlAttribs: Record<string, string>;
 ```

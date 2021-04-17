@@ -17,8 +17,8 @@ export interface HTMLIframeProps<WebViewProps = any> extends IframeConfig
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [htmlAttribs](./iframe-plugin.htmliframeprops.htmlattribs.md) | HtmlAttributesDictionary | Html attributes for this iframe node. |
-|  [onLinkPress?](./iframe-plugin.htmliframeprops.onlinkpress.md) | RenderHTMLProps\['onLinkPress'\] | <i>(Optional)</i> Handle link press events. |
+|  [htmlAttribs](./iframe-plugin.htmliframeprops.htmlattribs.md) | Record&lt;string, string&gt; | Html attributes for this iframe node. |
+|  [onLinkPress?](./iframe-plugin.htmliframeprops.onlinkpress.md) | RenderersPropsBase\['a'\]\['onPress'\] | <i>(Optional)</i> Handle link press events. |
 |  [scaleFactor](./iframe-plugin.htmliframeprops.scalefactor.md) | number | When scalesPageToFit is enabled, scales the WebView zoom level to make sure the viewport fits contentWidth. |
 |  [source](./iframe-plugin.htmliframeprops.source.md) | { uri?: string; html?: string; } | The source for the iframe. |
 |  [style](./iframe-plugin.htmliframeprops.style.md) | StyleProp&lt;ViewStyle&gt; | Container style. |

@@ -9,5 +9,5 @@ Handle link press events.
 <b>Signature:</b>
 
 ```typescript
-onLinkPress?: RenderHTMLProps['onLinkPress'];
+onLinkPress?: RenderersPropsBase['a']['onPress'];
 ```
