@@ -1,3 +1,10 @@
+## [2.2.1](https://github.com/native-html/plugins/compare/@native-html/iframe-plugin@2.2.0...@native-html/iframe-plugin@2.2.1) (2021-04-17)
+
+
+### Bug Fixes
+
+* restrict compatible versions of react-native-render-html ([032c4ed](https://github.com/native-html/plugins/commit/032c4ed035150471c914d6406fe7b2b2237035fe))
+
 # [2.2.0](https://github.com/native-html/plugins/compare/@native-html/iframe-plugin@2.1.1...@native-html/iframe-plugin@2.2.0) (2021-02-19)
 
 
