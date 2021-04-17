@@ -39,9 +39,9 @@ export default function YoutubeExample({
       key={`youtube-${instance}`}
       contentWidth={availableWidth}
       source={{ html: youtubeIframe }}
-      onLinkPress={onLinkPress}
       {...htmlConfig}
       renderersProps={{
+        a: { onPress: onLinkPress },
         iframe: {
           scalesPageToFit
         }

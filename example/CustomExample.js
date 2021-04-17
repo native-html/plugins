@@ -184,9 +184,11 @@ export default function CustomExample({
     <RenderHTML
       key={`custom-${instance}`}
       source={{ html: table1 }}
-      onLinkPress={onLinkPress}
       contentWidth={availableWidth}
-      {...htmlConfig}
+      renderersProps={{
+        a: { onPress: onLinkPress },
+        ...htmlConfig.renderersProps
+      }}
       debug={false}
     />
   );

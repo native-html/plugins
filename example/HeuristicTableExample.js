@@ -394,10 +394,13 @@ export default function HeuristicTable({
     <RenderHTML
       key={`custom-${instance}`}
       source={{ html }}
-      onLinkPress={onLinkPress}
       contentWidth={availableWidth}
       enableExperimentalMarginCollapsing
       {...htmlConfig}
+      renderersProps={{
+        a: { onPress: onLinkPress },
+        ...htmlConfig.renderersProps
+      }}
       debug={false}
     />
   );
