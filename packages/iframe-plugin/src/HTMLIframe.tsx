@@ -7,10 +7,7 @@ import {
   useWebshell
 } from '@formidable-webview/webshell';
 import { StyleProp, ViewStyle } from 'react-native';
-import {
-  HtmlAttributesDictionary,
-  RenderHTMLProps
-} from 'react-native-render-html';
+import { RenderersPropsBase } from 'react-native-render-html';
 import { linkPressTargetToOnDOMLinkPressArgs } from '@native-html/plugins-core';
 
 /**
@@ -81,12 +78,12 @@ export interface HTMLIframeProps<WebViewProps = any> extends IframeConfig {
   /**
    * Handle link press events.
    */
-  onLinkPress?: RenderHTMLProps['onLinkPress'];
+  onLinkPress?: RenderersPropsBase['a']['onPress'];
 
   /**
    * Html attributes for this iframe node.
    */
-  htmlAttribs: HtmlAttributesDictionary;
+  htmlAttribs: Record<string, string>;
 
   /**
    * When scalesPageToFit is enabled, scales the WebView zoom level to make sure the

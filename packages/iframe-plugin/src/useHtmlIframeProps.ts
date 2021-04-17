@@ -3,7 +3,8 @@ import {
   CustomTagRendererProps,
   useDocumentMetadata,
   useSharedProps,
-  useNormalizedUrl
+  useNormalizedUrl,
+  useRendererProps
 } from 'react-native-render-html';
 import extractPrintDimensions, {
   ExtractPrintDimensionsParams
@@ -32,12 +33,13 @@ export default function useHtmlIframeProps(
 ): HTMLIframeProps | null {
   const {
     WebView,
-    onLinkPress,
     defaultWebViewProps,
     contentWidth,
-    computeEmbeddedMaxWidth,
-    renderersProps: { iframe: globalIframeConfig } = {}
+    computeEmbeddedMaxWidth
   } = useSharedProps();
+  const globalIframeConfig = useRendererProps('table');
+  const { onPress: onLinkPress } = useRendererProps('a');
+
   const resolvedConfig = {
     ...defaultIframeConfig,
     ...globalIframeConfig,
