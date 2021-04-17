@@ -1,3 +1,10 @@
+## [5.0.3](https://github.com/native-html/plugins/compare/@native-html/table-plugin@5.0.2...@native-html/table-plugin@5.0.3) (2021-04-17)
+
+
+### Bug Fixes
+
+* restrict to react-native-render-html < 6.0.0-alpha.23 ([3a8d9f8](https://github.com/native-html/plugins/commit/3a8d9f8fada412d5adae663338b4661a20b19be3))
+
 ## [5.0.2](https://github.com/native-html/plugins/compare/@native-html/table-plugin@5.0.1...@native-html/table-plugin@5.0.2) (2021-04-17)
 
 
