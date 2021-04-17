@@ -57,7 +57,7 @@
     "react": "16.13.1",
     "react-native": "^0.63.2",
     "react-native-builder-bob": "^0.17.1",
-    "react-native-render-html": "6.0.0-alpha.20",
+    "react-native-render-html": "6.0.0-alpha.23",
     "react-native-webview": "11.0.0",
     "react-test-renderer": "16.13.1",
     "release-it": "^14.3.0",
@@ -72,7 +72,7 @@
   "peerDependencies": {
     "react": ">= 16.8.0",
     "react-native": ">= 0.63.0",
-    "react-native-render-html": ">= 6.0.0-alpha.20 < 6.0.0-alpha.23"
+    "react-native-render-html": ">= 6.0.0-alpha.23 || 6.x"
   },
   "author": "Jules Sam. Randolph <jules.sam.randolph@gmail.com> (https://github.com/jsamr)",
   "homepage": "https://github.com/native-html/plugins/tree/master/packages/table-plugin#readme",

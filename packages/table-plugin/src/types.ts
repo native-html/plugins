@@ -1,9 +1,6 @@
 import { ComponentType } from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
-import {
-  RenderHTMLProps,
-  HtmlAttributesDictionary
-} from 'react-native-render-html';
+import { RenderersPropsBase } from 'react-native-render-html';
 
 /**
  * An object describing how to generate styles. See {@link cssRulesFromSpecs}.
@@ -324,12 +321,12 @@ export interface HTMLTableBaseProps extends HTMLTableStats {
   /**
    * Intercept links press.
    */
-  onLinkPress?: RenderHTMLProps['onLinkPress'];
+  onLinkPress?: RenderersPropsBase['a']['onPress'];
 
   /**
    * Html attributes for this table node.
    */
-  htmlAttribs?: HtmlAttributesDictionary;
+  htmlAttribs?: Record<string, string>;
 
   /**
    * The `WebView` Component you wish to use.
