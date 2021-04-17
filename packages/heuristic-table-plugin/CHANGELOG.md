@@ -1,3 +1,10 @@
+## [0.3.3](https://github.com/native-html/plugins/compare/@native-html/heuristic-table-plugin@0.3.2...@native-html/heuristic-table-plugin@0.3.3) (2021-04-17)
+
+
+### Bug Fixes
+
+* restrict compatible versions of react-native-render-html ([032c4ed](https://github.com/native-html/plugins/commit/032c4ed035150471c914d6406fe7b2b2237035fe))
+
 ## [0.3.2](https://github.com/native-html/plugins/compare/@native-html/heuristic-table-plugin@0.3.1...@native-html/heuristic-table-plugin@0.3.2) (2021-03-23)
 
 
