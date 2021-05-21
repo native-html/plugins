@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/native-html/plugins/compare/@native-html/plugins-core@1.1.0...@native-html/plugins-core@1.2.0) (2021-05-21)
+
+
+### Features
+
+* support react-native-render-html@6.0.0-alpha.25; beware of ([55b2014](https://github.com/native-html/plugins/commit/55b201483ce27a49811727db16624f36e06fc9e4))
+
 # [1.1.0](https://github.com/native-html/plugins/compare/@native-html/plugins-core@1.0.1...@native-html/plugins-core@1.1.0) (2021-04-17)
 
 
