@@ -38,7 +38,7 @@ export default function useHtmlIframeProps(
     computeEmbeddedMaxWidth
   } = useSharedProps();
   const contentWidth = useContentWidth();
-  const globalIframeConfig = useRendererProps('table');
+  const globalIframeConfig = useRendererProps('iframe');
   const { onPress: onLinkPress } = useRendererProps('a');
   const resolvedConfig = {
     ...defaultIframeConfig,
