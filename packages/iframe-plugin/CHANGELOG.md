@@ -1,3 +1,15 @@
+# [2.4.0](https://github.com/native-html/plugins/compare/@native-html/iframe-plugin@2.3.0...@native-html/iframe-plugin@2.4.0) (2021-05-21)
+
+
+### Bug Fixes
+
+* **iframe:** did not pick config passed in rendererProps ([3580d77](https://github.com/native-html/plugins/commit/3580d7781c75ed0a5f3707d5b2fe18c0d8fe6926))
+
+
+### Features
+
+* support react-native-render-html@6.0.0-alpha.25; beware of upstream breaking changes ([53e322c](https://github.com/native-html/plugins/commit/53e322cad64aece27d5c95c1bc9fb4a3095addbd))
+
 # [2.3.0](https://github.com/native-html/plugins/compare/@native-html/iframe-plugin@2.2.2...@native-html/iframe-plugin@2.3.0) (2021-04-17)
 
 
