@@ -33,6 +33,4 @@ export const tableModel: HTMLElementModel<
   isOpaque: true
 });
 
-TableRenderer.model = tableModel;
-
 export default TableRenderer;

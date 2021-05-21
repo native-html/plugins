@@ -101,13 +101,13 @@ _[Full example](https://github.com/native-html/plugins/blob/master/example/Simpl
 You need 2 steps to get to a working example:
 
 1. Import the `WebView` component. [Instructions will differ depending on your setup](#errors-when-importing-webview-component);
-2. Inject `renderers` and `WebView` props to the `HTML` component;
+2. Inject `renderers`, `customHTMLElementModels` and `WebView` props to the `HTML` component;
 
 ```javascript
 import React from 'react';
 import { ScrollView } from 'react-native';
 import HTML from 'react-native-render-html';
-import TableRenderer from '@native-html/table-plugin';
+import TableRenderer, { tableModel } from '@native-html/table-plugin';
 import WebView from 'react-native-webview';
 
 const html = `
@@ -132,6 +132,9 @@ const htmlProps = {
     table: {
       // Put the table config here
     }
+  },
+  customHTMLElementModels: {
+    table: tableModel
   }
 };
 

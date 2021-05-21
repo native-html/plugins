@@ -3,6 +3,7 @@ import {
   CustomTagRendererProps,
   TBlock,
   TNode,
+  useContentWidth,
   useRendererProps
 } from 'react-native-render-html';
 import { Settings, HTMLTableProps } from './shared-types';
@@ -41,10 +42,11 @@ export default function useHtmlTableProps(
 ): HTMLTableProps {
   const table = useRendererProps('table');
   const forceStretch = table?.forceStretch ?? false;
+  const sharedContentWidth = useContentWidth();
   const contentWidth =
     typeof options.overrideContentWidth === 'number'
       ? options.overrideContentWidth
-      : sharedProps.contentWidth;
+      : sharedContentWidth;
   const settings = useMemo(() => ({ contentWidth, forceStretch }), [
     contentWidth,
     forceStretch

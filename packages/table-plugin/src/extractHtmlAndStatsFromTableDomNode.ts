@@ -1,13 +1,10 @@
 import { domNodeToHTMLString } from 'react-native-render-html';
-import {
-  SerializableNode,
-  isSerializableElement,
-  isSerializableText
-} from '@native-html/transient-render-engine';
+import { isDOMElement, isDOMText } from '@native-html/transient-render-engine';
 import { HTMLTableStats } from './types';
+import type { Node } from 'domhandler';
 
 export default function extractHtmlAndStatsFromTableDomNode(
-  domNode: SerializableNode | null
+  domNode: Node | null
 ) {
   let stats: HTMLTableStats = {
     numOfChars: 0,
@@ -15,7 +12,7 @@ export default function extractHtmlAndStatsFromTableDomNode(
     numOfRows: 0
   };
   const innerHTML = domNodeToHTMLString(domNode, (node, _depth, html) => {
-    if (isSerializableElement(node)) {
+    if (isDOMElement(node)) {
       if (node.tagName === 'tr') {
         stats.numOfRows += 1;
       } else if (
@@ -24,7 +21,7 @@ export default function extractHtmlAndStatsFromTableDomNode(
       ) {
         stats.numOfColumns += 1;
       }
-    } else if (isSerializableText(node)) {
+    } else if (isDOMText(node)) {
       stats.numOfChars += html.length;
     }
   });

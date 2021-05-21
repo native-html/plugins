@@ -6,7 +6,6 @@ import prop from 'ramda/src/prop';
 import reduce from 'ramda/src/reduce';
 import { TextStyle } from 'react-native';
 import { TNode } from 'react-native-render-html';
-import { TBlock, TText } from '@native-html/transient-render-engine';
 import { TCellConstraints } from '../shared-types';
 import { getHorizontalMargins, getHorizontalSpacing } from './measure';
 
@@ -109,7 +108,7 @@ export default class TCellConstraintsComputer {
     tnode: TNode,
     stats: TCellStats = getInitCellStatsForTnode(tnode)
   ): TCellStats {
-    if (tnode instanceof TText) {
+    if (tnode.type === 'text') {
       const fontSize =
         tnode.styles.nativeTextFlow.fontSize ?? this.fallbackFontSize;
       const fontWeight = tnode.styles.nativeTextFlow.fontWeight ?? 'normal';
@@ -122,7 +121,7 @@ export default class TCellConstraintsComputer {
         fontWeightCoeff
       });
     } else {
-      if (tnode instanceof TBlock) {
+      if (tnode.type === 'block') {
         const blockStyle = tnode.styles.nativeBlockRet;
         const width =
           typeof blockStyle.width === 'number'

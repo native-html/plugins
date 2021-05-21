@@ -55,8 +55,7 @@ const HTMLTable = memo(function HTMLTable({
       <Container tableWidth={tableWidth} availableWidth={containerWidth}>
         {React.createElement(TreeRenderer, {
           node: layout.renderTree,
-          config,
-          rootMarkers: props.markers
+          config
         })}
       </Container>
     </TDefaultRenderer>

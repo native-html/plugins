@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { Markers, TNodeRenderer } from 'react-native-render-html';
+import { TNodeRenderer } from 'react-native-render-html';
 import { HeuristicTablePluginConfig, TableRenderNode } from './shared-types';
 
 const styles = StyleSheet.create({
@@ -10,20 +10,16 @@ const styles = StyleSheet.create({
 
 export default function TreeRenderer({
   node,
-  rootMarkers,
   config
 }: {
   node: TableRenderNode;
   config?: HeuristicTablePluginConfig;
-
-  rootMarkers: Markers;
 }) {
   if (node.type === 'cell') {
     return (
       <View style={{ width: node.width }}>
         <TNodeRenderer
           propsFromParent={{ cell: node, collapsedMarginTop: null, config }}
-          parentMarkers={rootMarkers}
           tnode={node.tnode}
         />
       </View>
@@ -34,8 +30,7 @@ export default function TreeRenderer({
       React.createElement(TreeRenderer, {
         node: v,
         key: i,
-        config,
-        rootMarkers
+        config
       })
     );
     return <View style={styles.colContainer}>{children}</View>;
@@ -47,8 +42,7 @@ export default function TreeRenderer({
           React.createElement(TreeRenderer, {
             node: v,
             key: i,
-            config,
-            rootMarkers
+            config
           })
         )}
       </View>

@@ -109,19 +109,17 @@ See the documentation for this object here: [`HeuristicTablePluginConfig`](docs/
 
 ### Customizing Root renderer
 
-You can customize the renderer logic thanks to `useHtmlTableProps` hook, `tableModel` and `HTMLTable` exports:
+You can customize the renderer logic thanks to `useHtmlTableProps` hook and `HTMLTable` exports:
 
 ```jsx
 import React from 'react';
-import tableRenderers, {useHtmlTableProps, HTMLTable, tableModel} from '@native-html/heuristic-table-plugin';
+import tableRenderers, {useHtmlTableProps, HTMLTable} from '@native-html/heuristic-table-plugin';
 
 function TableRenderer(props) {
   const tableProps = useHtmlTableProps(props, /* config */);
   // Do customize the props here; wrap with your own container...
   return <HTMLTable {..tableProps} />;
 };
-
-TableRenderer.model = tableModel;
 
 const renderers = {
   ...tableRenderers,
@@ -162,8 +160,6 @@ function TdRenderer(props) {
   ]
   return React.createElement(cellProps.TDefaultRenderer, { ...cellProps, style });
 }
-
-TdRenderer.model = tdModel;
 
 const renderers = {
   table: TableRenderer,
