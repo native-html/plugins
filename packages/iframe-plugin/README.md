@@ -85,7 +85,7 @@ yarn add @native-html/iframe-plugin react-native-webview
 ## Minimal working example
 
 ```jsx
-import IframeRenderer from '@native-html/iframe-plugin';
+import IframeRenderer, { iframeModel } from '@native-html/iframe-plugin';
 import RenderHTML from 'react-native-render-html';
 import WebView from 'react-native-webview';
 
@@ -93,11 +93,16 @@ const renderers = {
   iframe: IframeRenderer
 }
 
+const customHTMLElementModels = {
+  iframe: iframeModel
+}
+
 // ...
 
 <RenderHTML renderers={renderers}
       WebView={WebView}
       source={{ html: '<iframe ...></iframe>' }}
+      customHTMLElementModels={customHTMLElementModels}
       defaultWebViewProps={{ /* Any prop you want to pass to all WebViews */ }}
       renderersProps={{ iframe: { scalesPageToFit: true, webViewProps: { /* Any prop you want to pass to iframe WebViews */ } }}}
 />
@@ -134,8 +139,6 @@ const IframeRenderer = function IframeRenderer(props) {
   // Do customize the props here; wrap with your own container...
   return iframeProps ? <HTMLIframe {..iframeProps} /> : null;
 };
-
-IframeRenderer.model = iframeModel;
 
 const renderers = {
   iframe: IframeRenderer

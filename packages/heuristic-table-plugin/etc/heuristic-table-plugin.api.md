@@ -6,7 +6,6 @@
 
 import { CustomBlockRenderer } from 'react-native-render-html';
 import { CustomTagRendererProps } from 'react-native-render-html';
-import { DefaultHTMLElementModels } from 'react-native-render-html';
 import { DefaultTagRendererProps } from 'react-native-render-html';
 import { PropsFromParent } from 'react-native-render-html';
 import { default as React_2 } from 'react';
@@ -100,9 +99,6 @@ export interface TableFlexRowContainer {
     type: 'row-container';
 }
 
-// @public (undocumented)
-export const tableModel: DefaultHTMLElementModels['table'];
-
 // @public
 export const TableRenderer: CustomBlockRenderer;
 
@@ -114,14 +110,8 @@ export interface TableRoot {
     type: 'root';
 }
 
-// @public (undocumented)
-export const tdModel: DefaultHTMLElementModels['td'];
-
 // @public
 export const TdRenderer: CustomBlockRenderer<TableCellPropsFromParent>;
-
-// @public (undocumented)
-export const thModel: DefaultHTMLElementModels['th'];
 
 // @public
 export const ThRenderer: CustomBlockRenderer<TableCellPropsFromParent>;

@@ -1,7 +1,6 @@
 import React from 'react';
 import { CustomBlockRenderer } from 'react-native-render-html';
 import HTMLTable from './HTMLTable';
-import tableModel from './models/tableModel';
 import { HeuristicTablePluginConfig } from './shared-types';
 import useHtmlTableProps from './useHtmlTableProps';
 
@@ -20,7 +19,5 @@ declare module 'react-native-render-html' {
 const TableRenderer: CustomBlockRenderer = function (props) {
   return React.createElement(HTMLTable, useHtmlTableProps(props));
 };
-
-TableRenderer.model = tableModel;
 
 export default TableRenderer;

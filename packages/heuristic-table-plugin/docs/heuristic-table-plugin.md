@@ -32,10 +32,7 @@
 |  --- | --- |
 |  [HTMLTable](./heuristic-table-plugin.htmltable.md) | A component to render tables. |
 |  [renderers](./heuristic-table-plugin.renderers.md) | Renderers to be merged in the <code>renderers</code> prop of <code>RenderHTML</code> component. |
-|  [tableModel](./heuristic-table-plugin.tablemodel.md) |  |
 |  [TableRenderer](./heuristic-table-plugin.tablerenderer.md) | A 100% native renderer component for <code>table</code> tag. |
-|  [tdModel](./heuristic-table-plugin.tdmodel.md) |  |
 |  [TdRenderer](./heuristic-table-plugin.tdrenderer.md) | The renderer component for <code>td</code> tag. |
-|  [thModel](./heuristic-table-plugin.thmodel.md) |  |
 |  [ThRenderer](./heuristic-table-plugin.threnderer.md) | The renderer component for <code>th</code> tag. |
 

@@ -3,7 +3,8 @@ import {
   CustomTagRendererProps,
   useSharedProps,
   useDocumentMetadata,
-  useRendererProps
+  useRendererProps,
+  useContentWidth
 } from 'react-native-render-html';
 import extractHtmlAndStatsFromTableDomNode from './extractHtmlAndStatsFromTableDomNode';
 import { HTMLTableProps, TableConfig } from './types';
@@ -25,9 +26,9 @@ export default function useHtmlTableProps(
   const {
     WebView,
     defaultWebViewProps,
-    contentWidth,
     computeEmbeddedMaxWidth
   } = useSharedProps();
+  const contentWidth = useContentWidth();
   const globalTableConfig = useRendererProps('table');
   const { onPress: onLinkPress } = useRendererProps('a');
   const resolvedConfig: TableConfig = {

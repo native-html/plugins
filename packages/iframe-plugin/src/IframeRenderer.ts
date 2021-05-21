@@ -33,6 +33,4 @@ export const iframeModel: HTMLElementModel<
   isOpaque: true
 });
 
-IframeRenderer.model = iframeModel;
-
 export default IframeRenderer;

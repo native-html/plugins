@@ -29,8 +29,6 @@ const renderers: Record<'th' | 'td' | 'table', CustomBlockRenderer> = {
   td: TdRenderer as any
 };
 
-export * from './models';
-
 export { default as useHtmlTableProps } from './useHtmlTableProps';
 export { default as useHtmlTableCellProps } from './useHtmlTableCellProps';
 export { default as HTMLTable } from './HTMLTable';

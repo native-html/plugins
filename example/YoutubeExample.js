@@ -1,6 +1,6 @@
 import React from 'react';
 import RenderHTML from 'react-native-render-html';
-import iframe from '@native-html/iframe-plugin';
+import iframe, { iframeModel } from '@native-html/iframe-plugin';
 import WebView from 'react-native-webview';
 
 const htmlConfig = {
@@ -11,6 +11,9 @@ const htmlConfig = {
     iframe: {
       alignSelf: 'center'
     }
+  },
+  customHTMLElementModels: {
+    iframe: iframeModel
   },
   WebView
 };
