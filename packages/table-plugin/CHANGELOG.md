@@ -1,3 +1,10 @@
+# [5.3.0](https://github.com/native-html/plugins/compare/@native-html/table-plugin@5.2.0...@native-html/table-plugin@5.3.0) (2021-06-08)
+
+
+### Features
+
+* **table:** support react-native-render-html@6.0.0-beta.0 ([6de42c8](https://github.com/native-html/plugins/commit/6de42c860fcd2ed0323bd4bd7c86667b134fcf90))
+
 # [5.2.0](https://github.com/native-html/plugins/compare/@native-html/table-plugin@5.1.0...@native-html/table-plugin@5.2.0) (2021-05-21)
 
 
