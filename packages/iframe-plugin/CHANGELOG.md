@@ -1,3 +1,10 @@
+# [2.5.0](https://github.com/native-html/plugins/compare/@native-html/iframe-plugin@2.4.0...@native-html/iframe-plugin@2.5.0) (2021-06-08)
+
+
+### Features
+
+* **iframe:** support react-native-render-html@6.0.0-beta.0 ([96c33b5](https://github.com/native-html/plugins/commit/96c33b56ad24a98f76142aad46007d7fbb28699f))
+
 # [2.4.0](https://github.com/native-html/plugins/compare/@native-html/iframe-plugin@2.3.0...@native-html/iframe-plugin@2.4.0) (2021-05-21)
 
 
