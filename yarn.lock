@@ -3779,21 +3779,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jsamr/counter-style@npm:^2.0.0":
-  version: 2.0.0
-  resolution: "@jsamr/counter-style@npm:2.0.0"
-  checksum: b881a7311bbd8f90526a1f27aa05d2fb265f078b245d7aee3ca805f7c4f7762077645e404454008ab1fb746d6f4c671a002a17767dd146477a2b04203f72df50
+"@jsamr/counter-style@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "@jsamr/counter-style@npm:2.0.1"
+  checksum: c5b40fa43ddec6a7c1f418f9eca375d32810414dbc79069c0a436c89e21e9b92c39514e0d9555558a4a8cccffe12a6786e4f64a7854a9ce110ba3d9fa2d8e722
   languageName: node
   linkType: hard
 
-"@jsamr/react-native-li@npm:^2.1.0":
-  version: 2.1.0
-  resolution: "@jsamr/react-native-li@npm:2.1.0"
+"@jsamr/react-native-li@npm:^2.2.1":
+  version: 2.2.1
+  resolution: "@jsamr/react-native-li@npm:2.2.1"
   peerDependencies:
     "@jsamr/counter-style": ^1.0.0 || ^2.0.0
     react: "*"
     react-native: "*"
-  checksum: c0846a4e0a9f32ca1a2eb7463bf2ec913457b63c0fa5af6bd9b3bbcf1479b282f3f9056e175c0cbf2d3bd6901b0ad98ab54c28222d7cb684d0045cd0cdf75df7
+  checksum: b71f79735e53dbc4dd45959092292217eba8b009361834f73caed0c37f707f1408afc2c0f85bbaf0d20ff66c7f2985d25e9241174c2d2e63420f126b171a1da6
   languageName: node
   linkType: hard
 
@@ -3916,7 +3916,7 @@ __metadata:
     react: 16.13.1
     react-native: ^0.63.2
     react-native-builder-bob: ^0.17.1
-    react-native-render-html: 6.0.0-alpha.25
+    react-native-render-html: 6.0.0-beta.0
     react-test-renderer: 16.13.1
     release-it: ^14.3.0
     typescript: ~4.1.3
@@ -3958,7 +3958,7 @@ __metadata:
     react: 16.13.1
     react-native: ^0.63.2
     react-native-builder-bob: ^0.17.1
-    react-native-render-html: 6.0.0-alpha.25
+    react-native-render-html: 6.0.0-beta.0
     react-native-webview: 11.0.0
     react-test-renderer: 16.13.1
     release-it: ^14.3.0
@@ -3997,7 +3997,7 @@ __metadata:
     react: 16.13.1
     react-native: ^0.63.2
     react-native-builder-bob: ^0.17.1
-    react-native-render-html: 6.0.0-alpha.25
+    react-native-render-html: 6.0.0-beta.0
     react-test-renderer: 16.13.1
     release-it: ^14.3.0
     typescript: ~4.1.3
@@ -4044,7 +4044,7 @@ __metadata:
     react: 16.13.1
     react-native: ^0.63.2
     react-native-builder-bob: ^0.17.1
-    react-native-render-html: 6.0.0-alpha.25
+    react-native-render-html: 6.0.0-beta.0
     react-native-webview: 11.0.0
     react-test-renderer: 16.13.1
     release-it: ^14.3.0
@@ -4056,9 +4056,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@native-html/transient-render-engine@npm:^8.4.1":
-  version: 8.4.1
-  resolution: "@native-html/transient-render-engine@npm:8.4.1"
+"@native-html/transient-render-engine@npm:^9.0.3":
+  version: 9.0.3
+  resolution: "@native-html/transient-render-engine@npm:9.0.3"
   dependencies:
     "@native-html/css-processor": 1.9.0
     "@types/ramda": ^0.27.40
@@ -4070,7 +4070,7 @@ __metadata:
   peerDependencies:
     "@types/react-native": "*"
     react-native: ^0.63.0
-  checksum: 75c709976942057409137f4c3c9ebb760e16c65d6355adadee48c7108dd194b6efb11e4b8a486ace0d8357161ae2a187dcf3796df087bae5d310f9cf57fe2fe6
+  checksum: 2a2b170a07cefa6b4bfcd04f7bf105a67f183f8d3d5cd7cac284b45fd5391f1812504b51f6f5634cf919c7a45c9b9fbc5e94ef9c98c19b02df884ca1aff54ac8
   languageName: node
   linkType: hard
 
@@ -8474,7 +8474,7 @@ __metadata:
     react-native-gesture-handler: ~1.8.0
     react-native-paper: ^4.7.1
     react-native-reanimated: ~1.13.2
-    react-native-render-html: 6.0.0-alpha.25
+    react-native-render-html: 6.0.0-beta.0
     react-native-safe-area-context: 3.1.9
     react-native-screens: ~2.15.2
     react-native-web: ~0.13.18
@@ -14997,13 +14997,13 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"react-native-render-html@npm:6.0.0-alpha.25":
-  version: 6.0.0-alpha.25
-  resolution: "react-native-render-html@npm:6.0.0-alpha.25"
+"react-native-render-html@npm:6.0.0-beta.0":
+  version: 6.0.0-beta.0
+  resolution: "react-native-render-html@npm:6.0.0-beta.0"
   dependencies:
-    "@jsamr/counter-style": ^2.0.0
-    "@jsamr/react-native-li": ^2.1.0
-    "@native-html/transient-render-engine": ^8.4.1
+    "@jsamr/counter-style": ^2.0.1
+    "@jsamr/react-native-li": ^2.2.1
+    "@native-html/transient-render-engine": ^9.0.3
     "@types/ramda": ^0.27.40
     "@types/urijs": ^1.19.15
     prop-types: ^15.5.7
@@ -15013,7 +15013,7 @@ fsevents@^1.2.7:
   peerDependencies:
     react: "*"
     react-native: ^0.63.0
-  checksum: 9e3d6f01503798d7124d59567eaa203471f4f76e2933d568fa4dde9637e7deb8eb936adc417efcc0ad5c376648bc55609e49430aeb35c14996b15a71bacaf61e
+  checksum: 63e91d7c39e7a4018903b923beee03d138535dc6d9e4c8d8598954dd983381cf4db62242e778cdfbf88105045950244db48df493020fa45ad12695f498ea93d9
   languageName: node
   linkType: hard
 
