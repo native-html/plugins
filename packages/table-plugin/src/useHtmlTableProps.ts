@@ -1,6 +1,6 @@
 import { Dimensions } from 'react-native';
 import {
-  CustomTagRendererProps,
+  CustomRendererProps,
   useSharedProps,
   useDocumentMetadata,
   useRendererProps,
@@ -20,7 +20,7 @@ import type { TBlock } from '@native-html/transient-render-engine';
  * @public
  */
 export default function useHtmlTableProps(
-  { key, style, tnode }: CustomTagRendererProps<TBlock>,
+  { key, style, tnode }: CustomRendererProps<TBlock>,
   tableConfig?: TableConfig
 ): (HTMLTableProps & { key?: string | number }) | null {
   const {

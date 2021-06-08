@@ -1,5 +1,5 @@
 import { domNodeToHTMLString } from 'react-native-render-html';
-import { isDOMElement, isDOMText } from '@native-html/transient-render-engine';
+import { isDomElement, isDomText } from '@native-html/transient-render-engine';
 import { HTMLTableStats } from './types';
 import type { Node } from 'domhandler';
 
@@ -12,7 +12,7 @@ export default function extractHtmlAndStatsFromTableDomNode(
     numOfRows: 0
   };
   const innerHTML = domNodeToHTMLString(domNode, (node, _depth, html) => {
-    if (isDOMElement(node)) {
+    if (isDomElement(node)) {
       if (node.tagName === 'tr') {
         stats.numOfRows += 1;
       } else if (
@@ -21,7 +21,7 @@ export default function extractHtmlAndStatsFromTableDomNode(
       ) {
         stats.numOfColumns += 1;
       }
-    } else if (isDOMText(node)) {
+    } else if (isDomText(node)) {
       stats.numOfChars += html.length;
     }
   });
