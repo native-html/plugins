@@ -9,5 +9,5 @@ The renderer component for `td` tag.
 <b>Signature:</b>
 
 ```typescript
-TdRenderer: CustomBlockRenderer<TableCellPropsFromParent>
+TdRenderer: CustomBlockRenderer
 ```

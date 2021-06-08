@@ -9,7 +9,7 @@ Customize the rendering logic of the table renderer via this hook.
 <b>Signature:</b>
 
 ```typescript
-export default function useHtmlTableProps({ sharedProps, tnode, ...props }: CustomTagRendererProps<TBlock>, options?: {
+export default function useHtmlTableProps({ sharedProps, tnode, ...props }: CustomRendererProps<TBlock>, options?: {
     overrideContentWidth?: number;
 }): HTMLTableProps;
 ```
@@ -18,7 +18,7 @@ export default function useHtmlTableProps({ sharedProps, tnode, ...props }: Cust
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  { sharedProps, tnode, ...props } | CustomTagRendererProps&lt;TBlock&gt; |  |
+|  { sharedProps, tnode, ...props } | CustomRendererProps&lt;TBlock&gt; |  |
 |  options | { overrideContentWidth?: number; } | Customize this hook behavior. |
 
 <b>Returns:</b>

@@ -9,7 +9,7 @@ Extract props for the HTMLTable component from renderer function arguments. This
 <b>Signature:</b>
 
 ```typescript
-export default function useHtmlTableProps({ key, style, tnode }: CustomTagRendererProps<TBlock>, tableConfig?: TableConfig): (HTMLTableProps & {
+export default function useHtmlTableProps({ key, style, tnode }: CustomRendererProps<TBlock>, tableConfig?: TableConfig): (HTMLTableProps & {
     key?: string | number;
 }) | null;
 ```
@@ -18,7 +18,7 @@ export default function useHtmlTableProps({ key, style, tnode }: CustomTagRender
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  { key, style, tnode } | CustomTagRendererProps&lt;TBlock&gt; |  |
+|  { key, style, tnode } | CustomRendererProps&lt;TBlock&gt; |  |
 |  tableConfig | [TableConfig](./table-plugin.tableconfig.md) | Override config options. |
 
 <b>Returns:</b>

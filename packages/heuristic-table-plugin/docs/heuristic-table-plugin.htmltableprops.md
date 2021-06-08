@@ -9,9 +9,9 @@ Props for the [HTMLTable](./heuristic-table-plugin.htmltable.md) component.
 <b>Signature:</b>
 
 ```typescript
-export interface HTMLTableProps extends CustomTagRendererProps<TBlock> 
+export interface HTMLTableProps extends CustomRendererProps<TBlock> 
 ```
-<b>Extends:</b> CustomTagRendererProps&lt;TBlock&gt;
+<b>Extends:</b> CustomRendererProps&lt;TBlock&gt;
 
 ## Properties
 

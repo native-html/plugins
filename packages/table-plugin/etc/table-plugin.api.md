@@ -6,10 +6,10 @@
 
 import { ComponentType } from 'react';
 import { CustomBlockRenderer } from 'react-native-render-html';
-import { CustomTagRendererProps } from 'react-native-render-html';
+import { CustomRendererProps } from 'react-native-render-html';
 import { HTMLContentModel } from 'react-native-render-html';
 import { HTMLElementModel } from '@native-html/transient-render-engine';
-import { RenderersPropsBase } from 'react-native-render-html';
+import { RenderersProps } from 'react-native-render-html';
 import { StyleProp } from 'react-native';
 import type { TBlock } from '@native-html/transient-render-engine';
 import { ViewStyle } from 'react-native';
@@ -27,7 +27,7 @@ export const HTMLTable: ({ WebView, tableStyleSpecs, cssRules, html, sourceBaseU
 export interface HTMLTableBaseProps extends HTMLTableStats {
     html: string;
     htmlAttribs?: Record<string, string>;
-    onLinkPress?: RenderersPropsBase['a']['onPress'];
+    onLinkPress?: RenderersProps['a']['onPress'];
     sourceBaseUrl?: string;
     WebView: ComponentType<any>;
 }
@@ -110,7 +110,7 @@ export interface TableStyleSpecs {
 }
 
 // @public
-export function useHtmlTableProps({ key, style, tnode }: CustomTagRendererProps<TBlock>, tableConfig?: TableConfig): (HTMLTableProps & {
+export function useHtmlTableProps({ key, style, tnode }: CustomRendererProps<TBlock>, tableConfig?: TableConfig): (HTMLTableProps & {
     key?: string | number;
 }) | null;
 

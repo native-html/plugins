@@ -5,8 +5,7 @@
 ```ts
 
 import { CustomBlockRenderer } from 'react-native-render-html';
-import { CustomTagRendererProps } from 'react-native-render-html';
-import { DefaultTagRendererProps } from 'react-native-render-html';
+import { CustomRendererProps } from 'react-native-render-html';
 import { PropsFromParent } from 'react-native-render-html';
 import { default as React_2 } from 'react';
 import { TBlock } from 'react-native-render-html';
@@ -49,7 +48,7 @@ export interface HeuristicTablePluginConfig {
 export const HTMLTable: React_2.NamedExoticComponent<HTMLTableProps>;
 
 // @public
-export interface HTMLTableProps extends CustomTagRendererProps<TBlock> {
+export interface HTMLTableProps extends CustomRendererProps<TBlock> {
     // (undocumented)
     config: HeuristicTablePluginConfig;
     // Warning: (ae-forgotten-export) The symbol "TableLayout" needs to be exported by the entry point index.d.ts
@@ -111,16 +110,16 @@ export interface TableRoot {
 }
 
 // @public
-export const TdRenderer: CustomBlockRenderer<TableCellPropsFromParent>;
+export const TdRenderer: CustomBlockRenderer;
 
 // @public
-export const ThRenderer: CustomBlockRenderer<TableCellPropsFromParent>;
+export const ThRenderer: CustomBlockRenderer;
 
 // @public
-export function useHtmlTableCellProps({ propsFromParent, ...props }: DefaultTagRendererProps<TBlock, TableCellPropsFromParent>): DefaultTagRendererProps<TBlock, TableCellPropsFromParent>;
+export function useHtmlTableCellProps({ propsFromParent, ...props }: CustomRendererProps<TBlock>): CustomRendererProps<TBlock>;
 
 // @public
-export function useHtmlTableProps({ sharedProps, tnode, ...props }: CustomTagRendererProps<TBlock>, options?: {
+export function useHtmlTableProps({ sharedProps, tnode, ...props }: CustomRendererProps<TBlock>, options?: {
     overrideContentWidth?: number;
 }): HTMLTableProps;
 

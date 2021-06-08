@@ -9,16 +9,16 @@ Customize `td` and `th` renderers while reusing default cell renderer logic.
 <b>Signature:</b>
 
 ```typescript
-export default function useHtmlTableCellProps({ propsFromParent, ...props }: DefaultTagRendererProps<TBlock, TableCellPropsFromParent>): DefaultTagRendererProps<TBlock, TableCellPropsFromParent>;
+export default function useHtmlTableCellProps({ propsFromParent, ...props }: CustomRendererProps<TBlock>): CustomRendererProps<TBlock>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  { propsFromParent, ...props } | DefaultTagRendererProps&lt;TBlock, [TableCellPropsFromParent](./heuristic-table-plugin.tablecellpropsfromparent.md)<!-- -->&gt; |  |
+|  { propsFromParent, ...props } | CustomRendererProps&lt;TBlock&gt; |  |
 
 <b>Returns:</b>
 
-DefaultTagRendererProps&lt;TBlock, [TableCellPropsFromParent](./heuristic-table-plugin.tablecellpropsfromparent.md)<!-- -->&gt;
+CustomRendererProps&lt;TBlock&gt;
 

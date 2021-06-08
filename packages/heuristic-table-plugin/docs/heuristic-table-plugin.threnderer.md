@@ -9,5 +9,5 @@ The renderer component for `th` tag.
 <b>Signature:</b>
 
 ```typescript
-ThRenderer: CustomBlockRenderer<TableCellPropsFromParent>
+ThRenderer: CustomBlockRenderer
 ```

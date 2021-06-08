@@ -9,5 +9,5 @@ Intercept links press.
 <b>Signature:</b>
 
 ```typescript
-onLinkPress?: RenderersPropsBase['a']['onPress'];
+onLinkPress?: RenderersProps['a']['onPress'];
 ```
