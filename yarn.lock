@@ -3923,7 +3923,7 @@ __metadata:
   peerDependencies:
     react: ">= 16.8.0"
     react-native: ">= 0.63.0"
-    react-native-render-html: ">= 6.0.0-alpha.25 || >= 6.0.0-beta.0 || 6.x"
+    react-native-render-html: ">= 6.0.0-beta.0 || 6.x"
   languageName: unknown
   linkType: soft
 
@@ -3966,7 +3966,7 @@ __metadata:
   peerDependencies:
     react: ">= 16.8.0"
     react-native: ">= 0.59.0"
-    react-native-render-html: ">= 6.0.0-alpha.25 || >= 6.0.0-beta.0 || 6.x"
+    react-native-render-html: ">= 6.0.0-beta.0 || 6.x"
   languageName: unknown
   linkType: soft
 
@@ -4005,7 +4005,7 @@ __metadata:
     "@formidable-webview/webshell": ^2.3.0
     react: ">= 16.8.0"
     react-native: ">= 0.63.0"
-    react-native-render-html: ">= 6.0.0-alpha.20 || >= 6.0.0-beta.0 || 6.x"
+    react-native-render-html: ">= 6.0.0-beta.0 || 6.x"
   languageName: unknown
   linkType: soft
 
@@ -4052,7 +4052,7 @@ __metadata:
   peerDependencies:
     react: ">= 16.8.0"
     react-native: ">= 0.63.0"
-    react-native-render-html: ">= 6.0.0-alpha.25 || >= 6.0.0-beta.0 || 6.x"
+    react-native-render-html: ">= 6.0.0-beta.0 || 6.x"
   languageName: unknown
   linkType: soft
 
