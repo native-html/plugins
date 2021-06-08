@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import {
-  CustomTagRendererProps,
+  CustomRendererProps,
   TBlock,
   TNode,
   useContentWidth,
@@ -32,7 +32,7 @@ function useTableLayout({
  * @public
  */
 export default function useHtmlTableProps(
-  { sharedProps, tnode, ...props }: CustomTagRendererProps<TBlock>,
+  { sharedProps, tnode, ...props }: CustomRendererProps<TBlock>,
   options: {
     /**
      * If present, overrides contentWidth from shared props.

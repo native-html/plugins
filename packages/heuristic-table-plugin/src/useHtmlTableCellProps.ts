@@ -1,4 +1,4 @@
-import { DefaultTagRendererProps, TBlock } from 'react-native-render-html';
+import { TBlock, CustomRendererProps } from 'react-native-render-html';
 import { TableCellPropsFromParent } from './shared-types';
 
 /**
@@ -11,11 +11,8 @@ import { TableCellPropsFromParent } from './shared-types';
 export default function useHtmlTableCellProps({
   propsFromParent,
   ...props
-}: DefaultTagRendererProps<
-  TBlock,
-  TableCellPropsFromParent
->): DefaultTagRendererProps<TBlock, TableCellPropsFromParent> {
-  const { config, cell } = propsFromParent;
+}: CustomRendererProps<TBlock>): CustomRendererProps<TBlock> {
+  const { config, cell } = propsFromParent as TableCellPropsFromParent;
   const styleFromConfig = config?.getStyleForCell?.call(null, cell);
   let spanStyles = {};
   if (cell.lenY > 1) {

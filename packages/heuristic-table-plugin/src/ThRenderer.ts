@@ -1,6 +1,5 @@
 import React from 'react';
 import { CustomBlockRenderer } from 'react-native-render-html';
-import { TableCellPropsFromParent } from './shared-types';
 import useHtmlTableCellProps from './useHtmlTableCellProps';
 
 /**
@@ -9,9 +8,7 @@ import useHtmlTableCellProps from './useHtmlTableCellProps';
  * @param props - Component props.
  * @public
  */
-const ThRenderer: CustomBlockRenderer<TableCellPropsFromParent> = function (
-  props
-) {
+const ThRenderer: CustomBlockRenderer = function ThRenderer(props) {
   return React.createElement(
     props.TDefaultRenderer,
     useHtmlTableCellProps(props)

@@ -19,7 +19,9 @@ export default function TreeRenderer({
     return (
       <View style={{ width: node.width }}>
         <TNodeRenderer
-          propsFromParent={{ cell: node, collapsedMarginTop: null, config }}
+          propsFromParent={
+            { cell: node, collapsedMarginTop: null, config } as any
+          }
           tnode={node.tnode}
         />
       </View>

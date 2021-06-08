@@ -1,6 +1,6 @@
 import { ViewStyle } from 'react-native';
 import {
-  CustomTagRendererProps,
+  CustomRendererProps,
   PropsFromParent,
   TBlock,
   TNode
@@ -164,7 +164,7 @@ export interface HeuristicTablePluginConfig {
  *
  * @public
  */
-export interface HTMLTableProps extends CustomTagRendererProps<TBlock> {
+export interface HTMLTableProps extends CustomRendererProps<TBlock> {
   layout: TableLayout;
   config: HeuristicTablePluginConfig;
   settings: Settings;

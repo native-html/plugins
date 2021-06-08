@@ -69,7 +69,7 @@
   "peerDependencies": {
     "react": ">= 16.8.0",
     "react-native": ">= 0.63.0",
-    "react-native-render-html": ">= 6.0.0-alpha.25 || >= 6.0.0-beta.0 || 6.x"
+    "react-native-render-html": ">= 6.0.0-beta.0 || 6.x"
   },
   "author": "Jules Sam. Randolph <jules.sam.randolph@gmail.com> (https://github.com/jsamr)",
   "homepage": "https://github.com/native-html/plugins/tree/master/packages/heuristic-table-plugin#readme",
