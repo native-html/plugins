@@ -7,7 +7,7 @@ import {
   useWebshell
 } from '@formidable-webview/webshell';
 import { StyleProp, ViewStyle } from 'react-native';
-import { RenderersPropsBase } from 'react-native-render-html';
+import { RenderersProps } from 'react-native-render-html';
 import { linkPressTargetToOnDOMLinkPressArgs } from '@native-html/plugins-core';
 
 /**
@@ -78,7 +78,7 @@ export interface HTMLIframeProps<WebViewProps = any> extends IframeConfig {
   /**
    * Handle link press events.
    */
-  onLinkPress?: RenderersPropsBase['a']['onPress'];
+  onLinkPress?: RenderersProps['a']['onPress'];
 
   /**
    * Html attributes for this iframe node.

@@ -6,11 +6,11 @@
 
 import { ComponentType } from 'react';
 import { CustomBlockRenderer } from 'react-native-render-html';
-import { CustomTagRendererProps } from 'react-native-render-html';
+import { CustomRendererProps } from 'react-native-render-html';
 import { HTMLContentModel } from 'react-native-render-html';
 import { HTMLElementModel } from '@native-html/transient-render-engine';
 import { default as React_2 } from 'react';
-import { RenderersPropsBase } from 'react-native-render-html';
+import { RenderersProps } from 'react-native-render-html';
 import { StyleProp } from 'react-native';
 import type { TBlock } from '@native-html/transient-render-engine';
 import { ViewStyle } from 'react-native';
@@ -21,7 +21,7 @@ export function HTMLIframe({ WebView, webViewProps: userWebViewProps, source, st
 // @public
 export interface HTMLIframeProps<WebViewProps = any> extends IframeConfig {
     htmlAttribs: Record<string, string>;
-    onLinkPress?: RenderersPropsBase['a']['onPress'];
+    onLinkPress?: RenderersProps['a']['onPress'];
     scaleFactor: number;
     source: {
         uri?: string;
@@ -49,7 +49,9 @@ const IframeRenderer: CustomBlockRenderer;
 export default IframeRenderer;
 
 // @public
-export function useHtmlIframeProps({ key, style, tnode }: CustomTagRendererProps<TBlock>, iframeConfig?: IframeConfig): HTMLIframeProps | null;
+export function useHtmlIframeProps({ key, style, tnode }: CustomRendererProps<TBlock>, iframeConfig?: IframeConfig): (HTMLIframeProps & {
+    key?: any;
+}) | null;
 
 
 // (No @packageDocumentation comment for this package)

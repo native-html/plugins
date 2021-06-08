@@ -1,6 +1,6 @@
 import { Dimensions } from 'react-native';
 import {
-  CustomTagRendererProps,
+  CustomRendererProps,
   useDocumentMetadata,
   useSharedProps,
   useNormalizedUrl,
@@ -29,9 +29,9 @@ const defaultIframeConfig: IframeConfig = {
  * @public
  */
 export default function useHtmlIframeProps(
-  { key, style, tnode }: CustomTagRendererProps<TBlock>,
+  { key, style, tnode }: CustomRendererProps<TBlock>,
   iframeConfig?: IframeConfig
-): HTMLIframeProps | null {
+): (HTMLIframeProps & { key?: any }) | null {
   const {
     WebView,
     defaultWebViewProps,

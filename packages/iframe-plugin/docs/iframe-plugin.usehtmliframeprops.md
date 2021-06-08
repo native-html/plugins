@@ -9,17 +9,19 @@ Extract props for the HTMLIframe component from renderer function arguments. Thi
 <b>Signature:</b>
 
 ```typescript
-export default function useHtmlIframeProps({ key, style, tnode }: CustomTagRendererProps<TBlock>, iframeConfig?: IframeConfig): HTMLIframeProps | null;
+export default function useHtmlIframeProps({ key, style, tnode }: CustomRendererProps<TBlock>, iframeConfig?: IframeConfig): (HTMLIframeProps & {
+    key?: any;
+}) | null;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  { key, style, tnode } | CustomTagRendererProps&lt;TBlock&gt; |  |
+|  { key, style, tnode } | CustomRendererProps&lt;TBlock&gt; |  |
 |  iframeConfig | [IframeConfig](./iframe-plugin.iframeconfig.md) | Override config options. |
 
 <b>Returns:</b>
 
-[HTMLIframeProps](./iframe-plugin.htmliframeprops.md) \| null
+([HTMLIframeProps](./iframe-plugin.htmliframeprops.md) &amp; { key?: any; }) \| null
 
