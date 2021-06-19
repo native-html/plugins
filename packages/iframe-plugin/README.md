@@ -137,7 +137,7 @@ import {useHtmlIframeProps, HTMLIframe, iframeModel} from '@native-html/iframe-p
 const IframeRenderer = function IframeRenderer(props) {
   const iframeProps = useHtmlIframeProps(props);
   // Do customize the props here; wrap with your own container...
-  return iframeProps ? <HTMLIframe {..iframeProps} /> : null;
+  return iframeProps ? <HTMLIframe {...iframeProps} /> : null;
 };
 
 const renderers = {
