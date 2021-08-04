@@ -47,6 +47,13 @@ function root(children: TableRoot['children']): TableRoot {
 }
 
 describe('createRenderTree', () => {
+  it('should handle empty table layout', () => {
+    expect(
+      makeRenderTree('<table><tr><td></td></tr></table>', [0])
+    ).toMatchObject({
+      type: 'root'
+    });
+  });
   it('should handle simple table layout', () => {
     expect(
       makeRenderTree(
