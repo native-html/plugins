@@ -80,7 +80,12 @@ export default function useHtmlIframeProps(
 
   const source = htmlAttribs.srcdoc
     ? { html: htmlAttribs.srcdoc as string, baseUrl: documentBaseUrl }
-    : { uri: normalizedUrl };
+    : {
+        headers: {
+          ...resolvedConfig.webViewProps?.source?.headers
+        },
+        uri: normalizedUrl
+    };
 
   if (__DEV__ && !WebView) {
     console.warn(
