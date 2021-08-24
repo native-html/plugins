@@ -90,7 +90,12 @@ export default function extractHtmlIframeProps(
 
   const source = htmlAttribs.srcdoc
     ? { html: htmlAttribs.srcdoc as string }
-    : { uri: normalizeUri(htmlAttribs.src as string) };
+    : { 
+      headers: {
+        ...resolvedConfig.webViewProps?.source?.headers
+      },
+      uri: normalizeUri(htmlAttribs.src as string) 
+    };
 
   if (__DEV__ && !WebView) {
     console.warn(
