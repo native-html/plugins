@@ -29,9 +29,9 @@ const defaultIframeConfig: IframeConfig = {
  * @public
  */
 export default function useHtmlIframeProps(
-  { key, style, tnode }: CustomRendererProps<TBlock>,
+  { style, tnode }: CustomRendererProps<TBlock>,
   iframeConfig?: IframeConfig
-): (HTMLIframeProps & { key?: any }) | null {
+): HTMLIframeProps | null {
   const {
     WebView,
     defaultWebViewProps,
@@ -90,7 +90,6 @@ export default function useHtmlIframeProps(
   return WebView
     ? {
         ...resolvedConfig,
-        key,
         source,
         onLinkPress,
         htmlAttribs,

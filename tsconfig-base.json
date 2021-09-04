@@ -2,11 +2,13 @@
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "@tsconfig/react-native/tsconfig.json",
   "compilerOptions": {
+    "lib": ["ESNext"],
     "allowJs": false,
     "composite": false,
     "noEmit": false,
     "declaration": true,
     "noImplicitAny": false,
-    "isolatedModules": false
+    "isolatedModules": false,
+    "skipLibCheck": true
   }
 }

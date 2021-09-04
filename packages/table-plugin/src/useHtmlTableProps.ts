@@ -20,9 +20,9 @@ import type { TBlock } from '@native-html/transient-render-engine';
  * @public
  */
 export default function useHtmlTableProps(
-  { key, style, tnode }: CustomRendererProps<TBlock>,
+  { style, tnode }: CustomRendererProps<TBlock>,
   tableConfig?: TableConfig
-): (HTMLTableProps & { key?: string | number }) | null {
+): HTMLTableProps | null {
   const {
     WebView,
     defaultWebViewProps,
@@ -68,7 +68,6 @@ export default function useHtmlTableProps(
     ? {
         ...resolvedConfig,
         ...stats,
-        key,
         html,
         sourceBaseUrl: documentBaseUrl,
         style: composedStyles,
