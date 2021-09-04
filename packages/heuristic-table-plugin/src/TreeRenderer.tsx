@@ -10,15 +10,21 @@ const styles = StyleSheet.create({
 
 export default function TreeRenderer({
   node,
-  config
+  config,
+  renderIndex,
+  renderLength
 }: {
   node: TableRenderNode;
+  renderIndex: number;
+  renderLength: number;
   config?: HeuristicTablePluginConfig;
 }) {
   if (node.type === 'cell') {
     return (
       <View style={{ width: node.width }}>
         <TNodeRenderer
+          renderIndex={renderIndex}
+          renderLength={renderLength}
           propsFromParent={
             { cell: node, collapsedMarginTop: null, config } as any
           }
@@ -32,7 +38,9 @@ export default function TreeRenderer({
       React.createElement(TreeRenderer, {
         node: v,
         key: i,
-        config
+        config,
+        renderIndex: i,
+        renderLength: node.children.length
       })
     );
     return <View style={styles.colContainer}>{children}</View>;
@@ -44,7 +52,9 @@ export default function TreeRenderer({
           React.createElement(TreeRenderer, {
             node: v,
             key: i,
-            config
+            config,
+            renderIndex: i,
+            renderLength: node.children.length
           })
         )}
       </View>
