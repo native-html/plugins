@@ -7,7 +7,7 @@ function cell(y: number, x: number = 0): TableCell {
   return {
     lenX: 1,
     lenY: 1,
-    tnode: ({} as unknown) as TNode,
+    tnode: {} as unknown as TNode,
     type: 'cell',
     constraints: {
       contentDensity: 0,

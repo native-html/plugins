@@ -23,11 +23,8 @@ export default function useHtmlTableProps(
   { style, tnode }: CustomRendererProps<TBlock>,
   tableConfig?: TableConfig
 ): HTMLTableProps | null {
-  const {
-    WebView,
-    defaultWebViewProps,
-    computeEmbeddedMaxWidth
-  } = useSharedProps();
+  const { WebView, defaultWebViewProps, computeEmbeddedMaxWidth } =
+    useSharedProps();
   const contentWidth = useContentWidth();
   const globalTableConfig = useRendererProps('table');
   const { onPress: onLinkPress } = useRendererProps('a');

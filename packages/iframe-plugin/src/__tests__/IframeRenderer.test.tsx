@@ -15,8 +15,7 @@ describe('iframe renderer', () => {
           }}
           contentWidth={10}
           source={{
-            html:
-              '<iframe width="300" height="300" src="https://google.com/" />'
+            html: '<iframe width="300" height="300" src="https://google.com/" />'
           }}
         />
       );

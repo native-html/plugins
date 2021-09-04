@@ -32,11 +32,8 @@ export default function useHtmlIframeProps(
   { style, tnode }: CustomRendererProps<TBlock>,
   iframeConfig?: IframeConfig
 ): HTMLIframeProps | null {
-  const {
-    WebView,
-    defaultWebViewProps,
-    computeEmbeddedMaxWidth
-  } = useSharedProps();
+  const { WebView, defaultWebViewProps, computeEmbeddedMaxWidth } =
+    useSharedProps();
   const contentWidth = useContentWidth();
   const globalIframeConfig = useRendererProps('iframe');
   const { onPress: onLinkPress } = useRendererProps('a');

@@ -25,12 +25,10 @@ const TableRenderer: CustomBlockRenderer = function TableRenderer(props) {
  *
  * @public
  */
-export const tableModel: HTMLElementModel<
-  'table',
-  HTMLContentModel.block
-> = defaultHTMLElementModels.table.extend({
-  contentModel: HTMLContentModel.block,
-  isOpaque: true
-});
+export const tableModel: HTMLElementModel<'table', HTMLContentModel.block> =
+  defaultHTMLElementModels.table.extend({
+    contentModel: HTMLContentModel.block,
+    isOpaque: true
+  });
 
 export default TableRenderer;

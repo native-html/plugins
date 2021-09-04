@@ -8581,6 +8581,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"eslint-config-prettier@npm:^8.3.0":
+  version: 8.3.0
+  resolution: "eslint-config-prettier@npm:8.3.0"
+  peerDependencies:
+    eslint: ">=7.0.0"
+  bin:
+    eslint-config-prettier: bin/cli.js
+  checksum: df4cea3032671995bb5ab07e016169072f7fa59f44a53251664d9ca60951b66cdc872683b5c6a3729c91497c11490ca44a79654b395dd6756beb0c3903a37196
+  languageName: node
+  linkType: hard
+
 "eslint-plugin-compat@npm:^3.13.0":
   version: 3.13.0
   resolution: "eslint-plugin-compat@npm:3.13.0"
@@ -15099,6 +15110,7 @@ fsevents@^1.2.7:
     "@typescript-eslint/eslint-plugin": ^4.30.0
     "@typescript-eslint/parser": ^4.30.0
     eslint: ^7.32.0
+    eslint-config-prettier: ^8.3.0
     eslint-plugin-compat: ^3.13.0
     eslint-plugin-tsdoc: ^0.2.14
     husky: ^4.3.8

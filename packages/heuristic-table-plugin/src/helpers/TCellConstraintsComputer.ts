@@ -58,22 +58,20 @@ export default class TCellConstraintsComputer {
   private baseFontCoeff: number;
   private fallbackFontSize: number;
 
-  private fontWeightCoeffs: Record<
-    Required<TextStyle>['fontWeight'],
-    number
-  > = {
-    '100': 0.8,
-    '200': 0.85,
-    '300': 0.9,
-    '400': 1,
-    '500': 1.1,
-    '600': 1.2,
-    '700': 1.3,
-    '800': 1.4,
-    '900': 1.5,
-    bold: 1.3,
-    normal: 1
-  };
+  private fontWeightCoeffs: Record<Required<TextStyle>['fontWeight'], number> =
+    {
+      '100': 0.8,
+      '200': 0.85,
+      '300': 0.9,
+      '400': 1,
+      '500': 1.1,
+      '600': 1.2,
+      '700': 1.3,
+      '800': 1.4,
+      '900': 1.5,
+      bold: 1.3,
+      normal: 1
+    };
 
   constructor({
     baseFontCoeff,

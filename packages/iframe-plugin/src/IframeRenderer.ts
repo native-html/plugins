@@ -25,12 +25,10 @@ const IframeRenderer: CustomBlockRenderer = function IframeRenderer(props) {
  *
  * @public
  */
-export const iframeModel: HTMLElementModel<
-  'iframe',
-  HTMLContentModel.block
-> = defaultHTMLElementModels.iframe.extend({
-  contentModel: HTMLContentModel.block,
-  isOpaque: true
-});
+export const iframeModel: HTMLElementModel<'iframe', HTMLContentModel.block> =
+  defaultHTMLElementModels.iframe.extend({
+    contentModel: HTMLContentModel.block,
+    isOpaque: true
+  });
 
 export default IframeRenderer;

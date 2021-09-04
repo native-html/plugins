@@ -47,10 +47,10 @@ export default function useHtmlTableProps(
     typeof options.overrideContentWidth === 'number'
       ? options.overrideContentWidth
       : sharedContentWidth;
-  const settings = useMemo(() => ({ contentWidth, forceStretch }), [
-    contentWidth,
-    forceStretch
-  ]);
+  const settings = useMemo(
+    () => ({ contentWidth, forceStretch }),
+    [contentWidth, forceStretch]
+  );
   const layout = useTableLayout({ tnode, settings });
   return {
     layout,
