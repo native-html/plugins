@@ -65,8 +65,9 @@ function YoutubeExampleDescription({ scalesPageToFit }) {
     <Text style={styles.welcome}>
       This <Monospace>IframeRenderer</Monospace> has the{' '}
       <Monospace>scalesPageToFit</Monospace> option set to{' '}
-      <Monospace children={scalesPageToFit + ''} />. It will zoom down to a
-      level that allows the whole content to be visible. Default is false.
+      <Monospace children={scalesPageToFit + ''} />. When{' '}
+      <Monospace>true</Monospace>, will zoom down to a level that allows the
+      whole content to be visible. Default is <Monospace>false</Monospace>.
     </Text>
   );
 }
