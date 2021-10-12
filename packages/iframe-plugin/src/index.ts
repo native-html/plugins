@@ -11,4 +11,17 @@ declare module 'react-native-render-html' {
      */
     iframe?: IframeConfig;
   }
+
+  interface EmbeddedWithHeadersParamsMap {
+    iframe: {
+      /**
+       * The print height of the iframe in DPI.
+       */
+      printHeight: number;
+      /**
+       * The print width of the iframe in DPI.
+       */
+      printWidth: number;
+    };
+  }
 }

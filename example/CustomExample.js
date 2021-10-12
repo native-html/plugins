@@ -183,6 +183,7 @@ export default function CustomExample({
   return (
     <RenderHTML
       key={`custom-${instance}`}
+      provideEmbeddedHeaders={(uri, tagName) => null}
       source={{ html: table1 }}
       contentWidth={availableWidth}
       renderersProps={{

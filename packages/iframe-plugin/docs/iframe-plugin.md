@@ -9,7 +9,7 @@
 |  Function | Description |
 |  --- | --- |
 |  [HTMLIframe({ WebView, webViewProps: userWebViewProps, source, style, onLinkPress, scaleFactor, injectedCSSStyles, removeBodySpacing, scalesPageToFit })](./iframe-plugin.htmliframe.md) | A component to render iframes in react-native-render-html. |
-|  [useHtmlIframeProps({ key, style, tnode }, iframeConfig)](./iframe-plugin.usehtmliframeprops.md) | Extract props for the HTMLIframe component from renderer function arguments. This function is especially usefull for custom iframe renderers. |
+|  [useHtmlIframeProps({ style, tnode }, iframeConfig)](./iframe-plugin.usehtmliframeprops.md) | Extract props for the HTMLIframe component from renderer function arguments. This function is especially usefull for custom iframe renderers. |
 
 ## Interfaces
 

@@ -32,8 +32,12 @@ export default function useHtmlIframeProps(
   { style, tnode }: CustomRendererProps<TBlock>,
   iframeConfig?: IframeConfig
 ): HTMLIframeProps | null {
-  const { WebView, defaultWebViewProps, computeEmbeddedMaxWidth } =
-    useSharedProps();
+  const {
+    WebView,
+    defaultWebViewProps,
+    computeEmbeddedMaxWidth,
+    provideEmbeddedHeaders
+  } = useSharedProps();
   const contentWidth = useContentWidth();
   const globalIframeConfig = useRendererProps('iframe');
   const { onPress: onLinkPress } = useRendererProps('a');
@@ -77,7 +81,13 @@ export default function useHtmlIframeProps(
 
   const source = htmlAttribs.srcdoc
     ? { html: htmlAttribs.srcdoc as string, baseUrl: documentBaseUrl }
-    : { uri: normalizedUrl };
+    : {
+        uri: normalizedUrl,
+        headers: provideEmbeddedHeaders?.(normalizedUrl, 'iframe', {
+          printHeight,
+          printWidth
+        })
+      };
 
   if (__DEV__ && !WebView) {
     console.warn(

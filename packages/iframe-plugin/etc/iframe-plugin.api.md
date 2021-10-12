@@ -16,7 +16,7 @@ import type { TBlock } from '@native-html/transient-render-engine';
 import { ViewStyle } from 'react-native';
 
 // @public
-export function HTMLIframe({ WebView, webViewProps: userWebViewProps, source, style, onLinkPress, scaleFactor, injectedCSSStyles, removeBodySpacing, scalesPageToFit }: HTMLIframeProps): React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, string | any | (new (props: any) => React_2.Component<any, any, any>)> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
+export function HTMLIframe({ WebView, webViewProps: userWebViewProps, source, style, onLinkPress, scaleFactor, injectedCSSStyles, removeBodySpacing, scalesPageToFit }: HTMLIframeProps): React_2.ReactElement<any, string | React_2.JSXElementConstructor<any>>;
 
 // @public
 export interface HTMLIframeProps<WebViewProps = any> extends IframeConfig {
@@ -49,9 +49,7 @@ const IframeRenderer: CustomBlockRenderer;
 export default IframeRenderer;
 
 // @public
-export function useHtmlIframeProps({ key, style, tnode }: CustomRendererProps<TBlock>, iframeConfig?: IframeConfig): (HTMLIframeProps & {
-    key?: any;
-}) | null;
+export function useHtmlIframeProps({ style, tnode }: CustomRendererProps<TBlock>, iframeConfig?: IframeConfig): HTMLIframeProps | null;
 
 
 // (No @packageDocumentation comment for this package)

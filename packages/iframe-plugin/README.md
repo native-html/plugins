@@ -127,6 +127,41 @@ equivalent to `resizeMode: 'contain'` for images. See example below with
 
 ![](/blob/master/images/scalesPageToFit.jpg)
 
+## Providing headers
+
+```jsx
+import IframeRenderer, { iframeModel } from '@native-html/iframe-plugin';
+import RenderHTML from 'react-native-render-html';
+import WebView from 'react-native-webview';
+
+const renderers = {
+  iframe: IframeRenderer
+}
+
+const customHTMLElementModels = {
+  iframe: iframeModel
+}
+
+function provideEmbeddedHeaders(uri, tagName) {
+  if (tagName === "iframe" && uri.startsWith("https://protected-domain.com")) {
+    // Pass an authorization header to all iframes in protected-domain.com
+    return {
+      Authorization: "Bearer XXXXXXXX";
+    }
+  }
+}
+
+// ...
+
+<RenderHTML renderers={renderers}
+      WebView={WebView}
+      source={{ html: '<iframe width="400" height="200" src="https://protected-domain.com/user/cart?embedded"></iframe>' }}
+      customHTMLElementModels={customHTMLElementModels}
+      provideEmbeddedHeaders={provideEmbeddedHeaders}
+/>
+
+```
+
 ## Customizing the renderer
 
 You can customize the renderer logic thanks to `useHtmlIframeProps` hook, `iframeModel` and `HTMLIframe` exports:
@@ -137,7 +172,7 @@ import {useHtmlIframeProps, HTMLIframe, iframeModel} from '@native-html/iframe-p
 const IframeRenderer = function IframeRenderer(props) {
   const iframeProps = useHtmlIframeProps(props);
   // Do customize the props here; wrap with your own container...
-  return iframeProps ? <HTMLIframe {...iframeProps} /> : null;
+  return <HTMLIframe {...iframeProps} />;
 };
 
 const renderers = {
