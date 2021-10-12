@@ -49,7 +49,7 @@ const IframeRenderer: CustomBlockRenderer;
 export default IframeRenderer;
 
 // @public
-export function useHtmlIframeProps({ style, tnode }: CustomRendererProps<TBlock>, iframeConfig?: IframeConfig): HTMLIframeProps | null;
+export function useHtmlIframeProps({ style, tnode }: CustomRendererProps<TBlock>, iframeConfig?: IframeConfig): HTMLIframeProps;
 
 
 // (No @packageDocumentation comment for this package)

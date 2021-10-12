@@ -31,7 +31,7 @@ const defaultIframeConfig: IframeConfig = {
 export default function useHtmlIframeProps(
   { style, tnode }: CustomRendererProps<TBlock>,
   iframeConfig?: IframeConfig
-): HTMLIframeProps | null {
+): HTMLIframeProps {
   const {
     WebView,
     defaultWebViewProps,
@@ -89,20 +89,13 @@ export default function useHtmlIframeProps(
         })
       };
 
-  if (__DEV__ && !WebView) {
-    console.warn(
-      "@native-html/iframe-plugin: You must pass a WebView component from react-native-webview as a prop to the HTML component. The iframe won't be rendered."
-    );
-  }
-  return WebView
-    ? {
-        ...resolvedConfig,
-        source,
-        onLinkPress,
-        htmlAttribs,
-        scaleFactor,
-        style: [restStyle, { width: printWidth, height: printHeight }],
-        WebView
-      }
-    : null;
+  return {
+    ...resolvedConfig,
+    source,
+    onLinkPress,
+    htmlAttribs,
+    scaleFactor,
+    style: [restStyle, { width: printWidth, height: printHeight }],
+    WebView
+  };
 }
