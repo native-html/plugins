@@ -22,7 +22,7 @@ import type { TBlock } from '@native-html/transient-render-engine';
 export default function useHtmlTableProps(
   { style, tnode }: CustomRendererProps<TBlock>,
   tableConfig?: TableConfig
-): HTMLTableProps | null {
+): HTMLTableProps {
   const { WebView, defaultWebViewProps, computeEmbeddedMaxWidth } =
     useSharedProps();
   const contentWidth = useContentWidth();
@@ -56,20 +56,13 @@ export default function useHtmlTableProps(
       : null
   ];
 
-  if (__DEV__ && !WebView) {
-    console.warn(
-      "@native-html/table-plugin: You must pass a WebView component from react-native-webview as a prop to the HTML component. The table won't be rendered."
-    );
-  }
-  return WebView
-    ? {
-        ...resolvedConfig,
-        ...stats,
-        html,
-        sourceBaseUrl: documentBaseUrl,
-        style: composedStyles,
-        onLinkPress,
-        WebView
-      }
-    : null;
+  return {
+    ...resolvedConfig,
+    ...stats,
+    html,
+    sourceBaseUrl: documentBaseUrl,
+    style: composedStyles,
+    onLinkPress,
+    WebView
+  };
 }

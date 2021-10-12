@@ -110,9 +110,7 @@ export interface TableStyleSpecs {
 }
 
 // @public
-export function useHtmlTableProps({ key, style, tnode }: CustomRendererProps<TBlock>, tableConfig?: TableConfig): (HTMLTableProps & {
-    key?: string | number;
-}) | null;
+export function useHtmlTableProps({ style, tnode }: CustomRendererProps<TBlock>, tableConfig?: TableConfig): HTMLTableProps;
 
 
 // (No @packageDocumentation comment for this package)

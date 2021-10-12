@@ -9,7 +9,7 @@
 |  Function | Description |
 |  --- | --- |
 |  [cssRulesFromSpecs(specs)](./table-plugin.cssrulesfromspecs.md) | Create css rules from a specification object. |
-|  [useHtmlTableProps({ key, style, tnode }, tableConfig)](./table-plugin.usehtmltableprops.md) | Extract props for the HTMLTable component from renderer function arguments. This function is especially usefull for custom table renderers. |
+|  [useHtmlTableProps({ style, tnode }, tableConfig)](./table-plugin.usehtmltableprops.md) | Extract props for the HTMLTable component from renderer function arguments. This function is especially usefull for custom table renderers. |
 
 ## Interfaces
 
