@@ -1,7 +1,7 @@
 import React from 'react';
 import HTML, { RenderHTMLProps } from 'react-native-render-html';
 import renderer from 'react-test-renderer';
-import WebView from '@formidable-webview/ersatz';
+import WebView from 'react-native-webview';
 import IframeRenderer, { iframeModel } from '../IframeRenderer';
 
 describe('iframe renderer', () => {
