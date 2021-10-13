@@ -1,3 +1,16 @@
+# [2.6.0](https://github.com/native-html/plugins/compare/@native-html/iframe-plugin@2.5.0...@native-html/iframe-plugin@2.6.0) (2021-10-13)
+
+
+### Bug Fixes
+
+* **iframe-plugin:** the iframe is painted as a blank view ([d40e98d](https://github.com/native-html/plugins/commit/d40e98db2595c3d8a231b0070ca3e74d6562fc83)), closes [#41](https://github.com/native-html/plugins/issues/41)
+* remove null from useHtmlIframeProps return signature (dead condition) ([4c51d0a](https://github.com/native-html/plugins/commit/4c51d0af641c0fd121d3959febcc60c09c8259b5))
+
+
+### Features
+
+* **iframe-plugin:** support headers via `provideEmbeddedHeaders` prop ([436a2ac](https://github.com/native-html/plugins/commit/436a2ace0afc80eb1cdba463c06985fc3acee6f8))
+
 # [2.5.0](https://github.com/native-html/plugins/compare/@native-html/iframe-plugin@2.4.0...@native-html/iframe-plugin@2.5.0) (2021-06-08)
 
 
