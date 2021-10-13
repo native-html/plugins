@@ -1,3 +1,10 @@
+## [5.3.1](https://github.com/native-html/plugins/compare/@native-html/table-plugin@5.3.0...@native-html/table-plugin@5.3.1) (2021-10-13)
+
+
+### Bug Fixes
+
+* remove null from useHtmlTableProps return signature (dead condition) ([52888c5](https://github.com/native-html/plugins/commit/52888c54d1d21647ce4afb5a05385e332a37ba02))
+
 # [5.3.0](https://github.com/native-html/plugins/compare/@native-html/table-plugin@5.2.0...@native-html/table-plugin@5.3.0) (2021-06-08)
 
 
