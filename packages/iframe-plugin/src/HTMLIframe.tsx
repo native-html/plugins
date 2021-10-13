@@ -6,7 +6,7 @@ import {
   LinkPressTarget,
   useWebshell
 } from '@formidable-webview/webshell';
-import { StyleProp, ViewStyle } from 'react-native';
+import { StyleProp, View, ViewStyle } from 'react-native';
 import { RenderersProps } from 'react-native-render-html';
 import { linkPressTargetToOnDOMLinkPressArgs } from '@native-html/plugins-core';
 
@@ -148,10 +148,15 @@ export default function HTMLIframe({
     props: {
       ...userWebViewProps,
       onDOMLinkPress,
-      style,
       source,
       testID: 'iframe'
     }
   });
-  return React.createElement(WebView, webViewProps);
+  // We need to wrap the WebView in a View to circumvent a bug in
+  // react-native-webview, see https://git.io/JKY1r
+  return (
+    <View style={style}>
+      <WebView {...webViewProps} />
+    </View>
+  );
 }
