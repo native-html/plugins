@@ -1,3 +1,10 @@
+# [0.7.0](https://github.com/native-html/plugins/compare/@native-html/heuristic-table-plugin@0.6.0...@native-html/heuristic-table-plugin@0.7.0) (2021-10-13)
+
+
+### Features
+
+* **heuristic-table:** support rnrh@6.1.0 `renderIndex` and `renderLength` props ([961de3d](https://github.com/native-html/plugins/commit/961de3d519c52e4d5fa12e59489003736d11aed2))
+
 # [0.6.0](https://github.com/native-html/plugins/compare/@native-html/heuristic-table-plugin@0.5.0...@native-html/heuristic-table-plugin@0.6.0) (2021-06-08)
 
 
