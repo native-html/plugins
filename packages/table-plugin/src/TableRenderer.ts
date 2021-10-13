@@ -17,7 +17,7 @@ import { HTMLTable } from './HTMLTable';
  */
 const TableRenderer: CustomBlockRenderer = function TableRenderer(props) {
   const tableProps = useHtmlTableProps(props);
-  return tableProps ? React.createElement(HTMLTable, tableProps) : null;
+  return React.createElement(HTMLTable, tableProps);
 };
 
 /**

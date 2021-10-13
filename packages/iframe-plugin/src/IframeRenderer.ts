@@ -17,7 +17,7 @@ import HTMLIframe from './HTMLIframe';
  */
 const IframeRenderer: CustomBlockRenderer = function IframeRenderer(props) {
   const iframeProps = useHtmlIframeProps(props);
-  return iframeProps ? React.createElement(HTMLIframe, iframeProps) : null;
+  return React.createElement(HTMLIframe, iframeProps);
 };
 
 /**
