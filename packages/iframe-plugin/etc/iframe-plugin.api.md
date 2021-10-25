@@ -9,14 +9,13 @@ import { CustomBlockRenderer } from 'react-native-render-html';
 import { CustomRendererProps } from 'react-native-render-html';
 import { HTMLContentModel } from 'react-native-render-html';
 import { HTMLElementModel } from '@native-html/transient-render-engine';
-import { default as React_2 } from 'react';
 import { RenderersProps } from 'react-native-render-html';
 import { StyleProp } from 'react-native';
 import type { TBlock } from '@native-html/transient-render-engine';
 import { ViewStyle } from 'react-native';
 
 // @public
-export function HTMLIframe({ WebView, webViewProps: userWebViewProps, source, style, onLinkPress, scaleFactor, injectedCSSStyles, removeBodySpacing, scalesPageToFit }: HTMLIframeProps): React_2.ReactElement<any, string | React_2.JSXElementConstructor<any>>;
+export function HTMLIframe({ WebView, webViewProps: userWebViewProps, source, style, onLinkPress, scaleFactor, injectedCSSStyles, removeBodySpacing, scalesPageToFit }: HTMLIframeProps): JSX.Element;
 
 // @public
 export interface HTMLIframeProps<WebViewProps = any> extends IframeConfig {

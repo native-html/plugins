@@ -9,7 +9,7 @@ A component to render iframes in react-native-render-html.
 <b>Signature:</b>
 
 ```typescript
-export default function HTMLIframe({ WebView, webViewProps: userWebViewProps, source, style, onLinkPress, scaleFactor, injectedCSSStyles, removeBodySpacing, scalesPageToFit }: HTMLIframeProps): React.ReactElement<any, string | React.JSXElementConstructor<any>>;
+export default function HTMLIframe({ WebView, webViewProps: userWebViewProps, source, style, onLinkPress, scaleFactor, injectedCSSStyles, removeBodySpacing, scalesPageToFit }: HTMLIframeProps): JSX.Element;
 ```
 
 ## Parameters
@@ -20,5 +20,5 @@ export default function HTMLIframe({ WebView, webViewProps: userWebViewProps, so
 
 <b>Returns:</b>
 
-React.ReactElement&lt;any, string \| React.JSXElementConstructor&lt;any&gt;&gt;
+JSX.Element
 
