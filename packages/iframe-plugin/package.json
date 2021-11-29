@@ -1,6 +1,6 @@
 {
   "name": "@native-html/iframe-plugin",
-  "version": "2.6.0",
+  "version": "2.6.1",
   "description": "🌐 A WebView-based plugin to render iframes in react-native-render-html",
   "main": "lib/commonjs/index.js",
   "module": "lib/module/index.js",
