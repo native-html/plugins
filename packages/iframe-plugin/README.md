@@ -77,10 +77,10 @@ yarn add @native-html/iframe-plugin react-native-webview
 
 ## Compat Table
 
-| react-native-render-html | @native-html/iframe-plugin                                          |
-| ------------------------ | ------------------------------------------------------------------- |
-| ≥ 5.0.0 &lt; 6.0.0       | 1.x ([documentation](/tree/rnrh/5.x/packages/iframe-plugin#readme)) |
-| ≥ 6.0.0                  | 2.x ([documentation](/tree/rnrh/6.x/packages/iframe-plugin#readme)  |
+| react-native-render-html | @native-html/iframe-plugin                                                                                |
+| ------------------------ | --------------------------------------------------------------------------------------------------------- |
+| ≥ 5.0.0 &lt; 6.0.0       | 1.x ([documentation](https://github.com/native-html/plugins/tree/rnrh/5.x/packages/iframe-plugin#readme)) |
+| ≥ 6.0.0                  | 2.x ([documentation](https://github.com/native-html/plugins/tree/rnrh/6.x/packages/iframe-plugin#readme)) |
 
 ## Minimal working example
 
@@ -91,22 +91,33 @@ import WebView from 'react-native-webview';
 
 const renderers = {
   iframe: IframeRenderer
-}
+};
 
 const customHTMLElementModels = {
   iframe: iframeModel
-}
+};
 
 // ...
 
-<RenderHTML renderers={renderers}
-      WebView={WebView}
-      source={{ html: '<iframe ...></iframe>' }}
-      customHTMLElementModels={customHTMLElementModels}
-      defaultWebViewProps={{ /* Any prop you want to pass to all WebViews */ }}
-      renderersProps={{ iframe: { scalesPageToFit: true, webViewProps: { /* Any prop you want to pass to iframe WebViews */ } }}}
-/>
-
+<RenderHTML
+  renderers={renderers}
+  WebView={WebView}
+  source={{ html: '<iframe ...></iframe>' }}
+  customHTMLElementModels={customHTMLElementModels}
+  defaultWebViewProps={
+    {
+      /* Any prop you want to pass to all WebViews */
+    }
+  }
+  renderersProps={{
+    iframe: {
+      scalesPageToFit: true,
+      webViewProps: {
+        /* Any prop you want to pass to iframe WebViews */
+      }
+    }
+  }}
+/>;
 ```
 
 ## Customizing
@@ -167,7 +178,11 @@ function provideEmbeddedHeaders(uri, tagName) {
 You can customize the renderer logic thanks to `useHtmlIframeProps` hook, `iframeModel` and `HTMLIframe` exports:
 
 ```jsx
-import {useHtmlIframeProps, HTMLIframe, iframeModel} from '@native-html/iframe-plugin';
+import {
+  useHtmlIframeProps,
+  HTMLIframe,
+  iframeModel
+} from '@native-html/iframe-plugin';
 
 const IframeRenderer = function IframeRenderer(props) {
   const iframeProps = useHtmlIframeProps(props);
@@ -177,7 +192,7 @@ const IframeRenderer = function IframeRenderer(props) {
 
 const renderers = {
   iframe: IframeRenderer
-}
+};
 
 // use "renderers" prop in your RenderHTML instance
 ```
