@@ -19,7 +19,8 @@ export default function linkPressTargetToOnDOMLinkPressArgs({
   nameAttribute,
   referrerpolicyAttribute,
   relAttribute,
-  typeAttribute
+  typeAttribute,
+  dataAttributes
 }: LinkPressTarget): Parameters<Required<RenderersProps['a']>['onPress']> {
   const attributes = {
     class: classAttribute,
@@ -31,7 +32,8 @@ export default function linkPressTargetToOnDOMLinkPressArgs({
     referrerpolicy: referrerpolicyAttribute,
     rel: relAttribute,
     type: typeAttribute,
-    target: targetAttribute
+    target: targetAttribute,
+    data: dataAttributes
   };
   for (const name in attributes) {
     if (attributes[name] == null) {
