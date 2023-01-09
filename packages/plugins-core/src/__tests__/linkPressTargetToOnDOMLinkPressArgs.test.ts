@@ -12,7 +12,8 @@ describe('linkPressTargetToOnDOMLinkPressArgs', () => {
         href: 'https://google.com/',
         hreflang: 'en',
         id: 'anchor03',
-        target: '_blank'
+        target: '_blank',
+        data: { custom: 'data' }
       },
       '_blank'
     ];
@@ -31,7 +32,8 @@ describe('linkPressTargetToOnDOMLinkPressArgs', () => {
         relAttribute: null,
         targetAttribute: '_blank',
         typeAttribute: null,
-        uri: 'https://google.com/'
+        uri: 'https://google.com/',
+        dataAttributes: { custom: 'data' }
       })
     ).toEqual(expectedOutput);
   });
