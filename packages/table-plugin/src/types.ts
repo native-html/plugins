@@ -234,7 +234,7 @@ export interface TableConfig {
    *
    * @defaultValue 1
    */
-  maxScale?: boolean;
+  maxScale?: number;
 
   /**
    * Container style.

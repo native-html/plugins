@@ -62,9 +62,7 @@
   },
   "dependencies": {
     "@formidable-webview/webshell": "^2.6.0",
-    "@native-html/plugins-core": "workspace:*",
-    "@types/prop-types": "^15.7.4",
-    "prop-types": "^15.7.2"
+    "@native-html/plugins-core": "workspace:*"
   },
   "peerDependencies": {
     "react": ">= 16.8.0",
