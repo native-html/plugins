@@ -1,4 +1,4 @@
-import { domNodeToHTMLString } from 'react-native-render-html';
+import { domNodeToHTMLString } from '@native-html/render';
 import { isDomElement, isDomText } from '@native-html/transient-render-engine';
 import { HTMLTableStats } from './types';
 import type { Node } from 'domhandler';

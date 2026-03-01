@@ -31,6 +31,7 @@
     "@babel/runtime": "^7.28.6",
     "@formidable-webview/webshell": "^2.6.0",
     "@microsoft/api-extractor": "7.57.6",
+    "@native-html/render": "1.0.0-alpha.0",
     "@testing-library/react-native": "^13.3.3",
     "@tsconfig/react-native": "^3.0.9",
     "@types/html-validator": "^5.0.6",
@@ -43,18 +44,17 @@
     "jest": "^30.2.0",
     "metro-react-native-babel-preset": "^0.77.0",
     "metro-react-native-babel-transformer": "^0.77.0",
-    "react": "19.2.4",
-    "react-native": "0.84.1",
+    "react": "19.2.0",
+    "react-native": "0.83.2",
     "react-native-builder-bob": "^0.40.18",
-    "react-native-render-html": "6.3.4",
-    "react-test-renderer": "19.2.4",
+    "react-test-renderer": "19.2.0",
     "typescript": "~5.8.2"
   },
   "peerDependencies": {
     "@formidable-webview/webshell": "^2.3.0",
+    "@native-html/render": ">=1.0.0-alpha.0",
     "react": ">= 16.8.0",
-    "react-native": ">= 0.63.0",
-    "react-native-render-html": ">= 6.0.0-beta.0 || 6.x"
+    "react-native": ">= 0.63.0"
   },
   "author": "Jules Sam. Randolph <jules.sam.randolph@gmail.com> (https://github.com/jsamr)",
   "homepage": "https://github.com/native-html/plugins/tree/master/packages/plugins-core#readme",

@@ -14,7 +14,7 @@ export { HTMLTable } from './HTMLTable';
 export { default as useHtmlTableProps } from './useHtmlTableProps';
 export { default, tableModel } from './TableRenderer';
 
-declare module 'react-native-render-html' {
+declare module '@native-html/render' {
   interface RenderersProps {
     /**
      * Configuration for `@native-html/table-plugin` table renderer.

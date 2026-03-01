@@ -1,7 +1,7 @@
 {
   "name": "@native-html/heuristic-table-plugin",
   "version": "0.7.0",
-  "description": "🔠 A 100% native component using heuristics to render tables in react-native-render-html",
+  "description": "🔠 A 100% native component using heuristics to render tables in @native-html/render",
   "main": "lib/commonjs/index.js",
   "module": "lib/module/index.js",
   "react-native": "src/",
@@ -25,7 +25,7 @@
   },
   "keywords": [
     "react-native",
-    "react-native-render-html",
+    "@native-html/render",
     "html",
     "table",
     "plugins"
@@ -38,6 +38,7 @@
     "@babel/runtime": "^7.28.6",
     "@microsoft/api-documenter": "^7.29.6",
     "@microsoft/api-extractor": "7.57.6",
+    "@native-html/render": "1.0.0-alpha.0",
     "@testing-library/react-native": "^13.3.3",
     "@tsconfig/react-native": "^3.0.9",
     "@types/html-validator": "^5.0.6",
@@ -51,11 +52,10 @@
     "jest": "^30.2.0",
     "metro-react-native-babel-preset": "^0.77.0",
     "metro-react-native-babel-transformer": "^0.77.0",
-    "react": "19.2.4",
-    "react-native": "0.84.1",
+    "react": "19.2.0",
+    "react-native": "0.83.2",
     "react-native-builder-bob": "^0.40.18",
-    "react-native-render-html": "6.3.4",
-    "react-test-renderer": "19.2.4",
+    "react-test-renderer": "19.2.0",
     "typescript": "~5.8.2"
   },
   "dependencies": {
@@ -65,9 +65,9 @@
     "ramda": "^0.32.0"
   },
   "peerDependencies": {
+    "@native-html/render": ">=1.0.0-alpha.0",
     "react": ">= 16.8.0",
-    "react-native": ">= 0.63.0",
-    "react-native-render-html": ">= 6.0.0-beta.0 || 6.x"
+    "react-native": ">= 0.63.0"
   },
   "author": "Jules Sam. Randolph <jules.sam.randolph@gmail.com> (https://github.com/jsamr)",
   "homepage": "https://github.com/native-html/plugins/tree/master/packages/heuristic-table-plugin#readme",

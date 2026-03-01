@@ -1,4 +1,4 @@
-import { TBlock, CustomRendererProps } from 'react-native-render-html';
+import { TBlock, CustomRendererProps } from '@native-html/render';
 import { TableCellPropsFromParent } from './shared-types';
 
 /**

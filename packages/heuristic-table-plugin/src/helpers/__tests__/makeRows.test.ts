@@ -1,4 +1,4 @@
-import { TNode } from 'react-native-render-html';
+import { TNode } from '@native-html/render';
 import R from 'ramda';
 import { TableCell } from '../../shared-types';
 import makeRows from '../makeRows';

@@ -1,9 +1,9 @@
-import { RenderersProps } from 'react-native-render-html';
+import { RenderersProps } from '@native-html/render';
 import { LinkPressTarget } from '@formidable-webview/webshell';
 
 /**
  * This function converts an "click event" from webshell to an array of
- * arguments for `onLinkPress` callback from react-native-render-html.
+ * arguments for `onLinkPress` callback from \@native-html/render.
  *
  * @param param0 - The event from webshell
  * @public

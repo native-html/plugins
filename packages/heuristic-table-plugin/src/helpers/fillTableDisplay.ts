@@ -1,4 +1,4 @@
-import { TNode } from 'react-native-render-html';
+import { TNode } from '@native-html/render';
 import { Display, DisplayCell, Settings } from '../shared-types';
 import TCellConstraintsComputer from './TCellConstraintsComputer';
 

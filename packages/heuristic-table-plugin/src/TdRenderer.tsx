@@ -1,5 +1,5 @@
 import React from 'react';
-import { CustomBlockRenderer } from 'react-native-render-html';
+import { CustomBlockRenderer } from '@native-html/render';
 import useHtmlTableCellProps from './useHtmlTableCellProps';
 
 /**

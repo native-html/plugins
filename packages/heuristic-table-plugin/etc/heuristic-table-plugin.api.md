@@ -4,12 +4,12 @@
 
 ```ts
 
-import { CustomBlockRenderer } from 'react-native-render-html';
-import { CustomRendererProps } from 'react-native-render-html';
-import { PropsFromParent } from 'react-native-render-html';
+import { CustomBlockRenderer } from '@native-html/render';
+import { CustomRendererProps } from '@native-html/render';
+import { PropsFromParent } from '@native-html/render';
 import { default as React_2 } from 'react';
-import { TBlock } from 'react-native-render-html';
-import { TNode } from 'react-native-render-html';
+import { TBlock } from '@native-html/render';
+import { TNode } from '@native-html/render';
 import { ViewStyle } from 'react-native';
 
 // @public (undocumented)

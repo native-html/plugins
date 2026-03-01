@@ -1,5 +1,5 @@
 import React from 'react';
-import RenderHTML from 'react-native-render-html';
+import RenderHTML from '@native-html/render';
 import tableRenderers from '@native-html/heuristic-table-plugin';
 
 const table1 = `

@@ -4,7 +4,7 @@ import map from 'ramda/src/map';
 import max from 'ramda/src/max';
 import prop from 'ramda/src/prop';
 import reduce from 'ramda/src/reduce';
-import { TNode } from 'react-native-render-html';
+import { TNode } from '@native-html/render';
 import { TCellConstraints } from '../shared-types';
 import { getHorizontalMargins, getHorizontalSpacing } from './measure';
 

@@ -1,10 +1,10 @@
 import React from 'react';
-import { CustomBlockRenderer } from 'react-native-render-html';
+import { CustomBlockRenderer } from '@native-html/render';
 import HTMLTable from './HTMLTable';
 import { HeuristicTablePluginConfig } from './shared-types';
 import useHtmlTableProps from './useHtmlTableProps';
 
-declare module 'react-native-render-html' {
+declare module '@native-html/render' {
   interface RenderersPropsBase {
     table?: HeuristicTablePluginConfig;
   }

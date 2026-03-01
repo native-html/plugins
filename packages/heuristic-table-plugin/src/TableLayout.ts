@@ -1,5 +1,5 @@
 import { sum } from 'ramda';
-import { TNode } from 'react-native-render-html';
+import { TNode } from '@native-html/render';
 import computeColumnWidths from './helpers/computeColumnWidths';
 import createRenderTree from './helpers/createRenderTree';
 import fillTableDisplay, {

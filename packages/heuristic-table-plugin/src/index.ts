@@ -1,4 +1,4 @@
-import { CustomBlockRenderer } from 'react-native-render-html';
+import { CustomBlockRenderer } from '@native-html/render';
 import { HeuristicTablePluginConfig, Settings } from './shared-types';
 import TableRenderer from './TableRenderer';
 import TdRenderer from './TdRenderer';
@@ -34,7 +34,7 @@ export { default as useHtmlTableProps } from './useHtmlTableProps';
 export { default as useHtmlTableCellProps } from './useHtmlTableCellProps';
 export { default as HTMLTable } from './HTMLTable';
 
-declare module 'react-native-render-html' {
+declare module '@native-html/render' {
   interface RenderersProps {
     /**
      * Configuration for `@native-html/heuristic-table-plugin` table renderer.

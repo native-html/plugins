@@ -1,6 +1,6 @@
 import { ComponentType } from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
-import { RenderersProps } from 'react-native-render-html';
+import { RenderersProps } from '@native-html/render';
 
 /**
  * An object describing how to generate styles. See {@link cssRulesFromSpecs}.

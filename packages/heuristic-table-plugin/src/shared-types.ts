@@ -4,7 +4,7 @@ import {
   PropsFromParent,
   TBlock,
   TNode
-} from 'react-native-render-html';
+} from '@native-html/render';
 import TableLayout from './TableLayout';
 
 /**

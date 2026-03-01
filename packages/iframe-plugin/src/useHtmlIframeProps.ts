@@ -6,7 +6,7 @@ import {
   useNormalizedUrl,
   useRendererProps,
   useContentWidth
-} from 'react-native-render-html';
+} from '@native-html/render';
 import extractPrintDimensions, {
   ExtractPrintDimensionsParams
 } from './extractPrintDimensions';

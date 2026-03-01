@@ -24,7 +24,7 @@ Description
 
 </td><td>
 
-A component to render iframes in react-native-render-html.
+A component to render iframes in @<!-- -->native-html/render.
 
 
 </td></tr>

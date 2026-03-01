@@ -51,7 +51,7 @@ I swear that I have completed these tasks before submitting:
   Print the versions of each library (remove unused)
 -->
 
-- react-native-render-html:
+- @native-html/render:
 - @native-html/table-plugin:
 - @native-html/iframe-plugin:
 - react-native-webview:

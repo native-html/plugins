@@ -4,7 +4,7 @@
 
 ## HTMLIframe() function
 
-A component to render iframes in react-native-render-html.
+A component to render iframes in @<!-- -->native-html/render.
 
 **Signature:**
 

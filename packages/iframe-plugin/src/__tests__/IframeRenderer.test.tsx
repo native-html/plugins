@@ -1,5 +1,5 @@
 import React, { act } from 'react';
-import HTML, { RenderHTMLProps } from 'react-native-render-html';
+import HTML, { RenderHTMLProps } from '@native-html/render';
 import renderer from 'react-test-renderer';
 import WebView from 'react-native-webview';
 import IframeRenderer, { iframeModel } from '../IframeRenderer';

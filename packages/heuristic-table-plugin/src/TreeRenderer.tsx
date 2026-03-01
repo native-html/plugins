@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { TNodeRenderer } from 'react-native-render-html';
+import { TNodeRenderer } from '@native-html/render';
 import { HeuristicTablePluginConfig, TableRenderNode } from './shared-types';
 
 const styles = StyleSheet.create({
