@@ -6,19 +6,61 @@
 
 Customize `td` and `th` renderers while reusing default cell renderer logic.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
-export default function useHtmlTableCellProps({ propsFromParent, ...props }: CustomRendererProps<TBlock>): CustomRendererProps<TBlock>;
+export default function useHtmlTableCellProps(input: CustomRendererProps<TBlock>): CustomRendererProps<TBlock>;
 ```
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  { propsFromParent, ...props } | CustomRendererProps&lt;TBlock&gt; |  |
+<table><thead><tr><th>
 
-<b>Returns:</b>
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+{ propsFromParent, ...props }
+
+
+</td><td>
+
+(not declared)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+input
+
+
+</td><td>
+
+CustomRendererProps&lt;TBlock&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
+
+**Returns:**
 
 CustomRendererProps&lt;TBlock&gt;
 

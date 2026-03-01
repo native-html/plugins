@@ -6,7 +6,7 @@
 
 Max zoom scale (must be greater than 1).
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 maxScale?: boolean;

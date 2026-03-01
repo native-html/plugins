@@ -6,7 +6,7 @@
 
 Font size, in pixels.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 fontSizePx: number | null;

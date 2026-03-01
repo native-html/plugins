@@ -6,7 +6,7 @@
 
 Table even header cell text color.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 thEvenColor: string;

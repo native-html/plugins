@@ -6,7 +6,7 @@
 
 Configuration options for the HTMLIframe component. You can pass those options through `renderersProps.iframe` HTML prop.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export interface IframeConfig 
@@ -14,10 +14,102 @@ export interface IframeConfig
 
 ## Properties
 
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [injectedCSSStyles?](./iframe-plugin.iframeconfig.injectedcssstyles.md) | string | <i>(Optional)</i> When defined, the provided CSS will be injected in a <code>style</code> element. |
-|  [removeBodySpacing?](./iframe-plugin.iframeconfig.removebodyspacing.md) | boolean | <i>(Optional)</i> When <code>true</code>, a stylesheet will be inserted in the <code>WebView</code> to remove padding and margins for the <code>body</code> element. |
-|  [scalesPageToFit?](./iframe-plugin.iframeconfig.scalespagetofit.md) | boolean | <i>(Optional)</i> When the iframe attribute width is wider than the contentWidth, scales down the viewport so that it doesn't overflows horizontally. |
-|  [webViewProps?](./iframe-plugin.iframeconfig.webviewprops.md) | any | <i>(Optional)</i> Any props you'd like to pass to the <code>WebView</code> component. |
+<table><thead><tr><th>
+
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[injectedCSSStyles?](./iframe-plugin.iframeconfig.injectedcssstyles.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+_(Optional)_ When defined, the provided CSS will be injected in a `style` element.
+
+
+</td></tr>
+<tr><td>
+
+[removeBodySpacing?](./iframe-plugin.iframeconfig.removebodyspacing.md)
+
+
+</td><td>
+
+
+</td><td>
+
+boolean
+
+
+</td><td>
+
+_(Optional)_ When `true`<!-- -->, a stylesheet will be inserted in the `WebView` to remove padding and margins for the `body` element.
+
+
+</td></tr>
+<tr><td>
+
+[scalesPageToFit?](./iframe-plugin.iframeconfig.scalespagetofit.md)
+
+
+</td><td>
+
+
+</td><td>
+
+boolean
+
+
+</td><td>
+
+_(Optional)_ When the iframe attribute width is wider than the contentWidth, scales down the viewport so that it doesn't overflows horizontally.
+
+
+</td></tr>
+<tr><td>
+
+[webViewProps?](./iframe-plugin.iframeconfig.webviewprops.md)
+
+
+</td><td>
+
+
+</td><td>
+
+any
+
+
+</td><td>
+
+_(Optional)_ Any props you'd like to pass to the `WebView` component.
+
+
+</td></tr>
+</tbody></table>
 

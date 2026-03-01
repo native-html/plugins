@@ -4,7 +4,7 @@
 
 ## TableAccurateContentHeightState.type property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type: 'accurate';

@@ -2,12 +2,65 @@
 
 [Home](./index.md) &gt; [@native-html/table-plugin](./table-plugin.md) &gt; [HTMLTable](./table-plugin.htmltable.md)
 
-## HTMLTable variable
+## HTMLTable() function
 
 A component capable of rendering a html string which root tag is a table tag. This component should not be used directly, except with custom renderers.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
-HTMLTable: ({ WebView, tableStyleSpecs, cssRules, html, sourceBaseUrl, animationType, computeHeuristicContentHeight, computeContainerHeight, webViewProps: userWebViewProps, style, onLinkPress, animationDuration, htmlAttribs, maxScale, ...stats }: HTMLTableProps) => JSX.Element
+HTMLTable: (input: HTMLTableProps) => React.JSX.Element
 ```
+
+## Parameters
+
+<table><thead><tr><th>
+
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+{ WebView, tableStyleSpecs, cssRules, html, sourceBaseUrl, animationType, computeHeuristicContentHeight, computeContainerHeight, webViewProps: userWebViewProps, style, onLinkPress, animationDuration, htmlAttribs, maxScale, ...stats }
+
+
+</td><td>
+
+(not declared)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+input
+
+
+</td><td>
+
+[HTMLTableProps](./table-plugin.htmltableprops.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
+
+**Returns:**
+
+React.JSX.Element
+

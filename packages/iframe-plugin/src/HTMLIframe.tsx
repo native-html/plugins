@@ -115,7 +115,7 @@ export default function HTMLIframe({
 }: HTMLIframeProps) {
   const onDOMLinkPress = useCallback(
     (event: LinkPressTarget) =>
-      onLinkPress?.apply(null, linkPressTargetToOnDOMLinkPressArgs(event)),
+      onLinkPress?.(...linkPressTargetToOnDOMLinkPressArgs(event)),
     [onLinkPress]
   );
   const injectedCss = useMemo(

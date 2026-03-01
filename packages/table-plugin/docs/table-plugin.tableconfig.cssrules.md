@@ -6,7 +6,7 @@
 
 Override default CSS rules with this prop.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 cssRules?: string;
@@ -30,6 +30,5 @@ const config = {
   cssRules,
   // Other config options
 };
-
 ```
 

@@ -6,19 +6,61 @@
 
 A component to render iframes in react-native-render-html.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
-export default function HTMLIframe({ WebView, webViewProps: userWebViewProps, source, style, onLinkPress, scaleFactor, injectedCSSStyles, removeBodySpacing, scalesPageToFit }: HTMLIframeProps): JSX.Element;
+export default function HTMLIframe(input: HTMLIframeProps): React.JSX.Element;
 ```
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  { WebView, webViewProps: userWebViewProps, source, style, onLinkPress, scaleFactor, injectedCSSStyles, removeBodySpacing, scalesPageToFit } | [HTMLIframeProps](./iframe-plugin.htmliframeprops.md) |  |
+<table><thead><tr><th>
 
-<b>Returns:</b>
+Parameter
 
-JSX.Element
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+{ WebView, webViewProps: userWebViewProps, source, style, onLinkPress, scaleFactor, injectedCSSStyles, removeBodySpacing, scalesPageToFit }
+
+
+</td><td>
+
+(not declared)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+input
+
+
+</td><td>
+
+[HTMLIframeProps](./iframe-plugin.htmliframeprops.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
+
+**Returns:**
+
+React.JSX.Element
 

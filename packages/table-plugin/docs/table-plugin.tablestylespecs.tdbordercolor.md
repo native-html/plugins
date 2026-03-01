@@ -6,7 +6,7 @@
 
 Table cell border color.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 tdBorderColor: string;

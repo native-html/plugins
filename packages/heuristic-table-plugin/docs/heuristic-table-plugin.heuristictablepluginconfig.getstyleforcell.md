@@ -6,7 +6,7 @@
 
 Customize cells appearance with this function.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 getStyleForCell?(cell: TableCell): ViewStyle | null;
@@ -14,11 +14,41 @@ getStyleForCell?(cell: TableCell): ViewStyle | null;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  cell | [TableCell](./heuristic-table-plugin.tablecell.md) | The cell for which styles should be provided. |
+<table><thead><tr><th>
 
-<b>Returns:</b>
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+cell
+
+
+</td><td>
+
+[TableCell](./heuristic-table-plugin.tablecell.md)
+
+
+</td><td>
+
+The cell for which styles should be provided.
+
+
+</td></tr>
+</tbody></table>
+
+**Returns:**
 
 ViewStyle \| null
 

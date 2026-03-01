@@ -63,7 +63,6 @@ export interface HTMLTableProps extends CustomRendererProps<TBlock> {
 
 // @public
 const renderers: Record<'th' | 'td' | 'table', CustomBlockRenderer>;
-
 export default renderers;
 
 // @public
@@ -116,13 +115,12 @@ export const TdRenderer: CustomBlockRenderer;
 export const ThRenderer: CustomBlockRenderer;
 
 // @public
-export function useHtmlTableCellProps({ propsFromParent, ...props }: CustomRendererProps<TBlock>): CustomRendererProps<TBlock>;
+export function useHtmlTableCellProps(input: CustomRendererProps<TBlock>): CustomRendererProps<TBlock>;
 
 // @public
-export function useHtmlTableProps({ sharedProps, tnode, ...props }: CustomRendererProps<TBlock>, options?: {
+export function useHtmlTableProps(input: CustomRendererProps<TBlock>, options?: {
     overrideContentWidth?: number;
 }): HTMLTableProps;
-
 
 // (No @packageDocumentation comment for this package)
 

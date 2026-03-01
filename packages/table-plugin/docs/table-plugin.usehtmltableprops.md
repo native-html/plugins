@@ -6,20 +6,77 @@
 
 Extract props for the HTMLTable component from renderer function arguments. This function is especially usefull for custom table renderers.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
-export default function useHtmlTableProps({ style, tnode }: CustomRendererProps<TBlock>, tableConfig?: TableConfig): HTMLTableProps;
+export default function useHtmlTableProps(input: CustomRendererProps<TBlock>, tableConfig?: TableConfig): HTMLTableProps;
 ```
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  { style, tnode } | CustomRendererProps&lt;TBlock&gt; |  |
-|  tableConfig | [TableConfig](./table-plugin.tableconfig.md) | Override config options. |
+<table><thead><tr><th>
 
-<b>Returns:</b>
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+{ style, tnode }
+
+
+</td><td>
+
+(not declared)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+input
+
+
+</td><td>
+
+CustomRendererProps&lt;TBlock&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+tableConfig
+
+
+</td><td>
+
+[TableConfig](./table-plugin.tableconfig.md)
+
+
+</td><td>
+
+_(Optional)_ Override config options.
+
+
+</td></tr>
+</tbody></table>
+
+**Returns:**
 
 [HTMLTableProps](./table-plugin.htmltableprops.md)
 

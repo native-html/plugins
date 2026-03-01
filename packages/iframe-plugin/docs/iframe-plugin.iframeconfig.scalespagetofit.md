@@ -6,7 +6,7 @@
 
 When the iframe attribute width is wider than the contentWidth, scales down the viewport so that it doesn't overflows horizontally.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 scalesPageToFit?: boolean;

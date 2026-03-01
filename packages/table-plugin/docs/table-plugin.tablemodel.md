@@ -6,7 +6,7 @@
 
 The model to attach to custom table renderers.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 tableModel: HTMLElementModel<'table', HTMLContentModel.block>

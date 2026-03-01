@@ -6,22 +6,112 @@
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [HTMLIframe({ WebView, webViewProps: userWebViewProps, source, style, onLinkPress, scaleFactor, injectedCSSStyles, removeBodySpacing, scalesPageToFit })](./iframe-plugin.htmliframe.md) | A component to render iframes in react-native-render-html. |
-|  [useHtmlIframeProps({ style, tnode }, iframeConfig)](./iframe-plugin.usehtmliframeprops.md) | Extract props for the HTMLIframe component from renderer function arguments. This function is especially usefull for custom iframe renderers. |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[HTMLIframe({ WebView, webViewProps: userWebViewProps, source, style, onLinkPress, scaleFactor, injectedCSSStyles, removeBodySpacing, scalesPageToFit }, input)](./iframe-plugin.htmliframe.md)
+
+
+</td><td>
+
+A component to render iframes in react-native-render-html.
+
+
+</td></tr>
+<tr><td>
+
+[useHtmlIframeProps({ style, tnode }, input, iframeConfig)](./iframe-plugin.usehtmliframeprops.md)
+
+
+</td><td>
+
+Extract props for the HTMLIframe component from renderer function arguments. This function is especially usefull for custom iframe renderers.
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [HTMLIframeProps](./iframe-plugin.htmliframeprops.md) | Props for the HTMLIframe component. |
-|  [IframeConfig](./iframe-plugin.iframeconfig.md) | Configuration options for the HTMLIframe component. You can pass those options through <code>renderersProps.iframe</code> HTML prop. |
+<table><thead><tr><th>
+
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[HTMLIframeProps](./iframe-plugin.htmliframeprops.md)
+
+
+</td><td>
+
+Props for the HTMLIframe component.
+
+
+</td></tr>
+<tr><td>
+
+[IframeConfig](./iframe-plugin.iframeconfig.md)
+
+
+</td><td>
+
+Configuration options for the HTMLIframe component. You can pass those options through `renderersProps.iframe` HTML prop.
+
+
+</td></tr>
+</tbody></table>
 
 ## Variables
 
-|  Variable | Description |
-|  --- | --- |
-|  [iframeModel](./iframe-plugin.iframemodel.md) | The model to attach to custom iframe renderers. |
-|  [IframeRenderer](./iframe-plugin.iframerenderer.md) | The renderer component for the iframe element. This renderer is fully scalable, and will adjust to <code>contentWidth</code> and <code>computeEmbeddedMaxWidth</code>. It also features <code>onLinkPress</code>. |
+<table><thead><tr><th>
+
+Variable
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[iframeModel](./iframe-plugin.iframemodel.md)
+
+
+</td><td>
+
+The model to attach to custom iframe renderers.
+
+
+</td></tr>
+<tr><td>
+
+[IframeRenderer](./iframe-plugin.iframerenderer.md)
+
+
+</td><td>
+
+The renderer component for the iframe element. This renderer is fully scalable, and will adjust to `contentWidth` and `computeEmbeddedMaxWidth`<!-- -->. It also features `onLinkPress`<!-- -->.
+
+
+</td></tr>
+</tbody></table>
 

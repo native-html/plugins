@@ -8,20 +8,72 @@ A cell is a unit of display for one `th` or `td` in a table, with coordinates an
 
 <pre> 0 1 2 → x 1 . . 2 . . ↓ y </pre>
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export interface TableCell extends DisplayCell 
 ```
-<b>Extends:</b> [DisplayCell](./heuristic-table-plugin.displaycell.md)
+**Extends:** [DisplayCell](./heuristic-table-plugin.displaycell.md)
 
 ## Remarks
 
 
 ## Properties
 
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [type](./heuristic-table-plugin.tablecell.type.md) | 'cell' |  |
-|  [width](./heuristic-table-plugin.tablecell.width.md) | number |  |
+<table><thead><tr><th>
+
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[type](./heuristic-table-plugin.tablecell.type.md)
+
+
+</td><td>
+
+
+</td><td>
+
+'cell'
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[width](./heuristic-table-plugin.tablecell.width.md)
+
+
+</td><td>
+
+
+</td><td>
+
+number
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 

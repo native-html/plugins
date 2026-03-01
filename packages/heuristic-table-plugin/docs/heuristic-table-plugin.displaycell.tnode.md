@@ -4,7 +4,7 @@
 
 ## DisplayCell.tnode property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 tnode: TNode;

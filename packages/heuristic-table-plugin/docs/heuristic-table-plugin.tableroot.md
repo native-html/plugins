@@ -5,7 +5,7 @@
 ## TableRoot interface
 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export interface TableRoot 
@@ -13,8 +13,60 @@ export interface TableRoot
 
 ## Properties
 
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [children](./heuristic-table-plugin.tableroot.children.md) | [TableFlexRowContainer](./heuristic-table-plugin.tableflexrowcontainer.md)<!-- -->\[\] |  |
-|  [type](./heuristic-table-plugin.tableroot.type.md) | 'root' |  |
+<table><thead><tr><th>
+
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[children](./heuristic-table-plugin.tableroot.children.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[TableFlexRowContainer](./heuristic-table-plugin.tableflexrowcontainer.md)<!-- -->\[\]
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[type](./heuristic-table-plugin.tableroot.type.md)
+
+
+</td><td>
+
+
+</td><td>
+
+'root'
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 

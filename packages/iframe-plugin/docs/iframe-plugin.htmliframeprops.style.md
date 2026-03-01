@@ -6,7 +6,7 @@
 
 Container style.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 style: StyleProp<ViewStyle>;

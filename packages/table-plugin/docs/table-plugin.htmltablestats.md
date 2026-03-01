@@ -6,7 +6,7 @@
 
 An object holding information on the table shape.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export interface HTMLTableStats 
@@ -14,9 +14,83 @@ export interface HTMLTableStats
 
 ## Properties
 
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [numOfChars](./table-plugin.htmltablestats.numofchars.md) | number | Number of text characters. |
-|  [numOfColumns](./table-plugin.htmltablestats.numofcolumns.md) | number | Number of columns. |
-|  [numOfRows](./table-plugin.htmltablestats.numofrows.md) | number | Number of rows, header included |
+<table><thead><tr><th>
+
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[numOfChars](./table-plugin.htmltablestats.numofchars.md)
+
+
+</td><td>
+
+
+</td><td>
+
+number
+
+
+</td><td>
+
+Number of text characters.
+
+
+</td></tr>
+<tr><td>
+
+[numOfColumns](./table-plugin.htmltablestats.numofcolumns.md)
+
+
+</td><td>
+
+
+</td><td>
+
+number
+
+
+</td><td>
+
+Number of columns.
+
+
+</td></tr>
+<tr><td>
+
+[numOfRows](./table-plugin.htmltablestats.numofrows.md)
+
+
+</td><td>
+
+
+</td><td>
+
+number
+
+
+</td><td>
+
+Number of rows, header included
+
+
+</td></tr>
+</tbody></table>
 

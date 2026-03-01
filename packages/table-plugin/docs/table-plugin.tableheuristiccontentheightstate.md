@@ -6,7 +6,7 @@
 
 This content height state is available on mount, before the real height is known from the DOM.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export interface TableHeuristicContentHeightState 
@@ -18,8 +18,60 @@ export interface TableHeuristicContentHeightState
 
 ## Properties
 
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [contentHeight](./table-plugin.tableheuristiccontentheightstate.contentheight.md) | number |  |
-|  [type](./table-plugin.tableheuristiccontentheightstate.type.md) | 'heuristic' |  |
+<table><thead><tr><th>
+
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[contentHeight](./table-plugin.tableheuristiccontentheightstate.contentheight.md)
+
+
+</td><td>
+
+
+</td><td>
+
+number
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[type](./table-plugin.tableheuristiccontentheightstate.type.md)
+
+
+</td><td>
+
+
+</td><td>
+
+'heuristic'
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 

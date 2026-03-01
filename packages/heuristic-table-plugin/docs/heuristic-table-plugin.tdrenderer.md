@@ -6,7 +6,7 @@
 
 The renderer component for `td` tag.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 TdRenderer: CustomBlockRenderer

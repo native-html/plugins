@@ -6,7 +6,7 @@
 
 Table even row background color.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 trEvenBackground: string;

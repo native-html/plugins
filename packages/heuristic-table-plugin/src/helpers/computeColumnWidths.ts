@@ -1,70 +1,46 @@
-import pipe from 'ramda/src/pipe';
-import map from 'ramda/src/map';
-import prop from 'ramda/src/prop';
-import sum from 'ramda/src/sum';
-import min from 'ramda/src/min';
-import reduce from 'ramda/src/reduce';
-import converge from 'ramda/src/converge';
-import subtract from 'ramda/src/subtract';
-import partialRight from 'ramda/src/partialRight';
-import divide from 'ramda/src/divide';
-import add from 'ramda/src/add';
-import zip from 'ramda/src/zip';
-import multiply from 'ramda/src/multiply';
-import identity from 'ramda/src/identity';
-
 import { Display, TColumnConstraints } from '../shared-types';
 import reduceColumnConstraints from './reduceColumnConstraints';
 
-const mapMinWidths = map<TColumnConstraints, number>(prop('minWidth'));
-const mapspreads = map<TColumnConstraints, number>(prop('spread'));
+function mapMinWidths(constraints: TColumnConstraints[]): number[] {
+  return constraints.map((c) => c.minWidth);
+}
 
-// Compute the normal content density for each column,
-// that is content density with the zero reference as
-// the shortest column.
-const mapNormalContentDensity = converge(
-  (m: number, list: number[]) => {
-    return map(partialRight(subtract, [m]))(list);
-  },
-  [reduce(min, Infinity), identity]
-);
+function mapSpreads(constraints: TColumnConstraints[]): number[] {
+  return constraints.map((c) => c.spread);
+}
 
-const weightContentDensity = converge(
-  (s: number, list: number[]) => {
-    return map(partialRight(divide, [s]))(list);
-  },
-  [sum, identity]
-);
-
-const mapWeightedColumnCoeffs = pipe(
-  map<TColumnConstraints, number>(prop('contentDensity')),
-  mapNormalContentDensity,
-  weightContentDensity
-);
-
-const totalMinWidths = pipe(mapMinWidths, sum);
+// Normalize content densities so the minimum column is zero-referenced,
+// then weight them so they sum to 1 (used to distribute extra width).
+function mapWeightedColumnCoeffs(
+  columnConstraints: TColumnConstraints[]
+): number[] {
+  const densities = columnConstraints.map((c) => c.contentDensity);
+  const minDensity = densities.reduce(
+    (acc, x) => Math.min(acc, x),
+    Infinity
+  );
+  const normalized = densities.map((x) => x - minDensity);
+  const total = normalized.reduce((acc, x) => acc + x, 0);
+  return normalized.map((x) => (total === 0 ? 0 : x / total));
+}
 
 export default function computeColumnWidths(display: Display): number[] {
   const contentWidth = display.contentWidth;
-  let shouldClampWidth = !display.forceStretch;
+  const shouldClampWidth = !display.forceStretch;
   const columnConstraints = reduceColumnConstraints(display.cells);
   const minWidths = mapMinWidths(columnConstraints);
-  const spreads = mapspreads(columnConstraints);
-  const sumOfMinWidths = totalMinWidths(columnConstraints);
+  const spreads = mapSpreads(columnConstraints);
+  const sumOfMinWidths = minWidths.reduce((a, b) => a + b, 0);
   if (contentWidth < sumOfMinWidths) {
     return minWidths;
   }
   const widthToAssign = contentWidth - sumOfMinWidths;
-  const clampWidths = pipe<any, any, any>(
-    zip(spreads),
-    map(reduce(min, Infinity))
+  const weightedCoeffs = mapWeightedColumnCoeffs(columnConstraints);
+  const rawWidths = minWidths.map(
+    (min, i) => min + weightedCoeffs[i]! * widthToAssign
   );
-  const columns = pipe(
-    mapWeightedColumnCoeffs,
-    map(multiply(widthToAssign)),
-    zip(minWidths),
-    map(reduce(add, 0)),
-    shouldClampWidth ? clampWidths : identity
-  )(columnConstraints);
-  return columns;
+  if (shouldClampWidth) {
+    return rawWidths.map((w, i) => Math.min(w, spreads[i] ?? Infinity));
+  }
+  return rawWidths;
 }

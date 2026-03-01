@@ -13,17 +13,17 @@ function Container({
   availableWidth: number;
 }>) {
   const scroll = tableWidth > availableWidth;
-  return React.createElement(
-    scroll ? ScrollView : View,
-    scroll
-      ? {
+  return scroll
+    ? React.createElement(
+        ScrollView,
+        {
           contentContainerStyle: { width: tableWidth },
           style: { width: availableWidth },
           horizontal: true
-        }
-      : { style: { width: tableWidth } },
-    children
-  );
+        },
+        children
+      )
+    : React.createElement(View, { style: { width: tableWidth } }, children);
 }
 
 /**

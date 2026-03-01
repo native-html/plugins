@@ -6,7 +6,7 @@
 
 The renderer component for the table element. This renderer is fully scalable, and will adjust to `contentWidth` and `computeEmbeddedMaxWidth`<!-- -->. It also features `onLinkPress`<!-- -->.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 TableRenderer: CustomBlockRenderer

@@ -9,6 +9,7 @@ import { CustomBlockRenderer } from 'react-native-render-html';
 import { CustomRendererProps } from 'react-native-render-html';
 import { HTMLContentModel } from 'react-native-render-html';
 import { HTMLElementModel } from '@native-html/transient-render-engine';
+import { default as React_2 } from 'react';
 import { RenderersProps } from 'react-native-render-html';
 import { StyleProp } from 'react-native';
 import type { TBlock } from '@native-html/transient-render-engine';
@@ -21,7 +22,7 @@ export function cssRulesFromSpecs(specs?: TableStyleSpecs): string;
 export const defaultTableStylesSpecs: TableStyleSpecs;
 
 // @public
-export const HTMLTable: ({ WebView, tableStyleSpecs, cssRules, html, sourceBaseUrl, animationType, computeHeuristicContentHeight, computeContainerHeight, webViewProps: userWebViewProps, style, onLinkPress, animationDuration, htmlAttribs, maxScale, ...stats }: HTMLTableProps) => JSX.Element;
+export const HTMLTable: (input: HTMLTableProps) => React_2.JSX.Element;
 
 // @public
 export interface HTMLTableBaseProps extends HTMLTableStats {
@@ -81,7 +82,6 @@ export const tableModel: HTMLElementModel<'table', HTMLContentModel.block>;
 
 // @public
 const TableRenderer: CustomBlockRenderer;
-
 export default TableRenderer;
 
 // @public
@@ -110,8 +110,7 @@ export interface TableStyleSpecs {
 }
 
 // @public
-export function useHtmlTableProps({ style, tnode }: CustomRendererProps<TBlock>, tableConfig?: TableConfig): HTMLTableProps;
-
+export function useHtmlTableProps(input: CustomRendererProps<TBlock>, tableConfig?: TableConfig): HTMLTableProps;
 
 // (No @packageDocumentation comment for this package)
 

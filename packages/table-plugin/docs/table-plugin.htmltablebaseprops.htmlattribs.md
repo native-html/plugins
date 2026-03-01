@@ -6,7 +6,7 @@
 
 Html attributes for this table node.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 htmlAttribs?: Record<string, string>;

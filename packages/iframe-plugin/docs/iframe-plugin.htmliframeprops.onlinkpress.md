@@ -6,7 +6,7 @@
 
 Handle link press events.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 onLinkPress?: RenderersProps['a']['onPress'];

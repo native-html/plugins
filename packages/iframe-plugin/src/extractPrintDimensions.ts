@@ -13,7 +13,6 @@ export default function extractPrintDimensions({
   styleHeight,
   contentWidth
 }: ExtractPrintDimensionsParams) {
-  let printWidth: number, printHeight: number;
   let ratio: number;
   if (typeof attrWidth === 'number' && typeof attrHeight === 'number') {
     ratio = attrWidth / attrHeight;
@@ -25,7 +24,7 @@ export default function extractPrintDimensions({
   } else {
     ratio = 16 / 9;
   }
-  printWidth = Math.min(
+  const printWidth = Math.min(
     contentWidth,
     typeof attrWidth === 'number'
       ? attrWidth
@@ -33,7 +32,7 @@ export default function extractPrintDimensions({
       ? styleWidth
       : contentWidth
   );
-  printHeight = printWidth / ratio;
+  const printHeight = printWidth / ratio;
   return {
     printWidth,
     printHeight

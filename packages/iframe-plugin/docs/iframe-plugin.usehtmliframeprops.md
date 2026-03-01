@@ -6,20 +6,77 @@
 
 Extract props for the HTMLIframe component from renderer function arguments. This function is especially usefull for custom iframe renderers.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
-export default function useHtmlIframeProps({ style, tnode }: CustomRendererProps<TBlock>, iframeConfig?: IframeConfig): HTMLIframeProps;
+export default function useHtmlIframeProps(input: CustomRendererProps<TBlock>, iframeConfig?: IframeConfig): HTMLIframeProps;
 ```
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  { style, tnode } | CustomRendererProps&lt;TBlock&gt; |  |
-|  iframeConfig | [IframeConfig](./iframe-plugin.iframeconfig.md) | Override config options. |
+<table><thead><tr><th>
 
-<b>Returns:</b>
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+{ style, tnode }
+
+
+</td><td>
+
+(not declared)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+input
+
+
+</td><td>
+
+CustomRendererProps&lt;TBlock&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+iframeConfig
+
+
+</td><td>
+
+[IframeConfig](./iframe-plugin.iframeconfig.md)
+
+
+</td><td>
+
+_(Optional)_ Override config options.
+
+
+</td></tr>
+</tbody></table>
+
+**Returns:**
 
 [HTMLIframeProps](./iframe-plugin.htmliframeprops.md)
 

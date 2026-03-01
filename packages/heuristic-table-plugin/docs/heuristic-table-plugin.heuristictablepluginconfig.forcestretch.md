@@ -6,7 +6,7 @@
 
 When true, force the table to stretch to the available width.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 forceStretch?: boolean;

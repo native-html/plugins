@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { act } from 'react';
 import HTML, { RenderHTMLProps } from 'react-native-render-html';
 import renderer from 'react-test-renderer';
 import WebView from 'react-native-webview';
@@ -15,8 +15,8 @@ describe('iframe renderer', () => {
     },
     contentWidth: 10
   };
-  it('should render without errors', () => {
-    expect(() => {
+  it('should render without errors', async () => {
+    await act(async () => {
       renderer.create(
         <HTML
           {...defaultConfig}
@@ -25,26 +25,28 @@ describe('iframe renderer', () => {
           }}
         />
       );
-    }).not.toThrow();
+    });
   });
-  it('should support provideEmbeddedHeaders prop', () => {
+  it('should support provideEmbeddedHeaders prop', async () => {
     const props: RenderHTMLProps = {
       source: {
         html: '<iframe width="300" height="300" src="https://google.com/" />'
       },
-      provideEmbeddedHeaders: (uri, tagName, params) => {
-        //@ts-ignore
+      provideEmbeddedHeaders: (uri, tagName) => {
+        // @ts-expect-error tagName can be 'iframe' at runtime
         if (tagName === 'iframe') {
-          params;
           return {
             'X-Frame-Options': 'ALLOW-FROM https://google.com'
           };
         }
       }
     };
-    const rendered = renderer.create(<HTML {...defaultConfig} {...props} />);
+    let rendered: renderer.ReactTestRenderer;
+    await act(async () => {
+      rendered = renderer.create(<HTML {...defaultConfig} {...props} />);
+    });
 
-    expect(rendered.root.findByType(WebView).props.source).toMatchObject({
+    expect(rendered!.root.findByType(WebView).props.source).toMatchObject({
       headers: {
         'X-Frame-Options': 'ALLOW-FROM https://google.com'
       }

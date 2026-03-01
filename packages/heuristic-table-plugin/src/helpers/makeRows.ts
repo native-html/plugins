@@ -1,12 +1,11 @@
-import groupBy from 'ramda/src/groupBy';
-import values from 'ramda/src/values';
-import pipe from 'ramda/src/pipe';
-import prop from 'ramda/src/prop';
 import { TableCell } from '../shared-types';
 
-const makeRows = pipe(
-  groupBy<TableCell, string>(pipe(prop('y'), String)),
-  values
-);
-
-export default makeRows;
+export default function makeRows(cells: readonly TableCell[]): TableCell[][] {
+  const grouped: Record<string, TableCell[]> = {};
+  for (const cell of cells) {
+    const key = String(cell.y);
+    if (!grouped[key]) grouped[key] = [];
+    grouped[key].push(cell);
+  }
+  return Object.values(grouped);
+}

@@ -6,7 +6,7 @@
 
 The outerHtml of <table> tag.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 html: string;

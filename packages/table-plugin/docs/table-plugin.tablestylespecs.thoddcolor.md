@@ -6,7 +6,7 @@
 
 Table odd header cell text color.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 thOddColor: string;

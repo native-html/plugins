@@ -6,7 +6,7 @@
 
 Font family.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 fontFamily: string;

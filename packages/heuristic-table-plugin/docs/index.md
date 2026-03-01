@@ -6,7 +6,25 @@
 
 ## Packages
 
-|  Package | Description |
-|  --- | --- |
-|  [@native-html/heuristic-table-plugin](./heuristic-table-plugin.md) |  |
+<table><thead><tr><th>
+
+Package
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[@native-html/heuristic-table-plugin](./heuristic-table-plugin.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 

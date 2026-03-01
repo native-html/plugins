@@ -4,7 +4,7 @@
 
 ## CellProperties.constraints property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 constraints: TCellConstraints;

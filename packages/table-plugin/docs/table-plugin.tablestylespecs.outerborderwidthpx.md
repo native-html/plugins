@@ -6,7 +6,7 @@
 
 The border width for the table frame.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 outerBorderWidthPx: number;

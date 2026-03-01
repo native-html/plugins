@@ -6,7 +6,7 @@
 
 Props to be passed to the `WebView` component;
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 webViewProps?: WebViewProps;

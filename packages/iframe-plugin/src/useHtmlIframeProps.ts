@@ -68,8 +68,8 @@ export default function useHtmlIframeProps(
   const printConfig: ExtractPrintDimensionsParams = {
     attrWidth: Number.isNaN(attrWidth) ? null : attrWidth,
     attrHeight: Number.isNaN(attrHeight) ? null : attrHeight,
-    styleWidth: typeof width === 'string' ? null : width,
-    styleHeight: typeof height === 'string' ? null : height,
+    styleWidth: typeof width === 'number' ? width : null,
+    styleHeight: typeof height === 'number' ? height : null,
     contentWidth: availableWidth
   };
   const { printWidth, printHeight } = extractPrintDimensions(printConfig);

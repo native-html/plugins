@@ -6,22 +6,79 @@
 
 Customize the rendering logic of the table renderer via this hook.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
-export default function useHtmlTableProps({ sharedProps, tnode, ...props }: CustomRendererProps<TBlock>, options?: {
+export default function useHtmlTableProps(input: CustomRendererProps<TBlock>, options?: {
     overrideContentWidth?: number;
 }): HTMLTableProps;
 ```
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  { sharedProps, tnode, ...props } | CustomRendererProps&lt;TBlock&gt; |  |
-|  options | { overrideContentWidth?: number; } | Customize this hook behavior. |
+<table><thead><tr><th>
 
-<b>Returns:</b>
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+{ sharedProps, tnode, ...props }
+
+
+</td><td>
+
+(not declared)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+input
+
+
+</td><td>
+
+CustomRendererProps&lt;TBlock&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+options
+
+
+</td><td>
+
+{ overrideContentWidth?: number; }
+
+
+</td><td>
+
+_(Optional)_ Customize this hook behavior.
+
+
+</td></tr>
+</tbody></table>
+
+**Returns:**
 
 [HTMLTableProps](./heuristic-table-plugin.htmltableprops.md)
 

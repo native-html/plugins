@@ -6,7 +6,7 @@
 
 The model to attach to custom iframe renderers.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 iframeModel: HTMLElementModel<'iframe', HTMLContentModel.block>

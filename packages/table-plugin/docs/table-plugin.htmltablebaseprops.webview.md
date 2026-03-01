@@ -6,7 +6,7 @@
 
 The `WebView` Component you wish to use.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 WebView: ComponentType<any>;

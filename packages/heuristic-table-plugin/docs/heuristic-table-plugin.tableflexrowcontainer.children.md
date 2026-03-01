@@ -4,7 +4,7 @@
 
 ## TableFlexRowContainer.children property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 children: (TableFlexColumnContainer | TableCell)[];

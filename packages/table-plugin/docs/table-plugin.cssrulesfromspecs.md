@@ -6,7 +6,7 @@
 
 Create css rules from a specification object.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export declare function cssRulesFromSpecs(specs?: TableStyleSpecs): string;
@@ -14,11 +14,41 @@ export declare function cssRulesFromSpecs(specs?: TableStyleSpecs): string;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  specs | [TableStyleSpecs](./table-plugin.tablestylespecs.md) | The specifications object. |
+<table><thead><tr><th>
 
-<b>Returns:</b>
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+specs
+
+
+</td><td>
+
+[TableStyleSpecs](./table-plugin.tablestylespecs.md)
+
+
+</td><td>
+
+_(Optional)_ The specifications object.
+
+
+</td></tr>
+</tbody></table>
+
+**Returns:**
 
 string
 

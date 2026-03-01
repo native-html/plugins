@@ -6,7 +6,25 @@
 
 ## Packages
 
-|  Package | Description |
-|  --- | --- |
-|  [@native-html/table-plugin](./table-plugin.md) |  |
+<table><thead><tr><th>
+
+Package
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[@native-html/table-plugin](./table-plugin.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
