@@ -47,6 +47,7 @@ export interface TColumnConstraints extends TConstraintsBase {
 /**
  * @public
  */
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface TCellConstraints extends TConstraintsBase {}
 
 /**

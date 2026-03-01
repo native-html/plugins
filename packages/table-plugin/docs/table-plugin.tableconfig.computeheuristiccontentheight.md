@@ -6,7 +6,7 @@
 
 A function to compute approximate content height before the real content height has been fetched on DOM mount.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 computeHeuristicContentHeight?: (state: HTMLTableStats) => number;

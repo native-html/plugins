@@ -4,7 +4,7 @@
 
 ## HTMLTableProps.settings property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 settings: Settings;

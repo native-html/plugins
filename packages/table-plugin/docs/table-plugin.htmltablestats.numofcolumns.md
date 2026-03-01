@@ -6,7 +6,7 @@
 
 Number of columns.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 numOfColumns: number;

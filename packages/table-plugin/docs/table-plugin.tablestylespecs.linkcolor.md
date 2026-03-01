@@ -6,7 +6,7 @@
 
 Link of anchors.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 linkColor: string;

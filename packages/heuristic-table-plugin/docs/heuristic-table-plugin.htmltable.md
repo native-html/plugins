@@ -6,7 +6,7 @@
 
 A component to render tables.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 HTMLTable: React.NamedExoticComponent<HTMLTableProps>

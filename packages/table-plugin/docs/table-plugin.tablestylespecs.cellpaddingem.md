@@ -6,7 +6,7 @@
 
 Spacing between cells, in em.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 cellPaddingEm: number;

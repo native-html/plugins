@@ -6,7 +6,7 @@
 
 When scalesPageToFit is enabled, scales the WebView zoom level to make sure the viewport fits contentWidth.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 scaleFactor: number;

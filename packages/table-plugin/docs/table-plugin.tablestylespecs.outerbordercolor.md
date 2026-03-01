@@ -6,7 +6,7 @@
 
 The border color of the table frame.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 outerBorderColor: string;

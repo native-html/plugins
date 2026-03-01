@@ -5,16 +5,52 @@
 ## DisplayCell interface
 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export interface DisplayCell extends CellProperties 
 ```
-<b>Extends:</b> [CellProperties](./heuristic-table-plugin.cellproperties.md)
+**Extends:** [CellProperties](./heuristic-table-plugin.cellproperties.md)
 
 ## Properties
 
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [tnode](./heuristic-table-plugin.displaycell.tnode.md) | TNode |  |
+<table><thead><tr><th>
+
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[tnode](./heuristic-table-plugin.displaycell.tnode.md)
+
+
+</td><td>
+
+
+</td><td>
+
+TNode
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 

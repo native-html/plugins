@@ -6,7 +6,7 @@
 
 The animation duration in milliseconds when infered height value changes. See [TableConfig.computeContainerHeight](./table-plugin.tableconfig.computecontainerheight.md)<!-- -->.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 animationDuration?: number;

@@ -6,7 +6,7 @@
 
 A 100% native renderer component for `table` tag.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 TableRenderer: CustomBlockRenderer

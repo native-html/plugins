@@ -6,7 +6,7 @@
 
 A container to display items in row. (think 'flex-direction: row')
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export interface TableFlexRowContainer 
@@ -14,8 +14,60 @@ export interface TableFlexRowContainer
 
 ## Properties
 
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [children](./heuristic-table-plugin.tableflexrowcontainer.children.md) | ([TableFlexColumnContainer](./heuristic-table-plugin.tableflexcolumncontainer.md) \| [TableCell](./heuristic-table-plugin.tablecell.md)<!-- -->)\[\] |  |
-|  [type](./heuristic-table-plugin.tableflexrowcontainer.type.md) | 'row-container' |  |
+<table><thead><tr><th>
+
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[children](./heuristic-table-plugin.tableflexrowcontainer.children.md)
+
+
+</td><td>
+
+
+</td><td>
+
+([TableFlexColumnContainer](./heuristic-table-plugin.tableflexcolumncontainer.md) \| [TableCell](./heuristic-table-plugin.tablecell.md)<!-- -->)\[\]
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[type](./heuristic-table-plugin.tableflexrowcontainer.type.md)
+
+
+</td><td>
+
+
+</td><td>
+
+'row-container'
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 

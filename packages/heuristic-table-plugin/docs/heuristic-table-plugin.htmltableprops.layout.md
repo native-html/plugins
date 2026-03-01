@@ -4,7 +4,7 @@
 
 ## HTMLTableProps.layout property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 layout: TableLayout;

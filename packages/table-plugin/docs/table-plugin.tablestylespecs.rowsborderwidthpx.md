@@ -6,7 +6,7 @@
 
 The width of the border between rows.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 rowsBorderWidthPx: number;

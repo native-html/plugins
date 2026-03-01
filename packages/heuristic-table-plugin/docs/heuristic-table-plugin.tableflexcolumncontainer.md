@@ -6,7 +6,7 @@
 
 A container to display items in columns (think 'flex-direction: column')
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export interface TableFlexColumnContainer 
@@ -14,8 +14,60 @@ export interface TableFlexColumnContainer
 
 ## Properties
 
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [children](./heuristic-table-plugin.tableflexcolumncontainer.children.md) | ([TableFlexRowContainer](./heuristic-table-plugin.tableflexrowcontainer.md) \| [TableCell](./heuristic-table-plugin.tablecell.md)<!-- -->)\[\] |  |
-|  [type](./heuristic-table-plugin.tableflexcolumncontainer.type.md) | 'col-container' |  |
+<table><thead><tr><th>
+
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[children](./heuristic-table-plugin.tableflexcolumncontainer.children.md)
+
+
+</td><td>
+
+
+</td><td>
+
+([TableFlexRowContainer](./heuristic-table-plugin.tableflexrowcontainer.md) \| [TableCell](./heuristic-table-plugin.tablecell.md)<!-- -->)\[\]
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[type](./heuristic-table-plugin.tableflexcolumncontainer.type.md)
+
+
+</td><td>
+
+
+</td><td>
+
+'col-container'
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 

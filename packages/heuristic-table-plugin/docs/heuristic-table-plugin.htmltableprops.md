@@ -6,18 +6,86 @@
 
 Props for the [HTMLTable](./heuristic-table-plugin.htmltable.md) component.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export interface HTMLTableProps extends CustomRendererProps<TBlock> 
 ```
-<b>Extends:</b> CustomRendererProps&lt;TBlock&gt;
+**Extends:** CustomRendererProps&lt;TBlock&gt;
 
 ## Properties
 
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [config](./heuristic-table-plugin.htmltableprops.config.md) | [HeuristicTablePluginConfig](./heuristic-table-plugin.heuristictablepluginconfig.md) |  |
-|  [layout](./heuristic-table-plugin.htmltableprops.layout.md) | TableLayout |  |
-|  [settings](./heuristic-table-plugin.htmltableprops.settings.md) | Settings |  |
+<table><thead><tr><th>
+
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[config](./heuristic-table-plugin.htmltableprops.config.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[HeuristicTablePluginConfig](./heuristic-table-plugin.heuristictablepluginconfig.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[layout](./heuristic-table-plugin.htmltableprops.layout.md)
+
+
+</td><td>
+
+
+</td><td>
+
+TableLayout
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[settings](./heuristic-table-plugin.htmltableprops.settings.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Settings
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 

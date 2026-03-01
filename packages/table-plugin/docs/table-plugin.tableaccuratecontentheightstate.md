@@ -6,7 +6,7 @@
 
 This content height state appears when the real table height is available, after the DOM has been mounted in the `WebView`<!-- -->.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export interface TableAccurateContentHeightState 
@@ -14,8 +14,60 @@ export interface TableAccurateContentHeightState
 
 ## Properties
 
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [contentHeight](./table-plugin.tableaccuratecontentheightstate.contentheight.md) | number |  |
-|  [type](./table-plugin.tableaccuratecontentheightstate.type.md) | 'accurate' |  |
+<table><thead><tr><th>
+
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[contentHeight](./table-plugin.tableaccuratecontentheightstate.contentheight.md)
+
+
+</td><td>
+
+
+</td><td>
+
+number
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[type](./table-plugin.tableaccuratecontentheightstate.type.md)
+
+
+</td><td>
+
+
+</td><td>
+
+'accurate'
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 

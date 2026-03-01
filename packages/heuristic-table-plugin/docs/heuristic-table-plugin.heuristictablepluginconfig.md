@@ -6,7 +6,7 @@
 
 Options to customize this plugin renderers.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export interface HeuristicTablePluginConfig 
@@ -14,13 +14,71 @@ export interface HeuristicTablePluginConfig
 
 ## Properties
 
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [forceStretch?](./heuristic-table-plugin.heuristictablepluginconfig.forcestretch.md) | boolean | <i>(Optional)</i> When true, force the table to stretch to the available width. |
+<table><thead><tr><th>
+
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[forceStretch?](./heuristic-table-plugin.heuristictablepluginconfig.forcestretch.md)
+
+
+</td><td>
+
+
+</td><td>
+
+boolean
+
+
+</td><td>
+
+_(Optional)_ When true, force the table to stretch to the available width.
+
+
+</td></tr>
+</tbody></table>
 
 ## Methods
 
-|  Method | Description |
-|  --- | --- |
-|  [getStyleForCell(cell)?](./heuristic-table-plugin.heuristictablepluginconfig.getstyleforcell.md) | <i>(Optional)</i> Customize cells appearance with this function. |
+<table><thead><tr><th>
+
+Method
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[getStyleForCell(cell)?](./heuristic-table-plugin.heuristictablepluginconfig.getstyleforcell.md)
+
+
+</td><td>
+
+_(Optional)_ Customize cells appearance with this function.
+
+
+</td></tr>
+</tbody></table>
 

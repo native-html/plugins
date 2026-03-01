@@ -6,7 +6,7 @@
 
 Number of text characters.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 numOfChars: number;

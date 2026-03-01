@@ -6,7 +6,7 @@
 
 Renderers to be merged in the `renderers` prop of `RenderHTML` component.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 renderers: Record<'th' | 'td' | 'table', CustomBlockRenderer>

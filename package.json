@@ -17,44 +17,34 @@
     "test:iframe:jest": "yarn workspace @native-html/iframe-plugin test:jest",
     "test:core": "yarn workspace @native-html/plugins-core test",
     "test:core:jest": "yarn workspace @native-html/plugins-core test:jest",
-    "release:table": "yarn workspace @native-html/table-plugin release-it",
-    "release:heuristic-table": "yarn workspace @native-html/heuristic-table-plugin release-it",
-    "release:iframe": "yarn workspace @native-html/iframe-plugin release-it",
-    "release:core": "yarn workspace @native-html/plugins-core release-it",
-    "publish:example": "yarn workspace example expo publish"
+    "prepare": "husky"
   },
   "devDependencies": {
-    "@commitlint/cli": "^11.0.0",
-    "@commitlint/config-conventional": "^11.0.0",
+    "@commitlint/cli": "^20.4.2",
+    "@commitlint/config-conventional": "^20.4.2",
     "@formidable-webview/eslint-config-webjs": "^1.0.0",
-    "@react-native-community/eslint-config": "^3.0.1",
-    "@typescript-eslint/eslint-plugin": "^4.30.0",
-    "@typescript-eslint/parser": "^4.30.0",
-    "eslint": "^7.32.0",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-compat": "^3.13.0",
-    "eslint-plugin-tsdoc": "^0.2.14",
-    "husky": "^4.3.8",
-    "prettier": "^2.3.2"
+    "@react-native-community/eslint-config": "^3.2.0",
+    "@typescript-eslint/eslint-plugin": "^8.56.1",
+    "@typescript-eslint/parser": "^8.56.1",
+    "eslint": "^10.0.2",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-compat": "^7.0.0",
+    "eslint-plugin-tsdoc": "^0.5.2",
+    "husky": "^9.1.7",
+    "prettier": "^3.8.1"
   },
   "resolutions": {
-    "react": "17.0.1",
-    "react-dom": "17.0.1",
-    "react-native": "0.64.2",
-    "react-test-renderer": "16.13.1",
-    "react-native-webview": "11.13.0",
-    "@release-it/conventional-changelog": "patch:@release-it/conventional-changelog@2.0.0#patches/@release-it-conventional-changelog.patch",
-    "release-it": "patch:release-it@14.3.0#patches/release-it.patch"
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "react-native": "0.84.1",
+    "react-test-renderer": "19.2.4",
+    "react-native-webview": "13.16.1"
   },
   "author": "Jules Sam. Randolph <jules.sam.randolph@gmail.com> (https://github.com/jsamr)",
   "license": "MIT",
-  "husky": {
-    "hooks": {
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-    }
-  },
   "workspaces": [
     "packages/*",
     "example"
-  ]
+  ],
+  "packageManager": "yarn@4.12.0"
 }

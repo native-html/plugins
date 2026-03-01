@@ -6,22 +6,168 @@
 
 Props for the HTMLIframe component.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export interface HTMLIframeProps<WebViewProps = any> extends IframeConfig 
 ```
-<b>Extends:</b> [IframeConfig](./iframe-plugin.iframeconfig.md)
+**Extends:** [IframeConfig](./iframe-plugin.iframeconfig.md)
 
 ## Properties
 
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [htmlAttribs](./iframe-plugin.htmliframeprops.htmlattribs.md) | Record&lt;string, string&gt; | Html attributes for this iframe node. |
-|  [onLinkPress?](./iframe-plugin.htmliframeprops.onlinkpress.md) | RenderersProps\['a'\]\['onPress'\] | <i>(Optional)</i> Handle link press events. |
-|  [scaleFactor](./iframe-plugin.htmliframeprops.scalefactor.md) | number | When scalesPageToFit is enabled, scales the WebView zoom level to make sure the viewport fits contentWidth. |
-|  [source](./iframe-plugin.htmliframeprops.source.md) | { uri?: string; html?: string; } | The source for the iframe. |
-|  [style](./iframe-plugin.htmliframeprops.style.md) | StyleProp&lt;ViewStyle&gt; | Container style. |
-|  [WebView](./iframe-plugin.htmliframeprops.webview.md) | ComponentType&lt;WebViewProps&gt; | The <code>WebView</code> Component you wish to use. |
-|  [webViewProps?](./iframe-plugin.htmliframeprops.webviewprops.md) | WebViewProps | <i>(Optional)</i> Props to be passed to the <code>WebView</code> component; |
+<table><thead><tr><th>
+
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[htmlAttribs](./iframe-plugin.htmliframeprops.htmlattribs.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Record&lt;string, string&gt;
+
+
+</td><td>
+
+Html attributes for this iframe node.
+
+
+</td></tr>
+<tr><td>
+
+[onLinkPress?](./iframe-plugin.htmliframeprops.onlinkpress.md)
+
+
+</td><td>
+
+
+</td><td>
+
+RenderersProps\['a'\]\['onPress'\]
+
+
+</td><td>
+
+_(Optional)_ Handle link press events.
+
+
+</td></tr>
+<tr><td>
+
+[scaleFactor](./iframe-plugin.htmliframeprops.scalefactor.md)
+
+
+</td><td>
+
+
+</td><td>
+
+number
+
+
+</td><td>
+
+When scalesPageToFit is enabled, scales the WebView zoom level to make sure the viewport fits contentWidth.
+
+
+</td></tr>
+<tr><td>
+
+[source](./iframe-plugin.htmliframeprops.source.md)
+
+
+</td><td>
+
+
+</td><td>
+
+{ uri?: string; html?: string; }
+
+
+</td><td>
+
+The source for the iframe.
+
+
+</td></tr>
+<tr><td>
+
+[style](./iframe-plugin.htmliframeprops.style.md)
+
+
+</td><td>
+
+
+</td><td>
+
+StyleProp&lt;ViewStyle&gt;
+
+
+</td><td>
+
+Container style.
+
+
+</td></tr>
+<tr><td>
+
+[WebView](./iframe-plugin.htmliframeprops.webview.md)
+
+
+</td><td>
+
+
+</td><td>
+
+ComponentType&lt;WebViewProps&gt;
+
+
+</td><td>
+
+The `WebView` Component you wish to use.
+
+
+</td></tr>
+<tr><td>
+
+[webViewProps?](./iframe-plugin.htmliframeprops.webviewprops.md)
+
+
+</td><td>
+
+
+</td><td>
+
+WebViewProps
+
+
+</td><td>
+
+_(Optional)_ Props to be passed to the `WebView` component;
+
+
+</td></tr>
+</tbody></table>
 

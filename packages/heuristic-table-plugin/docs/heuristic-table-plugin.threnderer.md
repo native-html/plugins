@@ -6,7 +6,7 @@
 
 The renderer component for `th` tag.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 ThRenderer: CustomBlockRenderer

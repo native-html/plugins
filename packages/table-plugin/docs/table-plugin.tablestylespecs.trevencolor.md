@@ -6,7 +6,7 @@
 
 Table even row text color.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 trEvenColor: string;

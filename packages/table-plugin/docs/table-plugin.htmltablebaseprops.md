@@ -6,20 +6,130 @@
 
 Base props for HTMLTable original and custom components.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export interface HTMLTableBaseProps extends HTMLTableStats 
 ```
-<b>Extends:</b> [HTMLTableStats](./table-plugin.htmltablestats.md)
+**Extends:** [HTMLTableStats](./table-plugin.htmltablestats.md)
 
 ## Properties
 
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [html](./table-plugin.htmltablebaseprops.html.md) | string | The outerHtml of <table> tag. |
-|  [htmlAttribs?](./table-plugin.htmltablebaseprops.htmlattribs.md) | Record&lt;string, string&gt; | <i>(Optional)</i> Html attributes for this table node. |
-|  [onLinkPress?](./table-plugin.htmltablebaseprops.onlinkpress.md) | RenderersProps\['a'\]\['onPress'\] | <i>(Optional)</i> Intercept links press. |
-|  [sourceBaseUrl?](./table-plugin.htmltablebaseprops.sourcebaseurl.md) | string | <i>(Optional)</i> The base to resolve relative URLs. |
-|  [WebView](./table-plugin.htmltablebaseprops.webview.md) | ComponentType&lt;any&gt; | The <code>WebView</code> Component you wish to use. |
+<table><thead><tr><th>
+
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[html](./table-plugin.htmltablebaseprops.html.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+The outerHtml of <table> tag.
+
+
+</td></tr>
+<tr><td>
+
+[htmlAttribs?](./table-plugin.htmltablebaseprops.htmlattribs.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Record&lt;string, string&gt;
+
+
+</td><td>
+
+_(Optional)_ Html attributes for this table node.
+
+
+</td></tr>
+<tr><td>
+
+[onLinkPress?](./table-plugin.htmltablebaseprops.onlinkpress.md)
+
+
+</td><td>
+
+
+</td><td>
+
+RenderersProps\['a'\]\['onPress'\]
+
+
+</td><td>
+
+_(Optional)_ Intercept links press.
+
+
+</td></tr>
+<tr><td>
+
+[sourceBaseUrl?](./table-plugin.htmltablebaseprops.sourcebaseurl.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+_(Optional)_ The base to resolve relative URLs.
+
+
+</td></tr>
+<tr><td>
+
+[WebView](./table-plugin.htmltablebaseprops.webview.md)
+
+
+</td><td>
+
+
+</td><td>
+
+ComponentType&lt;any&gt;
+
+
+</td><td>
+
+The `WebView` Component you wish to use.
+
+
+</td></tr>
+</tbody></table>
 

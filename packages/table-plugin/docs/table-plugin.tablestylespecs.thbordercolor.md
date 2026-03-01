@@ -6,7 +6,7 @@
 
 Table header cell border color.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 thBorderColor: string;

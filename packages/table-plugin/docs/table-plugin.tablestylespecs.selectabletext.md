@@ -6,7 +6,7 @@
 
 Will text be selectable.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 selectableText: boolean;

@@ -6,7 +6,7 @@
 
 The source for the iframe.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 source: {

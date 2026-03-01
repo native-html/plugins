@@ -6,7 +6,7 @@
 
 Number of rows, header included
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 numOfRows: number;

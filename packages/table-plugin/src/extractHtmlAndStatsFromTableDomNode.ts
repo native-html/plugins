@@ -6,7 +6,7 @@ import type { Node } from 'domhandler';
 export default function extractHtmlAndStatsFromTableDomNode(
   domNode: Node | null
 ) {
-  let stats: HTMLTableStats = {
+  const stats: HTMLTableStats = {
     numOfChars: 0,
     numOfColumns: 0,
     numOfRows: 0

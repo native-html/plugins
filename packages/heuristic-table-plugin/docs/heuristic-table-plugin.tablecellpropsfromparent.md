@@ -6,17 +6,71 @@
 
 Props received by td and th custom renderers in `propsFromParent` prop field.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export interface TableCellPropsFromParent extends PropsFromParent 
 ```
-<b>Extends:</b> PropsFromParent
+**Extends:** PropsFromParent
 
 ## Properties
 
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [cell](./heuristic-table-plugin.tablecellpropsfromparent.cell.md) | [TableCell](./heuristic-table-plugin.tablecell.md) |  |
-|  [config?](./heuristic-table-plugin.tablecellpropsfromparent.config.md) | [HeuristicTablePluginConfig](./heuristic-table-plugin.heuristictablepluginconfig.md) | <i>(Optional)</i> |
+<table><thead><tr><th>
+
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[cell](./heuristic-table-plugin.tablecellpropsfromparent.cell.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[TableCell](./heuristic-table-plugin.tablecell.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[config?](./heuristic-table-plugin.tablecellpropsfromparent.config.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[HeuristicTablePluginConfig](./heuristic-table-plugin.heuristictablepluginconfig.md)
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 

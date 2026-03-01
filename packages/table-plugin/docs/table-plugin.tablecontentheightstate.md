@@ -6,10 +6,10 @@
 
 An object describing the present knowledge of content height.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
-export declare type TableContentHeightState = TableHeuristicContentHeightState | TableAccurateContentHeightState;
+export type TableContentHeightState = TableHeuristicContentHeightState | TableAccurateContentHeightState;
 ```
-<b>References:</b> [TableHeuristicContentHeightState](./table-plugin.tableheuristiccontentheightstate.md)<!-- -->, [TableAccurateContentHeightState](./table-plugin.tableaccuratecontentheightstate.md)
+**References:** [TableHeuristicContentHeightState](./table-plugin.tableheuristiccontentheightstate.md)<!-- -->, [TableAccurateContentHeightState](./table-plugin.tableaccuratecontentheightstate.md)
 

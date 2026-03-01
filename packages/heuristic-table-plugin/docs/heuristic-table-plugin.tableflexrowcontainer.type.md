@@ -4,7 +4,7 @@
 
 ## TableFlexRowContainer.type property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type: 'row-container';

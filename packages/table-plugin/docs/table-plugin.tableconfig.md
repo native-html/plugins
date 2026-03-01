@@ -6,7 +6,7 @@
 
 This object defines how the table component can be customized.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export interface TableConfig 
@@ -14,16 +14,220 @@ export interface TableConfig
 
 ## Properties
 
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [animationDuration?](./table-plugin.tableconfig.animationduration.md) | number | <i>(Optional)</i> The animation duration in milliseconds when infered height value changes. See [TableConfig.computeContainerHeight](./table-plugin.tableconfig.computecontainerheight.md)<!-- -->. |
-|  [animationType?](./table-plugin.tableconfig.animationtype.md) | 'none' \| 'layout' \| 'animated' | <i>(Optional)</i> What kind of animation should be used when height is changed? <ul> <li> <b>layout</b>: use native <code>LayoutAnimation</code>. This is the best option performance-wise, but requires some setup. See https://facebook.github.io/react-native/docs/layoutanimation. </li> <li> <b>animated</b>: use <code>Animated</code> module from react-native. </li> <li> <b>none</b>: no animations are performed. </li> </ul> |
-|  [computeContainerHeight?](./table-plugin.tableconfig.computecontainerheight.md) | (state: [TableContentHeightState](./table-plugin.tablecontentheightstate.md)<!-- -->) =&gt; number \| null | <i>(Optional)</i> A function which will compute container's height given the table content height. |
-|  [computeHeuristicContentHeight?](./table-plugin.tableconfig.computeheuristiccontentheight.md) | (state: [HTMLTableStats](./table-plugin.htmltablestats.md)<!-- -->) =&gt; number | <i>(Optional)</i> A function to compute approximate content height before the real content height has been fetched on DOM mount. |
-|  [cssRules?](./table-plugin.tableconfig.cssrules.md) | string | <i>(Optional)</i> Override default CSS rules with this prop. |
-|  [displayMode?](./table-plugin.tableconfig.displaymode.md) | 'normal' \| 'embedded' \| 'expand' | <i>(Optional)</i> Determine how the width of the table is constrained (or not).<ul> <li> <b>normal</b>: the table will have no peculiar constrain on <code>width</code> or <code>maxWidth</code>. </li> <li> <b>embedded</b>: the table acts like a width-constrained embedded (React Native Render HTML RFC001), with <code>maxWidth</code> determined by <code>contentWidth</code> and <code>computeEmbeddedMaxWidth</code>. </li> <li> <b>expand</b>: like <b>embedded</b>, but with <code>width</code> set to <code>maxWidth</code>. This can be useful to have a center-aligned table on wide screens. </li> </ul> |
-|  [maxScale?](./table-plugin.tableconfig.maxscale.md) | boolean | <i>(Optional)</i> Max zoom scale (must be greater than 1). |
-|  [style?](./table-plugin.tableconfig.style.md) | StyleProp&lt;ViewStyle&gt; | <i>(Optional)</i> Container style. |
-|  [tableStyleSpecs?](./table-plugin.tableconfig.tablestylespecs.md) | [TableStyleSpecs](./table-plugin.tablestylespecs.md) | <i>(Optional)</i> Specs to generate css rules.<img src="https://raw.githubusercontent.com/native-html/table-plugin/master/images/TableStyleSpecs.png" /> |
-|  [webViewProps?](./table-plugin.tableconfig.webviewprops.md) | any | <i>(Optional)</i> Any props you'd like to pass to the <code>WebView</code> component. |
+<table><thead><tr><th>
+
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[animationDuration?](./table-plugin.tableconfig.animationduration.md)
+
+
+</td><td>
+
+
+</td><td>
+
+number
+
+
+</td><td>
+
+_(Optional)_ The animation duration in milliseconds when infered height value changes. See [TableConfig.computeContainerHeight](./table-plugin.tableconfig.computecontainerheight.md)<!-- -->.
+
+
+</td></tr>
+<tr><td>
+
+[animationType?](./table-plugin.tableconfig.animationtype.md)
+
+
+</td><td>
+
+
+</td><td>
+
+'none' \| 'layout' \| 'animated'
+
+
+</td><td>
+
+_(Optional)_ What kind of animation should be used when height is changed? <ul> <li> <b>layout</b>: use native `LayoutAnimation`<!-- -->. This is the best option performance-wise, but requires some setup. See https://facebook.github.io/react-native/docs/layoutanimation. </li> <li> <b>animated</b>: use `Animated` module from react-native. </li> <li> <b>none</b>: no animations are performed. </li> </ul>
+
+
+</td></tr>
+<tr><td>
+
+[computeContainerHeight?](./table-plugin.tableconfig.computecontainerheight.md)
+
+
+</td><td>
+
+
+</td><td>
+
+(state: [TableContentHeightState](./table-plugin.tablecontentheightstate.md)<!-- -->) =&gt; number \| null
+
+
+</td><td>
+
+_(Optional)_ A function which will compute container's height given the table content height.
+
+
+</td></tr>
+<tr><td>
+
+[computeHeuristicContentHeight?](./table-plugin.tableconfig.computeheuristiccontentheight.md)
+
+
+</td><td>
+
+
+</td><td>
+
+(state: [HTMLTableStats](./table-plugin.htmltablestats.md)<!-- -->) =&gt; number
+
+
+</td><td>
+
+_(Optional)_ A function to compute approximate content height before the real content height has been fetched on DOM mount.
+
+
+</td></tr>
+<tr><td>
+
+[cssRules?](./table-plugin.tableconfig.cssrules.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+_(Optional)_ Override default CSS rules with this prop.
+
+
+</td></tr>
+<tr><td>
+
+[displayMode?](./table-plugin.tableconfig.displaymode.md)
+
+
+</td><td>
+
+
+</td><td>
+
+'normal' \| 'embedded' \| 'expand'
+
+
+</td><td>
+
+_(Optional)_ Determine how the width of the table is constrained (or not).
+
+<ul> <li> <b>normal</b>: the table will have no peculiar constrain on <code>width</code> or <code>maxWidth</code>. </li> <li> <b>embedded</b>: the table acts like a width-constrained embedded (React Native Render HTML RFC001), with <code>maxWidth</code> determined by <code>contentWidth</code> and <code>computeEmbeddedMaxWidth</code>. </li> <li> <b>expand</b>: like <b>embedded</b>, but with <code>width</code> set to <code>maxWidth</code>. This can be useful to have a center-aligned table on wide screens. </li> </ul>
+
+
+</td></tr>
+<tr><td>
+
+[maxScale?](./table-plugin.tableconfig.maxscale.md)
+
+
+</td><td>
+
+
+</td><td>
+
+boolean
+
+
+</td><td>
+
+_(Optional)_ Max zoom scale (must be greater than 1).
+
+
+</td></tr>
+<tr><td>
+
+[style?](./table-plugin.tableconfig.style.md)
+
+
+</td><td>
+
+
+</td><td>
+
+StyleProp&lt;ViewStyle&gt;
+
+
+</td><td>
+
+_(Optional)_ Container style.
+
+
+</td></tr>
+<tr><td>
+
+[tableStyleSpecs?](./table-plugin.tableconfig.tablestylespecs.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[TableStyleSpecs](./table-plugin.tablestylespecs.md)
+
+
+</td><td>
+
+_(Optional)_ Specs to generate css rules.
+
+<img src="https://raw.githubusercontent.com/native-html/table-plugin/master/images/TableStyleSpecs.png" />
+
+
+</td></tr>
+<tr><td>
+
+[webViewProps?](./table-plugin.tableconfig.webviewprops.md)
+
+
+</td><td>
+
+
+</td><td>
+
+any
+
+
+</td><td>
+
+_(Optional)_ Any props you'd like to pass to the `WebView` component.
+
+
+</td></tr>
+</tbody></table>
 

@@ -4,7 +4,6 @@ import validator from 'html-validator';
 import { HTMLTable } from '../HTMLTable';
 import { act, render } from '@testing-library/react-native';
 import Ersatz from '@formidable-webview/ersatz';
-import { waitForErsatz } from '@formidable-webview/ersatz-testing';
 import { HTMLTableStats } from '../types';
 import './setup';
 import {
@@ -44,11 +43,12 @@ function waitForRender(timeMs: number = 1000) {
 // See https://github.com/callstack/react-native-testing-library/issues/539
 describe('HTMLTable component', () => {
   it('should produce w3-compliant HTML code', async () => {
-    const webview = await waitForErsatz(
-      render(<HTMLTable html={simpleHTML} WebView={Ersatz} {...dummyStats} />)
+    const { findByTestId, UNSAFE_getByType } = render(
+      <HTMLTable html={simpleHTML} {...dummyStats} {...defaultTestConfig} />
     );
+    await findByTestId('backend-loaded-0');
     const validated = await validator({
-      data: webview.props.source.html,
+      data: UNSAFE_getByType(Ersatz).props.source.html,
       format: 'json'
     });
     expect(validated).toBeValidHTML();
@@ -60,16 +60,15 @@ describe('HTMLTable component', () => {
       const computeContainerHeight = jest.fn((s: TableContentHeightState) => {
         return s.contentHeight;
       });
-      await waitForErsatz(
-        render(
-          <HTMLTable
-            html={simpleHTML}
-            computeContainerHeight={computeContainerHeight}
-            {...dummyStats}
-            {...defaultTestConfig}
-          />
-        )
+      const { findByTestId } = render(
+        <HTMLTable
+          html={simpleHTML}
+          computeContainerHeight={computeContainerHeight}
+          {...dummyStats}
+          {...defaultTestConfig}
+        />
       );
+      await findByTestId('backend-loaded-0');
       expect(computeContainerHeight).toHaveBeenCalledTimes(3);
       expect(computeContainerHeight).toHaveBeenNthCalledWith(
         1,
@@ -85,6 +84,7 @@ describe('HTMLTable component', () => {
           contentHeight: expect.any(Number)
         })
       );
+      await waitForRender();
     });
     it("should be used to set container's height", async () => {
       const { getByTestId, findByTestId } = render(

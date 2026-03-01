@@ -4,7 +4,6 @@ import map from 'ramda/src/map';
 import max from 'ramda/src/max';
 import prop from 'ramda/src/prop';
 import reduce from 'ramda/src/reduce';
-import { TextStyle } from 'react-native';
 import { TNode } from 'react-native-render-html';
 import { TCellConstraints } from '../shared-types';
 import { getHorizontalMargins, getHorizontalSpacing } from './measure';
@@ -58,20 +57,19 @@ export default class TCellConstraintsComputer {
   private baseFontCoeff: number;
   private fallbackFontSize: number;
 
-  private fontWeightCoeffs: Record<Required<TextStyle>['fontWeight'], number> =
-    {
-      '100': 0.8,
-      '200': 0.85,
-      '300': 0.9,
-      '400': 1,
-      '500': 1.1,
-      '600': 1.2,
-      '700': 1.3,
-      '800': 1.4,
-      '900': 1.5,
-      bold: 1.3,
-      normal: 1
-    };
+  private fontWeightCoeffs: Record<string, number> = {
+    '100': 0.8,
+    '200': 0.85,
+    '300': 0.9,
+    '400': 1,
+    '500': 1.1,
+    '600': 1.2,
+    '700': 1.3,
+    '800': 1.4,
+    '900': 1.5,
+    bold: 1.3,
+    normal: 1
+  };
 
   constructor({
     baseFontCoeff,
@@ -110,7 +108,7 @@ export default class TCellConstraintsComputer {
       const fontSize =
         tnode.styles.nativeTextFlow.fontSize ?? this.fallbackFontSize;
       const fontWeight = tnode.styles.nativeTextFlow.fontWeight ?? 'normal';
-      const fontWeightCoeff = this.fontWeightCoeffs[fontWeight] ?? 1;
+      const fontWeightCoeff = this.fontWeightCoeffs[String(fontWeight)] ?? 1;
       stats.textStats.push({
         characters: tnode.data.length,
         maxWordLength: getMaxWordSize(tnode.data.split(/\s+/)),

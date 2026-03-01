@@ -8,8 +8,7 @@ import { LinkPressTarget } from '@formidable-webview/webshell';
 import { RenderersProps } from 'react-native-render-html';
 
 // @public
-export function linkPressTargetToOnDOMLinkPressArgs({ uri, classAttribute, downloadAttribute, hrefAttribute, hreflangAttribute, targetAttribute, idAttribute, nameAttribute, referrerpolicyAttribute, relAttribute, typeAttribute }: LinkPressTarget): Parameters<Required<RenderersProps['a']>['onPress']>;
-
+export function linkPressTargetToOnDOMLinkPressArgs(input: LinkPressTarget): Parameters<Required<RenderersProps['a']>['onPress']>;
 
 // (No @packageDocumentation comment for this package)
 

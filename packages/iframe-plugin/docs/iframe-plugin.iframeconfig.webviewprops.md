@@ -6,7 +6,7 @@
 
 Any props you'd like to pass to the `WebView` component.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 webViewProps?: any;

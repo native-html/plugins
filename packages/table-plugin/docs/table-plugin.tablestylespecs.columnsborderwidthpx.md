@@ -6,7 +6,7 @@
 
 The width of the border between columns.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 columnsBorderWidthPx: number;

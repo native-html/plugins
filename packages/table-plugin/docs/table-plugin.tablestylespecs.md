@@ -8,7 +8,7 @@ An object describing how to generate styles. See [cssRulesFromSpecs()](./table-p
 
 <img src="https://raw.githubusercontent.com/native-html/table-plugin/master/images/TableStyleSpecs.png" />
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export interface TableStyleSpecs 
@@ -16,27 +16,425 @@ export interface TableStyleSpecs
 
 ## Properties
 
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [cellPaddingEm](./table-plugin.tablestylespecs.cellpaddingem.md) | number | Spacing between cells, in em. |
-|  [columnsBorderWidthPx](./table-plugin.tablestylespecs.columnsborderwidthpx.md) | number | The width of the border between columns. |
-|  [fitContainerHeight](./table-plugin.tablestylespecs.fitcontainerheight.md) | boolean | Expand table to HTML height. \*\*You must une unconstrained height for this to work!\*\* See [TableConfig.computeContainerHeight](./table-plugin.tableconfig.computecontainerheight.md)<!-- -->. |
-|  [fitContainerWidth](./table-plugin.tablestylespecs.fitcontainerwidth.md) | boolean | Expand table to HTML width. |
-|  [fontFamily](./table-plugin.tablestylespecs.fontfamily.md) | string | Font family. |
-|  [fontSizePx](./table-plugin.tablestylespecs.fontsizepx.md) | number \| null | Font size, in pixels. |
-|  [linkColor](./table-plugin.tablestylespecs.linkcolor.md) | string | Link of anchors. |
-|  [outerBorderColor](./table-plugin.tablestylespecs.outerbordercolor.md) | string | The border color of the table frame. |
-|  [outerBorderWidthPx](./table-plugin.tablestylespecs.outerborderwidthpx.md) | number | The border width for the table frame. |
-|  [rowsBorderWidthPx](./table-plugin.tablestylespecs.rowsborderwidthpx.md) | number | The width of the border between rows. |
-|  [selectableText](./table-plugin.tablestylespecs.selectabletext.md) | boolean | Will text be selectable. |
-|  [tdBorderColor](./table-plugin.tablestylespecs.tdbordercolor.md) | string | Table cell border color. |
-|  [thBorderColor](./table-plugin.tablestylespecs.thbordercolor.md) | string | Table header cell border color. |
-|  [thEvenBackground](./table-plugin.tablestylespecs.thevenbackground.md) | string | Table even header cell background color. |
-|  [thEvenColor](./table-plugin.tablestylespecs.thevencolor.md) | string | Table even header cell text color. |
-|  [thOddBackground](./table-plugin.tablestylespecs.thoddbackground.md) | string | Table even header cell background color. |
-|  [thOddColor](./table-plugin.tablestylespecs.thoddcolor.md) | string | Table odd header cell text color. |
-|  [trEvenBackground](./table-plugin.tablestylespecs.trevenbackground.md) | string | Table even row background color. |
-|  [trEvenColor](./table-plugin.tablestylespecs.trevencolor.md) | string | Table even row text color. |
-|  [trOddBackground](./table-plugin.tablestylespecs.troddbackground.md) | string | Table odd row background color. |
-|  [trOddColor](./table-plugin.tablestylespecs.troddcolor.md) | string | Table odd row text color. |
+<table><thead><tr><th>
+
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[cellPaddingEm](./table-plugin.tablestylespecs.cellpaddingem.md)
+
+
+</td><td>
+
+
+</td><td>
+
+number
+
+
+</td><td>
+
+Spacing between cells, in em.
+
+
+</td></tr>
+<tr><td>
+
+[columnsBorderWidthPx](./table-plugin.tablestylespecs.columnsborderwidthpx.md)
+
+
+</td><td>
+
+
+</td><td>
+
+number
+
+
+</td><td>
+
+The width of the border between columns.
+
+
+</td></tr>
+<tr><td>
+
+[fitContainerHeight](./table-plugin.tablestylespecs.fitcontainerheight.md)
+
+
+</td><td>
+
+
+</td><td>
+
+boolean
+
+
+</td><td>
+
+Expand table to HTML height. \*\*You must une unconstrained height for this to work!\*\* See [TableConfig.computeContainerHeight](./table-plugin.tableconfig.computecontainerheight.md)<!-- -->.
+
+
+</td></tr>
+<tr><td>
+
+[fitContainerWidth](./table-plugin.tablestylespecs.fitcontainerwidth.md)
+
+
+</td><td>
+
+
+</td><td>
+
+boolean
+
+
+</td><td>
+
+Expand table to HTML width.
+
+
+</td></tr>
+<tr><td>
+
+[fontFamily](./table-plugin.tablestylespecs.fontfamily.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+Font family.
+
+
+</td></tr>
+<tr><td>
+
+[fontSizePx](./table-plugin.tablestylespecs.fontsizepx.md)
+
+
+</td><td>
+
+
+</td><td>
+
+number \| null
+
+
+</td><td>
+
+Font size, in pixels.
+
+
+</td></tr>
+<tr><td>
+
+[linkColor](./table-plugin.tablestylespecs.linkcolor.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+Link of anchors.
+
+
+</td></tr>
+<tr><td>
+
+[outerBorderColor](./table-plugin.tablestylespecs.outerbordercolor.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+The border color of the table frame.
+
+
+</td></tr>
+<tr><td>
+
+[outerBorderWidthPx](./table-plugin.tablestylespecs.outerborderwidthpx.md)
+
+
+</td><td>
+
+
+</td><td>
+
+number
+
+
+</td><td>
+
+The border width for the table frame.
+
+
+</td></tr>
+<tr><td>
+
+[rowsBorderWidthPx](./table-plugin.tablestylespecs.rowsborderwidthpx.md)
+
+
+</td><td>
+
+
+</td><td>
+
+number
+
+
+</td><td>
+
+The width of the border between rows.
+
+
+</td></tr>
+<tr><td>
+
+[selectableText](./table-plugin.tablestylespecs.selectabletext.md)
+
+
+</td><td>
+
+
+</td><td>
+
+boolean
+
+
+</td><td>
+
+Will text be selectable.
+
+
+</td></tr>
+<tr><td>
+
+[tdBorderColor](./table-plugin.tablestylespecs.tdbordercolor.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+Table cell border color.
+
+
+</td></tr>
+<tr><td>
+
+[thBorderColor](./table-plugin.tablestylespecs.thbordercolor.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+Table header cell border color.
+
+
+</td></tr>
+<tr><td>
+
+[thEvenBackground](./table-plugin.tablestylespecs.thevenbackground.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+Table even header cell background color.
+
+
+</td></tr>
+<tr><td>
+
+[thEvenColor](./table-plugin.tablestylespecs.thevencolor.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+Table even header cell text color.
+
+
+</td></tr>
+<tr><td>
+
+[thOddBackground](./table-plugin.tablestylespecs.thoddbackground.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+Table even header cell background color.
+
+
+</td></tr>
+<tr><td>
+
+[thOddColor](./table-plugin.tablestylespecs.thoddcolor.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+Table odd header cell text color.
+
+
+</td></tr>
+<tr><td>
+
+[trEvenBackground](./table-plugin.tablestylespecs.trevenbackground.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+Table even row background color.
+
+
+</td></tr>
+<tr><td>
+
+[trEvenColor](./table-plugin.tablestylespecs.trevencolor.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+Table even row text color.
+
+
+</td></tr>
+<tr><td>
+
+[trOddBackground](./table-plugin.tablestylespecs.troddbackground.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+Table odd row background color.
+
+
+</td></tr>
+<tr><td>
+
+[trOddColor](./table-plugin.tablestylespecs.troddcolor.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+Table odd row text color.
+
+
+</td></tr>
+</tbody></table>
 

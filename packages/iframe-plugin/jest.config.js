@@ -5,5 +5,8 @@ module.exports = {
   coveragePathIgnorePatterns: ['/node_modules/', '__tests__'],
   transformIgnorePatterns: [
     'node_modules/(?!(@react-native|react-native|react-native-webview|ramda|react-native-render-html)/)'
-  ]
+  ],
+  moduleNameMapper: {
+    'react-native-webview': '@formidable-webview/ersatz'
+  }
 };

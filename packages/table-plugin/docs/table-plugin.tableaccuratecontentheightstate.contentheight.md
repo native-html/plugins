@@ -4,7 +4,7 @@
 
 ## TableAccurateContentHeightState.contentHeight property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 contentHeight: number;

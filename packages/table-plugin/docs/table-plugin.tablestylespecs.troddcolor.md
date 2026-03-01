@@ -6,7 +6,7 @@
 
 Table odd row text color.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 trOddColor: string;

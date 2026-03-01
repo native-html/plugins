@@ -5,7 +5,7 @@
 ## Coordinates interface
 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export interface Coordinates 
@@ -13,8 +13,60 @@ export interface Coordinates
 
 ## Properties
 
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [x](./heuristic-table-plugin.coordinates.x.md) | number |  |
-|  [y](./heuristic-table-plugin.coordinates.y.md) | number |  |
+<table><thead><tr><th>
+
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[x](./heuristic-table-plugin.coordinates.x.md)
+
+
+</td><td>
+
+
+</td><td>
+
+number
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[y](./heuristic-table-plugin.coordinates.y.md)
+
+
+</td><td>
+
+
+</td><td>
+
+number
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 

@@ -5,18 +5,86 @@
 ## CellProperties interface
 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export interface CellProperties extends Coordinates 
 ```
-<b>Extends:</b> [Coordinates](./heuristic-table-plugin.coordinates.md)
+**Extends:** [Coordinates](./heuristic-table-plugin.coordinates.md)
 
 ## Properties
 
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [constraints](./heuristic-table-plugin.cellproperties.constraints.md) | TCellConstraints |  |
-|  [lenX](./heuristic-table-plugin.cellproperties.lenx.md) | number |  |
-|  [lenY](./heuristic-table-plugin.cellproperties.leny.md) | number |  |
+<table><thead><tr><th>
+
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[constraints](./heuristic-table-plugin.cellproperties.constraints.md)
+
+
+</td><td>
+
+
+</td><td>
+
+TCellConstraints
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[lenX](./heuristic-table-plugin.cellproperties.lenx.md)
+
+
+</td><td>
+
+
+</td><td>
+
+number
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[lenY](./heuristic-table-plugin.cellproperties.leny.md)
+
+
+</td><td>
+
+
+</td><td>
+
+number
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 

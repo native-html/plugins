@@ -6,7 +6,7 @@
 
 When defined, the provided CSS will be injected in a `style` element.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 injectedCSSStyles?: string;

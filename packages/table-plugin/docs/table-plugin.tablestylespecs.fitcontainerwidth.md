@@ -6,7 +6,7 @@
 
 Expand table to HTML width.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 fitContainerWidth: boolean;

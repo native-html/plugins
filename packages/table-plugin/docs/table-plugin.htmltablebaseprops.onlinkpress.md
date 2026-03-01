@@ -6,7 +6,7 @@
 
 Intercept links press.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 onLinkPress?: RenderersProps['a']['onPress'];

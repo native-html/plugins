@@ -6,7 +6,7 @@
 
 A function which will compute container's height given the table content height.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 computeContainerHeight?: (state: TableContentHeightState) => number | null;

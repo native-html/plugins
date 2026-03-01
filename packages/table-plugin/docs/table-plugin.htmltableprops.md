@@ -6,10 +6,10 @@
 
 Props for HTMLTable component.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export interface HTMLTableProps extends TableConfig, HTMLTableBaseProps 
 ```
-<b>Extends:</b> [TableConfig](./table-plugin.tableconfig.md)<!-- -->, [HTMLTableBaseProps](./table-plugin.htmltablebaseprops.md)
+**Extends:** [TableConfig](./table-plugin.tableconfig.md)<!-- -->, [HTMLTableBaseProps](./table-plugin.htmltablebaseprops.md)
 

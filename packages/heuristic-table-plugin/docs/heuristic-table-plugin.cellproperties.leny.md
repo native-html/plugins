@@ -4,7 +4,7 @@
 
 ## CellProperties.lenY property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 lenY: number;

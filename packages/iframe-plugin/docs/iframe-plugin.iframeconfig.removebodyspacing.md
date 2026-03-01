@@ -6,7 +6,7 @@
 
 When `true`<!-- -->, a stylesheet will be inserted in the `WebView` to remove padding and margins for the `body` element.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 removeBodySpacing?: boolean;

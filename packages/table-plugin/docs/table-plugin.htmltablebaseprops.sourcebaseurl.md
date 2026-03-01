@@ -6,7 +6,7 @@
 
 The base to resolve relative URLs.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 sourceBaseUrl?: string;

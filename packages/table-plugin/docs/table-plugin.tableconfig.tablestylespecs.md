@@ -8,7 +8,7 @@ Specs to generate css rules.
 
 <img src="https://raw.githubusercontent.com/native-html/table-plugin/master/images/TableStyleSpecs.png" />
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 tableStyleSpecs?: TableStyleSpecs;
