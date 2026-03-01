@@ -1,4 +1,4 @@
-> :warning: This documentation is for **react-native-render-html v6** (@native-html/table-plugin@4.x). For v5 and below, [go here](https://github.com/native-html/plugins/tree/rnrh/5.x/packages/table-plugin#readme).
+> :warning: This documentation is for **@native-html/render v6** (@native-html/table-plugin@4.x). For v5 and below, [go here](https://github.com/native-html/plugins/tree/rnrh/5.x/packages/table-plugin#readme).
 
 <h1 align="center">@native-html/table-plugin</h1>
 
@@ -39,7 +39,7 @@
 </p>
 
 <p align="center">
-  🔠 A WebView-based plugin to render tables in react-native-render-html.
+  🔠 A WebView-based plugin to render tables in @native-html/render.
 </p>
 
 <p align="center">
@@ -81,19 +81,6 @@ yarn add @native-html/table-plugin
 - Limited support of Expo &lt;33 version ; full support [&ge;33 versions](https://github.com/expo/expo/milestone/22) (see bellow limitation)
 - Autoheight behavior and `onLinkPress` config options only work with [`WebView` &ge; `v5.0.0` community edition](https://github.com/react-native-community/react-native-webview/releases/tag/v5.0.0)
 
-## Compat Table
-
-> :warning: The API is significantly different depending on target
-> react-native-render-html version.
-> **Make sure you check the appropriate version documentation before
-> proceeding.**
-
-| react-native-render-html | @native-html/table-plugin                                                                                                                                                                                                                     |
-| ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| ≥ 4.2.1 &lt; 5.0.0       | 2.x ([documentation](https://github.com/native-html/plugins/tree/rnrh/4.x#readme))                                                                                                                                                            |
-| ≥ 5.0.0 &lt; 6.0.0       | 3.x ([documentation](https://github.com/native-html/plugins/tree/rnrh/5.x/packages/table-plugin#readme))                                                                                                                                      |
-| ≥ 6.0.0                  | 4.x ([documentation](https://github.com/native-html/plugins/tree/@native-html/table-plugin@4.0.3/packages/table-plugin#readme)) <br> 5.x ([documentation](https://github.com/native-html/plugins/tree/rnrh/6.x/packages/table-plugin#readme)) |
-
 ## Minimal working example
 
 _[Full example](https://github.com/native-html/plugins/blob/master/example/SimpleExample.js)_
@@ -106,7 +93,7 @@ You need 2 steps to get to a working example:
 ```javascript
 import React from 'react';
 import { ScrollView } from 'react-native';
-import HTML from 'react-native-render-html';
+import HTML from '@native-html/render';
 import TableRenderer, { tableModel } from '@native-html/table-plugin';
 import WebView from 'react-native-webview';
 

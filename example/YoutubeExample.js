@@ -1,5 +1,5 @@
 import React from 'react';
-import RenderHTML from 'react-native-render-html';
+import RenderHTML from '@native-html/render';
 import iframe, { iframeModel } from '@native-html/iframe-plugin';
 import WebView from 'react-native-webview';
 
@@ -22,7 +22,7 @@ const youtubeIframe = `
 <p>
 <iframe width="560"
         height="315"
-        src="https://www.youtube.com/embed/POK_Iw4m3fY"
+        src="https://www.youtube.com/watch?v=YWEsoSosQXQ"
         frameborder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowfullscreen>

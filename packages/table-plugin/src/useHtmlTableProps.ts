@@ -5,7 +5,7 @@ import {
   useDocumentMetadata,
   useRendererProps,
   useContentWidth
-} from 'react-native-render-html';
+} from '@native-html/render';
 import extractHtmlAndStatsFromTableDomNode from './extractHtmlAndStatsFromTableDomNode';
 import { HTMLTableProps, TableConfig } from './types';
 import type { TBlock } from '@native-html/transient-render-engine';

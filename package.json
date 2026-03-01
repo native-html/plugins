@@ -34,11 +34,11 @@
     "prettier": "^3.8.1"
   },
   "resolutions": {
-    "react": "19.2.4",
-    "react-dom": "19.2.4",
-    "react-native": "0.84.1",
-    "react-test-renderer": "19.2.4",
-    "react-native-webview": "13.16.1"
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "react-native": "0.83.2",
+    "react-test-renderer": "19.2.0",
+    "react-native-webview": "13.16.0"
   },
   "author": "Jules Sam. Randolph <jules.sam.randolph@gmail.com> (https://github.com/jsamr)",
   "license": "MIT",

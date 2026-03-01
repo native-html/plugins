@@ -1,5 +1,5 @@
 import React from 'react';
-import RenderHTML from 'react-native-render-html';
+import RenderHTML from '@native-html/render';
 import { useHtmlTableProps, tableModel } from '@native-html/table-plugin';
 import ClickTable from './ClickTable';
 import WebView from 'react-native-webview';

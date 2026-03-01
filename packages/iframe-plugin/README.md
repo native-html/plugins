@@ -1,4 +1,4 @@
-> :warning: This documentation is for **react-native-render-html v6** (@native-html/iframe-plugin@2.x). For v5, [go here](https://github.com/native-html/plugins/tree/rnrh/5.x/packages/iframe-plugin#readme).
+> :warning: This documentation is for **@native-html/render v6** (@native-html/iframe-plugin@2.x). For v5, [go here](https://github.com/native-html/plugins/tree/rnrh/5.x/packages/iframe-plugin#readme).
 
 <h1 align="center">@native-html/iframe-plugin</h1>
 
@@ -33,7 +33,7 @@
 </p>
 
 <p align="center">
-  🌐 A WebView-based plugin to render iframes in react-native-render-html.
+  🌐 A WebView-based plugin to render iframes in @native-html/render.
 </p>
 
 <p align="center">
@@ -75,18 +75,11 @@ yarn add @native-html/iframe-plugin react-native-webview
 
 - With `react-native-web`, `onLinkPress` will not work for external domains.
 
-## Compat Table
-
-| react-native-render-html | @native-html/iframe-plugin                                                                                |
-| ------------------------ | --------------------------------------------------------------------------------------------------------- |
-| ≥ 5.0.0 &lt; 6.0.0       | 1.x ([documentation](https://github.com/native-html/plugins/tree/rnrh/5.x/packages/iframe-plugin#readme)) |
-| ≥ 6.0.0                  | 2.x ([documentation](https://github.com/native-html/plugins/tree/rnrh/6.x/packages/iframe-plugin#readme)) |
-
 ## Minimal working example
 
 ```jsx
 import IframeRenderer, { iframeModel } from '@native-html/iframe-plugin';
-import RenderHTML from 'react-native-render-html';
+import RenderHTML from '@native-html/render';
 import WebView from 'react-native-webview';
 
 const renderers = {
@@ -142,7 +135,7 @@ equivalent to `resizeMode: 'contain'` for images. See example below with
 
 ```jsx
 import IframeRenderer, { iframeModel } from '@native-html/iframe-plugin';
-import RenderHTML from 'react-native-render-html';
+import RenderHTML from '@native-html/render';
 import WebView from 'react-native-webview';
 
 const renderers = {

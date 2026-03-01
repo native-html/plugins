@@ -3,7 +3,7 @@ import {
   CustomBlockRenderer,
   defaultHTMLElementModels,
   HTMLContentModel
-} from 'react-native-render-html';
+} from '@native-html/render';
 import { HTMLElementModel } from '@native-html/transient-render-engine';
 import useHtmlIframeProps from './useHtmlIframeProps';
 import HTMLIframe from './HTMLIframe';

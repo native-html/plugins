@@ -5,7 +5,7 @@ import {
   TNode,
   useContentWidth,
   useRendererProps
-} from 'react-native-render-html';
+} from '@native-html/render';
 import { Settings, HTMLTableProps } from './shared-types';
 import TableLayout from './TableLayout';
 

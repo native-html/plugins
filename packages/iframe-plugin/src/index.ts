@@ -4,7 +4,7 @@ export { default as useHtmlIframeProps } from './useHtmlIframeProps';
 export { default as HTMLIframe } from './HTMLIframe';
 export type { HTMLIframeProps, IframeConfig } from './HTMLIframe';
 
-declare module 'react-native-render-html' {
+declare module '@native-html/render' {
   interface RenderersProps {
     /**
      * Configuration for `@native-html/iframe-plugin` iframe renderer.

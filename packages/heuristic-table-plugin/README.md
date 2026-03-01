@@ -39,7 +39,7 @@
 </p>
 
 <p align="center">
-  🔠 A 100% native component using heuristics to render tables in react-native-render-html.
+  🔠 A 100% native component using heuristics to render tables in @native-html/render.
 </p>
 
 <hr/>
@@ -52,19 +52,12 @@ npm add --save @native-html/heuristic-table-plugin
 yarn add @native-html/heuristic-table-plugin
 ```
 
-## Compat Table
-
-| react-native-render-html | @native-html/heuristic-table-plugin                                                                                |
-| ------------------------ | ------------------------------------------------------------------------------------------------------------------ |
-| &lt; 6.0.0               | -                                                                                                                  |
-| ≥ 6.0.0                  | 6.x ([documentation](https://github.com/native-html/plugins/tree/rnrh/6.x/packages/heuristic-table-plugin#readme)) |
-
 ## Minimal working example
 
 ```javascript
 import React from 'react';
 import { ScrollView } from 'react-native';
-import HTML from 'react-native-render-html';
+import HTML from '@native-html/render';
 import tableRenderers from '@native-html/heuristic-table-plugin';
 
 const html = `

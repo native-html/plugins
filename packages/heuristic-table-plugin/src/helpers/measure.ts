@@ -1,4 +1,4 @@
-import { TNode } from 'react-native-render-html';
+import { TNode } from '@native-html/render';
 
 type NativeBlockRetStyle = TNode['styles']['nativeBlockRet'];
 type SpacingFields = Extract<

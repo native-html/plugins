@@ -5,12 +5,12 @@
 ```ts
 
 import { ComponentType } from 'react';
-import { CustomBlockRenderer } from 'react-native-render-html';
-import { CustomRendererProps } from 'react-native-render-html';
-import { HTMLContentModel } from 'react-native-render-html';
+import { CustomBlockRenderer } from '@native-html/render';
+import { CustomRendererProps } from '@native-html/render';
+import { HTMLContentModel } from '@native-html/render';
 import { HTMLElementModel } from '@native-html/transient-render-engine';
 import { default as React_2 } from 'react';
-import { RenderersProps } from 'react-native-render-html';
+import { RenderersProps } from '@native-html/render';
 import { StyleProp } from 'react-native';
 import type { TBlock } from '@native-html/transient-render-engine';
 import { ViewStyle } from 'react-native';

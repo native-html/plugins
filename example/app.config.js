@@ -9,7 +9,7 @@ export default {
     version: pluginVersion,
     orientation: 'default',
     description:
-      'Try out official plugins for react-native-render-html on your device!',
+      'Try out official plugins for @native-html/render on your device!',
     icon: './assets/icon.png',
     splash: {
       backgroundColor: '#ffffff'
