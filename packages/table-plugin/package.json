@@ -64,7 +64,7 @@
   },
   "dependencies": {
     "@formidable-webview/webshell": "2.6.0",
-    "@native-html/plugins-core": "file:../plugins-core",
+    "@native-html/plugins-core": "workspace:*",
     "@types/prop-types": "^15.7.15",
     "prop-types": "^15.8.1"
   },

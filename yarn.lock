@@ -3315,18 +3315,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@native-html/plugins-core@file:../plugins-core::locator=%40native-html%2Ftable-plugin%40workspace%3Apackages%2Ftable-plugin":
-  version: 1.3.0
-  resolution: "@native-html/plugins-core@file:../plugins-core#../plugins-core::hash=6d4c6b&locator=%40native-html%2Ftable-plugin%40workspace%3Apackages%2Ftable-plugin"
-  peerDependencies:
-    "@formidable-webview/webshell": ^2.3.0
-    "@native-html/render": ">=1.0.0-alpha.0"
-    react: ">= 16.8.0"
-    react-native: ">= 0.63.0"
-  checksum: 10c0/22731d5e964d282affac3761ab96b19dac0f1c4a34379fbf0be193728953f99f8a3dbca0ac3bd76e20d48381734b5ac1c90c2c0ffc8e0702def90745b683c002
-  languageName: node
-  linkType: hard
-
 "@native-html/plugins-core@workspace:*, @native-html/plugins-core@workspace:packages/plugins-core":
   version: 0.0.0-use.local
   resolution: "@native-html/plugins-core@workspace:packages/plugins-core"
@@ -3398,7 +3386,7 @@ __metadata:
     "@formidable-webview/webshell": "npm:2.6.0"
     "@microsoft/api-documenter": "npm:^7.29.6"
     "@microsoft/api-extractor": "npm:7.57.6"
-    "@native-html/plugins-core": "file:../plugins-core"
+    "@native-html/plugins-core": "workspace:*"
     "@native-html/render": "npm:1.0.0-alpha.0"
     "@testing-library/react-native": "npm:^13.3.3"
     "@tsconfig/react-native": "npm:^3.0.9"
