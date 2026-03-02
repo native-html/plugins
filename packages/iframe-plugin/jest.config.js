@@ -6,7 +6,4 @@ module.exports = {
   transformIgnorePatterns: [
     'node_modules/(?!(@react-native|react-native|react-native-webview|ramda|@native-html|stringify-entities|character-entities-html4|character-entities-legacy)/)'
   ],
-  moduleNameMapper: {
-    'react-native-webview': '@formidable-webview/ersatz'
-  }
 };
