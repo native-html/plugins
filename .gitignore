@@ -67,3 +67,6 @@ buck-out/
 !.yarn/plugins
 !.yarn/sdks
 !.yarn/versions
+
+# lerna
+lerna-debug.log

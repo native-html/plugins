@@ -17,12 +17,15 @@
     "test:iframe:jest": "yarn workspace @native-html/iframe-plugin test:jest",
     "test:core": "yarn workspace @native-html/plugins-core test",
     "test:core:jest": "yarn workspace @native-html/plugins-core test:jest",
-    "prepare": "husky"
+    "prepare": "husky",
+    "release": "lerna publish"
   },
   "devDependencies": {
     "@commitlint/cli": "^20.4.2",
     "@commitlint/config-conventional": "^20.4.2",
     "@formidable-webview/eslint-config-webjs": "^1.0.0",
+    "@lerna-lite/cli": "^4.4.1",
+    "@lerna-lite/publish": "^4.4.1",
     "@react-native-community/eslint-config": "^3.2.0",
     "@typescript-eslint/eslint-plugin": "^8.56.1",
     "@typescript-eslint/parser": "^8.56.1",
