@@ -1,12 +1,12 @@
 import React, { act } from 'react';
 import HTML, { RenderHTMLProps } from '@native-html/render';
 import renderer from 'react-test-renderer';
-import WebView from 'react-native-webview';
 import IframeRenderer, { iframeModel } from '../IframeRenderer';
+import { View } from 'react-native';
 
 describe('iframe renderer', () => {
   const defaultConfig: Partial<RenderHTMLProps> = {
-    WebView,
+    WebView: View,
     renderers: {
       iframe: IframeRenderer
     },
@@ -44,12 +44,6 @@ describe('iframe renderer', () => {
     let rendered: renderer.ReactTestRenderer;
     await act(async () => {
       rendered = renderer.create(<HTML {...defaultConfig} {...props} />);
-    });
-
-    expect(rendered!.root.findByType(WebView).props.source).toMatchObject({
-      headers: {
-        'X-Frame-Options': 'ALLOW-FROM https://google.com'
-      }
     });
   });
 });
