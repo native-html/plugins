@@ -20,6 +20,11 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
+    - name: Install canvas system dependencies
+      uses: awalsh128/cache-apt-pkgs-action@latest
+      with:
+        packages: libcairo2-dev libjpeg-dev libpng-dev libgif-dev libpango1.0-dev librsvg2-dev
+        version: 1.0
     - run: yarn install --immutable
     - run: yarn build:core
       name: Build core

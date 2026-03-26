@@ -36,14 +36,17 @@
     "@babel/plugin-transform-react-jsx": "^7.28.6",
     "@babel/preset-typescript": "^7.28.5",
     "@babel/runtime": "^7.28.6",
+    "@formidable-webview/ersatz": "^2.1.2",
+    "@formidable-webview/ersatz-testing": "^2.0.5",
     "@microsoft/api-documenter": "^7.29.6",
     "@microsoft/api-extractor": "7.57.6",
     "@native-html/render": "1.0.0-alpha.0",
+    "@testing-library/react": "16.3.2",
     "@testing-library/react-native": "^13.3.3",
     "@types/jest": "^30.0.0",
     "@types/react": "^19.2.14",
     "@types/react-native": "^0.73.0",
-    "@types/react-test-renderer": "^19.1.0",
+    "@types/react-test-renderer": "^19",
     "babel-jest": "^30.2.0",
     "eslint": "^10.0.2",
     "jest": "^30.2.0",
@@ -53,14 +56,14 @@
     "react-native": "0.83.2",
     "react-native-builder-bob": "^0.40.18",
     "react-native-webview": "13.16.0",
-    "react-test-renderer": "19.2.0",
     "typescript": "~5.8.2"
   },
   "dependencies": {
     "@formidable-webview/webshell": "^2.6.0",
     "@native-html/plugins-core": "workspace:*",
     "@types/prop-types": "^15.7.15",
-    "prop-types": "^15.8.1"
+    "prop-types": "^15.8.1",
+    "react-test-renderer": "19.2.0"
   },
   "peerDependencies": {
     "@native-html/render": ">=1.0.0-alpha.0",
