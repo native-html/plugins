@@ -84,6 +84,7 @@ function findHeight({
   computeHeuristicContentHeight: (tableStats: HTMLTableStats) => number;
   contentHeight: number | null;
 } & HTMLTableStats) {
+  console.log('findHeight');
   if (typeof contentHeight === 'number') {
     return computeContainerHeight({
       type: 'accurate',
@@ -137,6 +138,15 @@ function useAnimatedAutoheight<WVP extends MinimalWebViewProps>({
       webshellProps: webViewProps as any,
       resetHeightOnViewportWidthChange: false
     });
+  console.log({
+    computeContainerHeight,
+    computeHeuristicContentHeight,
+    'contentSize.height': contentSize.height,
+    syncState,
+    numOfChars,
+    numOfColumns,
+    numOfRows
+  });
   const containerHeight = useMemo(
     () =>
       findHeight({
@@ -331,18 +341,6 @@ const propTypes: Record<keyof HTMLTableProps, any> = {
   displayMode: PropTypes.oneOf(['flex', 'expand'])
 };
 
-const defaultProps = {
-  animationDuration: DEFAULT_TRANSITION_DURATION,
-  animationType: 'animated',
-  computeHeuristicContentHeight: defaultComputeHeuristicContentHeight,
-  computeContainerHeight: defaultComputeContainerHeight,
-  maxScale: 1
-};
-
 Object.defineProperty(HTMLTable, 'propTypes', {
   value: propTypes
-});
-
-Object.defineProperty(HTMLTable, 'defaultProps', {
-  value: defaultProps
 });

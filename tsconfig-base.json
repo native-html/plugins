@@ -1,5 +1,4 @@
 {
-  "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "@tsconfig/react-native/tsconfig.json",
   "compilerOptions": {
     "lib": ["ESNext"],
@@ -9,6 +8,6 @@
     "declaration": true,
     "noImplicitAny": false,
     "isolatedModules": false,
-    "skipLibCheck": true
+    "skipLibCheck": true,
   }
 }

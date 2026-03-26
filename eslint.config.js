@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 const tsPlugin = require('@typescript-eslint/eslint-plugin');
 const compat = require('eslint-plugin-compat');
 const tsdoc = require('eslint-plugin-tsdoc');

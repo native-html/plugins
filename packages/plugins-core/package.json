@@ -32,13 +32,13 @@
     "@formidable-webview/webshell": "^2.6.0",
     "@microsoft/api-extractor": "7.57.6",
     "@native-html/render": "1.0.0-alpha.0",
+    "@testing-library/react": "16.3.2",
     "@testing-library/react-native": "^13.3.3",
     "@tsconfig/react-native": "^3.0.9",
     "@types/html-validator": "^5.0.6",
     "@types/jest": "^30.0.0",
     "@types/react": "^19.2.14",
     "@types/react-native": "^0.73.0",
-    "@types/react-test-renderer": "^19.1.0",
     "babel-jest": "^30.2.0",
     "eslint": "^10.0.2",
     "jest": "^30.2.0",
@@ -47,7 +47,6 @@
     "react": "19.2.0",
     "react-native": "0.83.2",
     "react-native-builder-bob": "^0.40.18",
-    "react-test-renderer": "19.2.0",
     "typescript": "~5.8.2"
   },
   "peerDependencies": {
