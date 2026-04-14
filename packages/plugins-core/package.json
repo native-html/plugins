@@ -31,7 +31,7 @@
     "@babel/runtime": "^7.28.6",
     "@formidable-webview/webshell": "^2.6.0",
     "@microsoft/api-extractor": "7.57.6",
-    "@native-html/render": "1.0.0-alpha.0",
+    "@native-html/render": "1.0.2",
     "@testing-library/react": "16.3.2",
     "@testing-library/react-native": "^13.3.3",
     "@tsconfig/react-native": "^3.0.9",
