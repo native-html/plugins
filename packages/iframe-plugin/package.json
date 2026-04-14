@@ -1,6 +1,6 @@
 {
   "name": "@native-html/iframe-plugin",
-  "version": "2.6.1",
+  "version": "3.0.0-alpha.0",
   "description": "🌐 A WebView-based plugin to render iframes in @native-html/render",
   "main": "lib/commonjs/index.js",
   "module": "lib/module/index.js",

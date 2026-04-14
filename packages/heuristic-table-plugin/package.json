@@ -1,6 +1,6 @@
 {
   "name": "@native-html/heuristic-table-plugin",
-  "version": "0.7.0",
+  "version": "1.0.0-alpha.0",
   "description": "🔠 A 100% native component using heuristics to render tables in @native-html/render",
   "main": "lib/commonjs/index.js",
   "module": "lib/module/index.js",

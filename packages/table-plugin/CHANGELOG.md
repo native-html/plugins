@@ -1,5 +1,23 @@
-## [5.3.1](https://github.com/native-html/plugins/compare/@native-html/table-plugin@5.3.0...@native-html/table-plugin@5.3.1) (2021-10-13)
+# Change Log
 
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+# [6.0.0-alpha.0](github.com/native-html/plugins/compare/@native-html/table-plugin@5.3.1...@native-html/table-plugin@6.0.0-alpha.0) (2026-04-14)
+
+### Bug Fixes
+
+* adjust tests after version bump ([bab83b9](github.com/native-html/plugins/commits/bab83b94a79d2ac9d658c7e44665381ae79f4021)) - by @5ZYSZ3K
+* bring back workspace access for @native-html/plugins-core ([d1d8b9c](github.com/native-html/plugins/commits/d1d8b9c8bdea9c49cbec9e894a3d9fde3f1e7ee0)) - by @5ZYSZ3K
+* remove @formidable-webview/ersatz ([d04a6d5](github.com/native-html/plugins/commits/d04a6d5594bf8ca66c419490fd5162dee2e0cff9)) - by @5ZYSZ3K
+
+### Features
+
+* fix example app and switch from react-native-render-html to @native-html/render ([5cd0239](github.com/native-html/plugins/commits/5cd0239140bce1610186fcc1a8921f1f35ef4337)) - by @5ZYSZ3K
+* upgrade @native-html/render to a stable version ([bb25566](github.com/native-html/plugins/commits/bb25566282fb604f7fb4f747ec72428934d9f4d0)) - by @5ZYSZ3K
+* upgrade all packages and bring libraries to work ([228ce17](github.com/native-html/plugins/commits/228ce174f2598c2aa6ed9b78fcd1f0d43d439d0a)) - by @5ZYSZ3K
+
+## [5.3.1](https://github.com/native-html/plugins/compare/@native-html/table-plugin@5.3.0...@native-html/table-plugin@5.3.1) (2021-10-13)
 
 ### Bug Fixes
 
@@ -7,13 +25,11 @@
 
 # [5.3.0](https://github.com/native-html/plugins/compare/@native-html/table-plugin@5.2.0...@native-html/table-plugin@5.3.0) (2021-06-08)
 
-
 ### Features
 
 * **table:** support react-native-render-html@6.0.0-beta.0 ([6de42c8](https://github.com/native-html/plugins/commit/6de42c860fcd2ed0323bd4bd7c86667b134fcf90))
 
 # [5.2.0](https://github.com/native-html/plugins/compare/@native-html/table-plugin@5.1.0...@native-html/table-plugin@5.2.0) (2021-05-21)
-
 
 ### Features
 
@@ -21,13 +37,11 @@
 
 # [5.1.0](https://github.com/native-html/plugins/compare/@native-html/table-plugin@5.0.3...@native-html/table-plugin@5.1.0) (2021-04-17)
 
-
 ### Features
 
 * **table:** support react-native-render-html@6.0.0-alpha.23 ([604e76e](https://github.com/native-html/plugins/commit/604e76e60f99812a558e03ffc17ed877873cf7a4))
 
 ## [5.0.3](https://github.com/native-html/plugins/compare/@native-html/table-plugin@5.0.2...@native-html/table-plugin@5.0.3) (2021-04-17)
-
 
 ### Bug Fixes
 
@@ -35,13 +49,11 @@
 
 ## [5.0.2](https://github.com/native-html/plugins/compare/@native-html/table-plugin@5.0.1...@native-html/table-plugin@5.0.2) (2021-04-17)
 
-
 ### Bug Fixes
 
 * restrict compatible versions of react-native-render-html ([032c4ed](https://github.com/native-html/plugins/commit/032c4ed035150471c914d6406fe7b2b2237035fe))
 
 ## [5.0.1](https://github.com/native-html/plugins/compare/@native-html/table-plugin@5.0.0...@native-html/table-plugin@5.0.1) (2021-02-18)
-
 
 ### Bug Fixes
 
@@ -49,11 +61,9 @@
 
 # [5.0.0](https://github.com/native-html/plugins/compare/@native-html/table-plugin@4.0.3...@native-html/table-plugin@5.0.0) (2021-02-08)
 
-
 ### Features
 
 * **table-plugin:** automatically handle relative URLs ([000b9b4](https://github.com/native-html/plugins/commit/000b9b44de3adb924901bee7fa131542af2b4bc4))
-
 
 ### BREAKING CHANGES
 
@@ -72,7 +82,6 @@ against this base. Read https://git.io/JtwG0 for a detailed description.
 
 ## [4.0.1](https://github.com/native-html/plugins/compare/@native-html/table-plugin@4.0.0...@native-html/table-plugin@4.0.1) (2021-02-07)
 
-
 ### Bug Fixes
 
 * **table-plugin:** default htmlAttribs would cause infinite re-renders ([cb23e01](https://github.com/native-html/plugins/commit/cb23e01d50af19374686632b51d47aa4bd6f532b))
@@ -81,16 +90,13 @@ against this base. Read https://git.io/JtwG0 for a detailed description.
 
 # [4.0.0](https://github.com/native-html/plugins/compare/@native-html/table-plugin@3.1.0...@native-html/table-plugin@4.0.0) (2021-02-06)
 
-
 ### Bug Fixes
 
 * **table-plugin:** mark displayMode field as optional ([b395a49](https://github.com/native-html/plugins/commit/b395a49f0e5d439a799a84393e2c8fd50a239c2c))
 
-
 ### Features
 
 * **table-plugin:** support react-native-render-html 6.x ([1526efe](https://github.com/native-html/plugins/commit/1526efe18b8fd67a51235dca341b34c7227dafa3))
-
 
 ### BREAKING CHANGES
 
@@ -101,7 +107,6 @@ against this base. Read https://git.io/JtwG0 for a detailed description.
 - new `tableModel` export for the new custom renderers API
 
 # [3.1.0](https://github.com/native-html/plugins/compare/@native-html/table-plugin@3.0.1...@native-html/table-plugin@3.1.0) (2020-12-05)
-
 
 ### Features
 
@@ -117,7 +122,6 @@ against this base. Read https://git.io/JtwG0 for a detailed description.
 # 3.0.0 (2020-12-05)
 
 This release requires `react-native-render-html` ≥ 5.0.0! Be aware, its API has changed a little:
-
 
 ```javascript
 import React from 'react';
@@ -214,22 +218,18 @@ Configuration for the table renderer is now read from
 
 # [2.0.0](https://github.com/native-html/table-plugin/compare/v1.0.4...v2.0.0) (2020-09-28)
 
-
 ### Code Refactoring
 
 * implement HTMLTable component with [**webshell 2.0**](https://formidable-webview.github.io/webshell/) `useAutoheight` ([0d038ba](https://github.com/native-html/table-plugin/commit/0d038ba0f61cfa2cd9f089ed7d69d26d191cd4a6)), closes [#16](https://github.com/native-html/table-plugin/issues/16)
-
 
 ### Features
 
 * better customizability of table style specs ([2b66c10](https://github.com/native-html/table-plugin/commit/2b66c10a61990de4a7beb735be0e5be9121c985b)), thanks [@nadav2051](https://github.com/nadav2051)! closes [#10](https://github.com/native-html/table-plugin/issues/10)
 
-
 ### Performance Improvements
 
 * avoid rerendering caused by `onDOMLinkPress` ([1fe9f77](https://github.com/native-html/table-plugin/commit/1fe9f7748851d92935f9fcc7693b5be02f79bfc6))
 * limit number of rendering cycles ([312e648](https://github.com/native-html/table-plugin/commit/312e648b8fb7eddd8c933d6e0b1ba8e35457a910))
-
 
 ### BREAKING CHANGES
 
@@ -240,7 +240,6 @@ Configuration for the table renderer is now read from
 ## [1.0.4](https://github.com/native-html/table-plugin/compare/v1.0.3...v1.0.4) (2020-08-20)
 
 ## [1.0.3](https://github.com/native-html/table-plugin/compare/v1.0.2...v1.0.3) (2020-08-20)
-
 
 ### Bug Fixes
 
@@ -258,11 +257,9 @@ Fix misconfigured repository field in package.json, responsible for bad relative
 
 * restructure source files and comply with api-extractor ([644e2ff](https://github.com/native-html/table-plugin/commit/644e2ff653d5abff979a72ea6cee733227b0baf6))
 
-
 ### Features
 
 * new TableConfig API to configure height computation ([07264fb](https://github.com/native-html/table-plugin/commit/07264fb6233d47cb23ce559c54b83c983e778021))
-
 
 ### BREAKING CHANGES
 
@@ -279,9 +276,7 @@ Finally, `animationDuration` now replaces `transitionDuration` to make the
 semantic link with animationType more explicit.
 * remove export of domToHTML
 
-
 ## [0.6.1](https://github.com/native-html/table-plugin/compare/v0.6.0...v0.6.1) (2020-07-03)
-
 
 ### Bug Fixes
 
@@ -289,13 +284,11 @@ semantic link with animationType more explicit.
 
 # [0.6.0](https://github.com/native-html/table-plugin/compare/v0.5.1...v0.6.0) (2020-07-03)
 
-
 ### Bug Fixes
 
 * empty 'cssRules' prop is ignored ([469ec9a](https://github.com/native-html/table-plugin/commit/469ec9a0665735e64790df9f3724a8411fbe1d83))
 * script injection resulting in syntax error ([875f18f](https://github.com/native-html/table-plugin/commit/875f18f2f24cdc1db6ee79a9487495ecddd92d15))
 * table borders correctly rendered left and bottom ([14422f8](https://github.com/native-html/table-plugin/commit/14422f84cbe2c4e89315119624cd2cc6aeb46198))
-
 
 ### Features
 
@@ -306,7 +299,6 @@ semantic link with animationType more explicit.
 
 - `fitContainer` attribute of `tableStyleSpecs` config has been split into `fitContainerWidth` and `fitContainerHeight`.
 - TypeScript definitions for `react-native-render-html` are not embedded anymore. Please upgrade to `react-native-render-html@4.2.1`.
-
 
 ## 0.5.3
 
