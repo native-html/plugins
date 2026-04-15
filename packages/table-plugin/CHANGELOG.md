@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.0.0-alpha.1](github.com/native-html/plugins/compare/@native-html/table-plugin@6.0.0-alpha.0...@native-html/table-plugin@6.0.0-alpha.1) (2026-04-15)
+
+### Bug Fixes
+
+* remove unnecessary console.log ([7b88648](github.com/native-html/plugins/commits/7b8864853b4d39b2ebd1af6fef955ada99985a7a)) - by @5ZYSZ3K
+
 # [6.0.0-alpha.0](github.com/native-html/plugins/compare/@native-html/table-plugin@5.3.1...@native-html/table-plugin@6.0.0-alpha.0) (2026-04-14)
 
 ### Bug Fixes
