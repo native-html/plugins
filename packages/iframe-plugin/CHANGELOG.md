@@ -1,13 +1,30 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+# [3.0.0-alpha.0](github.com/native-html/plugins/compare/@native-html/iframe-plugin@2.6.1...@native-html/iframe-plugin@3.0.0-alpha.0) (2026-04-14)
+
+### Bug Fixes
+
+* adjust tests after version bump ([bab83b9](github.com/native-html/plugins/commits/bab83b94a79d2ac9d658c7e44665381ae79f4021)) - by @5ZYSZ3K
+* remove @formidable-webview/ersatz ([d04a6d5](github.com/native-html/plugins/commits/d04a6d5594bf8ca66c419490fd5162dee2e0cff9)) - by @5ZYSZ3K
+* remove WebView tests ([c4e509e](github.com/native-html/plugins/commits/c4e509e83ed6ddb693961532b3489c241973eddb)) - by @5ZYSZ3K
+
+### Features
+
+* fix example app and switch from react-native-render-html to @native-html/render ([5cd0239](github.com/native-html/plugins/commits/5cd0239140bce1610186fcc1a8921f1f35ef4337)) - by @5ZYSZ3K
+* upgrade @native-html/render to a stable version ([bb25566](github.com/native-html/plugins/commits/bb25566282fb604f7fb4f747ec72428934d9f4d0)) - by @5ZYSZ3K
+* upgrade all packages and bring libraries to work ([228ce17](github.com/native-html/plugins/commits/228ce174f2598c2aa6ed9b78fcd1f0d43d439d0a)) - by @5ZYSZ3K
+
 ## [2.6.1](https://github.com/native-html/plugins/compare/@native-html/iframe-plugin@2.6.0...@native-html/iframe-plugin@2.6.1) (2021-11-29)
 
 # [2.6.0](https://github.com/native-html/plugins/compare/@native-html/iframe-plugin@2.5.0...@native-html/iframe-plugin@2.6.0) (2021-10-13)
-
 
 ### Bug Fixes
 
 * **iframe-plugin:** the iframe is painted as a blank view ([d40e98d](https://github.com/native-html/plugins/commit/d40e98db2595c3d8a231b0070ca3e74d6562fc83)), closes [#41](https://github.com/native-html/plugins/issues/41)
 * remove null from useHtmlIframeProps return signature (dead condition) ([4c51d0a](https://github.com/native-html/plugins/commit/4c51d0af641c0fd121d3959febcc60c09c8259b5))
-
 
 ### Features
 
@@ -15,18 +32,15 @@
 
 # [2.5.0](https://github.com/native-html/plugins/compare/@native-html/iframe-plugin@2.4.0...@native-html/iframe-plugin@2.5.0) (2021-06-08)
 
-
 ### Features
 
 * **iframe:** support react-native-render-html@6.0.0-beta.0 ([96c33b5](https://github.com/native-html/plugins/commit/96c33b56ad24a98f76142aad46007d7fbb28699f))
 
 # [2.4.0](https://github.com/native-html/plugins/compare/@native-html/iframe-plugin@2.3.0...@native-html/iframe-plugin@2.4.0) (2021-05-21)
 
-
 ### Bug Fixes
 
 * **iframe:** did not pick config passed in rendererProps ([3580d77](https://github.com/native-html/plugins/commit/3580d7781c75ed0a5f3707d5b2fe18c0d8fe6926))
-
 
 ### Features
 
@@ -34,13 +48,11 @@
 
 # [2.3.0](https://github.com/native-html/plugins/compare/@native-html/iframe-plugin@2.2.2...@native-html/iframe-plugin@2.3.0) (2021-04-17)
 
-
 ### Features
 
 * **iframe-plugin:** support react-native-render-html@6.0.0-alpha.23 ([489f8f4](https://github.com/native-html/plugins/commit/489f8f4fec58281a2cb1b4180f886a97bddc00d3))
 
 ## [2.2.2](https://github.com/native-html/plugins/compare/@native-html/iframe-plugin@2.2.1...@native-html/iframe-plugin@2.2.2) (2021-04-17)
-
 
 ### Bug Fixes
 
@@ -48,18 +60,15 @@
 
 ## [2.2.1](https://github.com/native-html/plugins/compare/@native-html/iframe-plugin@2.2.0...@native-html/iframe-plugin@2.2.1) (2021-04-17)
 
-
 ### Bug Fixes
 
 * restrict compatible versions of react-native-render-html ([032c4ed](https://github.com/native-html/plugins/commit/032c4ed035150471c914d6406fe7b2b2237035fe))
 
 # [2.2.0](https://github.com/native-html/plugins/compare/@native-html/iframe-plugin@2.1.1...@native-html/iframe-plugin@2.2.0) (2021-02-19)
 
-
 ### Bug Fixes
 
 * force responsive layout when scalesPageToFit = false (1:1) ([1233104](https://github.com/native-html/plugins/commit/12331044fd9f21e443086ca7bd50d37c3ceaa8eb))
-
 
 ### Features
 
@@ -67,13 +76,11 @@
 
 ## [2.1.1](https://github.com/native-html/plugins/compare/@native-html/iframe-plugin@2.1.0...@native-html/iframe-plugin@2.1.1) (2021-02-18)
 
-
 ### Bug Fixes
 
 * replace outdated type import `RenderHTMLPassedProps` ([872bc96](https://github.com/native-html/plugins/commit/872bc965d8b5c5e8e37430060a2edc343549623f))
 
 # [2.1.0](https://github.com/native-html/plugins/compare/@native-html/iframe-plugin@2.0.2...@native-html/iframe-plugin@2.1.0) (2021-02-08)
-
 
 ### Features
 
@@ -84,7 +91,6 @@
 
 ## [2.0.1](https://github.com/native-html/plugins/compare/@native-html/iframe-plugin@2.0.0...@native-html/iframe-plugin@2.0.1) (2021-02-07)
 
-
 ### Bug Fixes
 
 * **iframe-plugin:** pass anchor attributes and target to `onLinkPress` ([a5c22e8](https://github.com/native-html/plugins/commit/a5c22e81f8cff0eba82c363ac453e7118a5e200d))
@@ -92,11 +98,9 @@
 
 # [2.0.0](https://github.com/native-html/plugins/compare/@native-html/iframe-plugin@1.1.1...@native-html/iframe-plugin@2.0.0) (2021-02-06)
 
-
 ### Features
 
 * **iframe-plugin:** support react-native-render-html 6.x ([11a8ca0](https://github.com/native-html/plugins/commit/11a8ca04e2e864de145b9189cfb526fb345782ae))
-
 
 ### BREAKING CHANGES
 
@@ -107,13 +111,11 @@
 
 ## [1.1.1](https://github.com/native-html/plugins/compare/@native-html/iframe-plugin@1.1.0...@native-html/iframe-plugin@1.1.1) (2020-12-05)
 
-
 ### Bug Fixes
 
 * **iframe-plugin:** resolve TypeError when renderersProp is not defined ([54e650b](https://github.com/native-html/plugins/commit/54e650b9046aeae12f63ed94c41d19347e97d725))
 
 # [1.1.0](https://github.com/native-html/plugins/compare/@native-html/iframe-plugin@1.0.0...@native-html/iframe-plugin@1.1.0) (2020-12-05)
-
 
 ### Features
 
@@ -137,4 +139,3 @@ HTML `contentWidth` prop.) In the screenshot below, scalesPageToFit is disabled
 * **iframe-plugin:** new scalesPageToFit config ([8f5c030](https://github.com/native-html/plugins/commit/8f5c030e7080d2ee861cbbc7db49d214529679f6))
 * **iframe-plugin:** the component inherits from `tagsStyles` and `classesStyles` styles when matched
 * **iframe-plugin:** compliance with React Native Render HTML RFC001: use `computeEmbeddedMaxWidth` to constrain max width for iframes
-

@@ -3511,15 +3511,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@native-html/css-processor@npm:2.0.0-alpha.0":
-  version: 2.0.0-alpha.0
-  resolution: "@native-html/css-processor@npm:2.0.0-alpha.0"
+"@native-html/css-processor@npm:2.0.0":
+  version: 2.0.0
+  resolution: "@native-html/css-processor@npm:2.0.0"
   dependencies:
     css-to-react-native: "npm:^3.2.0"
     csstype: "npm:^3.1.3"
   peerDependencies:
     "@types/react": "*"
-  checksum: 10c0/4b290037522a3cf94690cb6f59787260c295b2bf5cee397c4442714db707bf0cdf25aa76a91fb41bbbd0a9098a9c78f9995f5cf2159559283c424f2cffbf7e6d
+  checksum: 10c0/6a552876fe490da5e19f001b73ae68a8a721d2af8958ad714f4af0e28aa8a1d1b67b6415ec2a6f926c4bb6f4e58e9fbf573ef04d357130eea9f3dd7e139a6dc7
   languageName: node
   linkType: hard
 
@@ -3534,7 +3534,7 @@ __metadata:
     "@babel/runtime": "npm:^7.28.6"
     "@microsoft/api-documenter": "npm:^7.29.6"
     "@microsoft/api-extractor": "npm:7.57.6"
-    "@native-html/render": "npm:1.0.0-alpha.0"
+    "@native-html/render": "npm:1.0.2"
     "@testing-library/react": "npm:16.3.2"
     "@testing-library/react-native": "npm:^13.3.3"
     "@tsconfig/react-native": "npm:^3.0.9"
@@ -3578,7 +3578,7 @@ __metadata:
     "@microsoft/api-documenter": "npm:^7.29.6"
     "@microsoft/api-extractor": "npm:7.57.6"
     "@native-html/plugins-core": "workspace:*"
-    "@native-html/render": "npm:1.0.0-alpha.0"
+    "@native-html/render": "npm:1.0.2"
     "@testing-library/react": "npm:16.3.2"
     "@testing-library/react-native": "npm:^13.3.3"
     "@types/jest": "npm:^30.0.0"
@@ -3616,7 +3616,7 @@ __metadata:
     "@babel/runtime": "npm:^7.28.6"
     "@formidable-webview/webshell": "npm:^2.6.0"
     "@microsoft/api-extractor": "npm:7.57.6"
-    "@native-html/render": "npm:1.0.0-alpha.0"
+    "@native-html/render": "npm:1.0.2"
     "@testing-library/react": "npm:16.3.2"
     "@testing-library/react-native": "npm:^13.3.3"
     "@tsconfig/react-native": "npm:^3.0.9"
@@ -3641,13 +3641,13 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@native-html/render@npm:1.0.0-alpha.0":
-  version: 1.0.0-alpha.0
-  resolution: "@native-html/render@npm:1.0.0-alpha.0"
+"@native-html/render@npm:1.0.2":
+  version: 1.0.2
+  resolution: "@native-html/render@npm:1.0.2"
   dependencies:
     "@jsamr/counter-style": "npm:^2.0.2"
     "@jsamr/react-native-li": "npm:^2.3.1"
-    "@native-html/transient-render-engine": "npm:12.0.0-alpha.0"
+    "@native-html/transient-render-engine": "npm:12.0.0"
     "@types/ramda": "npm:^0.31.1"
     "@types/urijs": "npm:^1.19.25"
     prop-types: "npm:^15.8.1"
@@ -3657,7 +3657,7 @@ __metadata:
   peerDependencies:
     react: "*"
     react-native: "*"
-  checksum: 10c0/d84a83bb1168857af8d4783f4354871ceddc3b46990a5eaf94a3254e70400bdb03ba893cce3a0f48c6d4ec9406170cb2433f50850906a0be4f87c4594cbef564
+  checksum: 10c0/94d292cc41554b2a35edd6de873e593a9daf6d907f40b6fb6af3276346fad2c51fc63ffee18da8e55f694ee8ff25ded0394582be1643c48981da259bd3e4461c
   languageName: node
   linkType: hard
 
@@ -3676,7 +3676,7 @@ __metadata:
     "@microsoft/api-documenter": "npm:^7.29.6"
     "@microsoft/api-extractor": "npm:7.57.6"
     "@native-html/plugins-core": "workspace:*"
-    "@native-html/render": "npm:1.0.0-alpha.0"
+    "@native-html/render": "npm:1.0.2"
     "@testing-library/react": "npm:16.3.2"
     "@testing-library/react-native": "npm:^13.3.3"
     "@tsconfig/react-native": "npm:^3.0.9"
@@ -3705,11 +3705,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@native-html/transient-render-engine@npm:12.0.0-alpha.0":
-  version: 12.0.0-alpha.0
-  resolution: "@native-html/transient-render-engine@npm:12.0.0-alpha.0"
+"@native-html/transient-render-engine@npm:12.0.0":
+  version: 12.0.0
+  resolution: "@native-html/transient-render-engine@npm:12.0.0"
   dependencies:
-    "@native-html/css-processor": "npm:2.0.0-alpha.0"
+    "@native-html/css-processor": "npm:2.0.0"
     csstype: "npm:^3.1.3"
     domelementtype: "npm:^2.3.0"
     domhandler: "npm:^5.0.3"
@@ -3718,7 +3718,7 @@ __metadata:
     ramda: "npm:^0.32.0"
   peerDependencies:
     react-native: "*"
-  checksum: 10c0/61e848f81ab495b848fd75a0bcd91517f5dcefb44f8764af3886e53f6cf33888f0a9ee20f304f0fb5888b6be860ce64673a44f62626c33371bcc1398921fb577
+  checksum: 10c0/bd530e4c43afc3035c8247e76673bfb211d4c08234e6d47a4e4e1c3a040b66bae2e8fd5f95c813c9879959c1399a96ea8c73974255fe9ea6ff5b1e31313c37f4
   languageName: node
   linkType: hard
 
@@ -8117,7 +8117,7 @@ __metadata:
     "@native-html/heuristic-table-plugin": "workspace:*"
     "@native-html/iframe-plugin": "workspace:*"
     "@native-html/plugins-core": "workspace:*"
-    "@native-html/render": "npm:1.0.0-alpha.0"
+    "@native-html/render": "npm:1.0.2"
     "@native-html/table-plugin": "workspace:*"
     "@react-native-community/masked-view": "npm:0.1.11"
     "@react-navigation/native": "npm:^7.1.31"
