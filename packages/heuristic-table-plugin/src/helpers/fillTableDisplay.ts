@@ -13,13 +13,51 @@ export function createEmptyDisplay(config: Settings): Display {
   };
 }
 
-function computeOffsetX(display: Display, startX: number, startY: number) {
-  return display.occupiedCoordinates.reduce((prev, coordinates) => {
-    if (coordinates.x <= startX && coordinates.y === startY) {
-      return prev + 1;
-    }
-    return prev;
-  }, 0);
+const MAX_COLSPAN = 1000;
+const MAX_ROWSPAN = 65534;
+
+/**
+ * Parse a `colspan` / `rowspan` attribute the way HTML requires.
+ *
+ * @remarks
+ * The attribute is a non-negative integer, clamped to a maximum; anything
+ * invalid — a missing value, a negative, a fraction, `0`, or plain nonsense —
+ * falls back to `1`. Letting a raw `Number()` through instead lets `0` and
+ * negatives corrupt the grid cursor.
+ *
+ * Note that `rowspan="0"` means "span to the end of the row group" in HTML.
+ * Row groups are not modelled here, so it degrades to `1` rather than
+ * silently spanning nothing.
+ */
+function parseSpan(value: unknown, max: number): number {
+  const parsed = typeof value === 'string' ? Number(value.trim()) : NaN;
+  if (!Number.isFinite(parsed)) {
+    return 1;
+  }
+  return Math.min(Math.max(Math.floor(parsed), 1), max);
+}
+
+function isOccupied(display: Display, x: number, y: number): boolean {
+  return display.occupiedCoordinates.some(
+    (coordinates) => coordinates.x === x && coordinates.y === y
+  );
+}
+
+/**
+ * Find the first slot in row `y` at or after `fromX` that no spanning cell has
+ * already claimed.
+ *
+ * @remarks
+ * The search must advance one slot at a time: counting blockers in a single
+ * pass can land the cell on another blocked slot, so two cells end up sharing
+ * one coordinate.
+ */
+function findFreeSlotX(display: Display, fromX: number, y: number): number {
+  let x = fromX;
+  while (isOccupied(display, x, y)) {
+    x += 1;
+  }
+  return x;
 }
 
 export default function fillTableDisplay(
@@ -32,14 +70,15 @@ export default function fillTableDisplay(
     display.offsetX = 0;
   }
   if (tnode.tagName === 'th' || tnode.tagName === 'td') {
-    const rowspan = Number(tnode.attributes.rowspan);
-    const colspan = Number(tnode.attributes.colspan);
-    const lenX = Number.isFinite(colspan) ? colspan : 1;
-    const lenY = Number.isFinite(rowspan) ? rowspan : 1;
-    const initialStartX = display.offsetX + tnode.nodeIndex;
+    const lenX = parseSpan(tnode.attributes.colspan, MAX_COLSPAN);
+    const lenY = parseSpan(tnode.attributes.rowspan, MAX_ROWSPAN);
     const startY = display.maxY;
-    const startX =
-      computeOffsetX(display, initialStartX, display.maxY) + initialStartX;
+    // `offsetX` is the slot cursor for the current row: cells are laid down
+    // left to right from wherever the previous one ended, skipping any slot a
+    // spanning cell from an earlier row has already claimed. Deriving the
+    // column from `nodeIndex` instead would let a stray non-cell element
+    // inside the row shift every following cell.
+    const startX = findFreeSlotX(display, display.offsetX, startY);
     const constraints = computer.computeCellConstraints(tnode);
     const cell: DisplayCell = {
       lenX,
@@ -50,13 +89,18 @@ export default function fillTableDisplay(
       constraints
     };
     display.cells.push(cell);
-    display.offsetX += lenX - 1;
+    display.offsetX = startX + lenX;
     if (lenY > 1) {
+      // A spanning cell claims the whole rectangle it covers, so a cell that
+      // is both `colspan` and `rowspan` blocks every column it straddles in
+      // each of the rows below — not just its first one.
       for (let y = startY + 1; y < lenY + startY; y++) {
-        display.occupiedCoordinates.push({ x: startX, y });
+        for (let x = startX; x < startX + lenX; x++) {
+          display.occupiedCoordinates.push({ x, y });
+        }
       }
     }
-    display.maxX = Math.max(display.maxX, initialStartX);
+    display.maxX = Math.max(display.maxX, startX);
   } else {
     tnode.children.forEach((child) =>
       fillTableDisplay(child, display, computer)

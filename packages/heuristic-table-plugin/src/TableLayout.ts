@@ -14,7 +14,9 @@ export default class TableLayout {
   public readonly totalWidth: number;
   public readonly renderTree: TableRoot;
   constructor(tnode: TNode, config: Settings) {
-    const computer = new TCellConstraintsComputer({});
+    const computer = new TCellConstraintsComputer({
+      contentWidth: config.contentWidth
+    });
     this.display = createEmptyDisplay(config);
     fillTableDisplay(tnode, this.display, computer);
     this.columnWidths = computeColumnWidths(this.display);

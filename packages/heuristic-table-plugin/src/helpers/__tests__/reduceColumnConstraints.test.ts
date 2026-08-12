@@ -11,6 +11,7 @@ describe('getColumnConstraints', () => {
           y: 0,
           constraints: {
             contentDensity: 3,
+            maxWidth: 3,
             minWidth: 2
           }
         },
@@ -21,6 +22,7 @@ describe('getColumnConstraints', () => {
           y: 0,
           constraints: {
             contentDensity: 4,
+            maxWidth: 4,
             minWidth: 3
           }
         },
@@ -31,6 +33,7 @@ describe('getColumnConstraints', () => {
           y: 1,
           constraints: {
             contentDensity: 3,
+            maxWidth: 3,
             minWidth: 1
           }
         },
@@ -41,6 +44,7 @@ describe('getColumnConstraints', () => {
           y: 1,
           constraints: {
             contentDensity: 2,
+            maxWidth: 2,
             minWidth: 1
           }
         }
@@ -68,6 +72,7 @@ describe('getColumnConstraints', () => {
           y: 0,
           constraints: {
             contentDensity: 9,
+            maxWidth: 9,
             minWidth: 3
           }
         },
@@ -78,6 +83,7 @@ describe('getColumnConstraints', () => {
           y: 1,
           constraints: {
             contentDensity: 4,
+            maxWidth: 4,
             minWidth: 2
           }
         }
@@ -98,6 +104,33 @@ describe('getColumnConstraints', () => {
         spread: 3,
         minWidth: 1
       }
+    ]);
+  });
+  it('should keep a slot for a column no cell occupies', () => {
+    // Callers look constraints up by a cell's absolute `x`, so an unoccupied
+    // column has to keep its place: compacting it away would hand every later
+    // column the width of its neighbour.
+    expect(
+      reduceColumnConstraints([
+        {
+          lenX: 1,
+          lenY: 1,
+          x: 0,
+          y: 0,
+          constraints: { contentDensity: 3, maxWidth: 3, minWidth: 2 }
+        },
+        {
+          lenX: 1,
+          lenY: 1,
+          x: 2,
+          y: 0,
+          constraints: { contentDensity: 5, maxWidth: 5, minWidth: 4 }
+        }
+      ])
+    ).toEqual([
+      { contentDensity: 3, spread: 3, minWidth: 2 },
+      { contentDensity: 0, spread: 0, minWidth: 0 },
+      { contentDensity: 5, spread: 5, minWidth: 4 }
     ]);
   });
 });

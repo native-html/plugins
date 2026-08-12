@@ -34,12 +34,18 @@ export interface TConstraintsBase {
  */
 export interface TColumnConstraints extends TConstraintsBase {
   /**
-   * The minimum number for the text in one column to hold in one line.
+   * The width beyond which this column would gain nothing — the *maximum
+   * column width* of {@link https://www.w3.org/TR/CSS21/tables.html#auto-table-layout | CSS 2.1 §17.5.2.2}.
    *
-   * @remarks spread and contentDensity only differ when applied to a
-   * whole column. Spread width will be the maximum of cell content densities,
-   * while the column content density will be the sum of the cell content
-   * densities.
+   * @remarks
+   * This is the greatest {@link TCellConstraints.maxWidth} among the cells of
+   * the column, and is always at least {@link TConstraintsBase.minWidth}:
+   * per the spec, both bounds are raised by the column `width`, so a maximum
+   * can never sit below its own minimum.
+   *
+   * Note that spread and contentDensity only differ when applied to a whole
+   * column: the column content density is the *sum* of the cell content
+   * densities, whereas spread is a maximum.
    */
   spread: number;
 }
@@ -47,8 +53,18 @@ export interface TColumnConstraints extends TConstraintsBase {
 /**
  * @public
  */
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface TCellConstraints extends TConstraintsBase {}
+export interface TCellConstraints extends TConstraintsBase {
+  /**
+   * The width at which this cell would stop benefiting from more space — the
+   * *maximum cell width* of {@link https://www.w3.org/TR/CSS21/tables.html#auto-table-layout | CSS 2.1 §17.5.2.2},
+   * including horizontal spacing.
+   *
+   * @remarks
+   * Like {@link TConstraintsBase.minWidth}, this is raised by an explicit
+   * `width` on the cell, so it is never below `minWidth`.
+   */
+  maxWidth: number;
+}
 
 /**
  * @public

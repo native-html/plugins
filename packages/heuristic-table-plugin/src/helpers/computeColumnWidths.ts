@@ -9,38 +9,60 @@ function mapSpreads(constraints: TColumnConstraints[]): number[] {
   return constraints.map((c) => c.spread);
 }
 
-// Normalize content densities so the minimum column is zero-referenced,
-// then weight them so they sum to 1 (used to distribute extra width).
-function mapWeightedColumnCoeffs(
-  columnConstraints: TColumnConstraints[]
-): number[] {
-  const densities = columnConstraints.map((c) => c.contentDensity);
-  const minDensity = densities.reduce(
-    (acc, x) => Math.min(acc, x),
-    Infinity
-  );
-  const normalized = densities.map((x) => x - minDensity);
-  const total = normalized.reduce((acc, x) => acc + x, 0);
-  return normalized.map((x) => (total === 0 ? 0 : x / total));
+function sumOf(values: number[]): number {
+  return values.reduce((acc, x) => acc + x, 0);
+}
+
+/**
+ * Share `total` across `weights`, proportionally. Falls back to an even share
+ * when every weight is zero, so that no space is ever silently dropped.
+ */
+function distribute(total: number, weights: number[]): number[] {
+  if (weights.length === 0) {
+    return [];
+  }
+  const totalWeight = sumOf(weights);
+  if (totalWeight === 0) {
+    return weights.map(() => total / weights.length);
+  }
+  return weights.map((weight) => (total * weight) / totalWeight);
 }
 
 export default function computeColumnWidths(display: Display): number[] {
   const contentWidth = display.contentWidth;
-  const shouldClampWidth = !display.forceStretch;
+  const shouldStretch = !!display.forceStretch;
   const columnConstraints = reduceColumnConstraints(display.cells);
+  if (columnConstraints.length === 0) {
+    return [];
+  }
   const minWidths = mapMinWidths(columnConstraints);
   const spreads = mapSpreads(columnConstraints);
-  const sumOfMinWidths = minWidths.reduce((a, b) => a + b, 0);
+  const sumOfMinWidths = sumOf(minWidths);
   if (contentWidth < sumOfMinWidths) {
+    // The table cannot fit: no column may go below the width it needs to hold
+    // its longest word, so the table overflows and `HTMLTable` scrolls it.
     return minWidths;
   }
   const widthToAssign = contentWidth - sumOfMinWidths;
-  const weightedCoeffs = mapWeightedColumnCoeffs(columnConstraints);
-  const rawWidths = minWidths.map(
-    (min, i) => min + weightedCoeffs[i]! * widthToAssign
+  // Each column may usefully grow from its minimum up to its maximum, and no
+  // further. CSS 2.1 §17.5.2.2 shares the surplus over that headroom, so every
+  // column that can still benefit gets a proportional share — including the
+  // least demanding one, which must not be starved.
+  const headrooms = spreads.map((spread, i) =>
+    Math.max(0, spread - (minWidths[i] ?? 0))
   );
-  if (shouldClampWidth) {
-    return rawWidths.map((w, i) => Math.min(w, spreads[i] ?? Infinity));
+  const totalHeadroom = sumOf(headrooms);
+  if (widthToAssign < totalHeadroom) {
+    const shares = distribute(widthToAssign, headrooms);
+    return minWidths.map((min, i) => min + (shares[i] ?? 0));
   }
-  return rawWidths;
+  // Every column can reach its maximum width. Shrink-to-fit leaves the table
+  // narrower than its container; `forceStretch` instead spreads the remainder
+  // over the columns, in proportion to how much width each one can put to use.
+  if (!shouldStretch) {
+    return spreads;
+  }
+  const leftover = widthToAssign - totalHeadroom;
+  const shares = distribute(leftover, spreads);
+  return spreads.map((spread, i) => spread + (shares[i] ?? 0));
 }

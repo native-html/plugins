@@ -3,6 +3,7 @@ import { ScrollView, View } from 'react-native';
 import TreeRenderer from './TreeRenderer';
 import { HTMLTableProps } from './shared-types';
 import { getHorizontalSpacing } from './helpers/measure';
+import relaxHeightConstraint from './helpers/relaxHeightConstraint';
 
 function Container({
   children,
@@ -46,7 +47,9 @@ const HTMLTable = memo(function HTMLTable({
     <TDefaultRenderer
       {...props}
       style={{
-        ...props.style,
+        // An explicit height on a table is a minimum height in HTML, so that
+        // the table still grows to fit its rows.
+        ...relaxHeightConstraint(props.style),
         width: Math.min(
           tableWidth + getHorizontalSpacing(props.tnode.styles.nativeBlockRet),
           containerWidth

@@ -7,7 +7,7 @@ import {
 } from '../shared-types';
 
 function getColumnMetrics(cells: CellProperties[]): TColumnConstraints {
-  return cells
+  const column = cells
     .map((c) => c.constraints)
     .reduce(
       (columnConstraints: TColumnConstraints, cellConstraints: TCellConstraints) => ({
@@ -17,13 +17,15 @@ function getColumnMetrics(cells: CellProperties[]): TColumnConstraints {
         ),
         contentDensity:
           columnConstraints.contentDensity + cellConstraints.contentDensity,
-        spread: Math.max(
-          columnConstraints.spread,
-          cellConstraints.contentDensity
-        )
+        spread: Math.max(columnConstraints.spread, cellConstraints.maxWidth)
       }),
       { minWidth: 0, spread: 0, contentDensity: 0 }
     );
+  // CSS 2.1 §17.5.2.2 derives the column minimum and maximum from the same
+  // cells, each floored by the column 'width' — so a maximum below its own
+  // minimum is not a state the spec can produce. Restate it here so callers
+  // may clamp against `spread` without starving the column.
+  return { ...column, spread: Math.max(column.spread, column.minWidth) };
 }
 
 function splitColspanCells(cell: CellProperties): CellProperties | CellProperties[] {
@@ -35,6 +37,7 @@ function splitColspanCells(cell: CellProperties): CellProperties | CellPropertie
         lenY: cell.lenY,
         constraints: {
           minWidth: cell.constraints.minWidth / cell.lenX,
+          maxWidth: cell.constraints.maxWidth / cell.lenX,
           contentDensity: cell.constraints.contentDensity / cell.lenX
         },
         x: cell.x + i,
@@ -50,11 +53,21 @@ export default function reduceColumnConstraints(
   cells: CellProperties[]
 ): TColumnConstraints[] {
   const flatCells = flatten(cells.map(splitColspanCells)) as CellProperties[];
-  const grouped: Record<string, CellProperties[]> = {};
-  for (const cell of flatCells) {
-    const key = String(cell.x);
-    if (!grouped[key]) grouped[key] = [];
-    grouped[key].push(cell);
+  if (flatCells.length === 0) {
+    return [];
   }
-  return Object.values(grouped).map(getColumnMetrics);
+  const grouped: CellProperties[][] = [];
+  let lastColumn = 0;
+  for (const cell of flatCells) {
+    // Callers index the result by a cell's absolute `x`, so the array has to
+    // stay dense: a column that no cell occupies must still hold a slot, or
+    // every column after it would be handed the width of its neighbour.
+    (grouped[cell.x] ??= []).push(cell);
+    lastColumn = Math.max(lastColumn, cell.x);
+  }
+  const columns: TColumnConstraints[] = [];
+  for (let x = 0; x <= lastColumn; x++) {
+    columns[x] = getColumnMetrics(grouped[x] ?? []);
+  }
+  return columns;
 }
