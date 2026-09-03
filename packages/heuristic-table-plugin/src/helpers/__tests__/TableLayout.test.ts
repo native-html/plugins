@@ -192,4 +192,73 @@ describe('TableLayout', () => {
       { x: 2, y: 1 }
     ]);
   });
+
+  describe('containing block', () => {
+    const rows = '<tr><td>alpha</td><td>beta</td></tr>';
+
+    it('should lay out against the width left by a padded ancestor', () => {
+      const { assignableWidth, availableWidth, totalWidth } = layoutFor(
+        `<div style="padding: 30px"><table>${rows}</table></div>`,
+        { contentWidth: 400, forceStretch: true }
+      );
+      expect(availableWidth).toBe(340);
+      expect(assignableWidth).toBe(340);
+      expect(totalWidth).toBeCloseTo(340);
+    });
+
+    it('should resolve a percentage table width against the padded ancestor', () => {
+      const { totalWidth } = layoutFor(
+        `<div style="padding: 20px"><table style="width: 50%">${rows}</table></div>`,
+        { contentWidth: 400, forceStretch: false }
+      );
+      expect(totalWidth).toBeCloseTo(180);
+    });
+
+    it('should keep the columns inside the table own padding and border', () => {
+      // `width` is a border box in React Native, so padding and border eat into
+      // the space the columns may use rather than adding to the table width.
+      const { assignableWidth, availableWidth, totalWidth } = layoutFor(
+        `<table style="padding: 10px; border: 1px solid black">${rows}</table>`,
+        { contentWidth: 400, forceStretch: true }
+      );
+      expect(availableWidth).toBe(400);
+      expect(assignableWidth).toBe(378);
+      expect(totalWidth).toBeCloseTo(378);
+    });
+
+    it('should take the table own margins out of the width it may occupy', () => {
+      const { assignableWidth, availableWidth } = layoutFor(
+        `<table style="margin: 25px">${rows}</table>`,
+        { contentWidth: 400, forceStretch: true }
+      );
+      expect(availableWidth).toBe(350);
+      expect(assignableWidth).toBe(350);
+    });
+
+    it('should stretch to the available width by default', () => {
+      const { totalWidth } = layoutFor(`<table>${rows}</table>`, {
+        contentWidth: 400
+      });
+      expect(totalWidth).toBeCloseTo(400);
+    });
+
+    it('should shrink to fit when forceStretch is disabled', () => {
+      const { totalWidth } = layoutFor(`<table>${rows}</table>`, {
+        contentWidth: 400,
+        forceStretch: false
+      });
+      expect(totalWidth).toBeLessThan(400);
+    });
+
+    it('should still overflow when the minimum widths do not fit', () => {
+      const { totalWidth, assignableWidth } = layoutFor(
+        `<div style="padding: 50px">
+          <table><tr><td style="width: 300px">A</td><td style="width: 300px">B</td></tr></table>
+        </div>`,
+        { contentWidth: 400, forceStretch: true }
+      );
+      expect(assignableWidth).toBe(300);
+      expect(totalWidth).toBeGreaterThanOrEqual(600);
+    });
+  });
 });

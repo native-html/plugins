@@ -2,7 +2,7 @@ import React, { memo, PropsWithChildren } from 'react';
 import { ScrollView, View } from 'react-native';
 import TreeRenderer from './TreeRenderer';
 import { HTMLTableProps } from './shared-types';
-import { getHorizontalSpacing } from './helpers/measure';
+import { getHorizontalInsets } from './helpers/measure';
 import relaxHeightConstraint from './helpers/relaxHeightConstraint';
 
 export function shouldScrollTable(
@@ -52,7 +52,11 @@ const HTMLTable = memo(function HTMLTable({
   ...props
 }: HTMLTableProps) {
   const tableWidth = layout.totalWidth;
-  const containerWidth = settings.contentWidth;
+  // `layout` measures against the width the table's ancestors actually leave
+  // it, which is what `contentWidth` would be if it were narrowed on the way
+  // down the tree. Sizing the container off `settings.contentWidth` instead
+  // would spill the table out of every padded ancestor it sits in.
+  const insets = getHorizontalInsets(props.tnode.styles.nativeBlockRet);
   return (
     <TDefaultRenderer
       {...props}
@@ -60,12 +64,11 @@ const HTMLTable = memo(function HTMLTable({
         // An explicit height on a table is a minimum height in HTML, so that
         // the table still grows to fit its rows.
         ...relaxHeightConstraint(props.style),
-        width: Math.min(
-          tableWidth + getHorizontalSpacing(props.tnode.styles.nativeBlockRet),
-          containerWidth
-        )
+        width: Math.min(tableWidth + insets, layout.availableWidth)
       }}>
-      <Container tableWidth={tableWidth} availableWidth={containerWidth}>
+      <Container
+        tableWidth={tableWidth}
+        availableWidth={layout.assignableWidth}>
         {React.createElement(TreeRenderer, {
           node: layout.renderTree,
           config,

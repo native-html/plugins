@@ -177,6 +177,20 @@ problem](https://dl.acm.org/doi/abs/10.1145/304893.304937).
 To resolve this problem, this library uses a dumb and cheap algorithm, which
 won't find the *best* solution but instead a visually acceptable layout.
 
+### 0. Available width resolution
+
+`contentWidth` is published once, at the root of the render tree, and is never
+narrowed as the engine descends. Before anything else, the table walks up its
+ancestors and subtracts the horizontal spacing each one imposes — padding,
+border and margin — along with any explicit width they declare. Its own
+margins come off next, and its own padding and border after that, since a
+React Native `width` is a border box. What is left is the width its columns
+may occupy.
+
+A table inside `<div style="padding: 20px">` therefore lays out against
+`contentWidth - 40` and stays inside its parent, rather than overflowing it
+into a horizontal scroller.
+
 ### 1. Cell constraints extraction
 
 In the first step, each cell of the table is parsed to extract two metrics:
@@ -201,4 +215,11 @@ constraint.
 
 Otherwise, let `spaceToAllocate = contentWidth - minTableWidth`. Allocate to each column a width equal to its `minWidth` constraint + `spaceToAllocate * gamma`, with `gamma = (normalContentDensity) / sum(normalContentDensities)`. The `normalContentDensity` is `contentDensity - min(contentDensities)`.
 
-Finally, clamp the assign width to the `spread` constraint for this column, unless `forceStretch` parameter is set to `true`.
+Finally, clamp the assign width to the `spread` constraint for this column,
+unless the `forceStretch` parameter is set to `true`.
+
+`forceStretch` defaults to `true`, so a table fills the width its containing
+block leaves it. Set it to `false` in `renderersProps.table` to let an
+auto-width table shrink to fit its content instead. A table with an explicit
+width always distributes that width over its columns, whatever `forceStretch`
+is set to.

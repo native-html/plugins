@@ -41,7 +41,7 @@ export default function useHtmlTableProps(
   } = {}
 ): HTMLTableProps {
   const table = useRendererProps('table');
-  const forceStretch = table?.forceStretch ?? false;
+  const forceStretch = table?.forceStretch;
   const sharedContentWidth = useContentWidth();
   const contentWidth =
     typeof options.overrideContentWidth === 'number'

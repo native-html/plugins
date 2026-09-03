@@ -145,7 +145,12 @@ export interface Settings {
    */
   forceStretch?: boolean;
   /**
-   * Available width prior to scrolling.
+   * Available width at the root of the render tree, prior to scrolling.
+   *
+   * @remarks
+   * This is the width offered to the document as a whole. The horizontal
+   * spacing of the table's ancestors, and of the table itself, is subtracted
+   * from it by {@link TableLayout}.
    */
   contentWidth: number;
 }
@@ -165,7 +170,11 @@ export interface Display extends Settings {
  */
 export interface HeuristicTablePluginConfig {
   /**
-   * When true, force the table to stretch to the available width.
+   * When true, the table stretches to fill the width its containing block
+   * offers — `contentWidth`, less the horizontal spacing of every ancestor.
+   * When false, a table with an auto width shrinks to fit its content.
+   *
+   * @defaultValue true
    */
   forceStretch?: boolean;
   /**

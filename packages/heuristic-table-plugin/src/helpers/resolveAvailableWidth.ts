@@ -1,0 +1,49 @@
+import { TNode } from '@native-html/render';
+import { getHorizontalInsets, getHorizontalMargins } from './measure';
+import { clampWidth, resolveCssSize, resolveNodeWidth } from './resolveWidth';
+
+/**
+ * The width `tnode` offers to a block-level child, i.e. its content box.
+ */
+function reduceToContentBox(tnode: TNode, containingWidth: number): number {
+  const style = tnode.styles.nativeBlockRet;
+  // A declared width is a border box in React Native, so it already accounts
+  // for padding and border; an auto width fills the containing block, minus
+  // the margins that sit outside the box, and is still capped by `max-width`.
+  const declaredWidth = resolveNodeWidth(tnode, containingWidth);
+  const borderBox =
+    declaredWidth ??
+    clampWidth(
+      containingWidth - getHorizontalMargins(style),
+      resolveCssSize(style.minWidth, containingWidth),
+      resolveCssSize(style.maxWidth, containingWidth)
+    );
+  return Math.max(0, borderBox - getHorizontalInsets(style));
+}
+
+/**
+ * Resolve the width the containing block of `tnode` actually offers.
+ *
+ * @remarks
+ * `contentWidth` is published once, at the root of the render tree, and is
+ * never narrowed as the engine descends. A node nested in padded, bordered or
+ * explicitly sized ancestors therefore has to subtract their horizontal
+ * spacing itself — otherwise it lays out against a width it was never given
+ * and overflows every one of them.
+ *
+ * @param tnode - The node whose containing block should be measured.
+ * @param contentWidth - The width available at the root of the render tree.
+ */
+export default function resolveAvailableWidth(
+  tnode: TNode,
+  contentWidth: number
+): number {
+  const ancestors: TNode[] = [];
+  for (let parent = tnode.parent; parent; parent = parent.parent) {
+    ancestors.unshift(parent);
+  }
+  return ancestors.reduce(
+    (width, ancestor) => reduceToContentBox(ancestor, width),
+    contentWidth
+  );
+}
