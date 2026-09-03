@@ -6,6 +6,8 @@
 
 import { CustomBlockRenderer } from '@native-html/render';
 import { CustomRendererProps } from '@native-html/render';
+import { HTMLContentModel } from '@native-html/render';
+import { HTMLElementModel } from '@native-html/render';
 import { PropsFromParent } from '@native-html/render';
 import { default as React_2 } from 'react';
 import { TBlock } from '@native-html/render';
@@ -23,6 +25,9 @@ export interface CellProperties extends Coordinates {
     // (undocumented)
     lenY: number;
 }
+
+// @public
+export const colgroupModel: HTMLElementModel<'colgroup', HTMLContentModel.block>;
 
 // @public (undocumented)
 export interface Coordinates {

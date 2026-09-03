@@ -20,6 +20,112 @@ describe('TableLayout', () => {
     expect(columnWidths[0]).toBeGreaterThanOrEqual(200);
   });
 
+  it('should honour percentage widths declared by col elements', () => {
+    const { columnWidths } = layoutFor(
+      `<table style="width: 400px">
+        <colgroup>
+          <col style="width: 40%" />
+          <col style="width: 20%" />
+          <col style="width: 25%" />
+          <col style="width: 15%" />
+        </colgroup>
+        <tr><td>A</td><td>B</td><td>C</td><td>D</td></tr>
+      </table>`,
+      { contentWidth: 600, forceStretch: false }
+    );
+    expect(columnWidths[0]).toBeCloseTo(160);
+    expect(columnWidths[1]).toBeCloseTo(80);
+    expect(columnWidths[2]).toBeCloseTo(100);
+    expect(columnWidths[3]).toBeCloseTo(60);
+  });
+
+  it('should resolve column percentages against the declared table width', () => {
+    const { columnWidths, totalWidth } = layoutFor(
+      `<table style="width: 50%">
+        <colgroup><col style="width: 50%" /><col style="width: 50%" /></colgroup>
+        <tr><td>A</td><td>B</td></tr>
+      </table>`,
+      { contentWidth: 600, forceStretch: false }
+    );
+    expect(columnWidths).toEqual([150, 150]);
+    expect(totalWidth).toBe(300);
+  });
+
+  it('should expand col and colgroup span declarations', () => {
+    const { columnWidths } = layoutFor(
+      `<table style="width: 400px">
+        <colgroup style="width: 25%">
+          <col span="2" />
+          <col style="width: 50%" />
+        </colgroup>
+        <tr><td>A</td><td>B</td><td>C</td></tr>
+      </table>`,
+      { contentWidth: 400, forceStretch: false }
+    );
+    expect(columnWidths).toEqual([100, 100, 200]);
+  });
+
+  it('should expand a colgroup span when it has no col children', () => {
+    const { columnWidths } = layoutFor(
+      `<table style="width: 300px">
+        <colgroup span="3" style="width: 100px" />
+        <tr><td>A</td><td>B</td><td>C</td></tr>
+      </table>`,
+      { contentWidth: 400, forceStretch: false }
+    );
+    expect(columnWidths).toEqual([100, 100, 100]);
+  });
+
+  it('should prefer a CSS col width over its HTML width attribute', () => {
+    const { columnWidths } = layoutFor(
+      `<table style="width: 300px">
+        <colgroup><col width="50" style="width: 100px" /><col /></colgroup>
+        <tr><td>A</td><td>B</td></tr>
+      </table>`,
+      { contentWidth: 300, forceStretch: false }
+    );
+    expect(columnWidths[0]).toBe(100);
+  });
+
+  it('should let cell content make a declared column wider', () => {
+    const { columnWidths } = layoutFor(
+      `<table>
+        <colgroup><col style="width: 20px" /><col /></colgroup>
+        <tr><td>averyveryverylongword</td><td>B</td></tr>
+      </table>`,
+      { contentWidth: 400, forceStretch: false }
+    );
+    expect(columnWidths[0]).toBeGreaterThan(20);
+  });
+
+  it('should reconcile percent columns with min-content inside the table width', () => {
+    const { columnWidths, totalWidth } = layoutFor(
+      `<table style="width: 300px">
+        <colgroup><col style="width: 80%" /><col style="width: 20%" /></colgroup>
+        <tr><td>A</td><td>longword</td></tr>
+      </table>`,
+      { contentWidth: 300, forceStretch: false }
+    );
+    expect(columnWidths[1]).toBeGreaterThan(60);
+    expect(totalWidth).toBeCloseTo(300);
+  });
+
+  it('should cap accumulated intrinsic column percentages at 100%', () => {
+    const { columnWidths, totalWidth } = layoutFor(
+      `<table style="width: 300px">
+        <colgroup>
+          <col style="width: 60%" />
+          <col style="width: 60%" />
+        </colgroup>
+        <tr><td>A</td><td>B</td></tr>
+      </table>`,
+      { contentWidth: 300, forceStretch: false }
+    );
+    expect(columnWidths[0]).toBeCloseTo(180);
+    expect(columnWidths[1]).toBeCloseTo(120);
+    expect(totalWidth).toBeCloseTo(300);
+  });
+
   it('should keep a column holding only an image', () => {
     // An image contributes no text, so a text-derived maximum of zero used to
     // clamp this column away entirely.

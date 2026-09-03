@@ -5,6 +5,16 @@ import { HTMLTableProps } from './shared-types';
 import { getHorizontalSpacing } from './helpers/measure';
 import relaxHeightConstraint from './helpers/relaxHeightConstraint';
 
+export function shouldScrollTable(
+  tableWidth: number,
+  availableWidth: number
+): boolean {
+  // Browser/WebView scroll metrics are pixel-rounded. Avoid turning harmless
+  // subpixel overshoots from generated values such as width:100.055% into a
+  // dedicated native horizontal scroller.
+  return tableWidth - availableWidth > 1;
+}
+
 function Container({
   children,
   tableWidth,
@@ -13,7 +23,7 @@ function Container({
   tableWidth: number;
   availableWidth: number;
 }>) {
-  const scroll = tableWidth > availableWidth;
+  const scroll = shouldScrollTable(tableWidth, availableWidth);
   return scroll
     ? React.createElement(
         ScrollView,

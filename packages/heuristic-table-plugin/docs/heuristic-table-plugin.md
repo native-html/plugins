@@ -179,6 +179,17 @@ Description
 </th></tr></thead>
 <tbody><tr><td>
 
+[colgroupModel](./heuristic-table-plugin.colgroupmodel.md)
+
+
+</td><td>
+
+Element model required for colgroup children to be available to the table layout engine. Col elements remain non-rendering empty nodes.
+
+
+</td></tr>
+<tr><td>
+
 [HTMLTable](./heuristic-table-plugin.htmltable.md)
 
 

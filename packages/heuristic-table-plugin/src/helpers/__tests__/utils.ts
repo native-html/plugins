@@ -1,5 +1,14 @@
 import { TRenderEngine } from '@native-html/transient-render-engine';
-const engine = new TRenderEngine();
+import colgroupModel from '../../ColgroupModel';
+
+const engine = new TRenderEngine({
+  customizeHTMLModels(defaultModels) {
+    return {
+      ...defaultModels,
+      colgroup: colgroupModel
+    };
+  }
+});
 
 export function createTableTNode(html: string) {
   const ttree = engine.buildTTree(html);

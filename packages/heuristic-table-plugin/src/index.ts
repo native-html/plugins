@@ -3,6 +3,7 @@ import { HeuristicTablePluginConfig, Settings } from './shared-types';
 import TableRenderer from './TableRenderer';
 import TdRenderer from './TdRenderer';
 import ThRenderer from './ThRenderer';
+import colgroupModel from './ColgroupModel';
 
 export {
   CellProperties,
@@ -17,7 +18,7 @@ export {
   TableRoot
 } from './shared-types';
 
-export { TableRenderer, ThRenderer, TdRenderer };
+export { TableRenderer, ThRenderer, TdRenderer, colgroupModel };
 
 /**
  * Renderers to be merged in the `renderers` prop of `RenderHTML` component.

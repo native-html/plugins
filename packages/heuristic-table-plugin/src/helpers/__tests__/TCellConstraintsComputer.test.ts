@@ -26,6 +26,22 @@ function constraintsFor(cellMarkup: string, contentWidth = 400): TCellConstraint
 }
 
 describe('TCellConstraintsComputer', () => {
+  describe('text break opportunities', () => {
+    it('should allow a line break after a hyphen', () => {
+      const { minWidth } = constraintsFor('<td>Medium-High</td>');
+
+      // The longest unbreakable segment is "Medium-" (7 characters), not the
+      // full 11-character string.
+      expect(minWidth).toBeCloseTo(7 * 14 * 0.65);
+    });
+
+    it('should retain a non-breaking hyphen in one segment', () => {
+      const { minWidth } = constraintsFor('<td>Medium&#8209;High</td>');
+
+      expect(minWidth).toBeCloseTo(11 * 14 * 0.65);
+    });
+  });
+
   describe('width resolution', () => {
     it('should resolve a percentage width against the containing block', () => {
       // 50% of a 400px containing block, which a browser resolves against the

@@ -58,7 +58,7 @@ yarn add @native-html/heuristic-table-plugin
 import React from 'react';
 import { ScrollView } from 'react-native';
 import HTML from '@native-html/render';
-import tableRenderers from '@native-html/heuristic-table-plugin';
+import tableRenderers, {colgroupModel} from '@native-html/heuristic-table-plugin';
 
 const html = `
 <table>
@@ -77,6 +77,10 @@ const htmlProps = {
   WebView,
   renderers: {
     ...tableRenderers
+  },
+  customHTMLElementModels: {
+    // Required for widths declared by <colgroup> and <col>.
+    colgroup: colgroupModel
   },
   renderersProps: {
     table: {

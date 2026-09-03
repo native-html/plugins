@@ -2,11 +2,11 @@ import pipe from 'ramda/src/pipe';
 import sum from 'ramda/src/sum';
 import map from 'ramda/src/map';
 import max from 'ramda/src/max';
-import prop from 'ramda/src/prop';
 import reduce from 'ramda/src/reduce';
 import { TNode } from '@native-html/render';
 import { TCellConstraints, TConstraintsBase } from '../shared-types';
 import { getHorizontalMargins, getHorizontalSpacing } from './measure';
+import { resolveCssSize, resolveNodeWidth } from './resolveWidth';
 
 interface TextChunkStats {
   fontWeightCoeff: number;
@@ -48,80 +48,27 @@ function getInitCellStatsForTnode(tnode: TNode): TCellStats {
   };
 }
 
-const getMaxWordSize = pipe(
-  map<string, number>(prop('length')),
-  reduce<number, number>(max, 0)
-);
-
-const PERCENTAGE_REGEX = /^(\d*\.?\d+)%$/;
-const UNITLESS_REGEX = /^(\d*\.?\d+)$/;
-
-/**
- * Resolve a CSS length coming from `nativeBlockRet` to pixels.
- *
- * @remarks
- * The CSS processor hands us absolute lengths already reduced to numbers, but
- * leaves percentages as strings such as `"50%"` — those resolve against the
- * table's containing block, which is `contentWidth` here. Keywords (`auto`,
- * `min-content`, …) and any value we cannot resolve yield `null`, meaning
- * "unconstrained", exactly as an `auto` width would.
- */
-function resolveCssSize(value: unknown, contentWidth: number): number | null {
-  if (typeof value === 'number') {
-    return Number.isFinite(value) && value >= 0 ? value : null;
-  }
-  if (typeof value === 'string') {
-    const percentage = PERCENTAGE_REGEX.exec(value.trim());
-    if (percentage) {
-      return (contentWidth * Number(percentage[1])) / 100;
+function getMaxUnbreakableTextLength(text: string): number {
+  let currentLength = 0;
+  let maxLength = 0;
+  for (const character of text) {
+    if (/\s/u.test(character)) {
+      currentLength = 0;
+      continue;
+    }
+    currentLength += character.length;
+    // A line can break after a regular hyphen. Keep the hyphen in the
+    // preceding segment because it still occupies space at the line end.
+    // U+2011 NON-BREAKING HYPHEN is deliberately not included.
+    if (character === '-' || character === '\u2010') {
+      maxLength = Math.max(maxLength, currentLength);
+      currentLength = 0;
+    } else {
+      maxLength = Math.max(maxLength, currentLength);
     }
   }
-  return null;
+  return maxLength;
 }
-
-/**
- * Resolve an HTML presentational `width` attribute to pixels.
- *
- * @remarks
- * Unlike CSS, the attribute takes a bare number of pixels (`width="200"`) as
- * well as a percentage (`width="50%"`). It is a presentational hint of the
- * lowest priority, so any CSS `width` supersedes it.
- */
-function resolveAttributeSize(
-  value: unknown,
-  contentWidth: number
-): number | null {
-  if (typeof value !== 'string') {
-    return null;
-  }
-  const trimmed = value.trim();
-  const percentage = PERCENTAGE_REGEX.exec(trimmed);
-  if (percentage) {
-    return (contentWidth * Number(percentage[1])) / 100;
-  }
-  const unitless = UNITLESS_REGEX.exec(trimmed);
-  return unitless ? Number(unitless[1]) : null;
-}
-
-/**
- * Apply the CSS clamping order to a width: `min-width` beats `max-width`, which
- * beats `width` ({@link https://www.w3.org/TR/CSS21/visudet.html#min-max-widths | CSS 2.1 §10.4}).
- */
-function clampWidth(
-  width: number,
-  minWidth: number | null,
-  maxWidth: number | null
-): number {
-  let used = width;
-  if (maxWidth !== null) {
-    used = Math.min(used, maxWidth);
-  }
-  if (minWidth !== null) {
-    used = Math.max(used, minWidth);
-  }
-  return used;
-}
-
 
 export default class TCellConstraintsComputer {
   private baseFontCoeff: number;
@@ -189,7 +136,7 @@ export default class TCellConstraintsComputer {
       const fontWeightCoeff = this.fontWeightCoeffs[String(fontWeight)] ?? 1;
       stats.textStats.push({
         characters: tnode.data.length,
-        maxWordLength: getMaxWordSize(tnode.data.split(/\s+/)),
+        maxWordLength: getMaxUnbreakableTextLength(tnode.data),
         fontFamilyCoeff: 1,
         fontSize,
         fontWeightCoeff
@@ -220,17 +167,7 @@ export default class TCellConstraintsComputer {
    * lowest priority.
    */
   private resolveBlockWidth(tnode: TNode): number | null {
-    const blockStyle = tnode.styles.nativeBlockRet;
-    const minWidth = resolveCssSize(blockStyle.minWidth, this.contentWidth);
-    const maxWidth = resolveCssSize(blockStyle.maxWidth, this.contentWidth);
-    const cssWidth = resolveCssSize(blockStyle.width, this.contentWidth);
-    const width =
-      cssWidth ??
-      resolveAttributeSize(tnode.attributes.width, this.contentWidth);
-    if (width === null && minWidth === null) {
-      return null;
-    }
-    return clampWidth(width ?? minWidth ?? 0, minWidth, maxWidth);
+    return resolveNodeWidth(tnode, this.contentWidth);
   }
 
   private computeTextConstraints(chunks: TextChunkStats[]): TConstraintsBase {
