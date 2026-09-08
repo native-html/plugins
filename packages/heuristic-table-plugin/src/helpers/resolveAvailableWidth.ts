@@ -1,23 +1,27 @@
 import { TNode } from '@native-html/render';
 import { getHorizontalInsets, getHorizontalMargins } from './measure';
-import { clampWidth, resolveCssSize, resolveNodeWidth } from './resolveWidth';
+import { clampWidth, resolveWidthConstraints } from './resolveWidth';
 
 /**
  * The width `tnode` offers to a block-level child, i.e. its content box.
  */
 function reduceToContentBox(tnode: TNode, containingWidth: number): number {
   const style = tnode.styles.nativeBlockRet;
+  const { width, minWidth, maxWidth } = resolveWidthConstraints(
+    tnode,
+    containingWidth
+  );
   // A declared width is a border box in React Native, so it already accounts
   // for padding and border; an auto width fills the containing block, minus
-  // the margins that sit outside the box, and is still capped by `max-width`.
-  const declaredWidth = resolveNodeWidth(tnode, containingWidth);
-  const borderBox =
-    declaredWidth ??
-    clampWidth(
-      containingWidth - getHorizontalMargins(style),
-      resolveCssSize(style.minWidth, containingWidth),
-      resolveCssSize(style.maxWidth, containingWidth)
-    );
+  // the margins that sit outside the box. Either way `min-width` and
+  // `max-width` only bound the result: an ancestor asking for *at least*
+  // 100px still hands its children everything it was given, and must not
+  // squeeze them into that 100px.
+  const borderBox = clampWidth(
+    width ?? containingWidth - getHorizontalMargins(style),
+    minWidth,
+    maxWidth
+  );
   return Math.max(0, borderBox - getHorizontalInsets(style));
 }
 

@@ -98,4 +98,27 @@ describe('resolveAvailableWidth', () => {
       )
     ).toBe(400);
   });
+
+  it('should not let an ancestor min-width narrow the available width', () => {
+    // `min-width` is a floor, not a width: an ancestor asking for *at least*
+    // 100px still hands its children the whole 400px it was given. Reading it
+    // as a declared width squeezed every descendant table to min-content.
+    expect(
+      availableWidthFor(
+        '<div style="min-width: 100px"><table><tr><td>A</td></tr></table></div>',
+        400
+      )
+    ).toBe(400);
+  });
+
+  it('should raise a narrow ancestor up to its min-width', () => {
+    expect(
+      availableWidthFor(
+        `<div style="width: 50px; min-width: 100px">
+          <table><tr><td>A</td></tr></table>
+        </div>`,
+        400
+      )
+    ).toBe(100);
+  });
 });

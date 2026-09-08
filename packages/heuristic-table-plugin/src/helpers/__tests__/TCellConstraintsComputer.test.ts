@@ -1,5 +1,8 @@
 import { TNode } from '@native-html/render';
-import TCellConstraintsComputer from '../TCellConstraintsComputer';
+import TCellConstraintsComputer, {
+  DEFAULT_FONT_WEIGHT_COEFFS,
+  FontWeightCoefficients
+} from '../TCellConstraintsComputer';
 import { TCellConstraints } from '../../shared-types';
 import { createTableTNode } from './utils';
 
@@ -16,29 +19,107 @@ function findFirstCell(tnode: TNode): TNode | null {
   return null;
 }
 
-function constraintsFor(cellMarkup: string, contentWidth = 400): TCellConstraints {
+/**
+ * Pinned here so that the break-opportunity assertions below test the segment
+ * a string breaks into, and not whatever character-width estimate the computer
+ * happens to default to.
+ */
+const BASE_FONT_COEFF = 0.65;
+
+function constraintsFor(
+  cellMarkup: string,
+  contentWidth = 400,
+  fontWeightCoeffs?: FontWeightCoefficients
+): TCellConstraints {
   const table = createTableTNode(`<table><tr>${cellMarkup}</tr></table>`);
   const cell = findFirstCell(table);
   expect(cell).not.toBeNull();
-  return new TCellConstraintsComputer({ contentWidth }).computeCellConstraints(
-    cell as TNode
-  );
+  return new TCellConstraintsComputer({
+    contentWidth,
+    baseFontCoeff: BASE_FONT_COEFF,
+    fontWeightCoeffs
+  }).computeCellConstraints(cell as TNode);
 }
 
 describe('TCellConstraintsComputer', () => {
+  describe('font weight coefficients', () => {
+    it('should widen bold text by the default coefficient', () => {
+      const { minWidth } = constraintsFor(
+        '<td style="font-weight: bold">Method</td>'
+      );
+
+      expect(minWidth).toBeCloseTo(
+        6 * 14 * BASE_FONT_COEFF * (DEFAULT_FONT_WEIGHT_COEFFS.bold as number)
+      );
+    });
+
+    it('should apply a coefficient supplied by the config', () => {
+      const { minWidth } = constraintsFor(
+        '<td style="font-weight: bold">Method</td>',
+        400,
+        { bold: 1 }
+      );
+
+      // A cell of bold text now measures exactly as one of regular text.
+      expect(minWidth).toBeCloseTo(6 * 14 * BASE_FONT_COEFF);
+    });
+
+    it('should keep the defaults a partial config leaves untouched', () => {
+      // Only `bold` is retuned, so a `font-weight: 300` cell must still use
+      // the default 0.9 rather than falling back to 1.
+      const { minWidth } = constraintsFor(
+        '<td style="font-weight: 300">Method</td>',
+        400,
+        { bold: 1 }
+      );
+
+      expect(minWidth).toBeCloseTo(
+        6 * 14 * BASE_FONT_COEFF * (DEFAULT_FONT_WEIGHT_COEFFS['300'] as number)
+      );
+    });
+  });
+
   describe('text break opportunities', () => {
     it('should allow a line break after a hyphen', () => {
       const { minWidth } = constraintsFor('<td>Medium-High</td>');
 
       // The longest unbreakable segment is "Medium-" (7 characters), not the
       // full 11-character string.
-      expect(minWidth).toBeCloseTo(7 * 14 * 0.65);
+      expect(minWidth).toBeCloseTo(7 * 14 * BASE_FONT_COEFF);
     });
 
     it('should retain a non-breaking hyphen in one segment', () => {
       const { minWidth } = constraintsFor('<td>Medium&#8209;High</td>');
 
-      expect(minWidth).toBeCloseTo(11 * 14 * 0.65);
+      expect(minWidth).toBeCloseTo(11 * 14 * BASE_FONT_COEFF);
+    });
+
+    it('should not break a hyphen between two digits', () => {
+      // UAX #14 LB25 forbids it, and a date column that wraps mid-value is
+      // worse than a wide one.
+      const { minWidth } = constraintsFor('<td>2026-09-03</td>');
+
+      expect(minWidth).toBeCloseTo(10 * 14 * BASE_FONT_COEFF);
+    });
+
+    it('should still break a hyphen with a digit on only one side', () => {
+      // "ISO-" is the longest segment; the digits stand alone after the break.
+      const { minWidth } = constraintsFor('<td>ISO-2026</td>');
+
+      expect(minWidth).toBeCloseTo(4 * 14 * BASE_FONT_COEFF);
+    });
+
+    it('should not break at a non-breaking space', () => {
+      // A whole grouped number is one unbreakable run of nine characters.
+      const { minWidth } = constraintsFor('<td>10&nbsp;000&nbsp;km</td>');
+
+      expect(minWidth).toBeCloseTo(9 * 14 * BASE_FONT_COEFF);
+    });
+
+    it('should break at a regular space', () => {
+      const { minWidth } = constraintsFor('<td>10 000 km</td>');
+
+      expect(minWidth).toBeCloseTo(3 * 14 * BASE_FONT_COEFF);
     });
   });
 
@@ -49,6 +130,13 @@ describe('TCellConstraintsComputer', () => {
       const { minWidth } = constraintsFor('<td style="width:50%">a</td>');
       expect(minWidth).toBeGreaterThanOrEqual(200);
       expect(minWidth).toBeLessThan(220);
+    });
+
+    it('should not resolve a descendant percentage against the table', () => {
+      const { minWidth } = constraintsFor(
+        '<td><div style="width:100%">a</div></td>'
+      );
+      expect(minWidth).toBeLessThan(50);
     });
 
     it('should honour an absolute width', () => {
@@ -74,6 +162,13 @@ describe('TCellConstraintsComputer', () => {
 
     it('should ignore a width it cannot resolve', () => {
       const { minWidth } = constraintsFor('<td style="width:auto">a</td>');
+      expect(minWidth).toBeLessThan(50);
+    });
+
+    it('should let CSS auto override the presentational width attribute', () => {
+      const { minWidth } = constraintsFor(
+        '<td width="300" style="width:auto">a</td>'
+      );
       expect(minWidth).toBeLessThan(50);
     });
   });

@@ -1,6 +1,10 @@
 import { Display, TColumnConstraints } from '../shared-types';
 import reduceColumnConstraints from './reduceColumnConstraints';
 import type { DeclaredColumnWidth } from './extractColumnWidths';
+import { clampWidth, lesserBound } from './resolveWidth';
+
+/** Below this many pixels a leftover is not worth another distribution pass. */
+const EPSILON = 1e-6;
 
 function mapMinWidths(constraints: TColumnConstraints[]): number[] {
   return constraints.map((c) => c.minWidth);
@@ -67,22 +71,53 @@ function normalizePercentages(
   return percentages;
 }
 
+/**
+ * Grow the columns at `indexes` by `total`, never past a column's own
+ * `max-width`.
+ *
+ * @remarks
+ * Space a capped column cannot take is offered to the others, and space none
+ * of them can take is left unassigned: a table whose every column is capped
+ * ends up narrower than the width it was given, as it would in CSS, rather
+ * than pushing a column past the ceiling it declared.
+ */
 function addDistributedWidth(
   widths: number[],
   total: number,
-  indexes: number[]
+  indexes: number[],
+  caps: Array<number | null>
 ): number[] {
   if (indexes.length === 0 || total <= 0) {
     return widths;
   }
-  const weights = indexes.map((i) => widths[i] ?? 0);
-  const shares = distribute(total, weights);
-  return widths.map((width, i) => {
-    const candidateIndex = indexes.indexOf(i);
-    return candidateIndex === -1
-      ? width
-      : width + (shares[candidateIndex] ?? 0);
-  });
+  const result = [...widths];
+  const hasRoom = (i: number) => {
+    const cap = caps[i];
+    return cap == null || (result[i] ?? 0) < cap;
+  };
+  let candidates = indexes.filter(hasRoom);
+  let remaining = total;
+  while (remaining > EPSILON && candidates.length > 0) {
+    const shares = distribute(
+      remaining,
+      candidates.map((i) => result[i] ?? 0)
+    );
+    let consumed = 0;
+    candidates.forEach((i, k) => {
+      const cap = caps[i];
+      const current = result[i] ?? 0;
+      const grown = current + (shares[k] ?? 0);
+      const used = cap == null ? grown : Math.min(grown, cap);
+      result[i] = used;
+      consumed += used - current;
+    });
+    if (consumed <= EPSILON) {
+      break;
+    }
+    remaining -= consumed;
+    candidates = candidates.filter(hasRoom);
+  }
+  return result;
 }
 
 export default function computeColumnWidths(
@@ -91,24 +126,57 @@ export default function computeColumnWidths(
 ): number[] {
   const contentWidth = display.contentWidth;
   const shouldStretch = !!display.forceStretch;
+  // The cell grid alone decides how many columns a table has. `col` and
+  // `colgroup` declarations past its last column describe columns that do not
+  // exist — honouring them would widen the table by the sum of widths nothing
+  // is ever rendered into, and hand it a scroll view to hold the surplus.
   const columnConstraints = reduceColumnConstraints(display.cells);
-  const columnCount = Math.max(columnConstraints.length, declaredWidths.length);
-  for (let i = 0; i < columnCount; i++) {
-    const constraints = (columnConstraints[i] ??= {
-      minWidth: 0,
-      spread: 0,
-      contentDensity: 0
-    });
-    const declaredWidth = declaredWidths[i]?.minWidth;
-    if (declaredWidth != null && declaredWidth > 0) {
-      // Absolute column widths contribute to intrinsic minimum and preferred
-      // widths. Percentage widths remain unresolved until distribution below.
-      constraints.minWidth = Math.max(constraints.minWidth, declaredWidth);
-      constraints.spread = Math.max(constraints.spread, declaredWidth);
-    }
-  }
   if (columnConstraints.length === 0) {
     return [];
+  }
+  // A `max-width` may be declared in either unit, and caps the column in
+  // whichever sizing class it ends up in. Percentage bounds travel unresolved
+  // so that the same declarations can be reused against another table width,
+  // and are turned into pixels here, once that width is known.
+  const caps = columnConstraints.map((_, i) => {
+    const declared = declaredWidths[i];
+    if (!declared) {
+      return null;
+    }
+    return lesserBound(
+      declared.maxWidth,
+      declared.maxPercent === null ? null : declared.maxPercent * contentWidth
+    );
+  });
+  for (const [i, constraints] of columnConstraints.entries()) {
+    const declared = declaredWidths[i];
+    if (!declared) {
+      continue;
+    }
+    const cap = caps[i] ?? null;
+    // Absolute column widths contribute to intrinsic minimum and preferred
+    // widths. Percentage widths remain unresolved until distribution below,
+    // and contribute only the absolute floor they were given.
+    const floor =
+      declared.percent === null
+        ? clampWidth(
+            declared.width ?? declared.minWidth,
+            declared.minWidth,
+            cap
+          )
+        : declared.minWidth;
+    if (floor > 0) {
+      constraints.minWidth = Math.max(constraints.minWidth, floor);
+      constraints.spread = Math.max(constraints.spread, floor);
+    }
+    if (cap !== null) {
+      // A `max-width` caps how far a column may grow, but never below the
+      // width its own content needs to be legible at all.
+      constraints.spread = Math.max(
+        constraints.minWidth,
+        Math.min(constraints.spread, cap)
+      );
+    }
   }
   const minWidths = mapMinWidths(columnConstraints);
   const spreads = mapSpreads(columnConstraints);
@@ -129,9 +197,18 @@ export default function computeColumnWidths(
   );
   const percentageGuess = minWidths.map((minWidth, i) => {
     const percent = percentages[i];
-    return percent === null || percent === undefined
-      ? minWidth
-      : Math.max(minWidth, percent * contentWidth);
+    if (percent === null || percent === undefined) {
+      return minWidth;
+    }
+    // The fraction is resolved here rather than at extraction, so that the
+    // same declarations can be reused whenever the table is laid out again
+    // against another width. A `max-width` caps the share in the same pass.
+    const cap = caps[i];
+    const preferred = percent * contentWidth;
+    return Math.max(
+      minWidth,
+      cap == null ? preferred : Math.min(preferred, cap)
+    );
   });
   const percentageGuessTotal = sumOf(percentageGuess);
   if (contentWidth <= percentageGuessTotal) {
@@ -154,21 +231,26 @@ export default function computeColumnWidths(
   if (!shouldStretch) {
     return maxContentGuess;
   }
-  const leftover = contentWidth - maxContentGuessTotal;
-  const autoColumns = maxContentGuess
-    .map((_, i) => i)
-    .filter((i) => declaredWidths[i] == null);
-  if (autoColumns.length > 0) {
-    return addDistributedWidth(maxContentGuess, leftover, autoColumns);
+  const allColumns = maxContentGuess.map((_, i) => i);
+  // A column that declared a width of its own already has the width it asked
+  // for; the surplus belongs to the ones that left it to the table to decide.
+  const autoColumns = allColumns.filter((i) => {
+    const declared = declaredWidths[i];
+    return !declared || (declared.width === null && declared.percent === null);
+  });
+  const percentColumns = allColumns.filter((i) => percentages[i] != null);
+  // Each class of column is offered the surplus in turn, so that what one
+  // cannot take — every column in it held at its own `max-width` — falls
+  // through to the next rather than being dropped and leaving the table short
+  // of the width it was told to fill. Only when no column anywhere has room
+  // left does the table stay narrower than its assignable width.
+  let widths = maxContentGuess;
+  for (const group of [autoColumns, percentColumns, allColumns]) {
+    const leftover = contentWidth - sumOf(widths);
+    if (leftover <= EPSILON) {
+      break;
+    }
+    widths = addDistributedWidth(widths, leftover, group, caps);
   }
-  const percentColumns = percentages
-    .map((percent, i) => (percent == null ? -1 : i))
-    .filter((i) => i >= 0);
-  return addDistributedWidth(
-    maxContentGuess,
-    leftover,
-    percentColumns.length > 0
-      ? percentColumns
-      : maxContentGuess.map((_, i) => i)
-  );
+  return widths;
 }

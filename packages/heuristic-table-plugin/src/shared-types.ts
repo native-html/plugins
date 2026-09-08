@@ -6,6 +6,7 @@ import {
   TNode
 } from '@native-html/render';
 import TableLayout from './TableLayout';
+import type { FontWeightCoefficients } from './helpers/TCellConstraintsComputer';
 
 /**
  * @public
@@ -145,6 +146,33 @@ export interface Settings {
    */
   forceStretch?: boolean;
   /**
+   * The average advance width of one character, as a fraction of the font
+   * size, used to estimate how wide a cell's text is.
+   *
+   * @remarks
+   * Text is never measured, only estimated: a cell's bounds are its character
+   * count times this coefficient times the font size. Raise it when tables
+   * come out too narrow and their text wraps more than it should, lower it
+   * when cells claim more width than their content occupies.
+   *
+   * @defaultValue 0.65
+   */
+  baseFontCoeff?: number;
+  /**
+   * How much wider text renders at a given font weight than at a regular one,
+   * keyed by the stringified `fontWeight`.
+   *
+   * @remarks
+   * Merged over the defaults rather than replacing them, so `{ bold: 1.05 }`
+   * retunes bold text alone and leaves the numeric weights as they were. A
+   * weight with no entry, before or after merging, costs nothing. Pass a
+   * referentially stable object — a fresh literal on every render relays out
+   * every table using it.
+   *
+   * @defaultValue \{ normal: 1, bold: 1.3, '100': 0.8 … '900': 1.5 \}
+   */
+  fontWeightCoeffs?: FontWeightCoefficients;
+  /**
    * Available width at the root of the render tree, prior to scrolling.
    *
    * @remarks
@@ -177,6 +205,33 @@ export interface HeuristicTablePluginConfig {
    * @defaultValue true
    */
   forceStretch?: boolean;
+  /**
+   * The average advance width of one character, as a fraction of the font
+   * size, used to estimate how wide a cell's text is.
+   *
+   * @remarks
+   * Text is never measured, only estimated: a cell's bounds are its character
+   * count times this coefficient times the font size. Raise it when tables
+   * come out too narrow and their text wraps more than it should, lower it
+   * when cells claim more width than their content occupies.
+   *
+   * @defaultValue 0.65
+   */
+  baseFontCoeff?: number;
+  /**
+   * How much wider text renders at a given font weight than at a regular one,
+   * keyed by the stringified `fontWeight`.
+   *
+   * @remarks
+   * Merged over the defaults rather than replacing them, so `{ bold: 1.05 }`
+   * retunes bold text alone and leaves the numeric weights as they were. A
+   * weight with no entry, before or after merging, costs nothing. Pass a
+   * referentially stable object — a fresh literal on every render relays out
+   * every table using it.
+   *
+   * @defaultValue \{ normal: 1, bold: 1.3, '100': 0.8 … '900': 1.5 \}
+   */
+  fontWeightCoeffs?: FontWeightCoefficients;
   /**
    * Customize cells appearance with this function.
    *

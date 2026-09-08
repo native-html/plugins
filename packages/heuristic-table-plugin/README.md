@@ -193,11 +193,15 @@ into a horizontal scroller.
 
 ### 1. Cell constraints extraction
 
-In the first step, each cell of the table is parsed to extract two metrics:
-`minWidth` and `contentDensity`. `minWidth` is an estimation of the width taken
-by the longest word in the cell, or the explicit width or min-width of any
-block in the cell, or the greatest of the two. `contentDensity` is the width
-taken by all the text displayed in one line.
+In the first step, each cell of the table is parsed to extract three metrics:
+
+- `minWidth`, an estimate of the cell's min-content width: its longest
+  unbreakable text run or the greatest width imposed by one of its blocks,
+  plus horizontal spacing;
+- `maxWidth`, the width beyond which the cell would gain nothing, bounded by
+  the cell's own `max-width` but never below `minWidth`;
+- `contentDensity`, an estimate of the width taken by all the cell's text on
+  one line.
 
 ### 2. Column constraints reduction
 
@@ -205,18 +209,26 @@ In the second step, cell constraints are reduced per column. Three metrics come 
 
 - `minWidth`, the maximum of each cell `minWidth`;
 - `contentDensity`, the sum of each cell `contentDensity`;
-- `spread`, the maximum of each cell `contentDensity`.
+- `spread`, the maximum of each cell `maxWidth`, never below the column's
+  `minWidth`.
+
+Widths and bounds declared by `<colgroup>` and `<col>` are then folded into
+these constraints. Percentage widths remain unresolved until the table's
+assignable width is known.
 
 ### 3. Column widths calculation
 
-Let `minTableWidth` be the sum of all column `minWidth`. If `minTableWidth >
-contentWidth`, assign to each column a width corresponding to its `minWidth`
-constraint.
+If the sum of the column minimums exceeds the assignable width, every column
+keeps its `minWidth` and the table scrolls horizontally. Otherwise, the
+algorithm grows columns in passes:
 
-Otherwise, let `spaceToAllocate = contentWidth - minTableWidth`. Allocate to each column a width equal to its `minWidth` constraint + `spaceToAllocate * gamma`, with `gamma = (normalContentDensity) / sum(normalContentDensities)`. The `normalContentDensity` is `contentDensity - min(contentDensities)`.
+1. Percentage columns move from their minimums toward their declared shares.
+2. Auto and absolute-width columns move toward their max-content `spread`.
+3. When the table must stretch, any remaining width is distributed among
+   columns that have room below their declared caps.
 
-Finally, clamp the assign width to the `spread` constraint for this column,
-unless the `forceStretch` parameter is set to `true`.
+Each intermediate pass is interpolated to keep the result within the
+assignable table width. Space that no column can accept is left unassigned.
 
 `forceStretch` defaults to `true`, so a table fills the width its containing
 block leaves it. Set it to `false` in `renderersProps.table` to let an

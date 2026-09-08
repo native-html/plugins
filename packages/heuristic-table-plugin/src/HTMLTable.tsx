@@ -64,7 +64,12 @@ const HTMLTable = memo(function HTMLTable({
         // An explicit height on a table is a minimum height in HTML, so that
         // the table still grows to fit its rows.
         ...relaxHeightConstraint(props.style),
-        width: Math.min(tableWidth + insets, layout.availableWidth)
+        // `usedWidth` already accounts for both the room the ancestors leave
+        // and the table's own `width`/`max-width`, so the painted box stops at
+        // whichever of the two comes first and the overflow goes to the
+        // scroller inside. A table narrower than that keeps its own size,
+        // insets included.
+        width: Math.min(tableWidth + insets, layout.usedWidth)
       }}>
       <Container
         tableWidth={tableWidth}

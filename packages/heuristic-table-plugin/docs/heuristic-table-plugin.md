@@ -190,6 +190,17 @@ Element model required for colgroup children to be available to the table layout
 </td></tr>
 <tr><td>
 
+[DEFAULT\_FONT\_WEIGHT\_COEFFS](./heuristic-table-plugin.default_font_weight_coeffs.md)
+
+
+</td><td>
+
+The coefficients used when the config supplies none.
+
+
+</td></tr>
+<tr><td>
+
 [HTMLTable](./heuristic-table-plugin.htmltable.md)
 
 
@@ -240,6 +251,32 @@ The renderer component for `td` tag.
 </td><td>
 
 The renderer component for `th` tag.
+
+
+</td></tr>
+</tbody></table>
+
+## Type Aliases
+
+<table><thead><tr><th>
+
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[FontWeightCoefficients](./heuristic-table-plugin.fontweightcoefficients.md)
+
+
+</td><td>
+
+How much wider text renders at a given font weight than at a regular one.
 
 
 </td></tr>

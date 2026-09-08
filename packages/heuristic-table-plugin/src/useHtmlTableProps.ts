@@ -42,14 +42,21 @@ export default function useHtmlTableProps(
 ): HTMLTableProps {
   const table = useRendererProps('table');
   const forceStretch = table?.forceStretch;
+  const baseFontCoeff = table?.baseFontCoeff;
+  const fontWeightCoeffs = table?.fontWeightCoeffs;
   const sharedContentWidth = useContentWidth();
   const contentWidth =
     typeof options.overrideContentWidth === 'number'
       ? options.overrideContentWidth
       : sharedContentWidth;
   const settings = useMemo(
-    () => ({ contentWidth, forceStretch }),
-    [contentWidth, forceStretch]
+    () => ({
+      contentWidth,
+      forceStretch,
+      baseFontCoeff,
+      fontWeightCoeffs
+    }),
+    [contentWidth, forceStretch, baseFontCoeff, fontWeightCoeffs]
   );
   const layout = useTableLayout({ tnode, settings });
   return {

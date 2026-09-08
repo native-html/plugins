@@ -18,6 +18,11 @@ export {
   TableRoot
 } from './shared-types';
 
+export {
+  DEFAULT_FONT_WEIGHT_COEFFS,
+  FontWeightCoefficients
+} from './helpers/TCellConstraintsComputer';
+
 export { TableRenderer, ThRenderer, TdRenderer, colgroupModel };
 
 /**

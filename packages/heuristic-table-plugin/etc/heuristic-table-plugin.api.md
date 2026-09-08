@@ -37,6 +37,9 @@ export interface Coordinates {
     y: number;
 }
 
+// @public
+export const DEFAULT_FONT_WEIGHT_COEFFS: FontWeightCoefficients;
+
 // @public (undocumented)
 export interface DisplayCell extends CellProperties {
     // (undocumented)
@@ -44,7 +47,12 @@ export interface DisplayCell extends CellProperties {
 }
 
 // @public
+export type FontWeightCoefficients = Record<string, number>;
+
+// @public
 export interface HeuristicTablePluginConfig {
+    baseFontCoeff?: number;
+    fontWeightCoeffs?: FontWeightCoefficients;
     forceStretch?: boolean;
     getStyleForCell?(cell: TableCell): ViewStyle | null;
 }

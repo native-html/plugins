@@ -6,7 +6,7 @@ import reduce from 'ramda/src/reduce';
 import { TNode } from '@native-html/render';
 import { TCellConstraints, TConstraintsBase } from '../shared-types';
 import { getHorizontalMargins, getHorizontalSpacing } from './measure';
-import { resolveCssSize, resolveNodeWidth } from './resolveWidth';
+import { resolveCssSize, resolveImposedWidth } from './resolveWidth';
 
 interface TextChunkStats {
   fontWeightCoeff: number;
@@ -48,54 +48,111 @@ function getInitCellStatsForTnode(tnode: TNode): TCellStats {
   };
 }
 
+/**
+ * Whitespace that forbids a line break rather than offering one.
+ *
+ * @remarks
+ * `\s` cannot be used on its own to find break opportunities, because it also
+ * matches the spaces authors reach for precisely to keep two words together:
+ * U+00A0 NO-BREAK SPACE, U+202F NARROW NO-BREAK SPACE and U+2007 FIGURE SPACE
+ * are all glue in {@link https://www.unicode.org/reports/tr14/ | UAX #14}, and
+ * U+FEFF is a word joiner. `10&nbsp;000&nbsp;km` is one unbreakable run of ten
+ * characters, not three of two, three and two.
+ */
+const NON_BREAKING_SPACE_REGEX = /[\u00a0\u202f\u2007\ufeff]/u;
+
+const DIGIT_REGEX = /^\d$/u;
+
+function isBreakingSpace(character: string): boolean {
+  return /\s/u.test(character) && !NON_BREAKING_SPACE_REGEX.test(character);
+}
+
+function isDigit(character: string | undefined): boolean {
+  return character !== undefined && DIGIT_REGEX.test(character);
+}
+
 function getMaxUnbreakableTextLength(text: string): number {
+  const characters = Array.from(text);
   let currentLength = 0;
   let maxLength = 0;
-  for (const character of text) {
-    if (/\s/u.test(character)) {
+  for (let i = 0; i < characters.length; i++) {
+    const character = characters[i] as string;
+    if (isBreakingSpace(character)) {
       currentLength = 0;
       continue;
     }
     currentLength += character.length;
-    // A line can break after a regular hyphen. Keep the hyphen in the
-    // preceding segment because it still occupies space at the line end.
-    // U+2011 NON-BREAKING HYPHEN is deliberately not included.
-    if (character === '-' || character === '\u2010') {
-      maxLength = Math.max(maxLength, currentLength);
+    maxLength = Math.max(maxLength, currentLength);
+    // A line can break after a regular hyphen, but never between two digits
+    // (UAX #14 LB25) — that would split `2026-09-03` or a phone number across
+    // two lines. Keep the hyphen in the preceding segment because it still
+    // occupies space at the line end. U+2011 NON-BREAKING HYPHEN is
+    // deliberately not included.
+    const isHyphen = character === '-' || character === '\u2010';
+    if (
+      isHyphen &&
+      !(isDigit(characters[i - 1]) && isDigit(characters[i + 1]))
+    ) {
       currentLength = 0;
-    } else {
-      maxLength = Math.max(maxLength, currentLength);
     }
   }
   return maxLength;
 }
 
+/**
+ * How much wider text renders at a given font weight than at a regular one.
+ *
+ * @remarks
+ * Keys are matched against the resolved `fontWeight` stringified, so both the
+ * numeric weights React Native accepts and the `normal`/`bold` keywords are
+ * looked up here. A weight with no entry falls back to a coefficient of 1.
+ *
+ * @public
+ */
+export type FontWeightCoefficients = Record<string, number>;
+
+/**
+ * The coefficients used when the config supplies none.
+ *
+ * @remarks
+ * A user-supplied map is merged over these rather than replacing them, so a
+ * config may retune `bold` alone without restating all nine numeric weights.
+ *
+ * @public
+ */
+export const DEFAULT_FONT_WEIGHT_COEFFS: FontWeightCoefficients = {
+  '100': 0.8,
+  '200': 0.85,
+  '300': 0.9,
+  '400': 1,
+  '500': 1.1,
+  '600': 1.2,
+  '700': 1.3,
+  '800': 1.4,
+  '900': 1.5,
+  bold: 1.3,
+  normal: 1
+};
+
 export default class TCellConstraintsComputer {
   private baseFontCoeff: number;
   private fallbackFontSize: number;
   private contentWidth: number;
-
-  private fontWeightCoeffs: Record<string, number> = {
-    '100': 0.8,
-    '200': 0.85,
-    '300': 0.9,
-    '400': 1,
-    '500': 1.1,
-    '600': 1.2,
-    '700': 1.3,
-    '800': 1.4,
-    '900': 1.5,
-    bold: 1.3,
-    normal: 1
-  };
+  private fontWeightCoeffs: FontWeightCoefficients;
 
   constructor({
     baseFontCoeff,
     fallbackFontSize,
+    fontWeightCoeffs,
     contentWidth
   }: {
     baseFontCoeff?: number;
     fallbackFontSize?: number;
+    /**
+     * Per-weight width coefficients, merged over
+     * {@link DEFAULT_FONT_WEIGHT_COEFFS}.
+     */
+    fontWeightCoeffs?: FontWeightCoefficients;
     /**
      * The width of the table's containing block, against which percentage
      * widths are resolved.
@@ -104,6 +161,9 @@ export default class TCellConstraintsComputer {
   }) {
     this.baseFontCoeff = baseFontCoeff ?? 0.65;
     this.fallbackFontSize = fallbackFontSize ?? 14;
+    this.fontWeightCoeffs = fontWeightCoeffs
+      ? { ...DEFAULT_FONT_WEIGHT_COEFFS, ...fontWeightCoeffs }
+      : DEFAULT_FONT_WEIGHT_COEFFS;
     this.contentWidth = contentWidth ?? 0;
   }
 
@@ -127,7 +187,8 @@ export default class TCellConstraintsComputer {
 
   private assembleCellStats(
     tnode: TNode,
-    stats: TCellStats = getInitCellStatsForTnode(tnode)
+    stats: TCellStats = getInitCellStatsForTnode(tnode),
+    isCellRoot = true
   ): TCellStats {
     if (tnode.type === 'text') {
       const fontSize =
@@ -143,13 +204,13 @@ export default class TCellConstraintsComputer {
       });
     } else {
       if (tnode.type === 'block') {
-        const width = this.resolveBlockWidth(tnode);
+        const width = this.resolveBlockWidth(tnode, isCellRoot);
         if (width !== null) {
           const margins = getHorizontalMargins(tnode.styles.nativeBlockRet);
           stats.blockWidth = Math.max(stats.blockWidth, width + margins);
         }
       }
-      tnode.children.forEach((n) => this.assembleCellStats(n, stats));
+      tnode.children.forEach((n) => this.assembleCellStats(n, stats, false));
     }
     return stats;
   }
@@ -166,8 +227,13 @@ export default class TCellConstraintsComputer {
    * presentational `width` attribute is consulted last, as befits a hint of the
    * lowest priority.
    */
-  private resolveBlockWidth(tnode: TNode): number | null {
-    return resolveNodeWidth(tnode, this.contentWidth);
+  private resolveBlockWidth(tnode: TNode, isCellRoot: boolean): number | null {
+    return resolveImposedWidth(tnode, this.contentWidth, {
+      // The cell's percentage width resolves against the table. A descendant's
+      // percentage resolves against the eventual cell content box, which is
+      // precisely what this intrinsic-width pass is still trying to discover.
+      resolvePercentages: isCellRoot
+    });
   }
 
   private computeTextConstraints(chunks: TextChunkStats[]): TConstraintsBase {
