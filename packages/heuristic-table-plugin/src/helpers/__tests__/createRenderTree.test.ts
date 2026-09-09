@@ -1,6 +1,6 @@
 import fillTableDisplay, { createEmptyDisplay } from '../fillTableDisplay';
 import { createTableTNode } from './utils';
-import createRenderTree from '../createRenderTree';
+import createRenderTree, { makeTableCells } from '../createRenderTree';
 import TCellConstraintsComputer from '../TCellConstraintsComputer';
 import {
   TableCell,
@@ -14,7 +14,7 @@ function makeRenderTree(html: string, columnWidths: number[]) {
   const display = createEmptyDisplay({ contentWidth: 1000 });
   const computer = new TCellConstraintsComputer({});
   fillTableDisplay(tnode, display, computer);
-  return createRenderTree(display, columnWidths);
+  return createRenderTree(makeTableCells(display, columnWidths));
 }
 
 function rowContainer(

@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, ViewStyle } from 'react-native';
 import { TNodeRenderer } from '@native-html/render';
 import { HeuristicTablePluginConfig, TableRenderNode } from './shared-types';
 
@@ -11,6 +11,10 @@ const styles = StyleSheet.create({
 export default function TreeRenderer({
   node,
   config,
+  borderCollapse,
+  tableBorderStyle,
+  maxX,
+  maxY,
   renderIndex,
   renderLength
 }: {
@@ -18,6 +22,10 @@ export default function TreeRenderer({
   renderIndex: number;
   renderLength: number;
   config?: HeuristicTablePluginConfig;
+  borderCollapse: boolean;
+  tableBorderStyle: ViewStyle | null;
+  maxX: number;
+  maxY: number;
 }) {
   if (node.type === 'cell') {
     return (
@@ -26,7 +34,15 @@ export default function TreeRenderer({
           renderIndex={renderIndex}
           renderLength={renderLength}
           propsFromParent={
-            { cell: node, collapsedMarginTop: null, config } as any
+            {
+              cell: node,
+              collapsedMarginTop: null,
+              config,
+              borderCollapse,
+              tableBorderStyle,
+              maxX,
+              maxY
+            } as any
           }
           tnode={node.tnode}
         />
@@ -39,6 +55,10 @@ export default function TreeRenderer({
         node: v,
         key: i,
         config,
+        borderCollapse,
+        tableBorderStyle,
+        maxX,
+        maxY,
         renderIndex: i,
         renderLength: node.children.length
       })
@@ -53,6 +73,10 @@ export default function TreeRenderer({
             node: v,
             key: i,
             config,
+            borderCollapse,
+            tableBorderStyle,
+            maxX,
+            maxY,
             renderIndex: i,
             renderLength: node.children.length
           })

@@ -145,6 +145,26 @@ describe('TCellConstraintsComputer', () => {
       expect(minWidth).toBeLessThan(220);
     });
 
+    it('should treat a declared cell width as a border-box one', () => {
+      // React Native lays out with `box-sizing: border-box`, and so does CSS
+      // for a table cell: the padding sits inside the 200px, it does not
+      // widen the column to 216px.
+      const { minWidth, maxWidth } = constraintsFor(
+        '<td style="width:200px;padding:8px">a</td>'
+      );
+      expect(minWidth).toBe(200);
+      expect(maxWidth).toBe(200);
+    });
+
+    it('should still add cell spacing to a descendant width', () => {
+      // A block inside the cell is content-box against it, so the cell has to
+      // grow by its own padding to hold the 200px the block asked for.
+      const { minWidth } = constraintsFor(
+        '<td style="padding:8px"><div style="width:200px"></div></td>'
+      );
+      expect(minWidth).toBe(216);
+    });
+
     it('should read the presentational width attribute', () => {
       const { minWidth } = constraintsFor('<td width="200">a</td>');
       expect(minWidth).toBeGreaterThanOrEqual(200);

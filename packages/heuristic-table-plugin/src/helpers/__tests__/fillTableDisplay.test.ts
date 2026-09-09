@@ -100,6 +100,12 @@ describe('fillTableDisplay', () => {
       }
     ]);
   });
+  it('should include a final colspan in the maximum column index', () => {
+    const tnode = createTableTNode(`
+      <table><tr><td>A</td><td colspan="2">B</td></tr></table>
+    `);
+    expect(createDisplay(tnode).maxX).toBe(2);
+  });
   it('should take rowspan into account to compute cell coordinates (x=0)', () => {
     const table = `
     <table>

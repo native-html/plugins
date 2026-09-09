@@ -30,10 +30,16 @@ interface TCellStats {
    */
   horizontalSpace: number;
   /**
-   * The maximum of explicit widths or min-widths of block elements in this
-   * cell, including margins.
+   * The maximum of explicit widths or min-widths of the block elements *inside*
+   * this cell, including margins. Content-box against the cell, so the cell's
+   * own horizontal spacing still has to be added on top.
    */
   blockWidth: number;
+  /**
+   * The border-box width the cell itself declares, or `null` when it declares
+   * none. Already holds the cell's padding and border.
+   */
+  cellBoxWidth: number | null;
   /**
    * Text stats in this cell.
    */
@@ -43,6 +49,7 @@ interface TCellStats {
 function getInitCellStatsForTnode(tnode: TNode): TCellStats {
   return {
     blockWidth: 0,
+    cellBoxWidth: null,
     horizontalSpace: getHorizontalSpacing(tnode.styles.nativeBlockRet),
     textStats: []
   };
@@ -206,8 +213,19 @@ export default class TCellConstraintsComputer {
       if (tnode.type === 'block') {
         const width = this.resolveBlockWidth(tnode, isCellRoot);
         if (width !== null) {
-          const margins = getHorizontalMargins(tnode.styles.nativeBlockRet);
-          stats.blockWidth = Math.max(stats.blockWidth, width + margins);
+          if (isCellRoot) {
+            // React Native lays out with `box-sizing: border-box`, and CSS
+            // gives a table cell that same box model, so the width a cell
+            // declares already holds its padding and border. It is kept apart
+            // from the descendant widths below, which are content-box against
+            // the cell and so do have to grow by its spacing. Margins play no
+            // part either: a table cell has none, and the cell renderer zeroes
+            // whatever a stylesheet asked for.
+            stats.cellBoxWidth = width;
+          } else {
+            const margins = getHorizontalMargins(tnode.styles.nativeBlockRet);
+            stats.blockWidth = Math.max(stats.blockWidth, width + margins);
+          }
         }
       }
       tnode.children.forEach((n) => this.assembleCellStats(n, stats, false));
@@ -259,12 +277,18 @@ export default class TCellConstraintsComputer {
     // greater than MCW, W is the minimum cell width", and the maximum cell
     // width is likewise raised by the column 'width'. So an explicit width
     // lifts *both* bounds — never just one, or the cell would end up
-    // narrower than the width it asked for.
-    const minWidth =
-      Math.max(blockWidth, textConstrains.minWidth) + stats.horizontalSpace;
-    const maxWidth =
+    // narrower than the width it asked for. Being a border-box width, it
+    // bounds the spaced total rather than joining the content it holds.
+    const cellBoxWidth = stats.cellBoxWidth ?? 0;
+    const minWidth = Math.max(
+      Math.max(blockWidth, textConstrains.minWidth) + stats.horizontalSpace,
+      cellBoxWidth
+    );
+    const maxWidth = Math.max(
       Math.max(blockWidth, textConstrains.contentDensity) +
-      stats.horizontalSpace;
+        stats.horizontalSpace,
+      cellBoxWidth
+    );
     return {
       minWidth,
       // `max-width` caps the width the cell would *like*, but never takes it

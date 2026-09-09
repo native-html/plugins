@@ -1,6 +1,26 @@
 import { TNode } from '@native-html/render';
-import { Display, DisplayCell, Settings } from '../shared-types';
+import {
+  Display,
+  DisplayCell,
+  Settings,
+  TCellConstraints
+} from '../shared-types';
 import TCellConstraintsComputer from './TCellConstraintsComputer';
+
+/**
+ * The constraints of a cell no computer has measured yet.
+ *
+ * @remarks
+ * {@link fillTableDisplay} may be called without a computer, to lay the grid
+ * out before the width its cells must be measured against is known. Every cell
+ * of such a display carries this placeholder until {@link measureDisplay}
+ * replaces it.
+ */
+const UNMEASURED_CONSTRAINTS: TCellConstraints = Object.freeze({
+  contentDensity: 0,
+  maxWidth: 0,
+  minWidth: 0
+});
 
 export function createEmptyDisplay(config: Settings): Display {
   return {
@@ -60,10 +80,19 @@ function findFreeSlotX(display: Display, fromX: number, y: number): number {
   return x;
 }
 
+/**
+ * Lay every `th` and `td` of `tnode` out on the matrix of `display`.
+ *
+ * @param computer - Measures each cell as it is laid down. Omit it to build
+ * the grid alone — coordinates and spans do not depend on the width the table
+ * resolves to, whereas constraints do, and measuring text is the costly half
+ * of a layout pass. Pass the display to {@link measureDisplay} once that width
+ * is known.
+ */
 export default function fillTableDisplay(
   tnode: TNode,
   display: Display,
-  computer: TCellConstraintsComputer
+  computer?: TCellConstraintsComputer
 ) {
   if (tnode.tagName === 'tr') {
     display.maxY = display.maxY + 1;
@@ -79,7 +108,9 @@ export default function fillTableDisplay(
     // column from `nodeIndex` instead would let a stray non-cell element
     // inside the row shift every following cell.
     const startX = findFreeSlotX(display, display.offsetX, startY);
-    const constraints = computer.computeCellConstraints(tnode);
+    const constraints = computer
+      ? computer.computeCellConstraints(tnode)
+      : UNMEASURED_CONSTRAINTS;
     const cell: DisplayCell = {
       lenX,
       lenY,
@@ -100,10 +131,28 @@ export default function fillTableDisplay(
         }
       }
     }
-    display.maxX = Math.max(display.maxX, startX);
+    display.maxX = Math.max(display.maxX, startX + lenX - 1);
   } else {
     tnode.children.forEach((child) =>
       fillTableDisplay(child, display, computer)
     );
+  }
+}
+
+/**
+ * Measure every cell of an already laid out display.
+ *
+ * @remarks
+ * The counterpart to calling {@link fillTableDisplay} without a computer: the
+ * collapsing border model has to resolve the table's own borders — from cell
+ * coordinates alone — before the width those cells are measured against
+ * exists. Splitting the two keeps the grid walked once either way.
+ */
+export function measureDisplay(
+  display: Display,
+  computer: TCellConstraintsComputer
+) {
+  for (const cell of display.cells) {
+    cell.constraints = computer.computeCellConstraints(cell.tnode);
   }
 }

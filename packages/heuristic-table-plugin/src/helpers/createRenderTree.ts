@@ -99,11 +99,22 @@ function makeCell(columnWidths: number[], cell: DisplayCell): TableCell {
   };
 }
 
-export default function createRenderTree(
-  display: Display,
+/**
+ * Resolve the width of every cell of `display` from the column widths.
+ *
+ * @remarks
+ * Kept apart from {@link createRenderTree} because the flat list is also what
+ * {@link HeuristicTablePluginConfig.getStyleForCell} is called with: a cell
+ * only becomes a {@link TableCell} once its width exists.
+ */
+export function makeTableCells(
+  display: Pick<Display, 'cells'>,
   columnWidths: number[]
-): TableRoot {
-  const cells = display.cells.map((cell) => makeCell(columnWidths, cell));
+): TableCell[] {
+  return display.cells.map((cell) => makeCell(columnWidths, cell));
+}
+
+export default function createRenderTree(cells: TableCell[]): TableRoot {
   const rows = makeRows(cells);
   const vGroups = groupCellsByVGroup(rows);
   const children = translateVGroups(vGroups);

@@ -173,6 +173,10 @@ export interface Settings {
    */
   fontWeightCoeffs?: FontWeightCoefficients;
   /**
+   * Override the table's `border-collapse` mode.
+   */
+  borderCollapse?: 'collapse' | 'separate';
+  /**
    * Available width at the root of the render tree, prior to scrolling.
    *
    * @remarks
@@ -232,6 +236,13 @@ export interface HeuristicTablePluginConfig {
    * @defaultValue \{ normal: 1, bold: 1.3, '100': 0.8 … '900': 1.5 \}
    */
   fontWeightCoeffs?: FontWeightCoefficients;
+  /**
+   * Override the table's border model. When omitted, an inline
+   * `border-collapse` declaration from the table is used.
+   *
+   * @defaultValue `separate`
+   */
+  borderCollapse?: 'collapse' | 'separate';
   /**
    * Customize cells appearance with this function.
    *
