@@ -5,6 +5,7 @@ import relaxHeightConstraint from './helpers/relaxHeightConstraint';
 import {
   CellVerticalAlign,
   getCollapsedCellBorderStyle,
+  getDefaultCellPaddingStyle,
   resolveCellVerticalAlign
 } from './helpers/tableStyles';
 
@@ -70,7 +71,17 @@ export default function useHtmlTableCellProps({
         { maxX, maxY, tableBorderStyle }
       )
     : null;
+  // The user-agent padding is resolved against the config styles too, since a
+  // shorthand `padding` there cannot outrank a longhand default whatever the
+  // merge order: Yoga resolves each side against its own edge first.
+  const defaultPaddingStyle = getDefaultCellPaddingStyle(
+    props.tnode.styles.nativeBlockRet,
+    styleFromConfig
+  );
   const style = {
+    // The user-agent stylesheet is the weakest declaration of the three, and
+    // only covers the sides no author declaration reached.
+    ...defaultPaddingStyle,
     // An explicit height on a cell is a minimum height in HTML, so that the
     // cell still grows to fit its content.
     ...relaxHeightConstraint(props.style),

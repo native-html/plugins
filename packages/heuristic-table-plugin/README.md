@@ -102,6 +102,22 @@ to the `renderersProps.table` prop of `RenderHTML` component.
 
 See the documentation for this object here: [`HeuristicTablePluginConfig`](docs/heuristic-table-plugin.heuristictablepluginconfig.md)
 
+### Cell padding
+
+As in HTML, where the user-agent stylesheet declares `td, th { padding: 1px }`,
+cells are padded by one pixel on every side they declare no padding for. It is
+a user-agent declaration, so any author padding outranks it, side by side: a
+cell with `padding-left: 8px` keeps the default pixel on the three sides it
+left alone, and `padding: 0` removes it altogether. A padding from
+`getStyleForCell`, shorthand included, replaces it too.
+
+Be aware that column widths are measured before `getStyleForCell` is called —
+the widths it is handed are its input — so padding declared there is painted
+but not measured. A `getStyleForCell` returning `{ padding: 8 }` spends 16px
+per cell that the columns were never sized for, and content wraps earlier than
+it otherwise would. Declare padding in your CSS instead whenever the column
+widths should account for it.
+
 ## Custom Renderers
 
 ### Customizing Root renderer
@@ -197,7 +213,10 @@ In the first step, each cell of the table is parsed to extract three metrics:
 
 - `minWidth`, an estimate of the cell's min-content width: its longest
   unbreakable text run or the greatest width imposed by one of its blocks,
-  plus horizontal spacing;
+  plus horizontal spacing — the cell's borders and padding, the
+  [default cell padding](#cell-padding) included. Margins take no part: the
+  cell renderer zeroes them, so column width reserved for one would only
+  leave a gap nothing paints;
 - `maxWidth`, the width beyond which the cell would gain nothing, bounded by
   the cell's own `max-width` but never below `minWidth`;
 - `contentDensity`, an estimate of the width taken by all the cell's text on

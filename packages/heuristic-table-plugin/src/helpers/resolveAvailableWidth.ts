@@ -1,12 +1,17 @@
 import { TNode } from '@native-html/render';
 import { getHorizontalInsets, getHorizontalMargins } from './measure';
 import { clampWidth, resolveWidthConstraints } from './resolveWidth';
+import { getPaintedBlockStyle } from './tableStyles';
 
 /**
  * The width `tnode` offers to a block-level child, i.e. its content box.
  */
 function reduceToContentBox(tnode: TNode, containingWidth: number): number {
-  const style = tnode.styles.nativeBlockRet;
+  // The insets have to be the ones the ancestor is painted with rather than
+  // the ones it declares: a bare cell would otherwise hand its children the
+  // user-agent padding it is about to spend, and a table nested in it would
+  // overflow by that much once per level of nesting.
+  const style = getPaintedBlockStyle(tnode);
   const { width, minWidth, maxWidth } = resolveWidthConstraints(
     tnode,
     containingWidth

@@ -1,6 +1,7 @@
 import {
   getCollapsedCellBorderStyle,
   getCollapsedTableBorderStyle,
+  getDefaultCellPaddingStyle,
   resolveBorderCollapse,
   resolveCellVerticalAlign
 } from '../tableStyles';
@@ -70,6 +71,86 @@ describe('table styles', () => {
           findCell('<table><tr><td valign="baseline">A</td></tr></table>')
         )
       ).toBe('baseline');
+    });
+  });
+
+  describe('default padding', () => {
+    const ONE_PIXEL_EVERY_SIDE = {
+      paddingTop: 1,
+      paddingRight: 1,
+      paddingBottom: 1,
+      paddingLeft: 1
+    };
+
+    it('gives a bare cell one pixel on every side', () => {
+      expect(
+        getDefaultCellPaddingStyle(
+          findCell('<table><tr><td>A</td></tr></table>').styles.nativeBlockRet
+        )
+      ).toEqual(ONE_PIXEL_EVERY_SIDE);
+    });
+
+    it('leaves the sides an author declared alone', () => {
+      // Source CSS reaches the plugin expanded per side, so a `padding-left`
+      // replaces the default on that side alone — as it does in a browser.
+      expect(
+        getDefaultCellPaddingStyle(
+          findCell(
+            '<table><tr><td style="padding-left: 8px">A</td></tr></table>'
+          ).styles.nativeBlockRet
+        )
+      ).toEqual({ paddingTop: 1, paddingRight: 1, paddingBottom: 1 });
+    });
+
+    it('declares nothing for a cell padded on all sides', () => {
+      expect(
+        getDefaultCellPaddingStyle(
+          findCell('<table><tr><td style="padding: 8px">A</td></tr></table>')
+            .styles.nativeBlockRet
+        )
+      ).toEqual({});
+    });
+
+    it('keeps a zero padding at zero', () => {
+      expect(
+        getDefaultCellPaddingStyle(
+          findCell('<table><tr><td style="padding: 0">A</td></tr></table>')
+            .styles.nativeBlockRet
+        )
+      ).toEqual({});
+    });
+
+    it('reads a shorthand from the config as a declaration of every side', () => {
+      // Yoga resolves a side against its own edge before the `padding` one, so
+      // a longhand default would outrank this shorthand however it is merged.
+      expect(getDefaultCellPaddingStyle(null, { padding: 8 })).toEqual({});
+    });
+
+    it('reads an axis shorthand from the config on that axis alone', () => {
+      expect(getDefaultCellPaddingStyle(null, { paddingVertical: 8 })).toEqual({
+        paddingRight: 1,
+        paddingLeft: 1
+      });
+    });
+
+    it('reserves both horizontal sides for a writing-direction keyword', () => {
+      // Which side `paddingStart` lands on is not known here, so neither may
+      // be given a default that would fight it.
+      expect(getDefaultCellPaddingStyle(null, { paddingStart: 8 })).toEqual({
+        paddingTop: 1,
+        paddingBottom: 1
+      });
+    });
+
+    it('lets the config decide a side the source CSS left bare', () => {
+      expect(
+        getDefaultCellPaddingStyle(
+          findCell(
+            '<table><tr><td style="padding-top: 8px">A</td></tr></table>'
+          ).styles.nativeBlockRet,
+          { paddingHorizontal: 4 }
+        )
+      ).toEqual({ paddingBottom: 1 });
     });
   });
 

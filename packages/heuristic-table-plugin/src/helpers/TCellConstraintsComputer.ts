@@ -5,7 +5,8 @@ import max from 'ramda/src/max';
 import reduce from 'ramda/src/reduce';
 import { TNode } from '@native-html/render';
 import { TCellConstraints, TConstraintsBase } from '../shared-types';
-import { getHorizontalMargins, getHorizontalSpacing } from './measure';
+import { getHorizontalInsets, getHorizontalMargins } from './measure';
+import { getPaintedBlockStyle } from './tableStyles';
 import { resolveCssSize, resolveImposedWidth } from './resolveWidth';
 
 interface TextChunkStats {
@@ -26,7 +27,9 @@ interface TextChunkStats {
  */
 interface TCellStats {
   /**
-   * Horizontal spacing for this cell
+   * The cell's own horizontal insets: its padding and border. Margins are
+   * excluded because the cell renderer zeroes them, so reserving column width
+   * for one would leave a gap nothing ever paints.
    */
   horizontalSpace: number;
   /**
@@ -50,7 +53,12 @@ function getInitCellStatsForTnode(tnode: TNode): TCellStats {
   return {
     blockWidth: 0,
     cellBoxWidth: null,
-    horizontalSpace: getHorizontalSpacing(tnode.styles.nativeBlockRet),
+    // The padding a cell gets from the user-agent stylesheet is space its
+    // content cannot use, exactly like a declared one, so the intrinsic widths
+    // reserve it here as well as the cell renderer paints it. Config styles
+    // take no part in this pass, so a padding only `getStyleForCell` declares
+    // stays measured as the default it replaces.
+    horizontalSpace: getHorizontalInsets(getPaintedBlockStyle(tnode)),
     textStats: []
   };
 }

@@ -1,8 +1,8 @@
 import resolveAvailableWidth from '../resolveAvailableWidth';
 import { createTableTNode } from './utils';
 
-function availableWidthFor(html: string, contentWidth: number) {
-  return resolveAvailableWidth(createTableTNode(html), contentWidth);
+function availableWidthFor(html: string, contentWidth: number, nth = 0) {
+  return resolveAvailableWidth(createTableTNode(html, nth), contentWidth);
 }
 
 describe('resolveAvailableWidth', () => {
@@ -109,6 +109,60 @@ describe('resolveAvailableWidth', () => {
         400
       )
     ).toBe(400);
+  });
+
+  describe('table cell ancestors', () => {
+    // The user-agent `td, th { padding: 1px }` never reaches `nativeBlockRet`,
+    // so a cell which declares nothing looks bare here while the renderer
+    // still spends the padding. Measuring the declared insets handed a nested
+    // table 2px more than its cell had left, once per level of nesting.
+    const NESTED_TABLE = '<table><tr><td>A</td></tr></table>';
+
+    it('should subtract the default padding of a bare cell', () => {
+      expect(
+        availableWidthFor(
+          `<table><tr><td>${NESTED_TABLE}</td></tr></table>`,
+          400,
+          1
+        )
+      ).toBe(398);
+    });
+
+    it('should subtract a declared cell padding instead of the default', () => {
+      expect(
+        availableWidthFor(
+          `<table><tr><td style="padding: 10px">${NESTED_TABLE}</td></tr></table>`,
+          400,
+          1
+        )
+      ).toBe(380);
+    });
+
+    it('should subtract nothing from a cell which zeroes its padding', () => {
+      expect(
+        availableWidthFor(
+          `<table><tr><td style="padding: 0">${NESTED_TABLE}</td></tr></table>`,
+          400,
+          1
+        )
+      ).toBe(400);
+    });
+
+    it('should keep the default on the sides a cell leaves undeclared', () => {
+      expect(
+        availableWidthFor(
+          `<table><tr><td style="padding-left: 10px">${NESTED_TABLE}</td></tr></table>`,
+          400,
+          1
+        )
+      ).toBe(400 - 10 - 1);
+    });
+
+    it('should not give the default padding to a non-cell ancestor', () => {
+      expect(
+        availableWidthFor(`<div>${NESTED_TABLE}</div>`, 400)
+      ).toBe(400);
+    });
   });
 
   it('should raise a narrow ancestor up to its min-width', () => {

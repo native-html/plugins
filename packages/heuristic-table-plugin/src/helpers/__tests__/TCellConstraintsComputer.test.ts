@@ -4,6 +4,7 @@ import TCellConstraintsComputer, {
   FontWeightCoefficients
 } from '../TCellConstraintsComputer';
 import { TCellConstraints } from '../../shared-types';
+import { DEFAULT_CELL_PADDING } from '../tableStyles';
 import { createTableTNode } from './utils';
 
 function findFirstCell(tnode: TNode): TNode | null {
@@ -25,6 +26,13 @@ function findFirstCell(tnode: TNode): TNode | null {
  * happens to default to.
  */
 const BASE_FONT_COEFF = 0.65;
+
+/**
+ * The horizontal room a cell which declares no padding of its own still owes
+ * to the user-agent stylesheet, and which every intrinsic width below
+ * therefore carries on top of its text.
+ */
+const DEFAULT_HORIZONTAL_PADDING = 2 * DEFAULT_CELL_PADDING;
 
 function constraintsFor(
   cellMarkup: string,
@@ -49,7 +57,8 @@ describe('TCellConstraintsComputer', () => {
       );
 
       expect(minWidth).toBeCloseTo(
-        6 * 14 * BASE_FONT_COEFF * (DEFAULT_FONT_WEIGHT_COEFFS.bold as number)
+        DEFAULT_HORIZONTAL_PADDING +
+          6 * 14 * BASE_FONT_COEFF * (DEFAULT_FONT_WEIGHT_COEFFS.bold as number)
       );
     });
 
@@ -61,7 +70,9 @@ describe('TCellConstraintsComputer', () => {
       );
 
       // A cell of bold text now measures exactly as one of regular text.
-      expect(minWidth).toBeCloseTo(6 * 14 * BASE_FONT_COEFF);
+      expect(minWidth).toBeCloseTo(
+        DEFAULT_HORIZONTAL_PADDING + 6 * 14 * BASE_FONT_COEFF
+      );
     });
 
     it('should keep the defaults a partial config leaves untouched', () => {
@@ -74,7 +85,11 @@ describe('TCellConstraintsComputer', () => {
       );
 
       expect(minWidth).toBeCloseTo(
-        6 * 14 * BASE_FONT_COEFF * (DEFAULT_FONT_WEIGHT_COEFFS['300'] as number)
+        DEFAULT_HORIZONTAL_PADDING +
+          6 *
+            14 *
+            BASE_FONT_COEFF *
+            (DEFAULT_FONT_WEIGHT_COEFFS['300'] as number)
       );
     });
   });
@@ -85,13 +100,17 @@ describe('TCellConstraintsComputer', () => {
 
       // The longest unbreakable segment is "Medium-" (7 characters), not the
       // full 11-character string.
-      expect(minWidth).toBeCloseTo(7 * 14 * BASE_FONT_COEFF);
+      expect(minWidth).toBeCloseTo(
+        DEFAULT_HORIZONTAL_PADDING + 7 * 14 * BASE_FONT_COEFF
+      );
     });
 
     it('should retain a non-breaking hyphen in one segment', () => {
       const { minWidth } = constraintsFor('<td>Medium&#8209;High</td>');
 
-      expect(minWidth).toBeCloseTo(11 * 14 * BASE_FONT_COEFF);
+      expect(minWidth).toBeCloseTo(
+        DEFAULT_HORIZONTAL_PADDING + 11 * 14 * BASE_FONT_COEFF
+      );
     });
 
     it('should not break a hyphen between two digits', () => {
@@ -99,27 +118,82 @@ describe('TCellConstraintsComputer', () => {
       // worse than a wide one.
       const { minWidth } = constraintsFor('<td>2026-09-03</td>');
 
-      expect(minWidth).toBeCloseTo(10 * 14 * BASE_FONT_COEFF);
+      expect(minWidth).toBeCloseTo(
+        DEFAULT_HORIZONTAL_PADDING + 10 * 14 * BASE_FONT_COEFF
+      );
     });
 
     it('should still break a hyphen with a digit on only one side', () => {
       // "ISO-" is the longest segment; the digits stand alone after the break.
       const { minWidth } = constraintsFor('<td>ISO-2026</td>');
 
-      expect(minWidth).toBeCloseTo(4 * 14 * BASE_FONT_COEFF);
+      expect(minWidth).toBeCloseTo(
+        DEFAULT_HORIZONTAL_PADDING + 4 * 14 * BASE_FONT_COEFF
+      );
     });
 
     it('should not break at a non-breaking space', () => {
       // A whole grouped number is one unbreakable run of nine characters.
       const { minWidth } = constraintsFor('<td>10&nbsp;000&nbsp;km</td>');
 
-      expect(minWidth).toBeCloseTo(9 * 14 * BASE_FONT_COEFF);
+      expect(minWidth).toBeCloseTo(
+        DEFAULT_HORIZONTAL_PADDING + 9 * 14 * BASE_FONT_COEFF
+      );
     });
 
     it('should break at a regular space', () => {
       const { minWidth } = constraintsFor('<td>10 000 km</td>');
 
-      expect(minWidth).toBeCloseTo(3 * 14 * BASE_FONT_COEFF);
+      expect(minWidth).toBeCloseTo(
+        DEFAULT_HORIZONTAL_PADDING + 3 * 14 * BASE_FONT_COEFF
+      );
+    });
+  });
+
+  describe('default cell padding', () => {
+    it('should reserve the padding a bare cell gets from the user agent', () => {
+      const bare = constraintsFor('<td>Method</td>');
+      const unpadded = constraintsFor('<td style="padding:0">Method</td>');
+
+      expect(bare.minWidth - unpadded.minWidth).toBeCloseTo(
+        DEFAULT_HORIZONTAL_PADDING
+      );
+      expect(bare.maxWidth - unpadded.maxWidth).toBeCloseTo(
+        DEFAULT_HORIZONTAL_PADDING
+      );
+    });
+
+    it('should let a declared padding replace the default, not join it', () => {
+      // 8px on each side, so 16px of spacing — never 18px.
+      const declared = constraintsFor('<td style="padding:8px">Method</td>');
+      const unpadded = constraintsFor('<td style="padding:0">Method</td>');
+
+      expect(declared.minWidth - unpadded.minWidth).toBeCloseTo(16);
+    });
+
+    it('should ignore a margin the cell renderer zeroes', () => {
+      // `useHtmlTableCellProps` unconditionally zeroes all four margins, so
+      // width reserved for one here only widens the column by a gap nothing
+      // ever paints.
+      const withMargin = constraintsFor(
+        '<td style="margin-left:40px;margin-right:20px">Method</td>'
+      );
+      const bare = constraintsFor('<td>Method</td>');
+      expect(withMargin.minWidth).toBe(bare.minWidth);
+      expect(withMargin.maxWidth).toBe(bare.maxWidth);
+    });
+
+    it('should reserve the default beside a padding declared on one side', () => {
+      const oneSided = constraintsFor(
+        '<td style="padding-left:8px">Method</td>'
+      );
+      const unpadded = constraintsFor('<td style="padding:0">Method</td>');
+
+      // The right side keeps the user-agent pixel it was never given a
+      // declaration for.
+      expect(oneSided.minWidth - unpadded.minWidth).toBeCloseTo(
+        8 + DEFAULT_CELL_PADDING
+      );
     });
   });
 

@@ -20,15 +20,6 @@ const hinsetFields: readonly SpacingFields[] = [
   'paddingRight'
 ];
 
-const hspacingFields: readonly SpacingFields[] = [
-  'borderLeftWidth',
-  'borderRightWidth',
-  'paddingLeft',
-  'paddingRight',
-  'marginLeft',
-  'marginRight'
-];
-
 function sumFields(
   style: NativeBlockRetStyle,
   fields: readonly SpacingFields[]
@@ -55,8 +46,4 @@ export function getHorizontalMargins(style: NativeBlockRetStyle): number {
  */
 export function getHorizontalInsets(style: NativeBlockRetStyle): number {
   return sumFields(style, hinsetFields);
-}
-
-export function getHorizontalSpacing(style: NativeBlockRetStyle): number {
-  return sumFields(style, hspacingFields);
 }

@@ -11,26 +11,26 @@ const engine = new TRenderEngine({
   }
 });
 
-function findTable(tnode: TNode): TNode | null {
+function collectTables(tnode: TNode, found: TNode[] = []): TNode[] {
   if (tnode.tagName === 'table') {
-    return tnode;
+    found.push(tnode);
   }
   for (const child of tnode.children) {
-    const table = findTable(child);
-    if (table) {
-      return table;
-    }
+    collectTables(child, found);
   }
-  return null;
+  return found;
 }
 
 /**
- * Build a transient render tree from `html` and return its first `table`,
- * however deeply it is nested. The tnode keeps its ancestors, so helpers which
- * walk up the tree see the real containing blocks.
+ * Build a transient render tree from `html` and return one of its `table`
+ * nodes, however deeply nested. The tnode keeps its ancestors, so helpers
+ * which walk up the tree see the real containing blocks.
+ *
+ * @param nth - Which table to return, in document order. Defaults to the
+ * outermost one; pass `1` for the table nested inside it.
  */
-export function createTableTNode(html: string) {
-  const table = findTable(engine.buildTTree(html) as unknown as TNode);
+export function createTableTNode(html: string, nth = 0) {
+  const table = collectTables(engine.buildTTree(html) as unknown as TNode)[nth];
   expect(table?.tagName).toBe('table');
   return table as TNode;
 }

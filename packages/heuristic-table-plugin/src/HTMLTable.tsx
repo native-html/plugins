@@ -100,12 +100,10 @@ const HTMLTable = memo(function HTMLTable({
         // scroller inside. A table narrower than that keeps its own size,
         // insets included.
         width: Math.min(tableWidth + insets, layout.usedWidth)
-      }}
-    >
+      }}>
       <Container
         tableWidth={tableWidth}
-        availableWidth={layout.assignableWidth}
-      >
+        availableWidth={layout.assignableWidth}>
         {React.createElement(TreeRenderer, {
           node: layout.renderTree,
           config,

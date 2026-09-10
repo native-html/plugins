@@ -66,6 +66,132 @@ function normalizeVerticalAlign(value: string): CellVerticalAlign | null {
 export const DEFAULT_CELL_VERTICAL_ALIGN: CellVerticalAlign = 'middle';
 
 /**
+ * The padding HTML's user-agent stylesheet gives a table cell.
+ *
+ * @remarks
+ * `td, th { padding: 1px }`, per the
+ * {@link https://html.spec.whatwg.org/multipage/rendering.html#tables-2 | HTML rendering rules}.
+ * Being a user-agent declaration, it is outranked by any author padding, side
+ * by side: a cell which declares `padding-left` alone still gets the default
+ * on the three sides it left untouched.
+ *
+ * @public
+ */
+export const DEFAULT_CELL_PADDING = 1;
+
+type PaddingSide = 'Bottom' | 'Left' | 'Right' | 'Top';
+
+/**
+ * Every style property which declares padding on a given side.
+ *
+ * @remarks
+ * Source CSS always reaches the plugin expanded per side, but
+ * {@link HeuristicTablePluginConfig.getStyleForCell} is hand-written React
+ * Native style, where any shorthand is fair game. A shorthand cannot simply be
+ * overwritten either: Yoga resolves a side against its own edge and only falls
+ * back to the `padding` edge, so a longhand default would beat an author
+ * `padding` whatever the merge order. Each shorthand is therefore read as a
+ * declaration of every side it covers.
+ *
+ * The writing-direction keywords count on both horizontal sides. Which of the
+ * two they land on is not known here, and reserving both is the harmless
+ * choice: it withholds a default rather than fighting the author declaration.
+ */
+const paddingSideKeys: Record<PaddingSide, readonly (keyof ViewStyle)[]> = {
+  Top: [
+    'paddingTop',
+    'paddingBlockStart',
+    'paddingBlock',
+    'paddingVertical',
+    'padding'
+  ],
+  Right: [
+    'paddingRight',
+    'paddingEnd',
+    'paddingStart',
+    'paddingInlineEnd',
+    'paddingInlineStart',
+    'paddingInline',
+    'paddingHorizontal',
+    'padding'
+  ],
+  Bottom: [
+    'paddingBottom',
+    'paddingBlockEnd',
+    'paddingBlock',
+    'paddingVertical',
+    'padding'
+  ],
+  Left: [
+    'paddingLeft',
+    'paddingStart',
+    'paddingEnd',
+    'paddingInlineStart',
+    'paddingInlineEnd',
+    'paddingInline',
+    'paddingHorizontal',
+    'padding'
+  ]
+};
+
+/**
+ * Whether a node is a table cell, and so subject to the cell rules of the
+ * user-agent stylesheet.
+ */
+export function isTableCell(tnode: TNode): boolean {
+  return tnode.tagName === 'td' || tnode.tagName === 'th';
+}
+
+/**
+ * Everything a node is painted with, the user-agent cell rules included.
+ *
+ * @remarks
+ * `nativeBlockRet` holds source CSS alone, so a cell which declares no padding
+ * appears to have none while the renderer gives it
+ * {@link DEFAULT_CELL_PADDING}. Any pass which measures a box against what
+ * ends up on screen has to reconcile the two here first.
+ */
+export function getPaintedBlockStyle(
+  tnode: TNode
+): TNode['styles']['nativeBlockRet'] {
+  const style = tnode.styles.nativeBlockRet;
+  if (!isTableCell(tnode)) {
+    return style;
+  }
+  return { ...getDefaultCellPaddingStyle(style), ...style };
+}
+
+/**
+ * The padding a table cell owes to {@link DEFAULT_CELL_PADDING} alone.
+ *
+ * @param declaredStyles - Everything the cell declares padding in, source CSS
+ * and {@link HeuristicTablePluginConfig.getStyleForCell} alike. A side any of
+ * them covers is left out of the result.
+ *
+ * @remarks
+ * The result is expanded per side rather than left as a `padding` shorthand,
+ * so that the sides an author did declare stay untouched.
+ */
+export function getDefaultCellPaddingStyle(
+  ...declaredStyles: (ViewStyle | null | undefined)[]
+): ViewStyle {
+  const resolvedStyle: ViewStyle = {};
+  for (const side of ['Top', 'Right', 'Bottom', 'Left'] as const) {
+    const isDeclared = declaredStyles.some((style) =>
+      style
+        ? paddingSideKeys[side].some((property) => style[property] != null)
+        : false
+    );
+    if (!isDeclared) {
+      Object.assign(resolvedStyle, {
+        [`padding${side}`]: DEFAULT_CELL_PADDING
+      });
+    }
+  }
+  return resolvedStyle;
+}
+
+/**
  * Resolve the vertical alignment a native table cell should emulate.
  *
  * The CSS processor intentionally drops `vertical-align` because React Native
