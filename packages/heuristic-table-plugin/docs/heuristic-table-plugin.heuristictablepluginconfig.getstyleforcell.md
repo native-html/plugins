@@ -6,6 +6,8 @@
 
 Customize cells appearance with this function.
 
+Called once per cell per layout, with provisional widths measured from source styles. Returned styles are saved, included in the final layout, and reused for rendering. Width-dependent callbacks are not iterated. Keep this function referentially stable to avoid unnecessary layouts.
+
 **Signature:**
 
 ```typescript
@@ -42,7 +44,7 @@ cell
 
 </td><td>
 
-The cell for which styles should be provided.
+The cell with its provisional width and constraints.
 
 
 </td></tr>

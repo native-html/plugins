@@ -4,7 +4,7 @@
 
 ## HTMLTableProps interface
 
-Props for the [HTMLTable](./heuristic-table-plugin.htmltable.md) component.
+Props for the [HTMLTable()](./heuristic-table-plugin.htmltable.md) component.
 
 **Signature:**
 
@@ -64,23 +64,6 @@ Description
 </td><td>
 
 TableLayout
-
-
-</td><td>
-
-
-</td></tr>
-<tr><td>
-
-[settings](./heuristic-table-plugin.htmltableprops.settings.md)
-
-
-</td><td>
-
-
-</td><td>
-
-Settings
 
 
 </td><td>

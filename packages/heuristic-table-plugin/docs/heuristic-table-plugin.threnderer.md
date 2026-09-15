@@ -9,5 +9,5 @@ The renderer component for `th` tag.
 **Signature:**
 
 ```typescript
-ThRenderer: CustomBlockRenderer
+ThRenderer: import("@native-html/render").CustomBlockRenderer
 ```

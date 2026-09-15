@@ -9,5 +9,5 @@ The renderer component for `td` tag.
 **Signature:**
 
 ```typescript
-TdRenderer: CustomBlockRenderer
+TdRenderer: import("@native-html/render").CustomBlockRenderer
 ```

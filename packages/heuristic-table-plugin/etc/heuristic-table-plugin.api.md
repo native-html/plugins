@@ -6,6 +6,8 @@
 
 import { CustomBlockRenderer } from '@native-html/render';
 import { CustomRendererProps } from '@native-html/render';
+import { HTMLContentModel } from '@native-html/render';
+import { HTMLElementModel } from '@native-html/render';
 import { PropsFromParent } from '@native-html/render';
 import { default as React_2 } from 'react';
 import { TBlock } from '@native-html/render';
@@ -24,6 +26,9 @@ export interface CellProperties extends Coordinates {
     lenY: number;
 }
 
+// @public
+export const colgroupModel: HTMLElementModel<'colgroup', HTMLContentModel.block>;
+
 // @public (undocumented)
 export interface Coordinates {
     // (undocumented)
@@ -32,6 +37,9 @@ export interface Coordinates {
     y: number;
 }
 
+// @public
+export const DEFAULT_FONT_WEIGHT_COEFFS: FontWeightCoefficients;
+
 // @public (undocumented)
 export interface DisplayCell extends CellProperties {
     // (undocumented)
@@ -39,13 +47,20 @@ export interface DisplayCell extends CellProperties {
 }
 
 // @public
+export type FontWeightCoefficients = Record<string, number>;
+
+// @public
 export interface HeuristicTablePluginConfig {
+    baseFontCoeff?: number;
+    borderCollapse?: 'collapse' | 'separate';
+    fontWeightCoeffs?: FontWeightCoefficients;
     forceStretch?: boolean;
     getStyleForCell?(cell: TableCell): ViewStyle | null;
+    growBeyondHeight?: boolean;
 }
 
 // @public
-export const HTMLTable: React_2.NamedExoticComponent<HTMLTableProps>;
+export function HTMLTable(input: HTMLTableProps): React_2.JSX.Element;
 
 // @public
 export interface HTMLTableProps extends CustomRendererProps<TBlock> {
@@ -55,15 +70,16 @@ export interface HTMLTableProps extends CustomRendererProps<TBlock> {
     //
     // (undocumented)
     layout: TableLayout;
-    // Warning: (ae-forgotten-export) The symbol "Settings" needs to be exported by the entry point index.d.ts
-    //
-    // (undocumented)
-    settings: Settings;
 }
 
 // @public
 const renderers: Record<'th' | 'td' | 'table', CustomBlockRenderer>;
 export default renderers;
+
+// @public
+export interface Settings extends Omit<HeuristicTablePluginConfig, 'growBeyondHeight'> {
+    contentWidth: number;
+}
 
 // @public
 export interface TableCell extends DisplayCell {

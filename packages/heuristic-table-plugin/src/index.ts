@@ -1,8 +1,9 @@
 import { CustomBlockRenderer } from '@native-html/render';
-import { HeuristicTablePluginConfig, Settings } from './shared-types';
+import { HeuristicTablePluginConfig } from './shared-types';
 import TableRenderer from './TableRenderer';
 import TdRenderer from './TdRenderer';
 import ThRenderer from './ThRenderer';
+import colgroupModel from './ColgroupModel';
 
 export {
   CellProperties,
@@ -10,6 +11,7 @@ export {
   DisplayCell,
   HeuristicTablePluginConfig,
   HTMLTableProps,
+  Settings,
   TableCell,
   TableFlexColumnContainer,
   TableFlexRowContainer,
@@ -17,7 +19,12 @@ export {
   TableRoot
 } from './shared-types';
 
-export { TableRenderer, ThRenderer, TdRenderer };
+export {
+  DEFAULT_FONT_WEIGHT_COEFFS,
+  FontWeightCoefficients
+} from './helpers/TCellConstraintsComputer';
+
+export { TableRenderer, ThRenderer, TdRenderer, colgroupModel };
 
 /**
  * Renderers to be merged in the `renderers` prop of `RenderHTML` component.
@@ -26,8 +33,8 @@ export { TableRenderer, ThRenderer, TdRenderer };
  */
 const renderers: Record<'th' | 'td' | 'table', CustomBlockRenderer> = {
   table: TableRenderer,
-  th: ThRenderer as any,
-  td: TdRenderer as any
+  th: ThRenderer,
+  td: TdRenderer
 };
 
 export { default as useHtmlTableProps } from './useHtmlTableProps';
@@ -39,7 +46,7 @@ declare module '@native-html/render' {
     /**
      * Configuration for `@native-html/heuristic-table-plugin` table renderer.
      */
-    table?: Settings & HeuristicTablePluginConfig;
+    table?: HeuristicTablePluginConfig;
   }
 }
 

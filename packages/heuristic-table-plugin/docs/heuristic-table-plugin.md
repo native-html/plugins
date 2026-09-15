@@ -19,6 +19,17 @@ Description
 </th></tr></thead>
 <tbody><tr><td>
 
+[HTMLTable({ layout, TDefaultRenderer, config, ...props }, input)](./heuristic-table-plugin.htmltable.md)
+
+
+</td><td>
+
+A component to render tables.
+
+
+</td></tr>
+<tr><td>
+
 [useHtmlTableCellProps({ propsFromParent, ...props }, input)](./heuristic-table-plugin.usehtmltablecellprops.md)
 
 
@@ -102,7 +113,18 @@ Options to customize this plugin renderers.
 
 </td><td>
 
-Props for the [HTMLTable](./heuristic-table-plugin.htmltable.md) component.
+Props for the [HTMLTable()](./heuristic-table-plugin.htmltable.md) component.
+
+
+</td></tr>
+<tr><td>
+
+[Settings](./heuristic-table-plugin.settings.md)
+
+
+</td><td>
+
+Everything the table layout engine needs to lay a table out: the author configuration, plus the width the document offers it.
 
 
 </td></tr>
@@ -179,12 +201,23 @@ Description
 </th></tr></thead>
 <tbody><tr><td>
 
-[HTMLTable](./heuristic-table-plugin.htmltable.md)
+[colgroupModel](./heuristic-table-plugin.colgroupmodel.md)
 
 
 </td><td>
 
-A component to render tables.
+Element model required for colgroup children to be available to the table layout engine. Col elements remain non-rendering empty nodes.
+
+
+</td></tr>
+<tr><td>
+
+[DEFAULT\_FONT\_WEIGHT\_COEFFS](./heuristic-table-plugin.default_font_weight_coeffs.md)
+
+
+</td><td>
+
+The coefficients used when the config supplies none.
 
 
 </td></tr>
@@ -229,6 +262,32 @@ The renderer component for `td` tag.
 </td><td>
 
 The renderer component for `th` tag.
+
+
+</td></tr>
+</tbody></table>
+
+## Type Aliases
+
+<table><thead><tr><th>
+
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[FontWeightCoefficients](./heuristic-table-plugin.fontweightcoefficients.md)
+
+
+</td><td>
+
+How much wider text renders at a given font weight than at a regular one.
 
 
 </td></tr>
