@@ -274,16 +274,16 @@ describe('layout and resolved renderer styles', () => {
     }
   );
 
-  it('lets source longhands keep precedence over callback shorthands in measurement and renderer props', () => {
+  it('lets callback shorthands override source longhands in measurement and renderer props', () => {
     const layout = layoutFor(
       '<table><tr><td style="padding-left:4px">A</td></tr></table>',
       {
         getStyleForCell: () => ({ padding: 8 })
       }
     );
-    expect(layout.totalWidth).toBeCloseTo(9.1 + 4 + 8);
+    expect(layout.totalWidth).toBeCloseTo(9.1 + 8 + 8);
     expect(renderedCellStyle(layout, 0)).toMatchObject({
-      paddingLeft: 4,
+      paddingLeft: 8,
       padding: 8
     });
   });

@@ -111,6 +111,11 @@ cell with `padding-left: 8px` keeps the default pixel on the three sides it
 left alone, and `padding: 0` removes it altogether. A padding from
 `getStyleForCell`, shorthand included, replaces it too.
 
+Callback padding overrides the source padding on the sides it covers, including
+resolved user-agent styles and inline CSS. For example, `{ padding: 8 }` sets
+every side to 8 even if the cell declares `padding-left: 4px`; a callback's own
+`paddingLeft` still takes precedence over its `padding` shorthand.
+
 `getStyleForCell` padding and borders participate in layout. The plugin first
 calculates provisional cell widths from source styles, calls the callback once
 per cell, then calculates final widths using its returned styles. Those same

@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react-native';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, ViewStyle } from 'react-native';
 import RenderHTML, { CustomBlockRenderer } from '@native-html/render';
 import renderers from '../../index';
 import { TableCell } from '../../shared-types';
@@ -10,6 +10,57 @@ import { getHorizontalInsets } from '../measure';
 import useHtmlTableProps from '../../useHtmlTableProps';
 
 afterEach(() => jest.restoreAllMocks());
+
+describe.each([true, false])(
+  'callback padding with user-agent styles %s',
+  (enableUserAgentStyles) => {
+    it.each([
+      [{ padding: 8 }, '', 8, 8],
+      [{ paddingHorizontal: 8 }, '', 8, 8],
+      [{ padding: 0 }, '', 0, 0],
+      [{ padding: 8, paddingLeft: 3 }, '', 3, 8],
+      [{ padding: 8 }, 'padding-left:4px', 8, 8],
+      [{ paddingVertical: 8 }, 'padding-left:3px;padding-right:5px', 3, 5]
+    ] as [ViewStyle, string, number, number][])(
+      'measures and renders %j over source %s',
+      (padding, sourceStyle, left, right) => {
+        const getStyleForCell = jest.fn(() => padding);
+        const rendered = render(
+          <RenderHTML
+            enableUserAgentStyles={enableUserAgentStyles}
+            contentWidth={100}
+            source={{
+              html: `<table style="font-size:20px"><tr><td style="${sourceStyle}">A</td></tr></table>`
+            }}
+            renderers={renderers}
+            renderersProps={{
+              table: {
+                forceStretch: false,
+                baseFontCoeff: 0.5,
+                getStyleForCell
+              }
+            }}
+          />
+        );
+        const cell = rendered.getByTestId('td');
+        const width = 10 + left + right;
+        expect(cell).toHaveStyle({
+          paddingLeft: left,
+          paddingRight: right,
+          width
+        });
+        if (padding.paddingVertical != null) {
+          expect(cell).toHaveStyle({ paddingTop: 8, paddingBottom: 8 });
+        }
+        let wrapper = cell.parent;
+        while (wrapper && typeof wrapper.type !== 'string')
+          wrapper = wrapper.parent;
+        expect(StyleSheet.flatten(wrapper!.props.style).width).toBe(width);
+        expect(getStyleForCell).toHaveBeenCalledTimes(1);
+      }
+    );
+  }
+);
 
 it.each([0, 10])(
   'sizes nested tables inside their assigned cell and %spx wrapper padding',
@@ -63,8 +114,6 @@ it('reuses measured callback styles while rendering and relayouts when the callb
   const source = {
     html: '<table style="font-size:20px"><tr><td>A</td><td>B</td></tr></table>'
   };
-  // Explicit sides override the renderer model's per-side default padding;
-  // a shorthand alone would leave both column widths unchanged.
   const first = jest.fn((cell: TableCell) => ({
     paddingLeft: cell.x === 0 ? 8 : 4,
     paddingRight: cell.x === 0 ? 8 : 4

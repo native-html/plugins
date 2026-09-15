@@ -3,6 +3,9 @@ import { TNode } from '@native-html/render';
 import colgroupModel from '../../ColgroupModel';
 
 const engine = new TRenderEngine({
+  // Unit fixtures isolate plugin defaults. Public-renderer tests retain the
+  // RenderHTML defaults, including user-agent styles.
+  stylesConfig: { enableUserAgentStyles: false },
   customizeHTMLModels(defaultModels) {
     return {
       ...defaultModels,

@@ -4,7 +4,8 @@ import { Display } from '../shared-types';
 import {
   getCollapsedCellBorderStyle,
   getCollapsedTableBorderStyle,
-  getDefaultCellPaddingStyle
+  getDefaultCellPaddingStyle,
+  resolveConfiguredCellStyle
 } from './tableStyles';
 
 /** One saved style resolution shared by measurement and rendering. */
@@ -23,7 +24,7 @@ export default function resolveTableStyles(
   const styles = new Map<TNode, ViewStyle>();
   for (const { tnode } of display.cells) {
     const source = tnode.styles.nativeBlockRet;
-    const configured = configStyles.get(tnode);
+    const configured = resolveConfiguredCellStyle(configStyles.get(tnode));
     styles.set(tnode, {
       ...getDefaultCellPaddingStyle(source, configured),
       ...source,
@@ -44,7 +45,7 @@ export default function resolveTableStyles(
         })
       : null;
     cellStyles.set(cell.tnode, {
-      configStyle: configStyles.get(cell.tnode) ?? null,
+      configStyle: resolveConfiguredCellStyle(configStyles.get(cell.tnode)),
       borderStyle,
       style: { ...getCellStyle(cell), ...borderStyle }
     });

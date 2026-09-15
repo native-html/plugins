@@ -122,13 +122,13 @@ describe('useHtmlTableCellProps', () => {
         getStyleForCell: () => ({ padding: 8 })
       });
 
-      // No longhand may be emitted beside the config shorthand: Yoga resolves
-      // a side against its own edge first, so a default of 1 would win.
-      expect(style.padding).toBe(8);
-      expect(style).not.toHaveProperty('paddingTop');
-      expect(style).not.toHaveProperty('paddingRight');
-      expect(style).not.toHaveProperty('paddingBottom');
-      expect(style).not.toHaveProperty('paddingLeft');
+      expect(style).toMatchObject({
+        padding: 8,
+        paddingTop: 8,
+        paddingRight: 8,
+        paddingBottom: 8,
+        paddingLeft: 8
+      });
     });
 
     it('leaves a cell asking for no padding unpadded', () => {

@@ -7,6 +7,7 @@ import {
   CellVerticalAlign,
   getCollapsedCellBorderStyle,
   getDefaultCellPaddingStyle,
+  resolveConfiguredCellStyle,
   resolveCellVerticalAlign
 } from './helpers/tableStyles';
 
@@ -57,7 +58,7 @@ export default function useHtmlTableCellProps({
   } = propsFromParent as InternalTableCellPropsFromParent;
   const styleFromConfig = resolvedCellStyle
     ? resolvedCellStyle.configStyle
-    : config?.getStyleForCell?.call(null, cell);
+    : resolveConfiguredCellStyle(config?.getStyleForCell?.call(null, cell));
   const verticalAlign = resolveCellVerticalAlign(props.tnode);
   // Vertical table-cell alignment and horizontal colspan centering are
   // independent, so keep both declarations in the same style contribution.

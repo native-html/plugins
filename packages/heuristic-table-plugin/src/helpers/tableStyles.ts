@@ -191,6 +191,24 @@ export function getDefaultCellPaddingStyle(
   return resolvedStyle;
 }
 
+/** Expand callback shorthands so resolved source longhands cannot mask them. */
+export function resolveConfiguredCellStyle(
+  style: ViewStyle | null | undefined
+): ViewStyle | null {
+  if (!style) return null;
+  const horizontal = style.paddingHorizontal ?? style.padding;
+  const vertical = style.paddingVertical ?? style.padding;
+  return {
+    ...(horizontal != null
+      ? { paddingLeft: horizontal, paddingRight: horizontal }
+      : null),
+    ...(vertical != null
+      ? { paddingTop: vertical, paddingBottom: vertical }
+      : null),
+    ...style
+  };
+}
+
 /**
  * Resolve the vertical alignment a native table cell should emulate.
  *
