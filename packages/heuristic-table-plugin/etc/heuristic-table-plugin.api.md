@@ -56,6 +56,7 @@ export interface HeuristicTablePluginConfig {
     fontWeightCoeffs?: FontWeightCoefficients;
     forceStretch?: boolean;
     getStyleForCell?(cell: TableCell): ViewStyle | null;
+    growBeyondHeight?: boolean;
 }
 
 // @public

@@ -265,3 +265,22 @@ block leaves it. Set it to `false` in `renderersProps.table` to let an
 auto-width table shrink to fit its content instead. A table with an explicit
 width always distributes that width over its columns, whatever `forceStretch`
 is set to.
+
+### Table and cell heights
+
+Per [CSS 2.1 §17.5.3](https://www.w3.org/TR/CSS21/tables.html#height-layout),
+`height` on a `table`, `tr`, `th` or `td` box is only a *minimum*: the box
+always grows to fit its content. React Native has no table layout algorithm to
+shrink a row back down, so this plugin enforces a declared `height` as written
+by default, and taller content overflows it.
+
+Set `growBeyondHeight` to `true` in `renderersProps.table` to get the CSS
+behavior instead: an explicit `height` on the table or on any of its cells is
+folded into `minHeight`, and the box grows past it to fit its content.
+
+```tsx
+<RenderHTML
+  source={{ html }}
+  renderersProps={{ table: { growBeyondHeight: true } }}
+/>
+```

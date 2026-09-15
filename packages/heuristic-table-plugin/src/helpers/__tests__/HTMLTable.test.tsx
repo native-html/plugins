@@ -3,7 +3,10 @@ import { render } from '@testing-library/react-native';
 import { ScrollView, StyleSheet, View, ViewStyle } from 'react-native';
 import HTMLTable from '../../HTMLTable';
 import TableLayout from '../../TableLayout';
-import { HTMLTableProps } from '../../shared-types';
+import {
+  HeuristicTablePluginConfig,
+  HTMLTableProps
+} from '../../shared-types';
 import { createTableTNode } from './utils';
 
 // Inspect the real table wrapper and scroll container independently of cell rendering.
@@ -20,7 +23,11 @@ function DefaultRenderer({
   );
 }
 
-function renderTable(html: string, contentWidth: number) {
+function renderTable(
+  html: string,
+  contentWidth: number,
+  config: Partial<HeuristicTablePluginConfig> = {}
+) {
   const tnode = createTableTNode(html);
   const settings = { contentWidth, forceStretch: false };
   const layout = new TableLayout(tnode, settings);
@@ -28,7 +35,7 @@ function renderTable(html: string, contentWidth: number) {
     tnode,
     layout,
     settings,
-    config: settings,
+    config: { ...settings, ...config },
     style: tnode.styles.nativeBlockRet,
     TDefaultRenderer: DefaultRenderer
   } as unknown as HTMLTableProps;
@@ -36,10 +43,23 @@ function renderTable(html: string, contentWidth: number) {
 }
 
 describe('HTMLTable containers', () => {
-  it('passes an explicit table height as minHeight to the wrapper', () => {
+  it('enforces an explicit table height on the wrapper by default', () => {
     const rendered = renderTable(
       '<table style="height:48px"><tr><td>A</td></tr></table>',
       400
+    );
+    const wrapper = rendered.getByTestId('table-wrapper');
+    expect(wrapper).toHaveStyle({ height: 48 });
+    expect(StyleSheet.flatten(wrapper.props.style)).not.toHaveProperty(
+      'minHeight'
+    );
+  });
+
+  it('passes an explicit table height as minHeight when growBeyondHeight is set', () => {
+    const rendered = renderTable(
+      '<table style="height:48px"><tr><td>A</td></tr></table>',
+      400,
+      { growBeyondHeight: true }
     );
     const wrapper = rendered.getByTestId('table-wrapper');
     expect(wrapper).toHaveStyle({ minHeight: 48 });

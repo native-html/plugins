@@ -61,9 +61,12 @@ const HTMLTable = memo(function HTMLTable({
     <TDefaultRenderer
       {...props}
       style={{
-        // An explicit height on a table is a minimum height in HTML, so that
-        // the table still grows to fit its rows.
-        ...relaxHeightConstraint(props.style),
+        // An explicit height on a table is a minimum height in HTML, but only
+        // `growBeyondHeight` opts into letting the table grow past it; by
+        // default the declared height is enforced as written.
+        ...(config.growBeyondHeight
+          ? relaxHeightConstraint(props.style)
+          : props.style),
         // In collapsed mode, one resolved wrapper edge represents the table
         // and all cells which meet it. Apply it after source/native styles so
         // a weaker table border cannot replace a stronger cell border.

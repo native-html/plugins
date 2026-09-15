@@ -44,11 +44,22 @@ function cellStyleFor(
 }
 
 describe('useHtmlTableCellProps', () => {
-  it.each(['td', 'th'])('passes an explicit %s height as minHeight', (tag) => {
+  it.each(['td', 'th'])('enforces an explicit %s height by default', (tag) => {
     const style = cellStyleFor(`<${tag} style="height:48px">A</${tag}>`);
-    expect(style.minHeight).toBe(48);
-    expect(style).not.toHaveProperty('height');
+    expect(style.height).toBe(48);
+    expect(style).not.toHaveProperty('minHeight');
   });
+
+  it.each(['td', 'th'])(
+    'passes an explicit %s height as minHeight when growBeyondHeight is set',
+    (tag) => {
+      const style = cellStyleFor(`<${tag} style="height:48px">A</${tag}>`, {
+        growBeyondHeight: true
+      });
+      expect(style.minHeight).toBe(48);
+      expect(style).not.toHaveProperty('height');
+    }
+  );
 
   it.each([
     ['top', 'flex-start'],
