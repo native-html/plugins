@@ -55,6 +55,8 @@ export interface TColumnConstraints extends TConstraintsBase {
  * @public
  */
 export interface TCellConstraints extends TConstraintsBase {
+  /** Preferred fraction of the table width, resolved during distribution. */
+  percentWidth?: number;
   /**
    * The width at which this cell would stop benefiting from more space — the
    * *maximum cell width* of {@link https://www.w3.org/TR/CSS21/tables.html#auto-table-layout | CSS 2.1 §17.5.2.2},
@@ -141,6 +143,7 @@ export type TableRenderNode =
   | TableRoot;
 
 export interface Settings {
+  getStyleForCell?: HeuristicTablePluginConfig['getStyleForCell'];
   /**
    * When true, force the table to stretch to the available width.
    */
@@ -246,7 +249,12 @@ export interface HeuristicTablePluginConfig {
   /**
    * Customize cells appearance with this function.
    *
-   * @param cell - The cell for which styles should be provided.
+   * Called once per cell per layout, with provisional widths measured from
+   * source styles. Returned styles are saved, included in the final layout,
+   * and reused for rendering. Width-dependent callbacks are not iterated.
+   * Keep this function referentially stable to avoid unnecessary layouts.
+   *
+   * @param cell - The cell with its provisional width and constraints.
    */
   getStyleForCell?(cell: TableCell): ViewStyle | null;
 }

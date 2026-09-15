@@ -4,8 +4,7 @@ import { TNode } from '@native-html/render';
 import computeColumnWidths from './helpers/computeColumnWidths';
 import createRenderTree, { makeTableCells } from './helpers/createRenderTree';
 import fillTableDisplay, {
-  createEmptyDisplay,
-  measureDisplay
+  createEmptyDisplay
 } from './helpers/fillTableDisplay';
 import TCellConstraintsComputer from './helpers/TCellConstraintsComputer';
 import { Display, Settings, TableCell, TableRoot } from './shared-types';
@@ -13,10 +12,10 @@ import extractColumnWidths from './helpers/extractColumnWidths';
 import { clampWidth, resolveWidthConstraints } from './helpers/resolveWidth';
 import resolveAvailableWidth from './helpers/resolveAvailableWidth';
 import { getHorizontalInsets, getHorizontalMargins } from './helpers/measure';
-import {
-  getCollapsedTableBorderStyle,
-  resolveBorderCollapse
-} from './helpers/tableStyles';
+import { resolveBorderCollapse } from './helpers/tableStyles';
+import resolveTableStyles, {
+  ResolvedCellStyle
+} from './helpers/resolveTableStyles';
 
 /**
  * Tables fill the width their containing block leaves them unless the config
@@ -56,14 +55,8 @@ export default class TableLayout {
    * its ancestors and its own `max-width` allow.
    */
   public readonly usedWidth: number;
-  /**
-   * Every cell of the table, at the width the columns resolved to.
-   *
-   * @remarks
-   * This is what {@link HeuristicTablePluginConfig.getStyleForCell} is called
-   * with, so it is the earliest point at which the styles that function
-   * contributes can take part in the collapsing border model.
-   */
+  /** Resolved once and shared by layout and cell rendering. */
+  public readonly cellStyles: ReadonlyMap<TNode, ResolvedCellStyle>;
   public readonly cells: TableCell[];
   public readonly renderTree: TableRoot;
   constructor(tnode: TNode, config: Settings) {
@@ -94,11 +87,7 @@ export default class TableLayout {
     const forceStretch =
       (config.forceStretch ?? DEFAULT_FORCE_STRETCH) ||
       declaredTableWidth !== null;
-    // Cell coordinates and spans do not depend on the width the table resolves
-    // to; only their constraints do, and measuring text is the costly half of
-    // a layout pass. Laying the grid out first lets the collapsing model
-    // resolve the table's own borders — which feed the insets the cells are
-    // then measured against — without a second pass over the matrix.
+    // Build the grid once; styles may require a second measurement pass.
     const display = createEmptyDisplay({
       ...config,
       // A table with a specified width distributes that width over its
@@ -107,56 +96,62 @@ export default class TableLayout {
       forceStretch
     });
     fillTableDisplay(tnode, display);
-    this.tableBorderStyle = this.borderCollapse
-      ? getCollapsedTableBorderStyle(display, style)
-      : null;
-    const effectiveTableStyle = this.tableBorderStyle
-      ? { ...style, ...this.tableBorderStyle }
-      : style;
-    const insets = getHorizontalInsets(effectiveTableStyle);
-    this.horizontalInsets = insets;
-    this.availableWidth = availableWidth;
-    // A table capped by `max-width` — or one whose declared width is narrower
-    // than its content demands — offers its columns less room than its
-    // ancestors leave it, and the excess has to be scrolled rather than
-    // spilled out of the box the table paints.
-    this.usedWidth = Math.max(0, Math.min(usedTableWidth, availableWidth));
-    this.assignableWidth = Math.max(0, this.usedWidth - insets);
-    const layoutContentWidth = Math.max(0, usedTableWidth - insets);
-    display.contentWidth = layoutContentWidth;
-    measureDisplay(
-      display,
-      new TCellConstraintsComputer({
-        contentWidth: layoutContentWidth,
+    const declaredColumnWidths = extractColumnWidths(tnode);
+    const configStyles = new Map<TNode, ViewStyle | null>();
+    const measure = () => {
+      const resolved = resolveTableStyles(
+        display,
+        style,
+        this.borderCollapse,
+        configStyles
+      );
+      const insets = getHorizontalInsets({
+        ...style,
+        ...resolved.tableBorderStyle
+      });
+      display.contentWidth = Math.max(0, usedTableWidth - insets);
+      const computer = new TCellConstraintsComputer({
+        contentWidth: display.contentWidth,
         baseFontCoeff: config.baseFontCoeff,
         fontWeightCoeffs: config.fontWeightCoeffs
-      })
-    );
-    this.display = display;
-    // Declared column widths are independent of the width they will be
-    // resolved against, so the same set serves the min-width pass below.
-    const declaredColumnWidths = extractColumnWidths(tnode);
-    let columnWidths = computeColumnWidths(this.display, declaredColumnWidths);
-    // A shrink-to-fit table may still not fall below its own `min-width`. When
-    // the content lands short of that floor, the columns share the floor
-    // rather than the width the content asked for.
-    const minLayoutWidth = Math.max(0, (minWidth ?? 0) - insets);
-    if (sum(columnWidths) < minLayoutWidth) {
-      const raisedColumnWidths = computeColumnWidths(
-        { ...this.display, contentWidth: minLayoutWidth, forceStretch: true },
-        declaredColumnWidths
-      );
-      // Percentage columns resolve against whichever width the pass is given,
-      // so laying out against the floor can shrink them while a capped
-      // neighbour has no room left to absorb the slack. A floor may only
-      // widen the table, never narrow it.
-      if (sum(raisedColumnWidths) > sum(columnWidths)) {
-        columnWidths = raisedColumnWidths;
+      });
+      for (const cell of display.cells) {
+        cell.constraints = computer.computeCellConstraints(
+          cell.tnode,
+          resolved.cellStyles.get(cell.tnode)!.style
+        );
       }
+      let columnWidths = computeColumnWidths(display, declaredColumnWidths);
+      const minLayoutWidth = Math.max(0, (minWidth ?? 0) - insets);
+      if (sum(columnWidths) < minLayoutWidth) {
+        const raised = computeColumnWidths(
+          { ...display, contentWidth: minLayoutWidth, forceStretch: true },
+          declaredColumnWidths
+        );
+        if (sum(raised) > sum(columnWidths)) columnWidths = raised;
+      }
+      return { ...resolved, insets, columnWidths };
+    };
+    let measured = measure();
+    if (config.getStyleForCell) {
+      // Freeze callback results against provisional widths. Re-evaluating after
+      // each resize could oscillate for a callback that branches on width.
+      for (const cell of makeTableCells(display, measured.columnWidths)) {
+        const configured = config.getStyleForCell.call(null, cell);
+        configStyles.set(cell.tnode, configured ? { ...configured } : null);
+      }
+      measured = measure();
     }
-    this.columnWidths = columnWidths;
-    this.totalWidth = sum(columnWidths);
-    this.cells = makeTableCells(this.display, this.columnWidths);
+    this.tableBorderStyle = measured.tableBorderStyle;
+    this.cellStyles = measured.cellStyles;
+    this.horizontalInsets = measured.insets;
+    this.availableWidth = availableWidth;
+    this.usedWidth = Math.max(0, Math.min(usedTableWidth, availableWidth));
+    this.assignableWidth = Math.max(0, this.usedWidth - measured.insets);
+    this.display = display;
+    this.columnWidths = measured.columnWidths;
+    this.totalWidth = sum(this.columnWidths);
+    this.cells = makeTableCells(display, this.columnWidths);
     this.renderTree = createRenderTree(this.cells);
   }
 }

@@ -56,6 +56,25 @@ _(Optional)_ The average advance width of one character, as a fraction of the fo
 </td></tr>
 <tr><td>
 
+[borderCollapse?](./heuristic-table-plugin.heuristictablepluginconfig.bordercollapse.md)
+
+
+</td><td>
+
+
+</td><td>
+
+'collapse' \| 'separate'
+
+
+</td><td>
+
+_(Optional)_ Override the table's border model. When omitted, an inline `border-collapse` declaration from the table is used.
+
+
+</td></tr>
+<tr><td>
+
 [fontWeightCoeffs?](./heuristic-table-plugin.heuristictablepluginconfig.fontweightcoeffs.md)
 
 
@@ -115,6 +134,8 @@ Description
 </td><td>
 
 _(Optional)_ Customize cells appearance with this function.
+
+Called once per cell per layout, with provisional widths measured from source styles. Returned styles are saved, included in the final layout, and reused for rendering. Width-dependent callbacks are not iterated. Keep this function referentially stable to avoid unnecessary layouts.
 
 
 </td></tr>

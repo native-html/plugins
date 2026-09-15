@@ -1,30 +1,21 @@
-import pipe from 'ramda/src/pipe';
-import sum from 'ramda/src/sum';
-import map from 'ramda/src/map';
-import max from 'ramda/src/max';
-import reduce from 'ramda/src/reduce';
+import { ViewStyle } from 'react-native';
 import { TNode } from '@native-html/render';
-import { TCellConstraints, TConstraintsBase } from '../shared-types';
+import { TCellConstraints } from '../shared-types';
 import { getHorizontalInsets, getHorizontalMargins } from './measure';
 import { getPaintedBlockStyle } from './tableStyles';
-import { resolveCssSize, resolveImposedWidth } from './resolveWidth';
+import {
+  resolveCssSize,
+  resolveImposedWidth,
+  resolvePercentage
+} from './resolveWidth';
 
 interface TextChunkStats {
   fontWeightCoeff: number;
   fontFamilyCoeff: number;
   fontSize: number;
-  characters: number;
-  maxWordLength: number;
+  text: string;
 }
 
-/**
- * Distinction between two types of content generating constraints.
- *
- * - Blocks. When blocks such as images have an explicit width, this width is
- *   used as minimum and prefered width for this tnode cell.
- * - TPhrasing. Phrasing content will provide minimum and prefered width up to approx 10 characters. Above that,
- *   each new character will augment prefered width logarathmically, since text wraps nicely.
- */
 interface TCellStats {
   /**
    * The cell's own horizontal insets: its padding and border. Margins are
@@ -46,20 +37,15 @@ interface TCellStats {
   /**
    * Text stats in this cell.
    */
-  textStats: TextChunkStats[];
+  textStats: TextChunkStats[][];
 }
 
-function getInitCellStatsForTnode(tnode: TNode): TCellStats {
+function getInitCellStats(style: ViewStyle): TCellStats {
   return {
     blockWidth: 0,
     cellBoxWidth: null,
-    // The padding a cell gets from the user-agent stylesheet is space its
-    // content cannot use, exactly like a declared one, so the intrinsic widths
-    // reserve it here as well as the cell renderer paints it. Config styles
-    // take no part in this pass, so a padding only `getStyleForCell` declares
-    // stays measured as the default it replaces.
-    horizontalSpace: getHorizontalInsets(getPaintedBlockStyle(tnode)),
-    textStats: []
+    horizontalSpace: getHorizontalInsets(style),
+    textStats: [[]]
   };
 }
 
@@ -84,34 +70,6 @@ function isBreakingSpace(character: string): boolean {
 
 function isDigit(character: string | undefined): boolean {
   return character !== undefined && DIGIT_REGEX.test(character);
-}
-
-function getMaxUnbreakableTextLength(text: string): number {
-  const characters = Array.from(text);
-  let currentLength = 0;
-  let maxLength = 0;
-  for (let i = 0; i < characters.length; i++) {
-    const character = characters[i] as string;
-    if (isBreakingSpace(character)) {
-      currentLength = 0;
-      continue;
-    }
-    currentLength += character.length;
-    maxLength = Math.max(maxLength, currentLength);
-    // A line can break after a regular hyphen, but never between two digits
-    // (UAX #14 LB25) — that would split `2026-09-03` or a phone number across
-    // two lines. Keep the hyphen in the preceding segment because it still
-    // occupies space at the line end. U+2011 NON-BREAKING HYPHEN is
-    // deliberately not included.
-    const isHyphen = character === '-' || character === '\u2010';
-    if (
-      isHyphen &&
-      !(isDigit(characters[i - 1]) && isDigit(characters[i + 1]))
-    ) {
-      currentLength = 0;
-    }
-  }
-  return maxLength;
 }
 
 /**
@@ -182,18 +140,6 @@ export default class TCellConstraintsComputer {
     this.contentWidth = contentWidth ?? 0;
   }
 
-  private getContentDensity = pipe(
-    map<TextChunkStats, number>((ch) => ch.characters * this.getTextCoeff(ch)),
-    sum
-  );
-
-  private geTextMinWidth = pipe(
-    map<TextChunkStats, number>(
-      (ch) => ch.maxWordLength * this.getTextCoeff(ch)
-    ),
-    reduce<number, number>(max, 0)
-  );
-
   private getTextCoeff(ch: TextChunkStats): number {
     return (
       ch.fontFamilyCoeff * ch.fontSize * this.baseFontCoeff * ch.fontWeightCoeff
@@ -202,26 +148,33 @@ export default class TCellConstraintsComputer {
 
   private assembleCellStats(
     tnode: TNode,
-    stats: TCellStats = getInitCellStatsForTnode(tnode),
-    isCellRoot = true
+    stats: TCellStats,
+    cellStyle?: ViewStyle
   ): TCellStats {
-    if (tnode.type === 'text') {
+    if (tnode.tagName === 'br') {
+      stats.textStats.push([]);
+    } else if (tnode.type === 'text') {
       const fontSize =
         tnode.styles.nativeTextFlow.fontSize ?? this.fallbackFontSize;
       const fontWeight = tnode.styles.nativeTextFlow.fontWeight ?? 'normal';
       const fontWeightCoeff = this.fontWeightCoeffs[String(fontWeight)] ?? 1;
-      stats.textStats.push({
-        characters: tnode.data.length,
-        maxWordLength: getMaxUnbreakableTextLength(tnode.data),
+      stats.textStats[stats.textStats.length - 1]!.push({
+        text: tnode.data,
         fontFamilyCoeff: 1,
         fontSize,
         fontWeightCoeff
       });
     } else {
+      // Inline wrappers do not introduce a word boundary. Blocks and explicit
+      // line breaks separate text on both sides of their contents.
+      const separatesText = tnode.type === 'block';
+      if (separatesText) {
+        stats.textStats.push([]);
+      }
       if (tnode.type === 'block') {
-        const width = this.resolveBlockWidth(tnode, isCellRoot);
+        const width = this.resolveBlockWidth(tnode, cellStyle);
         if (width !== null) {
-          if (isCellRoot) {
+          if (cellStyle) {
             // React Native lays out with `box-sizing: border-box`, and CSS
             // gives a table cell that same box model, so the width a cell
             // declares already holds its padding and border. It is kept apart
@@ -236,7 +189,10 @@ export default class TCellConstraintsComputer {
           }
         }
       }
-      tnode.children.forEach((n) => this.assembleCellStats(n, stats, false));
+      tnode.children.forEach((n) => this.assembleCellStats(n, stats));
+      if (separatesText) {
+        stats.textStats.push([]);
+      }
     }
     return stats;
   }
@@ -253,34 +209,66 @@ export default class TCellConstraintsComputer {
    * presentational `width` attribute is consulted last, as befits a hint of the
    * lowest priority.
    */
-  private resolveBlockWidth(tnode: TNode, isCellRoot: boolean): number | null {
+  private resolveBlockWidth(tnode: TNode, style?: ViewStyle): number | null {
     return resolveImposedWidth(tnode, this.contentWidth, {
-      // The cell's percentage width resolves against the table. A descendant's
-      // percentage resolves against the eventual cell content box, which is
-      // precisely what this intrinsic-width pass is still trying to discover.
-      resolvePercentages: isCellRoot
+      // Cell percentages are preferences reconciled during column distribution.
+      // Descendant percentages depend on the as-yet unknown cell content box.
+      resolvePercentages: false,
+      style
     });
   }
 
-  private computeTextConstraints(chunks: TextChunkStats[]): TConstraintsBase {
-    const minWidth = this.geTextMinWidth(chunks);
-    const contentDensity = this.getContentDensity(chunks);
-    return {
-      minWidth,
-      contentDensity
-    };
+  private computeTextConstraints(runs: TextChunkStats[][]) {
+    let minWidth = 0;
+    let contentDensity = 0;
+    let maxWidth = 0;
+    for (const chunks of runs) {
+      const characters = chunks.flatMap((chunk) =>
+        Array.from(chunk.text, (character) => ({
+          character,
+          width: character.length * this.getTextCoeff(chunk)
+        }))
+      );
+      let wordWidth = 0;
+      let lineWidth = 0;
+      for (let i = 0; i < characters.length; i++) {
+        const { character, width } = characters[i]!;
+        contentDensity += width;
+        lineWidth += width;
+        if (isBreakingSpace(character)) {
+          wordWidth = 0;
+          continue;
+        }
+        wordWidth += width;
+        minWidth = Math.max(minWidth, wordWidth);
+        // Keep numeric hyphens unbroken even when adjacent digits belong to
+        // different styled nodes. Other hyphens stay in the preceding word.
+        const isHyphen = character === '-' || character === '\u2010';
+        if (
+          isHyphen &&
+          !(
+            isDigit(characters[i - 1]?.character) &&
+            isDigit(characters[i + 1]?.character)
+          )
+        ) {
+          wordWidth = 0;
+        }
+      }
+      maxWidth = Math.max(maxWidth, lineWidth);
+    }
+    return { minWidth, maxWidth, contentDensity };
   }
 
-  computeCellConstraints(tnode: TNode): TCellConstraints {
-    const stats = this.assembleCellStats(tnode);
+  computeCellConstraints(
+    tnode: TNode,
+    style: ViewStyle = getPaintedBlockStyle(tnode)
+  ): TCellConstraints {
+    const stats = this.assembleCellStats(tnode, getInitCellStats(style), style);
     const blockWidth = stats.blockWidth;
     const textConstrains = this.computeTextConstraints(stats.textStats);
     // A `max-width` on the cell itself caps the whole cell box. A descendant's
     // `max-width` must not, since it only bounds that descendant.
-    const cellMaxWidth = resolveCssSize(
-      tnode.styles.nativeBlockRet.maxWidth,
-      this.contentWidth
-    );
+    const cellMaxWidth = resolveCssSize(style.maxWidth, this.contentWidth);
     // Per CSS 2.1 §17.5.2.2, "if the specified 'width' (W) of the cell is
     // greater than MCW, W is the minimum cell width", and the maximum cell
     // width is likewise raised by the column 'width'. So an explicit width
@@ -293,11 +281,22 @@ export default class TCellConstraintsComputer {
       cellBoxWidth
     );
     const maxWidth = Math.max(
-      Math.max(blockWidth, textConstrains.contentDensity) +
-        stats.horizontalSpace,
+      Math.max(blockWidth, textConstrains.maxWidth) + stats.horizontalSpace,
       cellBoxWidth
     );
+    const percentage = resolvePercentage(style.width ?? tnode.attributes.width);
+    const percentWidth =
+      percentage === null
+        ? null
+        : Math.min(
+            percentage,
+            resolvePercentage(style.maxWidth) ?? percentage,
+            cellMaxWidth === null || this.contentWidth === 0
+              ? percentage
+              : cellMaxWidth / this.contentWidth
+          );
     return {
+      ...(percentWidth === null ? {} : { percentWidth }),
       minWidth,
       // `max-width` caps the width the cell would *like*, but never takes it
       // below the width it needs to hold its longest word: min-content is a

@@ -1,9 +1,8 @@
-import React, { memo, PropsWithChildren, useMemo } from 'react';
+import React, { memo, PropsWithChildren } from 'react';
 import { ScrollView, View } from 'react-native';
 import TreeRenderer from './TreeRenderer';
 import { HTMLTableProps } from './shared-types';
 import relaxHeightConstraint from './helpers/relaxHeightConstraint';
-import { getCollapsedTableBorderStyle } from './helpers/tableStyles';
 
 export function shouldScrollTable(
   tableWidth: number,
@@ -57,32 +56,7 @@ const HTMLTable = memo(function HTMLTable({
   // down the tree. Sizing the container off `settings.contentWidth` instead
   // would spill the table out of every padded ancestor it sits in.
   const insets = layout.horizontalInsets;
-  const getStyleForCell = config.getStyleForCell;
-  // `getStyleForCell` is handed cells the layout only produces at the end of
-  // its own work, so the outer collapsed edge is narrowed once more here, now
-  // that every border the edge cells actually paint is known. Leaving it to
-  // the layout alone would let a border only the config declares lose to the
-  // weaker one source CSS resolved, and be painted by neither. The insets the
-  // layout measured against still come from source CSS: a config border
-  // changes what the table paints, not how wide it was laid out.
-  const tableBorderStyle = useMemo(
-    () =>
-      layout.borderCollapse && getStyleForCell
-        ? getCollapsedTableBorderStyle(
-            {
-              cells: layout.cells,
-              maxX: layout.display.maxX,
-              maxY: layout.display.maxY
-            },
-            layout.tableBorderStyle ?? {},
-            (cell) => ({
-              ...cell.tnode.styles.nativeBlockRet,
-              ...getStyleForCell(cell)
-            })
-          )
-        : layout.tableBorderStyle,
-    [getStyleForCell, layout]
-  );
+  const tableBorderStyle = layout.tableBorderStyle;
   return (
     <TDefaultRenderer
       {...props}
@@ -100,13 +74,16 @@ const HTMLTable = memo(function HTMLTable({
         // scroller inside. A table narrower than that keeps its own size,
         // insets included.
         width: Math.min(tableWidth + insets, layout.usedWidth)
-      }}>
+      }}
+    >
       <Container
         tableWidth={tableWidth}
-        availableWidth={layout.assignableWidth}>
+        availableWidth={layout.assignableWidth}
+      >
         {React.createElement(TreeRenderer, {
           node: layout.renderTree,
           config,
+          cellStyles: layout.cellStyles,
           borderCollapse: layout.borderCollapse,
           // Cells need the edge the wrapper resolved, not just their position
           // in the matrix: an outer boundary it leaves bare is still theirs.

@@ -1,3 +1,4 @@
+import { ViewStyle } from 'react-native';
 import { TNode } from '@native-html/render';
 
 const PERCENTAGE_REGEX = /^(\d*\.?\d+)%$/;
@@ -90,6 +91,7 @@ export interface WidthConstraints {
 }
 
 interface ResolveWidthOptions {
+  style?: ViewStyle;
   /**
    * Percentage sizes do not impose an intrinsic width on a descendant whose
    * containing block has not been sized yet.
@@ -113,9 +115,9 @@ interface ResolveWidthOptions {
 export function resolveWidthConstraints(
   tnode: TNode,
   containingWidth: number,
-  { resolvePercentages = true }: ResolveWidthOptions = {}
+  { resolvePercentages = true, style }: ResolveWidthOptions = {}
 ): WidthConstraints {
-  const blockStyle = tnode.styles.nativeBlockRet;
+  const blockStyle = style ?? tnode.styles.nativeBlockRet;
   const resolveCss = (value: unknown) =>
     resolvePercentages || typeof value === 'number'
       ? resolveCssSize(value, containingWidth)

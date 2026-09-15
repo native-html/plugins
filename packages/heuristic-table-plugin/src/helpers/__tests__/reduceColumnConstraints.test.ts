@@ -1,6 +1,20 @@
 import reduceColumnConstraints from '../reduceColumnConstraints';
 
-describe('getColumnConstraints', () => {
+describe('reduceColumnConstraints', () => {
+  it('raises a maximum below its minimum to the minimum', () => {
+    expect(
+      reduceColumnConstraints([
+        {
+          x: 0,
+          y: 0,
+          lenX: 1,
+          lenY: 1,
+          constraints: { minWidth: 51, maxWidth: 30, contentDensity: 10 }
+        }
+      ])
+    ).toEqual([{ minWidth: 51, spread: 51, contentDensity: 10 }]);
+  });
+
   it('should return a record which keys are column indexes, and which values are the reduced constraints for this column', () => {
     expect(
       reduceColumnConstraints([

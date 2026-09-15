@@ -60,6 +60,32 @@ function cellStyleFor(
 }
 
 describe('useHtmlTableCellProps', () => {
+  it.each([
+    ['top', 'flex-start'],
+    ['baseline', 'flex-start'],
+    ['middle', 'center'],
+    ['bottom', 'flex-end']
+  ])('maps vertical-align:%s to justifyContent:%s', (alignment, expected) => {
+    expect(
+      cellStyleFor(`<td style="vertical-align:${alignment}">A</td>`)
+        .justifyContent
+    ).toBe(expected);
+  });
+
+  it('keeps explicit justify-content when vertical-align is absent', () => {
+    expect(
+      cellStyleFor('<td style="justify-content:flex-end">A</td>').justifyContent
+    ).toBe('flex-end');
+  });
+
+  it('lets explicit vertical-align override justify-content', () => {
+    expect(
+      cellStyleFor(
+        '<td style="vertical-align:top;justify-content:flex-end">A</td>'
+      ).justifyContent
+    ).toBe('flex-start');
+  });
+
   describe('default padding', () => {
     it('pads a bare cell by one pixel, as HTML does', () => {
       expect(cellStyleFor('<td>A</td>')).toMatchObject({

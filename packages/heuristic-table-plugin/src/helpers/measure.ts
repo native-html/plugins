@@ -1,6 +1,6 @@
-import { TNode } from '@native-html/render';
+import { I18nManager, ViewStyle } from 'react-native';
 
-type NativeBlockRetStyle = TNode['styles']['nativeBlockRet'];
+type NativeBlockRetStyle = ViewStyle;
 type SpacingFields = Extract<
   keyof NativeBlockRetStyle,
   | 'borderLeftWidth'
@@ -12,13 +12,6 @@ type SpacingFields = Extract<
 >;
 
 const hmarginFields: readonly SpacingFields[] = ['marginLeft', 'marginRight'];
-
-const hinsetFields: readonly SpacingFields[] = [
-  'borderLeftWidth',
-  'borderRightWidth',
-  'paddingLeft',
-  'paddingRight'
-];
 
 function sumFields(
   style: NativeBlockRetStyle,
@@ -45,5 +38,28 @@ export function getHorizontalMargins(style: NativeBlockRetStyle): number {
  * width it may pass on.
  */
 export function getHorizontalInsets(style: NativeBlockRetStyle): number {
-  return sumFields(style, hinsetFields);
+  const rtl =
+    style.direction === 'rtl' ||
+    (style.direction !== 'ltr' && I18nManager.isRTL);
+  const start = style.paddingInlineStart ?? style.paddingStart;
+  const end = style.paddingInlineEnd ?? style.paddingEnd;
+  const horizontal =
+    style.paddingInline ?? style.paddingHorizontal ?? style.padding;
+  const left = (rtl ? end : start) ?? style.paddingLeft ?? horizontal;
+  const right = (rtl ? start : end) ?? style.paddingRight ?? horizontal;
+  const borderStart = style.borderStartWidth;
+  const borderEnd = style.borderEndWidth;
+  return [
+    left,
+    right,
+    (rtl ? borderEnd : borderStart) ??
+      style.borderLeftWidth ??
+      style.borderWidth,
+    (rtl ? borderStart : borderEnd) ??
+      style.borderRightWidth ??
+      style.borderWidth
+  ].reduce<number>(
+    (total, value) => total + (typeof value === 'number' ? value : 0),
+    0
+  );
 }

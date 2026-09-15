@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, ViewStyle } from 'react-native';
-import { TNodeRenderer } from '@native-html/render';
+import { TNode, TNodeRenderer } from '@native-html/render';
+import { ResolvedCellStyle } from './helpers/resolveTableStyles';
 import { HeuristicTablePluginConfig, TableRenderNode } from './shared-types';
 
 const styles = StyleSheet.create({
@@ -11,6 +12,7 @@ const styles = StyleSheet.create({
 export default function TreeRenderer({
   node,
   config,
+  cellStyles,
   borderCollapse,
   tableBorderStyle,
   maxX,
@@ -22,6 +24,7 @@ export default function TreeRenderer({
   renderIndex: number;
   renderLength: number;
   config?: HeuristicTablePluginConfig;
+  cellStyles: ReadonlyMap<TNode, ResolvedCellStyle>;
   borderCollapse: boolean;
   tableBorderStyle: ViewStyle | null;
   maxX: number;
@@ -38,6 +41,7 @@ export default function TreeRenderer({
               cell: node,
               collapsedMarginTop: null,
               config,
+              resolvedCellStyle: cellStyles.get(node.tnode),
               borderCollapse,
               tableBorderStyle,
               maxX,
@@ -55,6 +59,7 @@ export default function TreeRenderer({
         node: v,
         key: i,
         config,
+        cellStyles,
         borderCollapse,
         tableBorderStyle,
         maxX,
@@ -73,6 +78,7 @@ export default function TreeRenderer({
             node: v,
             key: i,
             config,
+            cellStyles,
             borderCollapse,
             tableBorderStyle,
             maxX,

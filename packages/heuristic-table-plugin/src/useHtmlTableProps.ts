@@ -45,6 +45,7 @@ export default function useHtmlTableProps(
   const baseFontCoeff = table?.baseFontCoeff;
   const fontWeightCoeffs = table?.fontWeightCoeffs;
   const borderCollapse = table?.borderCollapse;
+  const getStyleForCell = table?.getStyleForCell;
   const sharedContentWidth = useContentWidth();
   const contentWidth =
     typeof options.overrideContentWidth === 'number'
@@ -56,14 +57,16 @@ export default function useHtmlTableProps(
       forceStretch,
       baseFontCoeff,
       fontWeightCoeffs,
-      borderCollapse
+      borderCollapse,
+      getStyleForCell
     }),
     [
       contentWidth,
       forceStretch,
       baseFontCoeff,
       fontWeightCoeffs,
-      borderCollapse
+      borderCollapse,
+      getStyleForCell
     ]
   );
   const layout = useTableLayout({ tnode, settings });

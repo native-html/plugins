@@ -52,6 +52,7 @@ export type FontWeightCoefficients = Record<string, number>;
 // @public
 export interface HeuristicTablePluginConfig {
     baseFontCoeff?: number;
+    borderCollapse?: 'collapse' | 'separate';
     fontWeightCoeffs?: FontWeightCoefficients;
     forceStretch?: boolean;
     getStyleForCell?(cell: TableCell): ViewStyle | null;

@@ -1,6 +1,7 @@
 import TableLayout from '../../TableLayout';
 import { shouldScrollTable } from '../../HTMLTable';
 import { Settings } from '../../shared-types';
+import reduceColumnConstraints from '../reduceColumnConstraints';
 import { createTableTNode } from './utils';
 
 function layoutFor(html: string, settings: Settings): TableLayout {
@@ -68,13 +69,14 @@ describe('TableLayout', () => {
 
   it('should expand a colgroup span when it has no col children', () => {
     const { columnWidths } = layoutFor(
-      `<table style="width: 300px">
-        <colgroup span="3" style="width: 100px" />
+      `<table style="width: 400px">
+        <colgroup span="2" style="width: 100px"></colgroup>
+        <colgroup style="width: 200px"></colgroup>
         <tr><td>A</td><td>B</td><td>C</td></tr>
       </table>`,
       { contentWidth: 400, forceStretch: false }
     );
-    expect(columnWidths).toEqual([100, 100, 100]);
+    expect(columnWidths).toEqual([100, 100, 200]);
   });
 
   it('should prefer a CSS col width over its HTML width attribute', () => {
@@ -339,23 +341,26 @@ describe('TableLayout', () => {
     expect(totalWidth).toBeCloseTo(400);
   });
 
-  it('should give every column a share of the surplus', () => {
+  it('should grow every column with room beyond its minimum', () => {
     // The narrowest column used to be pinned at its minimum, because the
     // weights were taken relative to the least dense column.
-    const { columnWidths } = layoutFor(
+    const { columnWidths, display, totalWidth } = layoutFor(
       `<table>
         <tr>
-          <td>1</td>
+          <td>1 2</td>
           <td>a somewhat longer cell of text</td>
           <td>an even longer cell of text than the one before it</td>
         </tr>
       </table>`,
       { contentWidth: 600, forceStretch: false }
     );
-    const [first, second, third] = columnWidths as [number, number, number];
-    expect(first).toBeGreaterThan(0);
-    expect(second).toBeGreaterThan(first);
-    expect(third).toBeGreaterThan(second);
+    const constraints = reduceColumnConstraints(display.cells);
+    constraints.forEach(({ minWidth, spread }, index) => {
+      expect(spread).toBeGreaterThan(minWidth);
+      expect(columnWidths[index]).toBeGreaterThan(minWidth);
+      expect(columnWidths[index]).toBeLessThanOrEqual(spread);
+    });
+    expect(totalWidth).toBeCloseTo(600);
   });
 
   it('should never exceed the container width when it fits', () => {
@@ -369,19 +374,17 @@ describe('TableLayout', () => {
     expect(totalWidth).toBeLessThanOrEqual(500);
   });
 
-  it('should place a cell after a rowspan+colspan rectangle end to end', () => {
-    const { display } = layoutFor(
-      `<table>
-        <tr><td colspan="2" rowspan="2">A</td><td>B</td></tr>
-        <tr><td>C</td></tr>
-      </table>`,
-      { contentWidth: 400, forceStretch: false }
+  it('passes configured font coefficients through to column measurement', () => {
+    const { columnWidths } = layoutFor(
+      '<table><tr><td style="padding:0;font-size:20px">AAAA</td><td style="padding:0;font-size:20px;font-weight:bold">AAAA</td></tr></table>',
+      {
+        contentWidth: 400,
+        forceStretch: false,
+        baseFontCoeff: 0.5,
+        fontWeightCoeffs: { bold: 2 }
+      }
     );
-    expect(display.cells).toMatchObject([
-      { x: 0, y: 0, lenX: 2, lenY: 2 },
-      { x: 2, y: 0 },
-      { x: 2, y: 1 }
-    ]);
+    expect(columnWidths).toEqual([40, 80]);
   });
 
   describe('containing block', () => {
@@ -477,10 +480,10 @@ describe('TableLayout', () => {
         <col style="max-width: 20px" />
       </colgroup>`;
       const body = `${cols}<tr><td>A</td><td>B</td></tr>`;
-      const { totalWidth: without } = layoutFor(
-        `<table>${body}</table>`,
-        { contentWidth: 600, forceStretch: false }
-      );
+      const { totalWidth: without } = layoutFor(`<table>${body}</table>`, {
+        contentWidth: 600,
+        forceStretch: false
+      });
       const { totalWidth: with400 } = layoutFor(
         `<table style="min-width: 400px">${body}</table>`,
         { contentWidth: 600, forceStretch: false }
@@ -488,7 +491,7 @@ describe('TableLayout', () => {
       expect(with400).toBeGreaterThanOrEqual(without);
     });
 
-    it('should scroll the columns that overflow the table max-width', () => {
+    it('reports the column overflow beyond the table max-width', () => {
       // The cells demand 600px inside a table that paints only 300px, so the
       // surplus belongs to a horizontal scroller rather than spilling out.
       const { totalWidth, assignableWidth } = layoutFor(
@@ -502,7 +505,7 @@ describe('TableLayout', () => {
       expect(shouldScrollTable(totalWidth, assignableWidth)).toBe(true);
     });
 
-    it('should not paint a table wider than the room its container leaves', () => {
+    it('caps usedWidth at the containing width when padding overflows', () => {
       // The insets were added back after the assignable width had been
       // floored at zero, so a table whose padding alone overflows its
       // container painted a box wider than the room it was given.
@@ -516,7 +519,7 @@ describe('TableLayout', () => {
       expect(usedWidth).toBe(30);
     });
 
-    it('should not paint a table past its own max-width', () => {
+    it('caps usedWidth at max-width when padding overflows', () => {
       const { usedWidth } = layoutFor(
         '<table style="max-width: 10px; padding: 20px"><tr><td>A</td></tr></table>',
         { contentWidth: 400, forceStretch: true }

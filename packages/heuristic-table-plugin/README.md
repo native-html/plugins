@@ -111,12 +111,21 @@ cell with `padding-left: 8px` keeps the default pixel on the three sides it
 left alone, and `padding: 0` removes it altogether. A padding from
 `getStyleForCell`, shorthand included, replaces it too.
 
-Be aware that column widths are measured before `getStyleForCell` is called —
-the widths it is handed are its input — so padding declared there is painted
-but not measured. A `getStyleForCell` returning `{ padding: 8 }` spends 16px
-per cell that the columns were never sized for, and content wraps earlier than
-it otherwise would. Declare padding in your CSS instead whenever the column
-widths should account for it.
+`getStyleForCell` padding and borders participate in layout. The plugin first
+calculates provisional cell widths from source styles, calls the callback once
+per cell, then calculates final widths using its returned styles. Those same
+styles are reused when rendering, including when borders collapse.
+
+The callback's `cell.width` and constraints are **provisional**: they do not yet
+include its returned styles. Width-dependent callbacks are not repeatedly
+evaluated, so a callback that switches padding at a width threshold cannot
+create a layout loop. Keep the callback referentially stable; changing it
+recalculates the layout.
+
+In collapsed mode, shared borders are resolved against adjacent cells. If a
+spanning cell meets several differently styled borders along one side, the
+strongest border is used for that whole side. Native Views also have one border
+style for all sides, so the strongest winning style is used for the View.
 
 ## Custom Renderers
 
@@ -219,8 +228,9 @@ In the first step, each cell of the table is parsed to extract three metrics:
   leave a gap nothing paints;
 - `maxWidth`, the width beyond which the cell would gain nothing, bounded by
   the cell's own `max-width` but never below `minWidth`;
-- `contentDensity`, an estimate of the width taken by all the cell's text on
-  one line.
+- `contentDensity`, the sum of the estimated widths of all text; forced
+  line breaks do not reduce this density. `maxWidth` instead uses the widest
+  forced line, keeping text on separate lines from widening the column.
 
 ### 2. Column constraints reduction
 
@@ -232,8 +242,9 @@ In the second step, cell constraints are reduced per column. Three metrics come 
   `minWidth`.
 
 Widths and bounds declared by `<colgroup>` and `<col>` are then folded into
-these constraints. Percentage widths remain unresolved until the table's
-assignable width is known.
+these constraints. Percentage widths from cells, columns, and column groups remain preferences
+until distribution. Cell percentages are combined by maximum across rows;
+a spanning cell shares its percentage across the columns it covers.
 
 ### 3. Column widths calculation
 

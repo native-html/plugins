@@ -187,6 +187,7 @@ describe('table styles', () => {
         borderTopWidth: 0,
         borderRightWidth: 1,
         borderRightColor: 'black',
+        borderStyle: 'solid',
         borderBottomWidth: 1,
         borderBottomColor: 'black'
       });
@@ -207,7 +208,7 @@ describe('table styles', () => {
       });
     });
 
-    it('rules off interior rows from a border-top-only cell', () => {
+    it('paints the next row top border on the current cell bottom edge', () => {
       // The boundary below the cell is the same declaration as the one above
       // the next row, and it is the only half this cell can paint.
       expect(
@@ -217,18 +218,42 @@ describe('table styles', () => {
           {
             maxX: 0,
             maxY: 3,
-            tableBorderStyle: { ...FRAMED, borderBottomWidth: 0 }
+            tableBorderStyle: { ...FRAMED, borderBottomWidth: 0 },
+            cells: [
+              {
+                x: 0,
+                y: 1,
+                lenX: 1,
+                lenY: 1,
+                tnode: findCell('<table><tr><td>A</td></tr></table>')
+              }
+            ],
+            getCellStyle: () => ({ borderTopWidth: 2, borderTopColor: 'red' })
           }
         )
       ).toMatchObject({ borderBottomWidth: 2, borderBottomColor: 'red' });
     });
 
-    it('rules off interior columns from a border-left-only cell', () => {
+    it('paints the next column left border on the current cell right edge', () => {
       expect(
         getCollapsedCellBorderStyle(
           { x: 1, y: 0, lenX: 1, lenY: 1 },
           { borderLeftWidth: 2, borderLeftColor: 'red' },
-          { maxX: 3, maxY: 0, tableBorderStyle: FRAMED }
+          {
+            maxX: 3,
+            maxY: 0,
+            tableBorderStyle: FRAMED,
+            cells: [
+              {
+                x: 2,
+                y: 0,
+                lenX: 1,
+                lenY: 1,
+                tnode: findCell('<table><tr><td>A</td></tr></table>')
+              }
+            ],
+            getCellStyle: () => ({ borderLeftWidth: 2, borderLeftColor: 'red' })
+          }
         )
       ).toMatchObject({ borderRightWidth: 2, borderRightColor: 'red' });
     });
@@ -259,21 +284,36 @@ describe('table styles', () => {
         borderBottomWidth: 1,
         borderBottomColor: 'blue',
         borderLeftWidth: 1,
-        borderLeftColor: 'blue'
+        borderLeftColor: 'blue',
+        borderStyle: 'solid'
       });
     });
 
-    it('keeps the stronger half of an interior boundary', () => {
+    it('uses the stronger border from the adjacent cell at a shared edge', () => {
       expect(
         getCollapsedCellBorderStyle(
           { x: 1, y: 1, lenX: 1, lenY: 1 },
           {
-            borderLeftWidth: 4,
-            borderLeftColor: 'red',
+            borderLeftWidth: 9,
+            borderLeftColor: 'green',
             borderRightWidth: 1,
             borderRightColor: 'blue'
           },
-          { maxX: 3, maxY: 3, tableBorderStyle: FRAMED }
+          {
+            maxX: 3,
+            maxY: 3,
+            tableBorderStyle: FRAMED,
+            cells: [
+              {
+                x: 2,
+                y: 1,
+                lenX: 1,
+                lenY: 1,
+                tnode: findCell('<table><tr><td>A</td></tr></table>')
+              }
+            ],
+            getCellStyle: () => ({ borderLeftWidth: 4, borderLeftColor: 'red' })
+          }
         )
       ).toMatchObject({ borderRightWidth: 4, borderRightColor: 'red' });
     });

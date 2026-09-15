@@ -365,10 +365,9 @@ function sourceCellStyle(cell: CollapsibleCell): ViewStyle {
  * stronger styles, then cells over the table.
  *
  * @param matrix - See {@link CollapsibleMatrix}.
- * @param tableStyle - What the table itself brings to the conflict. Passing
- * the result of an earlier resolution narrows it further, which is how
- * {@link HeuristicTablePluginConfig.getStyleForCell} joins in once the cell
- * widths it is handed exist.
+ * @param tableStyle - The table source style. Each pass starts from this
+ * rather than a previously collapsed result, so a callback can remove a
+ * source cell border as well as strengthen it.
  * @param getCellStyle - Everything an edge cell paints with. Defaults to its
  * source CSS alone.
  */
@@ -378,8 +377,7 @@ export function getCollapsedTableBorderStyle<C extends CollapsibleCell>(
   getCellStyle: (cell: C) => ViewStyle = sourceCellStyle
 ): ViewStyle {
   const resolvedStyle: ViewStyle = {};
-  let strongestStyle: BorderCandidate['style'] =
-    tableStyle.borderStyle ?? 'solid';
+  let strongestStyle: BorderCandidate['style'] | null = null;
   for (const side of ['Top', 'Right', 'Bottom', 'Left'] as const) {
     const winner = cellsAtOuterEdge(matrix, side).reduce(
       (currentWinner, cell) =>
@@ -394,12 +392,14 @@ export function getCollapsedTableBorderStyle<C extends CollapsibleCell>(
       [`border${side}Color`]: winner.color
     });
     if (
-      borderStylePriority[winner.style] > borderStylePriority[strongestStyle]
+      winner.width > 0 &&
+      (strongestStyle === null ||
+        borderStylePriority[winner.style] > borderStylePriority[strongestStyle])
     ) {
       strongestStyle = winner.style;
     }
   }
-  resolvedStyle.borderStyle = strongestStyle;
+  resolvedStyle.borderStyle = strongestStyle ?? 'solid';
   return resolvedStyle;
 }
 
@@ -415,6 +415,9 @@ export interface CollapsedCellEdges {
   maxX: number;
   maxY: number;
   tableBorderStyle: ViewStyle | null;
+  /** All cells and their uncollapsed styles, for shared-edge conflicts. */
+  cells?: readonly CollapsibleCell[];
+  getCellStyle?: (cell: CollapsibleCell) => ViewStyle;
 }
 
 /**
@@ -431,24 +434,20 @@ export interface CollapsedCellEdges {
  * visible result of the collapsing model for the border styles React Native
  * can render, without changing the flex geometry used for row and col spans.
  *
- * Two consequences of drawing a boundary once are worth spelling out. An
- * interior boundary falls back to the opposite half of the same cell, so cells
- * carrying `border-top` alone still rule off every row: under uniform cell
- * styling — the case worth optimising for, since React Native cannot paint one
- * side of a View in two segments anyway — both halves are the same
- * declaration. And an outer boundary the wrapper resolved to nothing stays
- * with the cell, so a table that declares no border of its own still shows the
- * frame its edge cells ask for.
- *
- * `tableBorderStyle` must therefore be the edge resolved against everything
- * `cellStyle` holds, `getStyleForCell` included — otherwise a border only the
- * config declares loses to the weaker one the wrapper resolved from source CSS
- * and is painted by neither.
+ * Shared boundaries compare the actual adjacent cells. Where spans bring
+ * several neighbours against one side, the strongest candidate paints that
+ * whole side; a native View cannot paint differently styled border segments.
  */
 export function getCollapsedCellBorderStyle(
   cell: Pick<TableCell, 'lenX' | 'lenY' | 'x' | 'y'>,
   cellStyle: ViewStyle,
-  { maxX, maxY, tableBorderStyle }: CollapsedCellEdges
+  {
+    maxX,
+    maxY,
+    tableBorderStyle,
+    cells = [],
+    getCellStyle = sourceCellStyle
+  }: CollapsedCellEdges
 ): ViewStyle {
   const resolvedStyle: ViewStyle = {};
   // A span that overruns the matrix is clipped to it rather than growing the
@@ -463,17 +462,25 @@ export function getCollapsedCellBorderStyle(
     const width = tableBorderStyle?.[`border${side}Width`];
     return typeof width === 'number' && width > 0;
   };
+  let strongestStyle: BorderCandidate['style'] | null = null;
   const paint = (side: BorderSide, candidate: BorderCandidate | null) => {
     if (!candidate || candidate.width === 0) {
       Object.assign(resolvedStyle, { [`border${side}Width`]: 0 });
       return;
+    }
+    if (
+      strongestStyle === null ||
+      borderStylePriority[candidate.style] > borderStylePriority[strongestStyle]
+    ) {
+      strongestStyle = candidate.style;
     }
     Object.assign(resolvedStyle, {
       [`border${side}Width`]: candidate.width,
       [`border${side}Color`]: candidate.color
     });
   };
-  const ownBorder = (side: BorderSide) => borderCandidate(cellStyle, side, true);
+  const ownBorder = (side: BorderSide) =>
+    borderCandidate(cellStyle, side, true);
   const keepOuterBorder = (side: BorderSide) =>
     isPaintedByTable(side) ? null : ownBorder(side);
   // A leading boundary is always drawn by the neighbour that precedes it,
@@ -488,8 +495,26 @@ export function getCollapsedCellBorderStyle(
       side,
       isOuterEdge[side]
         ? keepOuterBorder(side)
-        : resolveBorderConflict(ownBorder(side), ownBorder(opposite))
+        : cells
+            .filter((neighbour) =>
+              side === 'Right'
+                ? neighbour.x === cell.x + cell.lenX &&
+                  neighbour.y < cell.y + cell.lenY &&
+                  neighbour.y + neighbour.lenY > cell.y
+                : neighbour.y === cell.y + cell.lenY &&
+                  neighbour.x < cell.x + cell.lenX &&
+                  neighbour.x + neighbour.lenX > cell.x
+            )
+            .reduce(
+              (winner, neighbour) =>
+                resolveBorderConflict(
+                  winner,
+                  borderCandidate(getCellStyle(neighbour), opposite, true)
+                ),
+              ownBorder(side)
+            )
     );
   }
+  if (strongestStyle !== null) resolvedStyle.borderStyle = strongestStyle;
   return resolvedStyle;
 }

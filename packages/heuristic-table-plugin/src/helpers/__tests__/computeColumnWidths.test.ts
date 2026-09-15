@@ -3,7 +3,9 @@ import { createEmptyDisplay } from '../fillTableDisplay';
 import { Display, DisplayCell, TCellConstraints } from '../../shared-types';
 
 function makeDisplay(
-  cells: Array<Pick<DisplayCell, 'x' | 'y'> & { constraints: TCellConstraints }>,
+  cells: Array<
+    Pick<DisplayCell, 'x' | 'y'> & { constraints: TCellConstraints }
+  >,
   settings: { contentWidth: number; forceStretch?: boolean }
 ): Display {
   const display = createEmptyDisplay(settings);
@@ -17,7 +19,7 @@ function makeDisplay(
 }
 
 describe('computeColumnWidths', () => {
-  it('should never shrink a column below its minimum width, even when its maximum width is smaller', () => {
+  it('preserves a fixed-width column beside a column with more content', () => {
     // An icon column: a single wide glyph (`width: 40px` plus 11px of padding
     // and borders) whose one character makes for a very low content density.
     // CSS 2.1 §17.5.2.2 raises both the column minimum and maximum by the
@@ -72,7 +74,9 @@ describe('computeColumnWidths', () => {
     );
     widths.forEach((width, i) => {
       expect(width).toBeLessThanOrEqual(constraints[i]!.constraints.maxWidth);
-      expect(width).toBeGreaterThanOrEqual(constraints[i]!.constraints.minWidth);
+      expect(width).toBeGreaterThanOrEqual(
+        constraints[i]!.constraints.minWidth
+      );
     });
     // The surplus is fully used: the table fills its container.
     expect(widths.reduce((a, b) => a + b, 0)).toBeCloseTo(400);

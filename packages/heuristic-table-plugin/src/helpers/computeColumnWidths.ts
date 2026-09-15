@@ -134,6 +134,25 @@ export default function computeColumnWidths(
   if (columnConstraints.length === 0) {
     return [];
   }
+  // Cell percentages use the same sizing class as col/colgroup percentages.
+  // Repeated rows contribute a maximum, not a sum. A colspan shares its
+  // preference across the columns it covers, like its intrinsic constraints.
+  declaredWidths = [...declaredWidths];
+  for (const cell of display.cells) {
+    const percent = cell.constraints.percentWidth;
+    if (percent == null) continue;
+    for (let i = cell.x; i < cell.x + cell.lenX; i++) {
+      const declared = declaredWidths[i];
+      declaredWidths[i] = {
+        width: null,
+        minWidth: 0,
+        maxWidth: null,
+        maxPercent: null,
+        ...declared,
+        percent: Math.max(declared?.percent ?? 0, percent / cell.lenX)
+      };
+    }
+  }
   // A `max-width` may be declared in either unit, and caps the column in
   // whichever sizing class it ends up in. Percentage bounds travel unresolved
   // so that the same declarations can be reused against another table width,
@@ -157,14 +176,11 @@ export default function computeColumnWidths(
     // Absolute column widths contribute to intrinsic minimum and preferred
     // widths. Percentage widths remain unresolved until distribution below,
     // and contribute only the absolute floor they were given.
-    const floor =
-      declared.percent === null
-        ? clampWidth(
-            declared.width ?? declared.minWidth,
-            declared.minWidth,
-            cap
-          )
-        : declared.minWidth;
+    const floor = clampWidth(
+      declared.width ?? declared.minWidth,
+      declared.minWidth,
+      cap
+    );
     if (floor > 0) {
       constraints.minWidth = Math.max(constraints.minWidth, floor);
       constraints.spread = Math.max(constraints.spread, floor);

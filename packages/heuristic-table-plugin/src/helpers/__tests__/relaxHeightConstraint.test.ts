@@ -1,10 +1,7 @@
 import relaxHeightConstraint from '../relaxHeightConstraint';
 
 describe('relaxHeightConstraint', () => {
-  it('should translate an explicit height to a minimum height', () => {
-    expect(relaxHeightConstraint({ height: 48 })).toEqual({ minHeight: 48 });
-  });
-  it('should preserve unrelated styles', () => {
+  it('translates height to minHeight while preserving unrelated styles', () => {
     expect(
       relaxHeightConstraint({ height: 48, backgroundColor: 'red' })
     ).toEqual({

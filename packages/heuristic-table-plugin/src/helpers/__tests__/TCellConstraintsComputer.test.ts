@@ -123,8 +123,9 @@ describe('TCellConstraintsComputer', () => {
       );
     });
 
-    it('should still break a hyphen with a digit on only one side', () => {
-      // "ISO-" is the longest segment; the digits stand alone after the break.
+    it('uses the plugin heuristic to break ISO-2026 into two segments', () => {
+      // This heuristic differs from default UAX #14 LB25 (HY × NU).
+      // Both "ISO-" and "2026" have four characters.
       const { minWidth } = constraintsFor('<td>ISO-2026</td>');
 
       expect(minWidth).toBeCloseTo(
@@ -147,6 +148,62 @@ describe('TCellConstraintsComputer', () => {
       expect(minWidth).toBeCloseTo(
         DEFAULT_HORIZONTAL_PADDING + 3 * 14 * BASE_FONT_COEFF
       );
+    });
+  });
+
+  describe('words spanning inline nodes', () => {
+    it.each([
+      'fnej<span style="color: green">feaf</span>',
+      '<span>fn<span style="color: green">ej</span></span><span>feaf</span>'
+    ])('should measure %s as one eight-character word', (markup) => {
+      const actual = constraintsFor(`<td>${markup}</td>`);
+      const expected = constraintsFor('<td>fnejfeaf</td>');
+      expect(actual.minWidth).toBeCloseTo(expected.minWidth);
+      expect(actual.maxWidth).toBeCloseTo(expected.maxWidth);
+    });
+
+    it('should sum the widths of differently styled word fragments', () => {
+      const { minWidth, maxWidth } = constraintsFor(
+        '<td>fnej<span style="font-size:20px;font-weight:bold">feaf</span></td>'
+      );
+      const width =
+        DEFAULT_HORIZONTAL_PADDING +
+        4 * BASE_FONT_COEFF * (14 + 20 * DEFAULT_FONT_WEIGHT_COEFFS.bold!);
+      expect(minWidth).toBeCloseTo(width);
+      expect(maxWidth).toBeCloseTo(width);
+    });
+
+    it.each([
+      ['fnej<span> feaf</span>', 'fnej feaf'],
+      ['fnej <span>feaf</span>', 'fnej feaf'],
+      ['10<span>&nbsp;000</span>&nbsp;km', '10&nbsp;000&nbsp;km'],
+      ['2026<span>-</span>09-03', '2026-09-03'],
+      ['Medium<span>-</span>High', 'Medium-High']
+    ])('should preserve break opportunities in %s', (markup, plain) => {
+      const actual = constraintsFor(`<td>${markup}</td>`);
+      const expected = constraintsFor(`<td>${plain}</td>`);
+      expect(actual.minWidth).toBeCloseTo(expected.minWidth);
+      expect(actual.maxWidth).toBeCloseTo(expected.maxWidth);
+    });
+
+    it.each([
+      'fnej<br>feaf',
+      'fnej<div>feaf</div>abcd',
+      '<div>fnej</div><div>feaf</div>'
+    ])('should keep separate lines from joining in %s', (markup) => {
+      expect(constraintsFor(`<td>${markup}</td>`).minWidth).toBeCloseTo(
+        DEFAULT_HORIZONTAL_PADDING + 4 * 14 * BASE_FONT_COEFF
+      );
+    });
+
+    it('should keep max-width from clipping a word spanning nodes', () => {
+      const { minWidth, maxWidth } = constraintsFor(
+        '<td style="max-width:1px">fnej<span>feaf</span></td>'
+      );
+      expect(minWidth).toBeCloseTo(
+        DEFAULT_HORIZONTAL_PADDING + 8 * 14 * BASE_FONT_COEFF
+      );
+      expect(maxWidth).toBe(minWidth);
     });
   });
 
@@ -198,25 +255,23 @@ describe('TCellConstraintsComputer', () => {
   });
 
   describe('width resolution', () => {
-    it('should resolve a percentage width against the containing block', () => {
-      // 50% of a 400px containing block, which a browser resolves against the
-      // table — not discarded for want of being a number.
-      const { minWidth } = constraintsFor('<td style="width:50%">a</td>');
-      expect(minWidth).toBeGreaterThanOrEqual(200);
-      expect(minWidth).toBeLessThan(220);
+    it('should keep a percentage width as a preference, not an intrinsic floor', () => {
+      const { minWidth, percentWidth } = constraintsFor(
+        '<td style="width:50%">a</td>'
+      );
+      expect(percentWidth).toBe(0.5);
+      expect(minWidth).toBeCloseTo(
+        DEFAULT_HORIZONTAL_PADDING + 14 * BASE_FONT_COEFF
+      );
     });
 
     it('should not resolve a descendant percentage against the table', () => {
       const { minWidth } = constraintsFor(
         '<td><div style="width:100%">a</div></td>'
       );
-      expect(minWidth).toBeLessThan(50);
-    });
-
-    it('should honour an absolute width', () => {
-      const { minWidth } = constraintsFor('<td style="width:200px">a</td>');
-      expect(minWidth).toBeGreaterThanOrEqual(200);
-      expect(minWidth).toBeLessThan(220);
+      expect(minWidth).toBeCloseTo(
+        DEFAULT_HORIZONTAL_PADDING + 14 * BASE_FONT_COEFF
+      );
     });
 
     it('should treat a declared cell width as a border-box one', () => {
@@ -241,8 +296,7 @@ describe('TCellConstraintsComputer', () => {
 
     it('should read the presentational width attribute', () => {
       const { minWidth } = constraintsFor('<td width="200">a</td>');
-      expect(minWidth).toBeGreaterThanOrEqual(200);
-      expect(minWidth).toBeLessThan(220);
+      expect(minWidth).toBe(200);
     });
 
     it('should let a CSS width supersede the presentational attribute', () => {
@@ -250,20 +304,16 @@ describe('TCellConstraintsComputer', () => {
       const { minWidth } = constraintsFor(
         '<td width="300" style="width:100px">a</td>'
       );
-      expect(minWidth).toBeGreaterThanOrEqual(100);
-      expect(minWidth).toBeLessThan(120);
-    });
-
-    it('should ignore a width it cannot resolve', () => {
-      const { minWidth } = constraintsFor('<td style="width:auto">a</td>');
-      expect(minWidth).toBeLessThan(50);
+      expect(minWidth).toBe(100);
     });
 
     it('should let CSS auto override the presentational width attribute', () => {
       const { minWidth } = constraintsFor(
         '<td width="300" style="width:auto">a</td>'
       );
-      expect(minWidth).toBeLessThan(50);
+      expect(minWidth).toBeCloseTo(
+        DEFAULT_HORIZONTAL_PADDING + 14 * BASE_FONT_COEFF
+      );
     });
   });
 
@@ -272,15 +322,14 @@ describe('TCellConstraintsComputer', () => {
       const { minWidth } = constraintsFor(
         '<td style="width:50px;min-width:300px">a</td>'
       );
-      expect(minWidth).toBeGreaterThanOrEqual(300);
+      expect(minWidth).toBe(300);
     });
 
     it('should cut a width down to max-width', () => {
       const { minWidth } = constraintsFor(
         '<td style="width:500px;max-width:100px">a</td>'
       );
-      expect(minWidth).toBeGreaterThanOrEqual(100);
-      expect(minWidth).toBeLessThan(150);
+      expect(minWidth).toBe(100);
     });
 
     it('should let min-width win over a smaller max-width', () => {
@@ -288,30 +337,55 @@ describe('TCellConstraintsComputer', () => {
       const { minWidth } = constraintsFor(
         '<td style="min-width:200px;max-width:100px">a</td>'
       );
-      expect(minWidth).toBeGreaterThanOrEqual(200);
+      expect(minWidth).toBe(200);
     });
 
     it('should apply min-width on its own, without a width', () => {
       const { minWidth } = constraintsFor('<td style="min-width:250px">a</td>');
-      expect(minWidth).toBeGreaterThanOrEqual(250);
+      expect(minWidth).toBe(250);
     });
   });
 
   describe('maximum cell width', () => {
+    it.each([
+      'AAAA<br>BBBB',
+      '<div>AAAA</div><div>BBBB</div>',
+      'AAAA<div>BBBB</div>'
+    ])(
+      'uses the widest forced line in %s without losing text density',
+      (markup) => {
+        const actual = constraintsFor(`<td>${markup}</td>`);
+        const line = constraintsFor('<td>AAAA</td>');
+        expect(actual.maxWidth).toBeCloseTo(line.maxWidth);
+        expect(actual.contentDensity).toBeCloseTo(2 * line.contentDensity);
+      }
+    );
+
+    it('keeps styled fragments together when computing the widest line', () => {
+      const actual = constraintsFor(
+        '<td>AB<span style="font-size:20px">CD</span><br>E</td>'
+      );
+      expect(actual.maxWidth).toBeCloseTo(2 + 2 * BASE_FONT_COEFF * (14 + 20));
+    });
+
     it('should cap the maximum width at max-width', () => {
       const { maxWidth } = constraintsFor(
         `<td style="max-width:100px">${'lorem ipsum '.repeat(20)}</td>`
       );
-      expect(maxWidth).toBeLessThanOrEqual(100);
+      expect(maxWidth).toBe(100);
     });
 
-    it('should never report a maximum below the minimum', () => {
+    it('preserves the full unbreakable word when max-width is smaller', () => {
       // A cap tighter than the longest word must not drive the cell below the
       // width it needs to hold that word.
       const { minWidth, maxWidth } = constraintsFor(
         '<td style="max-width:1px">antidisestablishmentarianism</td>'
       );
-      expect(maxWidth).toBeGreaterThanOrEqual(minWidth);
+      expect(minWidth).toBeCloseTo(
+        DEFAULT_HORIZONTAL_PADDING +
+          'antidisestablishmentarianism'.length * 14 * BASE_FONT_COEFF
+      );
+      expect(maxWidth).toBe(minWidth);
     });
 
     it('should keep an explicitly sized block from collapsing the cell', () => {

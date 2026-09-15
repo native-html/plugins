@@ -1,6 +1,7 @@
 import { ViewStyle } from 'react-native';
 import { TBlock, CustomRendererProps } from '@native-html/render';
 import { TableCellPropsFromParent } from './shared-types';
+import { ResolvedCellStyle } from './helpers/resolveTableStyles';
 import relaxHeightConstraint from './helpers/relaxHeightConstraint';
 import {
   CellVerticalAlign,
@@ -27,6 +28,7 @@ const justifyContentForVerticalAlign: Record<
 };
 
 interface InternalTableCellPropsFromParent extends TableCellPropsFromParent {
+  resolvedCellStyle?: ResolvedCellStyle;
   borderCollapse: boolean;
   maxX: number;
   maxY: number;
@@ -44,9 +46,18 @@ export default function useHtmlTableCellProps({
   propsFromParent,
   ...props
 }: CustomRendererProps<TBlock>): CustomRendererProps<TBlock> {
-  const { borderCollapse, config, cell, maxX, maxY, tableBorderStyle } =
-    propsFromParent as InternalTableCellPropsFromParent;
-  const styleFromConfig = config?.getStyleForCell?.call(null, cell);
+  const {
+    borderCollapse,
+    config,
+    cell,
+    maxX,
+    maxY,
+    tableBorderStyle,
+    resolvedCellStyle
+  } = propsFromParent as InternalTableCellPropsFromParent;
+  const styleFromConfig = resolvedCellStyle
+    ? resolvedCellStyle.configStyle
+    : config?.getStyleForCell?.call(null, cell);
   const verticalAlign = resolveCellVerticalAlign(props.tnode);
   // Vertical table-cell alignment and horizontal colspan centering are
   // independent, so keep both declarations in the same style contribution.
@@ -64,13 +75,15 @@ export default function useHtmlTableCellProps({
   // The collapsing model has to weigh every border the cell actually paints,
   // config included: resolving it against the source CSS alone would strip a
   // border that came from `getStyleForCell` and leave nothing to draw it.
-  const collapsedBorderStyle = borderCollapse
-    ? getCollapsedCellBorderStyle(
-        cell,
-        { ...props.tnode.styles.nativeBlockRet, ...styleFromConfig },
-        { maxX, maxY, tableBorderStyle }
-      )
-    : null;
+  const collapsedBorderStyle = resolvedCellStyle
+    ? resolvedCellStyle.borderStyle
+    : borderCollapse
+      ? getCollapsedCellBorderStyle(
+          cell,
+          { ...props.tnode.styles.nativeBlockRet, ...styleFromConfig },
+          { maxX, maxY, tableBorderStyle }
+        )
+      : null;
   // The user-agent padding is resolved against the config styles too, since a
   // shorthand `padding` there cannot outrank a longhand default whatever the
   // merge order: Yoga resolves each side against its own edge first.
