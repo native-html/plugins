@@ -5,6 +5,7 @@ import { getSourceBlockStyle, resolveConfiguredCellStyle } from './cellPadding';
 import { getCollapsedCellBorderStyle, getCollapsedTableBorderStyle } from './collapseBorders';
 import composeCellStyle from './cellPadding';
 import indexCellNeighbours from './indexCellNeighbours';
+import { isRTL } from './boxSides';
 
 /** One saved style resolution shared by measurement and rendering. */
 export interface ResolvedCellStyle {
@@ -39,6 +40,7 @@ export default function resolveTableStyles(
   for (const cell of grid.cells) {
     const borderStyle = collapse
       ? getCollapsedCellBorderStyle(cell, getCellStyle(cell), {
+          tableRTL: isRTL(tableStyle),
           maxX: grid.maxX,
           maxY: grid.maxY,
           tableBorderStyle,

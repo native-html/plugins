@@ -2,7 +2,8 @@ import { DisplayCell } from '../shared-types';
 
 type Cell = Pick<DisplayCell, 'x' | 'y' | 'lenX' | 'lenY' | 'tnode'>;
 export interface CellNeighbours {
-  Right: readonly Cell[];
+  /** Neighbours at increasing x: physically left in RTL, right in LTR. */
+  End: readonly Cell[];
   Bottom: readonly Cell[];
 }
 
@@ -61,14 +62,14 @@ function overlapping(
 export default function indexCellNeighbours(
   cells: readonly Cell[]
 ): ReadonlyMap<Cell, CellNeighbours> {
-  const leftEdges = indexEdges(cells, false);
+  const startEdges = indexEdges(cells, false);
   const topEdges = indexEdges(cells, true);
   return new Map(
     cells.map((cell) => [
       cell,
       {
-        Right: overlapping(
-          leftEdges.get(cell.x + cell.lenX),
+        End: overlapping(
+          startEdges.get(cell.x + cell.lenX),
           cell.y,
           cell.y + cell.lenY
         ),

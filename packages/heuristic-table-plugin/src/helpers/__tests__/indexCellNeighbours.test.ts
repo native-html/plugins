@@ -17,7 +17,7 @@ function neighboursByScan(
   cell: DisplayCell
 ): CellNeighbours {
   return {
-    Right: cells.filter(
+    End: cells.filter(
       (other) =>
         other.x === cell.x + cell.lenX &&
         other.y < cell.y + cell.lenY &&

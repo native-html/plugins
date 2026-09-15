@@ -370,7 +370,7 @@ describe('cell styles', () => {
             maxY: 3,
             tableBorderStyle: FRAMED,
             neighbours: {
-              Right: [
+              End: [
                 {
                   x: 2,
                   y: 1,

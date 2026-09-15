@@ -277,3 +277,29 @@ describe('row height constraints', () => {
     expect(StyleSheet.flatten(rows[0].props.style).height).toBeUndefined();
   });
 });
+
+it('renders an RTL divider on the shared edge instead of the table frame', () => {
+  const rendered = render(
+    <RenderHTML
+      contentWidth={300}
+      source={{
+        html: '<table style="direction:rtl;border-collapse:collapse"><tr>' +
+          '<td style="border-left-width:8px;border-left-color:red">A</td>' +
+          '<td style="border-right-width:4px">B</td></tr></table>'
+      }}
+      renderers={renderers}
+    />
+  );
+  expect(rendered.getByTestId('table')).toHaveStyle({
+    direction: 'rtl',
+    borderLeftWidth: 0,
+    borderRightWidth: 0
+  });
+  const cells = rendered.getAllByTestId('td');
+  expect(cells[0]).toHaveStyle({
+    borderLeftWidth: 8,
+    borderLeftColor: 'red',
+    borderRightWidth: 0
+  });
+  expect(cells[1]).toHaveStyle({ borderLeftWidth: 0, borderRightWidth: 0 });
+});

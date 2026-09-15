@@ -112,25 +112,27 @@ type CollapsibleMatrix<C extends CollapsibleCell> = {
 function isAtOuterEdge(
   cell: Pick<CollapsibleCell, 'lenX' | 'lenY' | 'x' | 'y'>,
   side: BorderSide,
-  { maxX, maxY }: Pick<TableGrid, 'maxX' | 'maxY'>
+  { maxX, maxY }: Pick<TableGrid, 'maxX' | 'maxY'>,
+  rtl: boolean
 ): boolean {
   switch (side) {
     case 'Top':
       return cell.y === 0;
     case 'Right':
-      return cell.x + cell.lenX - 1 >= maxX;
+      return rtl ? cell.x === 0 : cell.x + cell.lenX - 1 >= maxX;
     case 'Bottom':
       return cell.y + cell.lenY - 1 >= maxY;
     case 'Left':
-      return cell.x === 0;
+      return rtl ? cell.x + cell.lenX - 1 >= maxX : cell.x === 0;
   }
 }
 
 function cellsAtOuterEdge<C extends CollapsibleCell>(
   { cells, maxX, maxY }: CollapsibleMatrix<C>,
-  side: BorderSide
+  side: BorderSide,
+  rtl: boolean
 ): readonly C[] {
-  return cells.filter((cell) => isAtOuterEdge(cell, side, { maxX, maxY }));
+  return cells.filter((cell) => isAtOuterEdge(cell, side, { maxX, maxY }, rtl));
 }
 
 function sourceCellStyle(cell: CollapsibleCell): ViewStyle {
@@ -160,7 +162,7 @@ export function getCollapsedTableBorderStyle<C extends CollapsibleCell>(
   const resolvedStyle: ViewStyle = clearLogicalBorders(tableStyle);
   let strongestStyle: BorderCandidate['style'] | null = null;
   for (const side of BOX_SIDES) {
-    const winner = cellsAtOuterEdge(matrix, side).reduce(
+    const winner = cellsAtOuterEdge(matrix, side, isRTL(tableStyle)).reduce(
       (currentWinner, cell) =>
         resolveBorderConflict(
           currentWinner,
@@ -193,6 +195,8 @@ export function getCollapsedTableBorderStyle<C extends CollapsibleCell>(
  * bare has to stay with the cell.
  */
 export interface CollapsedCellEdges {
+  /** Grid direction belongs to the table, independently of cell text direction. */
+  tableRTL?: boolean;
   maxX: number;
   maxY: number;
   tableBorderStyle: ViewStyle | null;
@@ -239,12 +243,13 @@ export function getCollapsedCellBorderStyle(
     maxY,
     tableBorderStyle,
     neighbours,
-    getCellStyle
+    getCellStyle,
+    tableRTL: rtl = isRTL(cellStyle)
   }: CollapsedCellEdges
 ): ViewStyle {
   const resolvedStyle: ViewStyle = clearLogicalBorders(cellStyle);
   const isOuterEdge = (side: BorderSide) =>
-    isAtOuterEdge(cell, side, { maxX, maxY });
+    isAtOuterEdge(cell, side, { maxX, maxY }, rtl);
   const isPaintedByTable = (side: BorderSide) => {
     const width = tableBorderStyle?.[`border${side}Width`];
     return typeof width === 'number' && width > 0;
@@ -273,16 +278,18 @@ export function getCollapsedCellBorderStyle(
   // A leading boundary is always drawn by the neighbour that precedes it,
   // except on the outside where there is no neighbour to draw it.
   paint('Top', isOuterEdge('Top') ? keepOuterBorder('Top') : null);
-  paint('Left', isOuterEdge('Left') ? keepOuterBorder('Left') : null);
-  for (const [side, opposite] of [
-    ['Right', 'Left'],
-    ['Bottom', 'Top']
+  const start = rtl ? 'Right' : 'Left';
+  const end = rtl ? 'Left' : 'Right';
+  paint(start, isOuterEdge(start) ? keepOuterBorder(start) : null);
+  for (const [side, opposite, neighbourEdge] of [
+    [end, start, 'End'],
+    ['Bottom', 'Top', 'Bottom']
   ] as const) {
     paint(
       side,
       isOuterEdge(side)
         ? keepOuterBorder(side)
-        : (neighbours?.[side] ?? []).reduce(
+        : (neighbours?.[neighbourEdge] ?? []).reduce(
             (winner, neighbour) =>
               resolveBorderConflict(
                 winner,
