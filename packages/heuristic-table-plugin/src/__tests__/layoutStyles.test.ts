@@ -236,7 +236,7 @@ describe('layout and resolved renderer styles', () => {
     );
     expect(layout.horizontalInsets).toBe(20);
     expect(layout.totalWidth).toBeCloseTo(9.1);
-    expect(shouldScrollTable(layout.totalWidth, layout.assignableWidth)).toBe(
+    expect(shouldScrollTable(layout.totalWidth, layout.viewportWidth)).toBe(
       false
     );
     expect(renderedCellStyle(layout, 0)).toMatchObject({
@@ -382,7 +382,7 @@ describe('layout and resolved renderer styles', () => {
       contentWidth: 20,
       getStyleForCell: () => ({ padding: 8 })
     });
-    expect(shouldScrollTable(layout.totalWidth, layout.assignableWidth)).toBe(
+    expect(shouldScrollTable(layout.totalWidth, layout.viewportWidth)).toBe(
       true
     );
   });
@@ -408,7 +408,7 @@ describe('cell percentage distribution', () => {
       '<table><tr><td style="width:80%">AAAAAAAAAAAA</td><td style="width:80%">B</td></tr></table>'
     );
     expect(layout.columnWidths[0]).toBeCloseTo(12 * 9.1 + 2);
-    expect(shouldScrollTable(layout.totalWidth, layout.assignableWidth)).toBe(
+    expect(shouldScrollTable(layout.totalWidth, layout.viewportWidth)).toBe(
       true
     );
   });

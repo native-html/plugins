@@ -119,7 +119,7 @@ const HTMLTable = memo(function HTMLTable({
     >
       <Container
         tableWidth={tableWidth}
-        availableWidth={layout.assignableWidth}
+        availableWidth={layout.viewportWidth}
         scrollVertically={
           !config.growBeyondHeight &&
           props.style?.height != null &&

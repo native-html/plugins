@@ -1,4 +1,4 @@
-import { Display, TColumnConstraints } from '../shared-types';
+import { DisplayCell, TColumnConstraints } from '../shared-types';
 import reduceColumnConstraints from './reduceColumnConstraints';
 import type { DeclaredColumnWidth } from './extractColumnWidths';
 import { clampWidth, lesserBound } from './resolveWidth';
@@ -133,45 +133,62 @@ function addDistributedWidth(
   return result;
 }
 
+/**
+ * What deciding column widths actually depends on.
+ *
+ * @remarks
+ * Stated explicitly rather than taken from the whole layout: `assignableWidth`
+ * is the width left for columns after the table's own padding, border and
+ * border-spacing, which is a different quantity from the document width the
+ * config calls `contentWidth`, and passing the latter by mistake is otherwise
+ * invisible.
+ */
+export interface ColumnLayoutInput {
+  cells: readonly DisplayCell[];
+  /** The width the columns may share between them. */
+  assignableWidth: number;
+  /** Whether the columns must fill that width rather than shrink to fit. */
+  forceStretch?: boolean;
+}
+
 export default function computeColumnWidths(
-  display: Display,
+  { cells, assignableWidth, forceStretch }: ColumnLayoutInput,
   declaredWidths: Array<DeclaredColumnWidth | null> = []
 ): number[] {
-  const contentWidth = display.contentWidth;
-  const shouldStretch = !!display.forceStretch;
+  const contentWidth = assignableWidth;
+  const shouldStretch = !!forceStretch;
   // The cell grid alone decides how many columns a table has. `col` and
   // `colgroup` declarations past its last column describe columns that do not
   // exist — honouring them would widen the table by the sum of widths nothing
   // is ever rendered into, and hand it a scroll view to hold the surplus.
-  const columnConstraints = reduceColumnConstraints(display.cells);
+  const columnConstraints = reduceColumnConstraints([...cells]);
   if (columnConstraints.length === 0) {
     return [];
   }
-  // Cell percentages use the same sizing class as col/colgroup percentages.
-  // Repeated rows contribute a maximum, not a sum. A colspan shares its
-  // preference across the columns it covers, like its intrinsic constraints.
-  declaredWidths = [...declaredWidths];
-  for (const cell of display.cells) {
-    const percent = cell.constraints.percentWidth;
-    if (percent == null) continue;
-    for (let i = cell.x; i < cell.x + cell.lenX; i++) {
-      const declared = declaredWidths[i];
-      declaredWidths[i] = {
-        width: null,
-        minWidth: 0,
-        maxWidth: null,
-        maxPercent: null,
-        ...declared,
-        percent: Math.max(declared?.percent ?? 0, percent / cell.lenX)
-      };
+  // Cell percentages use the same sizing class as col/colgroup percentages,
+  // and `reduceColumnConstraints` has already spread each spanning cell's
+  // preference over the columns it covers.
+  const declarations = columnConstraints.map((constraints, i) => {
+    const declared = declaredWidths[i];
+    const percent = constraints.percentWidth;
+    if (percent == null) {
+      return declared ?? null;
     }
-  }
+    return {
+      width: null,
+      minWidth: 0,
+      maxWidth: null,
+      maxPercent: null,
+      ...declared,
+      percent: Math.max(declared?.percent ?? 0, percent)
+    };
+  });
   // A `max-width` may be declared in either unit, and caps the column in
   // whichever sizing class it ends up in. Percentage bounds travel unresolved
   // so that the same declarations can be reused against another table width,
   // and are turned into pixels here, once that width is known.
   const caps = columnConstraints.map((_, i) => {
-    const declared = declaredWidths[i];
+    const declared = declarations[i];
     if (!declared) {
       return null;
     }
@@ -181,7 +198,7 @@ export default function computeColumnWidths(
     );
   });
   for (const [i, constraints] of columnConstraints.entries()) {
-    const declared = declaredWidths[i];
+    const declared = declarations[i];
     if (!declared) {
       continue;
     }
@@ -198,14 +215,9 @@ export default function computeColumnWidths(
       constraints.minWidth = Math.max(constraints.minWidth, floor);
       constraints.spread = Math.max(constraints.spread, floor);
     }
-    if (cap !== null) {
-      // A `max-width` caps how far a column may grow, but never below the
-      // width its own content needs to be legible at all.
-      constraints.spread = Math.max(
-        constraints.minWidth,
-        Math.min(constraints.spread, cap)
-      );
-    }
+    // A `max-width` caps how far a column may grow, but never below the
+    // width its own content needs to be legible at all.
+    constraints.spread = clampWidth(constraints.spread, constraints.minWidth, cap);
   }
   const minWidths = mapMinWidths(columnConstraints);
   const spreads = mapSpreads(columnConstraints);
@@ -221,7 +233,7 @@ export default function computeColumnWidths(
   // the full percentage guess does not fit, browsers interpolate back toward
   // the min-content guess while keeping the total at the assignable width.
   const percentages = normalizePercentages(
-    declaredWidths,
+    declarations,
     columnConstraints.length
   );
   const percentageGuess = minWidths.map((minWidth, i) => {
@@ -261,26 +273,14 @@ export default function computeColumnWidths(
     return maxContentGuess;
   }
   // The spacing each column carries, so that the surplus below is shared over
-  // content alone. A `colspan` spreads its own spacing across the columns it
-  // covers, as it does its intrinsic constraints, and where cells disagree the
-  // widest wins — the same reduction `minWidth` gets, which is the figure the
-  // spacing is being held out of.
-  const columnInsets = columnConstraints.map(() => 0);
-  for (const cell of display.cells) {
-    const share = (cell.constraints.horizontalSpace ?? 0) / cell.lenX;
-    const lastColumn = Math.min(
-      cell.x + cell.lenX - 1,
-      columnInsets.length - 1
-    );
-    for (let i = cell.x; i <= lastColumn; i++) {
-      columnInsets[i] = Math.max(columnInsets[i] ?? 0, share);
-    }
-  }
+  // content alone; `reduceColumnConstraints` reduced it the same way it
+  // reduced `minWidth`, which is the figure the spacing is held out of.
+  const columnInsets = columnConstraints.map((c) => c.horizontalSpace);
   const allColumns = maxContentGuess.map((_, i) => i);
   // A column that declared a width of its own already has the width it asked
   // for; the surplus belongs to the ones that left it to the table to decide.
   const autoColumns = allColumns.filter((i) => {
-    const declared = declaredWidths[i];
+    const declared = declarations[i];
     return !declared || (declared.width === null && declared.percent === null);
   });
   const percentColumns = allColumns.filter((i) => percentages[i] != null);

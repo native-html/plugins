@@ -1,6 +1,6 @@
 import {
   TableCell,
-  Display,
+  TableGrid,
   DisplayCell,
   TableFlexColumnContainer,
   TableFlexRowContainer,
@@ -112,11 +112,11 @@ function makeCell(
  * only becomes a {@link TableCell} once its width exists.
  */
 export function makeTableCells(
-  display: Pick<Display, 'cells'>,
+  grid: Pick<TableGrid, 'cells'>,
   columnWidths: number[],
   spacing = 0
 ): TableCell[] {
-  return display.cells.map((cell) => makeCell(columnWidths, cell, spacing));
+  return grid.cells.map((cell) => makeCell(columnWidths, cell, spacing));
 }
 
 export default function createRenderTree(cells: TableCell[]): TableRoot {

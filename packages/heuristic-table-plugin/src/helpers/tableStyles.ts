@@ -1,6 +1,6 @@
 import { I18nManager, ViewStyle } from 'react-native';
 import { TNode } from '@native-html/render';
-import { Display, DisplayCell, TableCell } from '../shared-types';
+import { DisplayCell, TableCell, TableGrid } from '../shared-types';
 import type { CellNeighbours } from './indexCellNeighbours';
 
 export type BorderCollapse = 'collapse' | 'separate';
@@ -83,7 +83,7 @@ export const DEFAULT_CELL_PADDING = 1;
 /** The four physical edges of a box, spelled as React Native style suffixes. */
 export type BoxSide = 'Bottom' | 'Left' | 'Right' | 'Top';
 
-export const BOX_SIDES: readonly BoxSide[] = ['Top', 'Right', 'Bottom', 'Left'];
+export const BOX_SIDES = ['Top', 'Right', 'Bottom', 'Left'] as const;
 
 /**
  * Whether a style resolves its logical edges right-to-left.
@@ -224,7 +224,7 @@ export function getDefaultCellPaddingStyle(
   ...declaredStyles: (ViewStyle | null | undefined)[]
 ): ViewStyle {
   const resolvedStyle: ViewStyle = {};
-  for (const side of ['Top', 'Right', 'Bottom', 'Left'] as const) {
+  for (const side of BOX_SIDES) {
     const isDeclared = declaredStyles.some((style) =>
       style
         ? paddingSideKeys[side].some((property) => style[property] != null)
@@ -433,7 +433,7 @@ type CollapsibleCell = Pick<DisplayCell, 'lenX' | 'lenY' | 'tnode' | 'x' | 'y'>;
  */
 type CollapsibleMatrix<C extends CollapsibleCell> = {
   cells: readonly C[];
-} & Pick<Display, 'maxX' | 'maxY'>;
+} & Pick<TableGrid, 'maxX' | 'maxY'>;
 
 /**
  * Whether a cell sits against one of the table's own edges.
@@ -450,7 +450,7 @@ type CollapsibleMatrix<C extends CollapsibleCell> = {
 function isAtOuterEdge(
   cell: Pick<CollapsibleCell, 'lenX' | 'lenY' | 'x' | 'y'>,
   side: BorderSide,
-  { maxX, maxY }: Pick<Display, 'maxX' | 'maxY'>
+  { maxX, maxY }: Pick<TableGrid, 'maxX' | 'maxY'>
 ): boolean {
   switch (side) {
     case 'Top':
@@ -497,7 +497,7 @@ export function getCollapsedTableBorderStyle<C extends CollapsibleCell>(
 ): ViewStyle {
   const resolvedStyle: ViewStyle = clearLogicalBorders(tableStyle);
   let strongestStyle: BorderCandidate['style'] | null = null;
-  for (const side of ['Top', 'Right', 'Bottom', 'Left'] as const) {
+  for (const side of BOX_SIDES) {
     const winner = cellsAtOuterEdge(matrix, side).reduce(
       (currentWinner, cell) =>
         resolveBorderConflict(

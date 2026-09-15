@@ -1,7 +1,6 @@
-import fillTableDisplay, { createEmptyDisplay } from '../fillTableDisplay';
+import buildTableGrid from '../buildTableGrid';
 import { createTableTNode } from '../../__tests__/utils';
 import createRenderTree, { makeTableCells } from '../createRenderTree';
-import TCellConstraintsComputer from '../TCellConstraintsComputer';
 import {
   TableCell,
   TableFlexColumnContainer,
@@ -11,10 +10,9 @@ import {
 
 function makeRenderTree(html: string, columnWidths: number[]) {
   const tnode = createTableTNode(html);
-  const display = createEmptyDisplay({ contentWidth: 1000 });
-  const computer = new TCellConstraintsComputer({});
-  fillTableDisplay(tnode, display, computer);
-  return createRenderTree(makeTableCells(display, columnWidths));
+  // The render tree is built from coordinates and widths alone, so the grid
+  // needs no measurement pass to produce one.
+  return createRenderTree(makeTableCells(buildTableGrid(tnode), columnWidths));
 }
 
 function rowContainer(

@@ -1,21 +1,24 @@
-import computeColumnWidths from '../computeColumnWidths';
-import { createEmptyDisplay } from '../fillTableDisplay';
-import { Display, DisplayCell, TCellConstraints } from '../../shared-types';
+import computeColumnWidths, {
+  ColumnLayoutInput
+} from '../computeColumnWidths';
+import { DisplayCell, TCellConstraints } from '../../shared-types';
 
 function makeDisplay(
   cells: Array<
     Pick<DisplayCell, 'x' | 'y'> & { constraints: TCellConstraints }
   >,
-  settings: { contentWidth: number; forceStretch?: boolean }
-): Display {
-  const display = createEmptyDisplay(settings);
-  display.cells = cells.map((cell) => ({
-    lenX: 1,
-    lenY: 1,
-    tnode: null as never,
-    ...cell
-  }));
-  return display;
+  { contentWidth, forceStretch }: { contentWidth: number; forceStretch?: boolean }
+): ColumnLayoutInput {
+  return {
+    assignableWidth: contentWidth,
+    forceStretch,
+    cells: cells.map((cell) => ({
+      lenX: 1,
+      lenY: 1,
+      tnode: null as never,
+      ...cell
+    }))
+  };
 }
 
 describe('computeColumnWidths', () => {

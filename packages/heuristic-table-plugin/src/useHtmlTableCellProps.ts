@@ -12,7 +12,8 @@ import {
   getCollapsedCellBorderStyle,
   resolveConfiguredCellStyle,
   resolveCellVerticalAlign,
-  getSourceBlockStyle
+  getSourceBlockStyle,
+  DEFAULT_CELL_VERTICAL_ALIGN
 } from './helpers/tableStyles';
 
 /**
@@ -89,7 +90,8 @@ export default function useHtmlTableCellProps({
   const alignmentStyles = {
     justifyContent: verticalAlign
       ? justifyContentForVerticalAlign[verticalAlign]
-      : (props.style?.justifyContent ?? 'center'),
+      : (props.style?.justifyContent ??
+        justifyContentForVerticalAlign[DEFAULT_CELL_VERTICAL_ALIGN]),
     ...(cell.lenX > 1 ? { alignItems: 'center' as const } : null)
   };
   // The collapsing model has to weigh every border the cell actually paints,

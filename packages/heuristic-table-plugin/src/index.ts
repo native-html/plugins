@@ -33,8 +33,8 @@ export { TableRenderer, ThRenderer, TdRenderer, colgroupModel };
  */
 const renderers: Record<'th' | 'td' | 'table', CustomBlockRenderer> = {
   table: TableRenderer,
-  th: ThRenderer as any,
-  td: TdRenderer as any
+  th: ThRenderer,
+  td: TdRenderer
 };
 
 export { default as useHtmlTableProps } from './useHtmlTableProps';

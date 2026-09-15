@@ -7,12 +7,10 @@ import { ViewStyle } from 'react-native';
 import { TNode } from '@native-html/render';
 import computeColumnWidths from './helpers/computeColumnWidths';
 import createRenderTree, { makeTableCells } from './helpers/createRenderTree';
-import fillTableDisplay, {
-  createEmptyDisplay
-} from './helpers/fillTableDisplay';
+import buildTableGrid from './helpers/buildTableGrid';
 import TCellConstraintsComputer from './helpers/TCellConstraintsComputer';
 import indexCellNeighbours from './helpers/indexCellNeighbours';
-import { Display, Settings, TableCell, TableRoot } from './shared-types';
+import { Settings, TableCell, TableGrid, TableRoot } from './shared-types';
 import extractColumnWidths from './helpers/extractColumnWidths';
 import { clampWidth, resolveWidthConstraints } from './helpers/resolveWidth';
 import resolveAvailableWidth from './helpers/resolveAvailableWidth';
@@ -33,7 +31,7 @@ import resolveTableStyles, {
 const DEFAULT_FORCE_STRETCH = true;
 
 export default class TableLayout {
-  public readonly display: Display;
+  public readonly display: TableGrid;
   public readonly borderSpacing: BorderSpacing;
   public readonly columnWidths: number[];
   public readonly totalWidth: number;
@@ -47,18 +45,23 @@ export default class TableLayout {
    */
   public readonly availableWidth: number;
   /**
-   * The width the columns may occupy: the narrower of
+   * The visible width of the table's content box: the narrower of
    * {@link TableLayout.availableWidth} and the table's own used width, less
-   * its padding and border, which sit inside its border box. Columns whose
-   * minimum widths overflow this are shown through a horizontal scroller.
+   * its padding and border, which sit inside its border box.
+   *
+   * @remarks
+   * A *viewport*, not an allowance. Columns are laid out against the width
+   * left once border-spacing is also taken out, which is smaller, and which
+   * for an overflowing table is smaller still than what the columns actually
+   * take. Content wider than this is reached through a horizontal scroller.
    */
-  public readonly assignableWidth: number;
+  public readonly viewportWidth: number;
   /**
    * The border-box width the table paints: the narrower of
    * {@link TableLayout.availableWidth} and the table's own used width.
    *
    * @remarks
-   * Unlike {@link TableLayout.assignableWidth} this still holds the table's
+   * Unlike {@link TableLayout.viewportWidth} this still holds the table's
    * padding and border, and it is a ceiling: a table whose insets alone
    * exceed it keeps this width and clips them, rather than growing past what
    * its ancestors and its own `max-width` allow.
@@ -108,14 +111,7 @@ export default class TableLayout {
       (config.forceStretch ?? DEFAULT_FORCE_STRETCH) ||
       declaredTableWidth !== null;
     // Build the grid once; styles may require a second measurement pass.
-    const display = createEmptyDisplay({
-      ...config,
-      // A table with a specified width distributes that width over its
-      // columns; shrink-to-fit only applies when the table width is auto,
-      // and is opt-in.
-      forceStretch
-    });
-    fillTableDisplay(tnode, display);
+    const display = buildTableGrid(tnode);
     const neighbours = this.borderCollapse
       ? indexCellNeighbours(display.cells)
       : undefined;
@@ -140,7 +136,9 @@ export default class TableLayout {
         ...style,
         ...resolved.tableBorderStyle
       });
-      display.contentWidth = Math.max(
+      // The width left for the columns, once the table's own padding, border
+      // and border-spacing are taken out of the width it may occupy.
+      const assignableWidth = Math.max(
         0,
         usedTableWidth - insets - spacingWidth
       );
@@ -148,7 +146,7 @@ export default class TableLayout {
         const constraints = computer.computeCellConstraints(
           cell.tnode,
           resolved.cellStyles.get(cell.tnode)!.style,
-          display.contentWidth
+          assignableWidth
         );
         // A spanning cell also occupies the gaps between its columns.
         const internalSpacing = (cell.lenX - 1) * this.borderSpacing.horizontal;
@@ -158,14 +156,24 @@ export default class TableLayout {
           maxWidth: Math.max(0, constraints.maxWidth - internalSpacing)
         };
       }
-      let columnWidths = computeColumnWidths(display, declaredColumnWidths);
+      let columnWidths = computeColumnWidths(
+        // A table with a specified width distributes that width over its
+        // columns; shrink-to-fit only applies when the table width is auto,
+        // and is opt-in.
+        { cells: display.cells, assignableWidth, forceStretch },
+        declaredColumnWidths
+      );
       const minLayoutWidth = Math.max(
         0,
         (minWidth ?? 0) - insets - spacingWidth
       );
       if (sum(columnWidths) < minLayoutWidth) {
         const raised = computeColumnWidths(
-          { ...display, contentWidth: minLayoutWidth, forceStretch: true },
+          {
+            cells: display.cells,
+            assignableWidth: minLayoutWidth,
+            forceStretch: true
+          },
           declaredColumnWidths
         );
         if (sum(raised) > sum(columnWidths)) columnWidths = raised;
@@ -191,7 +199,7 @@ export default class TableLayout {
     this.horizontalInsets = measured.insets;
     this.availableWidth = availableWidth;
     this.usedWidth = Math.max(0, Math.min(usedTableWidth, availableWidth));
-    this.assignableWidth = Math.max(0, this.usedWidth - measured.insets);
+    this.viewportWidth = Math.max(0, this.usedWidth - measured.insets);
     this.display = display;
     this.columnWidths = measured.columnWidths;
     this.totalWidth = sum(this.columnWidths) + spacingWidth;

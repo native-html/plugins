@@ -4,6 +4,7 @@ import { TCellConstraints } from '../shared-types';
 import { getHorizontalInsets, getHorizontalMargins } from './measure';
 import { getPaintedBlockStyle } from './tableStyles';
 import {
+  clampWidth,
   resolveCssSize,
   resolveImposedWidth,
   resolvePercentage
@@ -292,10 +293,7 @@ export default class TCellConstraintsComputer {
       // `max-width` caps the width the cell would *like*, but never takes it
       // below the width it needs to hold its longest word: min-content is a
       // floor no browser crosses.
-      maxWidth:
-        cellMaxWidth === null
-          ? maxWidth
-          : Math.max(minWidth, Math.min(maxWidth, cellMaxWidth)),
+      maxWidth: clampWidth(maxWidth, minWidth, cellMaxWidth),
       contentDensity: intrinsic.contentDensity
     };
   }

@@ -50,6 +50,22 @@ export interface TColumnConstraints extends TConstraintsBase {
    * densities, whereas spread is a maximum.
    */
   spread: number;
+  /**
+   * The horizontal padding and border the column carries, already included in
+   * {@link TConstraintsBase.minWidth} and {@link TColumnConstraints.spread}.
+   *
+   * @remarks
+   * The widest of its cells' insets, a `colspan` contributing its share to
+   * each column it covers — the same reduction `minWidth` gets, which is the
+   * figure this is held out of when surplus width is shared over content.
+   */
+  horizontalSpace: number;
+  /**
+   * The fraction of the table width the column's cells prefer, or `null` when
+   * none declares one. A `colspan` contributes its share to each column it
+   * covers; where cells disagree the largest wins, as it does for `minWidth`.
+   */
+  percentWidth: number | null;
 }
 
 /**
@@ -192,12 +208,23 @@ export interface Settings
   contentWidth: number;
 }
 
-export interface Display extends Settings {
-  maxY: number;
-  maxX: number;
-  occupiedCoordinates: Array<Coordinates>;
-  offsetX: number;
+/**
+ * Where every cell of a table sits, and how far the matrix extends.
+ *
+ * @remarks
+ * The durable result of laying a table out, and the only part of it anything
+ * downstream reads. `maxX`/`maxY` are the last occupied column and row, so a
+ * span overrunning them is clipped rather than growing the table.
+ *
+ * Deliberately holds neither configuration nor build-time scratch: it used to
+ * extend {@link Settings} and carry the grid-filling cursor, which meant
+ * `contentWidth` changed meaning halfway through a layout and every consumer
+ * had to narrow the type back down to the three fields it wanted.
+ */
+export interface TableGrid {
   cells: DisplayCell[];
+  maxX: number;
+  maxY: number;
 }
 
 /**

@@ -56,6 +56,12 @@ export default function useHtmlTableProps(
   } = {}
 ): HTMLTableProps {
   const table = useRendererProps('table');
+  // Destructured field by field, and memoized on the fields rather than on
+  // `table`, deliberately. `RenderersPropsProvider` memoizes on the whole
+  // `renderersProps` prop, so an inline `renderersProps={{ table: {...} }}` —
+  // the form the README shows — yields a new `table` object on every render.
+  // Depending on `table` itself would therefore rebuild `settings`, and with
+  // it the entire `TableLayout`, on every render of every table.
   const forceStretch = table?.forceStretch;
   const baseFontCoeff = table?.baseFontCoeff;
   const fontWeightCoeffs = table?.fontWeightCoeffs;

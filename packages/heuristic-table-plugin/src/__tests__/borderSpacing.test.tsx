@@ -75,7 +75,7 @@ describe('border spacing', () => {
     );
     const layout = new TableLayout(table, { contentWidth: 300 });
     expect(layout.totalWidth).toBe(424);
-    expect(layout.assignableWidth).toBe(300);
+    expect(layout.viewportWidth).toBe(300);
   });
 
   it('paints gaps outside cells and only once around the grid', () => {

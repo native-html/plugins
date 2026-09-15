@@ -1,15 +1,12 @@
-import { TNode } from '@native-html/render';
-import fillTableDisplay, { createEmptyDisplay } from '../fillTableDisplay';
-import TCellConstraintsComputer from '../TCellConstraintsComputer';
+import buildTableGrid from '../buildTableGrid';
 import { createTableTNode } from '../../__tests__/utils';
 
-function createDisplay(tnode: TNode) {
-  const display = createEmptyDisplay({ contentWidth: 1000 });
-  fillTableDisplay(tnode, display, new TCellConstraintsComputer({}));
-  return display;
-}
+const createDisplay = buildTableGrid;
 
-describe('fillTableDisplay', () => {
+// The slot cursor and the occupancy index are local to the build, so what a
+// spanning cell blocks is asserted where it shows: the coordinates the cells
+// after it are given.
+describe('buildTableGrid', () => {
   it('should parse cells', () => {
     const table = `
     <table>
@@ -68,9 +65,7 @@ describe('fillTableDisplay', () => {
     </table>`;
     const tnode = createTableTNode(table);
     const display = createDisplay(tnode);
-    // `offsetX` is the slot cursor of the row last laid out, so it ends up
     // just past that row's final cell.
-    expect(display.offsetX).toBe(1);
     expect(display.maxX).toBe(3);
     expect(display.maxY).toBe(1);
     expect(display.cells).toMatchObject([
@@ -123,8 +118,6 @@ describe('fillTableDisplay', () => {
     const display = createDisplay(tnode);
     expect(display.maxX).toBe(2);
     expect(display.maxY).toBe(1);
-    expect(display.offsetX).toBe(3);
-    expect(display.occupiedCoordinates).toMatchObject([{ x: 0, y: 1 }]);
     expect(display.cells).toMatchObject([
       {
         lenX: 1,
@@ -175,8 +168,6 @@ describe('fillTableDisplay', () => {
     const display = createDisplay(tnode);
     expect(display.maxX).toBe(2);
     expect(display.maxY).toBe(1);
-    expect(display.offsetX).toBe(3);
-    expect(display.occupiedCoordinates).toMatchObject([{ x: 1, y: 1 }]);
     expect(display.cells).toMatchObject([
       {
         lenX: 1,
@@ -227,11 +218,6 @@ describe('fillTableDisplay', () => {
     const display = createDisplay(tnode);
     expect(display.maxX).toBe(2);
     expect(display.maxY).toBe(1);
-    // expect(display.offsetX).toBe(2);
-    expect(display.occupiedCoordinates).toMatchObject([
-      { x: 0, y: 1 },
-      { x: 2, y: 1 }
-    ]);
     expect(display.cells).toMatchObject([
       {
         lenX: 1,
@@ -280,7 +266,6 @@ describe('fillTableDisplay', () => {
     const display = createDisplay(tnode);
     expect(display.maxX).toBe(2);
     expect(display.maxY).toBe(2);
-    expect(display.offsetX).toBe(1);
     expect(display.cells).toMatchObject([
       {
         lenX: 1,

@@ -1,6 +1,6 @@
 import { TNode } from '@native-html/render';
 import { ViewStyle } from 'react-native';
-import { Display } from '../shared-types';
+import { TableGrid } from '../shared-types';
 import {
   getCollapsedCellBorderStyle,
   getCollapsedTableBorderStyle,
@@ -18,15 +18,18 @@ export interface ResolvedCellStyle {
 }
 
 export default function resolveTableStyles(
-  display: Display,
+  grid: TableGrid,
   tableStyle: ViewStyle,
   collapse: boolean,
   configStyles: ReadonlyMap<TNode, ViewStyle | null>,
-  neighbours = collapse ? indexCellNeighbours(display.cells) : undefined
+  // Required: `TableLayout` indexes once per layout and passes it to both
+  // measurement passes, so a default here would be a second place stating the
+  // "index only when collapsing" rule, and would never run.
+  neighbours: ReturnType<typeof indexCellNeighbours> | undefined
 ) {
   const styles = new Map<TNode, ViewStyle>();
   const configuredStyles = new Map<TNode, ViewStyle | null>();
-  for (const { tnode } of display.cells) {
+  for (const { tnode } of grid.cells) {
     const source = getSourceBlockStyle(tnode);
     const configured = resolveConfiguredCellStyle(configStyles.get(tnode));
     configuredStyles.set(tnode, configured);
@@ -34,13 +37,14 @@ export default function resolveTableStyles(
   }
   const getCellStyle = ({ tnode }: { tnode: TNode }) => styles.get(tnode)!;
   const tableBorderStyle = collapse
-    ? getCollapsedTableBorderStyle(display, tableStyle, getCellStyle)
+    ? getCollapsedTableBorderStyle(grid, tableStyle, getCellStyle)
     : null;
   const cellStyles = new Map<TNode, ResolvedCellStyle>();
-  for (const cell of display.cells) {
+  for (const cell of grid.cells) {
     const borderStyle = collapse
       ? getCollapsedCellBorderStyle(cell, getCellStyle(cell), {
-          ...display,
+          maxX: grid.maxX,
+          maxY: grid.maxY,
           tableBorderStyle,
           getCellStyle,
           neighbours: neighbours?.get(cell)

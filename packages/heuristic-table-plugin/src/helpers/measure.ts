@@ -1,4 +1,5 @@
-import { I18nManager, ViewStyle } from 'react-native';
+import { ViewStyle } from 'react-native';
+import { isRTL } from './tableStyles';
 
 type NativeBlockRetStyle = ViewStyle;
 type SpacingFields = Extract<
@@ -38,9 +39,7 @@ export function getHorizontalMargins(style: NativeBlockRetStyle): number {
  * width it may pass on.
  */
 export function getHorizontalInsets(style: NativeBlockRetStyle): number {
-  const rtl =
-    style.direction === 'rtl' ||
-    (style.direction !== 'ltr' && I18nManager.isRTL);
+  const rtl = isRTL(style);
   const start = style.paddingInlineStart ?? style.paddingStart;
   const end = style.paddingInlineEnd ?? style.paddingEnd;
   const horizontal =

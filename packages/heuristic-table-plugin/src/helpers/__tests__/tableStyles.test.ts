@@ -6,7 +6,7 @@ import {
   resolveBorderCollapse,
   resolveCellVerticalAlign
 } from '../tableStyles';
-import fillTableDisplay, { createEmptyDisplay } from '../fillTableDisplay';
+import buildTableGrid from '../buildTableGrid';
 import { createCellTNode, createTableTNode } from '../../__tests__/utils';
 
 /** A wrapper that paints all four of its resolved outer edges. */
@@ -19,8 +19,7 @@ const FRAMED = {
 
 function displayFor(html: string) {
   const table = createTableTNode(html);
-  const display = createEmptyDisplay({ contentWidth: 400 });
-  fillTableDisplay(table, display);
+  const display = buildTableGrid(table);
   return { display, table };
 }
 

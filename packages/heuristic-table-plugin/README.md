@@ -74,7 +74,6 @@ const html = `
 `;
 
 const htmlProps = {
-  WebView,
   renderers: {
     ...tableRenderers
   },
@@ -101,6 +100,18 @@ To change the layout of cells and other options, you can pass a config object
 to the `renderersProps.table` prop of `RenderHTML` component.
 
 See the documentation for this object here: [`HeuristicTablePluginConfig`](docs/heuristic-table-plugin.heuristictablepluginconfig.md)
+
+| Option | Default | What it does |
+| --- | --- | --- |
+| `forceStretch` | `true` | Whether an auto-width table fills its containing block, or shrinks to fit its content. |
+| `growBeyondHeight` | `false` | Whether a declared table `height` is a minimum the table may grow past, or a fixed viewport that scrolls. |
+| `borderCollapse` | from the markup | Overrides the table's border model. When omitted, an inline `border-collapse` (or a `rules` attribute) decides. |
+| `baseFontCoeff` | `0.65` | The average character width, as a fraction of the font size. Text is estimated, never measured — raise it if tables come out too narrow, lower it if cells claim more width than their content needs. |
+| `fontWeightCoeffs` | see below | How much wider text renders per font weight, keyed by the stringified `fontWeight`. Merged over the defaults, so `{ bold: 1.05 }` retunes bold alone. |
+| `getStyleForCell` | — | Returns extra styles per cell. Called once per cell per layout, against provisional widths. |
+
+Pass `fontWeightCoeffs` and `getStyleForCell` as referentially stable values: a
+fresh literal on every render relays out every table using it.
 
 ### Cell padding
 
@@ -143,9 +154,11 @@ import React from 'react';
 import tableRenderers, {useHtmlTableProps, HTMLTable} from '@native-html/heuristic-table-plugin';
 
 function TableRenderer(props) {
-  const tableProps = useHtmlTableProps(props, /* config */);
+  const tableProps = useHtmlTableProps(props);
+  // Table options come from `renderersProps.table`, not from this hook.
+  // Its optional second argument is `{ overrideContentWidth }` alone.
   // Do customize the props here; wrap with your own container...
-  return <HTMLTable {..tableProps} />;
+  return <HTMLTable {...tableProps} />;
 };
 
 const renderers = {
@@ -158,8 +171,8 @@ const renderers = {
 
 ### Customizing Th and Td renderers
 
-You can customize cell rendering via `useHtmlTableCellProps`, `thModel` and
-`tdModel` exports. This renderer will receive a special `propsFromParent` of
+You can customize cell rendering via the `useHtmlTableCellProps` hook. Such a
+renderer receives a special `propsFromParent` of
 type
 [`TableCellPropsFromParent`](docs/heuristic-table-plugin.tablecellpropsfromparent.md).
 You can take advantage of this information to customize depending on the
@@ -170,8 +183,7 @@ import React from 'react';
 import {
   TableRenderer,
   ThRenderer,
-  useHtmlTableCellProps,
-  tdModel
+  useHtmlTableCellProps
 } from '@native-html/heuristic-table-plugin';
 
 function TdRenderer(props) {
@@ -179,12 +191,12 @@ function TdRenderer(props) {
   // The cell parent prop contains information about this cell,
   // especially its position (x, y) and lengths (lenX, lenY).
   // In this example, we customize the background depending on the
-  // y coordinate (row index).
+  // x coordinate (column index).
   const { cell } = cellProps.propsFromParent;
   const style = [
     cellProps.style,
-    backgroundColor: cell.x % 2 === 0 ? 'lightgray' : 'white'
-  ]
+    { backgroundColor: cell.x % 2 === 0 ? 'lightgray' : 'white' }
+  ];
   return React.createElement(cellProps.TDefaultRenderer, { ...cellProps, style });
 }
 

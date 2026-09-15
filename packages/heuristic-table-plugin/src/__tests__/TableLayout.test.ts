@@ -465,12 +465,12 @@ describe('TableLayout', () => {
     const rows = '<tr><td>alpha</td><td>beta</td></tr>';
 
     it('should lay out against the width left by a padded ancestor', () => {
-      const { assignableWidth, availableWidth, totalWidth } = layoutFor(
+      const { viewportWidth, availableWidth, totalWidth } = layoutFor(
         `<div style="padding: 30px"><table>${rows}</table></div>`,
         { contentWidth: 400, forceStretch: true }
       );
       expect(availableWidth).toBe(340);
-      expect(assignableWidth).toBe(340);
+      expect(viewportWidth).toBe(340);
       expect(totalWidth).toBeCloseTo(340);
     });
 
@@ -485,12 +485,12 @@ describe('TableLayout', () => {
     it('should keep the columns inside the table own padding and border', () => {
       // `width` is a border box in React Native, so padding and border eat into
       // the space the columns may use rather than adding to the table width.
-      const { assignableWidth, availableWidth, totalWidth } = layoutFor(
+      const { viewportWidth, availableWidth, totalWidth } = layoutFor(
         `<table style="padding: 10px; border: 1px solid black">${rows}</table>`,
         { contentWidth: 400, forceStretch: true }
       );
       expect(availableWidth).toBe(400);
-      expect(assignableWidth).toBe(378);
+      expect(viewportWidth).toBe(378);
       expect(totalWidth).toBeCloseTo(378);
     });
 
@@ -500,33 +500,33 @@ describe('TableLayout', () => {
       // block while the table box is allowed only what is left of it, and the
       // difference would surface as a scroller the very same table without a
       // declared width never gets.
-      const { totalWidth, assignableWidth } = layoutFor(
+      const { totalWidth, viewportWidth } = layoutFor(
         `<table style="width: 100%; margin: 0 10px">${rows}</table>`,
         { contentWidth: 400, forceStretch: true }
       );
-      expect(assignableWidth).toBe(380);
+      expect(viewportWidth).toBe(380);
       expect(totalWidth).toBeCloseTo(380);
-      expect(shouldScrollTable(totalWidth, assignableWidth)).toBe(false);
+      expect(shouldScrollTable(totalWidth, viewportWidth)).toBe(false);
     });
 
     it('should still scroll an absolute width wider than the container', () => {
       // Clamping the columns to the available width instead would silently
       // drop the width the table asked for.
-      const { totalWidth, assignableWidth } = layoutFor(
+      const { totalWidth, viewportWidth } = layoutFor(
         `<table style="width: 800px">${rows}</table>`,
         { contentWidth: 400 }
       );
       expect(totalWidth).toBeCloseTo(800);
-      expect(shouldScrollTable(totalWidth, assignableWidth)).toBe(true);
+      expect(shouldScrollTable(totalWidth, viewportWidth)).toBe(true);
     });
 
     it('should take the table own margins out of the width it may occupy', () => {
-      const { assignableWidth, availableWidth } = layoutFor(
+      const { viewportWidth, availableWidth } = layoutFor(
         `<table style="margin: 25px">${rows}</table>`,
         { contentWidth: 400, forceStretch: true }
       );
       expect(availableWidth).toBe(350);
-      expect(assignableWidth).toBe(350);
+      expect(viewportWidth).toBe(350);
     });
 
     it('should stretch to the available width by default', () => {
@@ -606,28 +606,28 @@ describe('TableLayout', () => {
     it('should report the column overflow beyond the table max-width', () => {
       // The cells demand 600px inside a table that paints only 300px, so the
       // surplus belongs to a horizontal scroller rather than spilling out.
-      const { totalWidth, assignableWidth } = layoutFor(
+      const { totalWidth, viewportWidth } = layoutFor(
         `<table style="max-width: 300px">
           <tr><td style="width: 300px">A</td><td style="width: 300px">B</td></tr>
         </table>`,
         { contentWidth: 600, forceStretch: false }
       );
-      expect(assignableWidth).toBe(300);
+      expect(viewportWidth).toBe(300);
       expect(totalWidth).toBeGreaterThanOrEqual(600);
-      expect(shouldScrollTable(totalWidth, assignableWidth)).toBe(true);
+      expect(shouldScrollTable(totalWidth, viewportWidth)).toBe(true);
     });
 
     it('should cap usedWidth at the containing width when padding overflows', () => {
       // The insets were added back after the assignable width had been
       // floored at zero, so a table whose padding alone overflows its
       // container painted a box wider than the room it was given.
-      const { usedWidth, assignableWidth } = layoutFor(
+      const { usedWidth, viewportWidth } = layoutFor(
         `<div style="width: 30px">
           <table style="padding: 40px"><tr><td>A</td></tr></table>
         </div>`,
         { contentWidth: 400, forceStretch: true }
       );
-      expect(assignableWidth).toBe(0);
+      expect(viewportWidth).toBe(0);
       expect(usedWidth).toBe(30);
     });
 
@@ -648,13 +648,13 @@ describe('TableLayout', () => {
     });
 
     it('should still overflow when the minimum widths do not fit', () => {
-      const { totalWidth, assignableWidth } = layoutFor(
+      const { totalWidth, viewportWidth } = layoutFor(
         `<div style="padding: 50px">
           <table><tr><td style="width: 300px">A</td><td style="width: 300px">B</td></tr></table>
         </div>`,
         { contentWidth: 400, forceStretch: true }
       );
-      expect(assignableWidth).toBe(300);
+      expect(viewportWidth).toBe(300);
       expect(totalWidth).toBeGreaterThanOrEqual(600);
     });
   });
