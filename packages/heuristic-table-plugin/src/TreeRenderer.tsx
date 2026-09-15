@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { StyleSheet, View, ViewStyle } from 'react-native';
 import { TNode, TNodeRenderer } from '@native-html/render';
 import { ResolvedCellStyle } from './helpers/resolveTableStyles';
 import { HeuristicTablePluginConfig, TableRenderNode } from './shared-types';
+import CellContentWidthContext from './CellContentWidthContext';
+import { getHorizontalInsets } from './helpers/measure';
 
 const styles = StyleSheet.create({
   colContainer: { flexDirection: 'column', flexGrow: 1 },
@@ -30,26 +32,42 @@ export default function TreeRenderer({
   maxX: number;
   maxY: number;
 }) {
+  const cellContentBox = useMemo(
+    () =>
+      node.type === 'cell'
+        ? {
+            tnode: node.tnode,
+            contentWidth: Math.max(
+              0,
+              node.width -
+                getHorizontalInsets(cellStyles.get(node.tnode)!.style)
+            )
+          }
+        : undefined,
+    [node, cellStyles]
+  );
   if (node.type === 'cell') {
     return (
       <View style={{ width: node.width }}>
-        <TNodeRenderer
-          renderIndex={renderIndex}
-          renderLength={renderLength}
-          propsFromParent={
-            {
-              cell: node,
-              collapsedMarginTop: null,
-              config,
-              resolvedCellStyle: cellStyles.get(node.tnode),
-              borderCollapse,
-              tableBorderStyle,
-              maxX,
-              maxY
-            } as any
-          }
-          tnode={node.tnode}
-        />
+        <CellContentWidthContext.Provider value={cellContentBox}>
+          <TNodeRenderer
+            renderIndex={renderIndex}
+            renderLength={renderLength}
+            propsFromParent={
+              {
+                cell: node,
+                collapsedMarginTop: null,
+                config,
+                resolvedCellStyle: cellStyles.get(node.tnode),
+                borderCollapse,
+                tableBorderStyle,
+                maxX,
+                maxY
+              } as any
+            }
+            tnode={node.tnode}
+          />
+        </CellContentWidthContext.Provider>
       </View>
     );
   }

@@ -1,3 +1,4 @@
+import { I18nManager } from 'react-native';
 import {
   getCollapsedCellBorderStyle,
   getCollapsedTableBorderStyle,
@@ -6,21 +7,7 @@ import {
   resolveCellVerticalAlign
 } from '../tableStyles';
 import fillTableDisplay, { createEmptyDisplay } from '../fillTableDisplay';
-import { createTableTNode } from './utils';
-
-function findCell(html: string, x = 0) {
-  const table = createTableTNode(html);
-  const cells = [] as typeof table.children;
-  const visit = (node: (typeof table.children)[number]) => {
-    if (node.tagName === 'td' || node.tagName === 'th') {
-      cells.push(node);
-    } else {
-      node.children.forEach(visit);
-    }
-  };
-  table.children.forEach(visit);
-  return cells[x];
-}
+import { createCellTNode, createTableTNode } from './utils';
 
 /** A wrapper that paints all four of its resolved outer edges. */
 const FRAMED = {
@@ -41,14 +28,16 @@ describe('table styles', () => {
   describe('vertical alignment', () => {
     it('declares nothing when the cell inherits the HTML default', () => {
       expect(
-        resolveCellVerticalAlign(findCell('<table><tr><td>A</td></tr></table>'))
+        resolveCellVerticalAlign(
+          createCellTNode('<table><tr><td>A</td></tr></table>')
+        )
       ).toBeNull();
     });
 
     it('honours inline cell alignment', () => {
       expect(
         resolveCellVerticalAlign(
-          findCell(
+          createCellTNode(
             '<table><tr><td style="vertical-align: bottom">A</td></tr></table>'
           )
         )
@@ -58,7 +47,7 @@ describe('table styles', () => {
     it('inherits inline row alignment', () => {
       expect(
         resolveCellVerticalAlign(
-          findCell(
+          createCellTNode(
             '<table><tr style="vertical-align: top"><td>A</td></tr></table>'
           )
         )
@@ -68,9 +57,110 @@ describe('table styles', () => {
     it('honours the legacy valign attribute', () => {
       expect(
         resolveCellVerticalAlign(
-          findCell('<table><tr><td valign="baseline">A</td></tr></table>')
+          createCellTNode(
+            '<table><tr><td valign="baseline">A</td></tr></table>'
+          )
         )
       ).toBe('baseline');
+    });
+
+    it.each(['vertical-align: TOP', 'valign="TOP"'])(
+      'matches the keyword in %s whatever its case',
+      (declaration) => {
+        const attribute = declaration.startsWith('valign');
+        expect(
+          resolveCellVerticalAlign(
+            createCellTNode(
+              `<table><tr><td ${
+                attribute ? declaration : `style="${declaration}"`
+              }>A</td></tr></table>`
+            )
+          )
+        ).toBe('top');
+      }
+    );
+
+    it('honours an important declaration without its keyword', () => {
+      expect(
+        resolveCellVerticalAlign(
+          createCellTNode(
+            '<table><tr><td style="vertical-align: bottom !important">A</td></tr></table>'
+          )
+        )
+      ).toBe('bottom');
+    });
+
+    it('takes the last of several declarations, as the cascade does', () => {
+      expect(
+        resolveCellVerticalAlign(
+          createCellTNode(
+            '<table><tr><td style="vertical-align: top; vertical-align: bottom">A</td></tr></table>'
+          )
+        )
+      ).toBe('bottom');
+    });
+
+    it('skips inline style segments that declare nothing', () => {
+      // A trailing semicolon leaves an empty segment, and a malformed one has
+      // no colon to split on. Neither may derail the properties around them.
+      expect(
+        resolveCellVerticalAlign(
+          createCellTNode(
+            '<table><tr><td style="color: red; oops; vertical-align: bottom;">A</td></tr></table>'
+          )
+        )
+      ).toBe('bottom');
+    });
+
+    it.each(['initial', 'unset'])(
+      'resets %s to the CSS initial value',
+      (keyword) => {
+        expect(
+          resolveCellVerticalAlign(
+            createCellTNode(
+              `<table><tr><td style="vertical-align: ${keyword}">A</td></tr></table>`
+            )
+          )
+        ).toBe('baseline');
+      }
+    );
+
+    it.each(['10px', '50%', 'super', 'text-bottom'])(
+      'treats the inline-only value %s as baseline, as CSS does for a cell',
+      (value) => {
+        expect(
+          resolveCellVerticalAlign(
+            createCellTNode(
+              `<table><tr><td style="vertical-align: ${value}">A</td></tr></table>`
+            )
+          )
+        ).toBe('baseline');
+      }
+    );
+
+    it.each(['inherit', 'revert', 'revert-layer'])(
+      'keeps walking up the tree past %s',
+      (keyword) => {
+        // The keyword declares nothing of its own: the cell takes whatever its
+        // row declares, exactly as though it had said nothing at all.
+        expect(
+          resolveCellVerticalAlign(
+            createCellTNode(
+              `<table><tr style="vertical-align: top"><td style="vertical-align: ${keyword}">A</td></tr></table>`
+            )
+          )
+        ).toBe('top');
+      }
+    );
+
+    it('reports nothing when only an inherit keyword is declared', () => {
+      expect(
+        resolveCellVerticalAlign(
+          createCellTNode(
+            '<table><tr><td style="vertical-align: inherit">A</td></tr></table>'
+          )
+        )
+      ).toBeNull();
     });
   });
 
@@ -85,7 +175,8 @@ describe('table styles', () => {
     it('gives a bare cell one pixel on every side', () => {
       expect(
         getDefaultCellPaddingStyle(
-          findCell('<table><tr><td>A</td></tr></table>').styles.nativeBlockRet
+          createCellTNode('<table><tr><td>A</td></tr></table>').styles
+            .nativeBlockRet
         )
       ).toEqual(ONE_PIXEL_EVERY_SIDE);
     });
@@ -95,7 +186,7 @@ describe('table styles', () => {
       // replaces the default on that side alone — as it does in a browser.
       expect(
         getDefaultCellPaddingStyle(
-          findCell(
+          createCellTNode(
             '<table><tr><td style="padding-left: 8px">A</td></tr></table>'
           ).styles.nativeBlockRet
         )
@@ -105,8 +196,9 @@ describe('table styles', () => {
     it('declares nothing for a cell padded on all sides', () => {
       expect(
         getDefaultCellPaddingStyle(
-          findCell('<table><tr><td style="padding: 8px">A</td></tr></table>')
-            .styles.nativeBlockRet
+          createCellTNode(
+            '<table><tr><td style="padding: 8px">A</td></tr></table>'
+          ).styles.nativeBlockRet
         )
       ).toEqual({});
     });
@@ -114,8 +206,9 @@ describe('table styles', () => {
     it('keeps a zero padding at zero', () => {
       expect(
         getDefaultCellPaddingStyle(
-          findCell('<table><tr><td style="padding: 0">A</td></tr></table>')
-            .styles.nativeBlockRet
+          createCellTNode(
+            '<table><tr><td style="padding: 0">A</td></tr></table>'
+          ).styles.nativeBlockRet
         )
       ).toEqual({});
     });
@@ -145,7 +238,7 @@ describe('table styles', () => {
     it('lets the config decide a side the source CSS left bare', () => {
       expect(
         getDefaultCellPaddingStyle(
-          findCell(
+          createCellTNode(
             '<table><tr><td style="padding-top: 8px">A</td></tr></table>'
           ).styles.nativeBlockRet,
           { paddingHorizontal: 4 }
@@ -172,6 +265,33 @@ describe('table styles', () => {
         '<table style="border-collapse: collapse"><tr><td>A</td></tr></table>'
       );
       expect(resolveBorderCollapse(table, 'separate')).toBe(false);
+    });
+
+    it('reads the legacy rules attribute as a collapsed table', () => {
+      // The HTML rendering rules give any `rules` value collapsed borders.
+      const table = createTableTNode(
+        '<table rules="all"><tr><td>A</td></tr></table>'
+      );
+      expect(resolveBorderCollapse(table)).toBe(true);
+    });
+
+    it.each(['collapse', 'separate'] as const)(
+      'inherits %s from an ancestor that declares it',
+      (value) => {
+        // `border-collapse` is inherited, and only inline declarations survive
+        // the CSS processor, so the ancestors have to be walked by hand.
+        const table = createTableTNode(
+          `<div style="border-collapse: ${value}"><section><table><tr><td>A</td></tr></table></section></div>`
+        );
+        expect(resolveBorderCollapse(table)).toBe(value === 'collapse');
+      }
+    );
+
+    it('prefers its own declaration to an inherited one', () => {
+      const table = createTableTNode(
+        '<div style="border-collapse: collapse"><table style="border-collapse: separate"><tr><td>A</td></tr></table></div>'
+      );
+      expect(resolveBorderCollapse(table)).toBe(false);
     });
 
     it('removes duplicate leading and top cell edges', () => {
@@ -206,56 +326,6 @@ describe('table styles', () => {
         borderBottomWidth: 0,
         borderLeftWidth: 0
       });
-    });
-
-    it('paints the next row top border on the current cell bottom edge', () => {
-      // The boundary below the cell is the same declaration as the one above
-      // the next row, and it is the only half this cell can paint.
-      expect(
-        getCollapsedCellBorderStyle(
-          { x: 0, y: 0, lenX: 1, lenY: 1 },
-          { borderTopWidth: 2, borderTopColor: 'red' },
-          {
-            maxX: 0,
-            maxY: 3,
-            tableBorderStyle: { ...FRAMED, borderBottomWidth: 0 },
-            cells: [
-              {
-                x: 0,
-                y: 1,
-                lenX: 1,
-                lenY: 1,
-                tnode: findCell('<table><tr><td>A</td></tr></table>')
-              }
-            ],
-            getCellStyle: () => ({ borderTopWidth: 2, borderTopColor: 'red' })
-          }
-        )
-      ).toMatchObject({ borderBottomWidth: 2, borderBottomColor: 'red' });
-    });
-
-    it('paints the next column left border on the current cell right edge', () => {
-      expect(
-        getCollapsedCellBorderStyle(
-          { x: 1, y: 0, lenX: 1, lenY: 1 },
-          { borderLeftWidth: 2, borderLeftColor: 'red' },
-          {
-            maxX: 3,
-            maxY: 0,
-            tableBorderStyle: FRAMED,
-            cells: [
-              {
-                x: 2,
-                y: 0,
-                lenX: 1,
-                lenY: 1,
-                tnode: findCell('<table><tr><td>A</td></tr></table>')
-              }
-            ],
-            getCellStyle: () => ({ borderLeftWidth: 2, borderLeftColor: 'red' })
-          }
-        )
-      ).toMatchObject({ borderRightWidth: 2, borderRightColor: 'red' });
     });
 
     it('keeps an outside edge the table wrapper does not paint', () => {
@@ -309,7 +379,7 @@ describe('table styles', () => {
                 y: 1,
                 lenX: 1,
                 lenY: 1,
-                tnode: findCell('<table><tr><td>A</td></tr></table>')
+                tnode: createCellTNode('<table><tr><td>A</td></tr></table>')
               }
             ],
             getCellStyle: () => ({ borderLeftWidth: 4, borderLeftColor: 'red' })
@@ -411,6 +481,44 @@ describe('table styles', () => {
         borderBottomColor: 'blue',
         borderLeftColor: 'blue'
       });
+    });
+  });
+
+  describe('writing direction', () => {
+    // A style which declares no `direction` of its own follows the locale, so
+    // the side a logical edge lands on is only knowable from `I18nManager`.
+    // This is the branch a right-to-left app takes, and the explicit
+    // `direction` one covered elsewhere never reaches it.
+    afterEach(() => jest.restoreAllMocks());
+
+    const LOGICAL_START = { borderStartWidth: 7, borderStartColor: 'red' };
+
+    it.each([
+      [false, 'borderLeftWidth'],
+      [true, 'borderRightWidth']
+    ] as const)(
+      'resolves a logical start edge with isRTL %s',
+      (isRTL, physicalSide) => {
+        jest.replaceProperty(I18nManager, 'isRTL', isRTL);
+        expect(
+          getCollapsedCellBorderStyle(
+            { x: 0, y: 0, lenX: 1, lenY: 1 },
+            LOGICAL_START,
+            { maxX: 0, maxY: 0, tableBorderStyle: null }
+          )
+        ).toMatchObject({ [physicalSide]: 7 });
+      }
+    );
+
+    it('lets an explicit direction outrank the locale', () => {
+      jest.replaceProperty(I18nManager, 'isRTL', true);
+      expect(
+        getCollapsedCellBorderStyle(
+          { x: 0, y: 0, lenX: 1, lenY: 1 },
+          { ...LOGICAL_START, direction: 'ltr' },
+          { maxX: 0, maxY: 0, tableBorderStyle: null }
+        )
+      ).toMatchObject({ borderLeftWidth: 7, borderRightWidth: 0 });
     });
   });
 });

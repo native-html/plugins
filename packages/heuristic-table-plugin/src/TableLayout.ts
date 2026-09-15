@@ -1,4 +1,5 @@
 import { sum } from 'ramda';
+import type { CellContentBox } from './CellContentWidthContext';
 import { ViewStyle } from 'react-native';
 import { TNode } from '@native-html/render';
 import computeColumnWidths from './helpers/computeColumnWidths';
@@ -59,10 +60,14 @@ export default class TableLayout {
   public readonly cellStyles: ReadonlyMap<TNode, ResolvedCellStyle>;
   public readonly cells: TableCell[];
   public readonly renderTree: TableRoot;
-  constructor(tnode: TNode, config: Settings) {
+  constructor(tnode: TNode, config: Settings, cellContentBox?: CellContentBox) {
     const style = tnode.styles.nativeBlockRet;
     this.borderCollapse = resolveBorderCollapse(tnode, config.borderCollapse);
-    const containingWidth = resolveAvailableWidth(tnode, config.contentWidth);
+    const containingWidth = resolveAvailableWidth(
+      tnode,
+      config.contentWidth,
+      cellContentBox
+    );
     const availableWidth = Math.max(
       0,
       containingWidth - getHorizontalMargins(style)

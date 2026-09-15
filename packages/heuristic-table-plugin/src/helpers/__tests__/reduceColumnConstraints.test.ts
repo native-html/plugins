@@ -1,7 +1,7 @@
 import reduceColumnConstraints from '../reduceColumnConstraints';
 
 describe('reduceColumnConstraints', () => {
-  it('raises a maximum below its minimum to the minimum', () => {
+  it('should raise a maximum below its minimum to the minimum', () => {
     expect(
       reduceColumnConstraints([
         {

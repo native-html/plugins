@@ -1,24 +1,10 @@
-import { TNode } from '@native-html/render';
 import TCellConstraintsComputer, {
   DEFAULT_FONT_WEIGHT_COEFFS,
   FontWeightCoefficients
 } from '../TCellConstraintsComputer';
 import { TCellConstraints } from '../../shared-types';
 import { DEFAULT_CELL_PADDING } from '../tableStyles';
-import { createTableTNode } from './utils';
-
-function findFirstCell(tnode: TNode): TNode | null {
-  if (tnode.tagName === 'td' || tnode.tagName === 'th') {
-    return tnode;
-  }
-  for (const child of tnode.children) {
-    const found = findFirstCell(child);
-    if (found) {
-      return found;
-    }
-  }
-  return null;
-}
+import { createCellTNode } from './utils';
 
 /**
  * Pinned here so that the break-opportunity assertions below test the segment
@@ -39,14 +25,13 @@ function constraintsFor(
   contentWidth = 400,
   fontWeightCoeffs?: FontWeightCoefficients
 ): TCellConstraints {
-  const table = createTableTNode(`<table><tr>${cellMarkup}</tr></table>`);
-  const cell = findFirstCell(table);
-  expect(cell).not.toBeNull();
   return new TCellConstraintsComputer({
     contentWidth,
     baseFontCoeff: BASE_FONT_COEFF,
     fontWeightCoeffs
-  }).computeCellConstraints(cell as TNode);
+  }).computeCellConstraints(
+    createCellTNode(`<table><tr>${cellMarkup}</tr></table>`)
+  );
 }
 
 describe('TCellConstraintsComputer', () => {
@@ -123,7 +108,7 @@ describe('TCellConstraintsComputer', () => {
       );
     });
 
-    it('uses the plugin heuristic to break ISO-2026 into two segments', () => {
+    it('should use the plugin heuristic to break ISO-2026 into two segments', () => {
       // This heuristic differs from default UAX #14 LB25 (HY × NU).
       // Both "ISO-" and "2026" have four characters.
       const { minWidth } = constraintsFor('<td>ISO-2026</td>');
@@ -348,24 +333,33 @@ describe('TCellConstraintsComputer', () => {
 
   describe('maximum cell width', () => {
     it.each([
-      'AAAA<br>BBBB',
-      '<div>AAAA</div><div>BBBB</div>',
-      'AAAA<div>BBBB</div>'
+      'AA<br>BBBB BBBB',
+      'BBBB BBBB<br>AA',
+      '<div>AA</div><div>BBBB BBBB</div>',
+      '<div>BBBB BBBB</div><div>AA</div>',
+      'AA<div>BBBB BBBB</div>',
+      'BBBB BBBB<div>AA</div>'
     ])(
-      'uses the widest forced line in %s without losing text density',
+      'should use the widest forced line in %s without losing text density',
       (markup) => {
         const actual = constraintsFor(`<td>${markup}</td>`);
-        const line = constraintsFor('<td>AAAA</td>');
-        expect(actual.maxWidth).toBeCloseTo(line.maxWidth);
-        expect(actual.contentDensity).toBeCloseTo(2 * line.contentDensity);
+        // The wider line contains a space: its width exceeds the longest-word
+        // minimum, which would otherwise mask a broken maximum calculation.
+        expect(actual.maxWidth).toBeCloseTo(
+          DEFAULT_HORIZONTAL_PADDING + 9 * 14 * BASE_FONT_COEFF
+        );
+        expect(actual.contentDensity).toBeCloseTo(11 * 14 * BASE_FONT_COEFF);
       }
     );
 
-    it('keeps styled fragments together when computing the widest line', () => {
-      const actual = constraintsFor(
-        '<td>AB<span style="font-size:20px">CD</span><br>E</td>'
+    it.each([
+      'AB<span style="font-size:20px"> CD</span><br>E',
+      'E<br>AB<span style="font-size:20px"> CD</span>'
+    ])('should sum styled fragments in the widest line of %s', (markup) => {
+      const actual = constraintsFor(`<td>${markup}</td>`);
+      expect(actual.maxWidth).toBeCloseTo(
+        DEFAULT_HORIZONTAL_PADDING + BASE_FONT_COEFF * (2 * 14 + 3 * 20)
       );
-      expect(actual.maxWidth).toBeCloseTo(2 + 2 * BASE_FONT_COEFF * (14 + 20));
     });
 
     it('should cap the maximum width at max-width', () => {
@@ -375,7 +369,7 @@ describe('TCellConstraintsComputer', () => {
       expect(maxWidth).toBe(100);
     });
 
-    it('preserves the full unbreakable word when max-width is smaller', () => {
+    it('should preserve the full unbreakable word when max-width is smaller', () => {
       // A cap tighter than the longest word must not drive the cell below the
       // width it needs to hold that word.
       const { minWidth, maxWidth } = constraintsFor(

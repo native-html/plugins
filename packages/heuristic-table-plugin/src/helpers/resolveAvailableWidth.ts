@@ -2,6 +2,7 @@ import { TNode } from '@native-html/render';
 import { getHorizontalInsets, getHorizontalMargins } from './measure';
 import { clampWidth, resolveWidthConstraints } from './resolveWidth';
 import { getPaintedBlockStyle } from './tableStyles';
+import type { CellContentBox } from '../CellContentWidthContext';
 
 /**
  * The width `tnode` offers to a block-level child, i.e. its content box.
@@ -45,10 +46,19 @@ function reduceToContentBox(tnode: TNode, containingWidth: number): number {
  */
 export default function resolveAvailableWidth(
   tnode: TNode,
-  contentWidth: number
+  contentWidth: number,
+  cellContentBox?: CellContentBox
 ): number {
   const ancestors: TNode[] = [];
   for (let parent = tnode.parent; parent; parent = parent.parent) {
+    if (parent === cellContentBox?.tnode) {
+      // Start inside the assigned cell, then account only for wrappers
+      // between that cell and this table. Its insets are already deducted.
+      return ancestors.reduce(
+        (width, ancestor) => reduceToContentBox(ancestor, width),
+        cellContentBox.contentWidth
+      );
+    }
     ancestors.unshift(parent);
   }
   return ancestors.reduce(

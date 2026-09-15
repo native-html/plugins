@@ -1,6 +1,6 @@
 import React, { PropsWithChildren } from 'react';
 import { render } from '@testing-library/react-native';
-import { ScrollView, View, ViewStyle } from 'react-native';
+import { ScrollView, StyleSheet, View, ViewStyle } from 'react-native';
 import HTMLTable from '../../HTMLTable';
 import TableLayout from '../../TableLayout';
 import { HTMLTableProps } from '../../shared-types';
@@ -36,6 +36,18 @@ function renderTable(html: string, contentWidth: number) {
 }
 
 describe('HTMLTable containers', () => {
+  it('passes an explicit table height as minHeight to the wrapper', () => {
+    const rendered = renderTable(
+      '<table style="height:48px"><tr><td>A</td></tr></table>',
+      400
+    );
+    const wrapper = rendered.getByTestId('table-wrapper');
+    expect(wrapper).toHaveStyle({ minHeight: 48 });
+    expect(StyleSheet.flatten(wrapper.props.style)).not.toHaveProperty(
+      'height'
+    );
+  });
+
   it('uses the capped table width for the wrapper and overflow viewport', () => {
     const rendered = renderTable(
       '<table style="max-width:300px"><tr><td style="width:300px">A</td><td style="width:300px">B</td></tr></table>',
@@ -58,7 +70,7 @@ describe('HTMLTable containers', () => {
       10
     ]
   ] as const)(
-    'clamps the painted wrapper when its insets exceed its width: %s',
+    'caps the wrapper style width when its insets exceed its width: %s',
     (html, width) => {
       const rendered = renderTable(html, 400);
       expect(rendered.getByTestId('table-wrapper')).toHaveStyle({ width });
@@ -68,7 +80,7 @@ describe('HTMLTable containers', () => {
     }
   );
 
-  it('paints a shrink-to-fit wrapper with its own insets', () => {
+  it('includes its own insets in the shrink-to-fit wrapper width', () => {
     const rendered = renderTable(
       '<table style="padding:10px"><tr><td style="width:100px">A</td></tr></table>',
       400

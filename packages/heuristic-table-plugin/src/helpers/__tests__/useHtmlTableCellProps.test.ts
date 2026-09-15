@@ -1,21 +1,8 @@
 import { ViewStyle } from 'react-native';
-import { CustomRendererProps, TBlock, TNode } from '@native-html/render';
+import { CustomRendererProps, TBlock } from '@native-html/render';
 import useHtmlTableCellProps from '../../useHtmlTableCellProps';
 import { HeuristicTablePluginConfig, TableCell } from '../../shared-types';
-import { createTableTNode } from './utils';
-
-function findFirstCell(tnode: TNode): TNode | null {
-  if (tnode.tagName === 'td' || tnode.tagName === 'th') {
-    return tnode;
-  }
-  for (const child of tnode.children) {
-    const cell = findFirstCell(child);
-    if (cell) {
-      return cell;
-    }
-  }
-  return null;
-}
+import { createCellTNode } from './utils';
 
 /**
  * The style the cell renderer hands to the default renderer for the first cell
@@ -30,13 +17,10 @@ function cellStyleFor(
   cellMarkup: string,
   config: HeuristicTablePluginConfig = {}
 ): ViewStyle {
-  const tnode = findFirstCell(
-    createTableTNode(`<table><tr>${cellMarkup}</tr></table>`)
-  );
-  expect(tnode).not.toBeNull();
+  const tnode = createCellTNode(`<table><tr>${cellMarkup}</tr></table>`);
   const cell: TableCell = {
     type: 'cell',
-    tnode: tnode as TNode,
+    tnode,
     x: 0,
     y: 0,
     lenX: 1,
@@ -46,7 +30,7 @@ function cellStyleFor(
   };
   const props = {
     tnode,
-    style: tnode?.styles.nativeBlockRet,
+    style: tnode.styles.nativeBlockRet,
     propsFromParent: {
       cell,
       config,
@@ -60,6 +44,12 @@ function cellStyleFor(
 }
 
 describe('useHtmlTableCellProps', () => {
+  it.each(['td', 'th'])('passes an explicit %s height as minHeight', (tag) => {
+    const style = cellStyleFor(`<${tag} style="height:48px">A</${tag}>`);
+    expect(style.minHeight).toBe(48);
+    expect(style).not.toHaveProperty('height');
+  });
+
   it.each([
     ['top', 'flex-start'],
     ['baseline', 'flex-start'],

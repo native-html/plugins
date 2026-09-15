@@ -9,7 +9,7 @@ function layoutFor(html: string, settings: Settings): TableLayout {
 }
 
 describe('TableLayout', () => {
-  it('should honour an explicit cell width end to end', () => {
+  it('should honour an explicit cell width through the measurement pipeline', () => {
     // The column was previously clamped against a maximum derived from text
     // alone, which ignored the declared width and collapsed this column to the
     // width of the word "Hi".
@@ -319,6 +319,80 @@ describe('TableLayout', () => {
     expect(columnWidths[0]).toBeCloseTo(100);
   });
 
+  it('should apply the stricter of a col and colgroup max-width', () => {
+    // A bound is not a declaration and does not override: the group box holds
+    // the column box, so both caps apply and the tighter one decides.
+    expect(
+      layoutFor(
+        `<table style="width: 400px">
+          <colgroup style="max-width: 200px"><col style="max-width: 100px" /><col /></colgroup>
+          <tr><td>A</td><td>B</td></tr>
+        </table>`,
+        { contentWidth: 400, forceStretch: true }
+      ).columnWidths[0]
+    ).toBeCloseTo(100);
+  });
+
+  it('should apply a colgroup max-width tighter than its col one', () => {
+    // The same pair the other way round, so that neither side can be the one
+    // silently kept.
+    expect(
+      layoutFor(
+        `<table style="width: 400px">
+          <colgroup style="max-width: 100px"><col style="max-width: 300px" /><col /></colgroup>
+          <tr><td>A</td><td>B</td></tr>
+        </table>`,
+        { contentWidth: 400, forceStretch: true }
+      ).columnWidths[0]
+    ).toBeCloseTo(100);
+  });
+
+  it.each([
+    ['50%', '100px', 100],
+    ['10%', '300px', 40]
+  ])(
+    'should apply the stricter of a %s and a %s max-width on one column',
+    (groupCap, columnCap, expected) => {
+      // The two caps arrive in different units and are only comparable once
+      // the table width is known, so the percentage one travels unresolved.
+      expect(
+        layoutFor(
+          `<table style="width: 400px">
+            <colgroup style="max-width: ${groupCap}"><col style="max-width: ${columnCap}" /><col /></colgroup>
+            <tr><td>A</td><td>B</td></tr>
+          </table>`,
+          { contentWidth: 400, forceStretch: true }
+        ).columnWidths[0]
+      ).toBeCloseTo(expected);
+    }
+  );
+
+  it('should read a col declared outside any colgroup', () => {
+    // `col` is valid as a direct child of `table`, without a wrapping group.
+    const { columnWidths } = layoutFor(
+      `<table style="width: 400px">
+        <col style="width: 300px" /><col />
+        <tr><td>A</td><td>B</td></tr>
+      </table>`,
+      { contentWidth: 400, forceStretch: false }
+    );
+    expect(columnWidths[0]).toBeCloseTo(300);
+    expect(columnWidths[1]).toBeCloseTo(100);
+  });
+
+  it('should share the width evenly between columns of no intrinsic width', () => {
+    // Every column weighs zero, so proportional distribution has nothing to
+    // go on. An even share keeps the surplus rather than dropping it.
+    const { columnWidths, totalWidth } = layoutFor(
+      `<table>
+        <tr><td style="padding:0"></td><td style="padding:0"></td></tr>
+      </table>`,
+      { contentWidth: 400, forceStretch: true }
+    );
+    expect(columnWidths).toEqual([200, 200]);
+    expect(totalWidth).toBeCloseTo(400);
+  });
+
   it('should keep a column holding only an image', () => {
     // An image contributes no text, so a text-derived maximum of zero used to
     // clamp this column away entirely.
@@ -374,7 +448,7 @@ describe('TableLayout', () => {
     expect(totalWidth).toBeLessThanOrEqual(500);
   });
 
-  it('passes configured font coefficients through to column measurement', () => {
+  it('should pass configured font coefficients through to column measurement', () => {
     const { columnWidths } = layoutFor(
       '<table><tr><td style="padding:0;font-size:20px">AAAA</td><td style="padding:0;font-size:20px;font-weight:bold">AAAA</td></tr></table>',
       {
@@ -471,27 +545,39 @@ describe('TableLayout', () => {
       expect(totalWidth).toBeCloseTo(300);
     });
 
-    it('should not narrow a table by raising its min-width', () => {
-      // Laying the columns out against the floor resolves the percentage
-      // column against a *smaller* width, and the capped auto column cannot
-      // take up the slack. A floor may only widen the table.
-      const cols = `<colgroup>
-        <col style="width: 40%; max-width: 300px" />
-        <col style="max-width: 20px" />
-      </colgroup>`;
-      const body = `${cols}<tr><td>A</td><td>B</td></tr>`;
-      const { totalWidth: without } = layoutFor(`<table>${body}</table>`, {
-        contentWidth: 600,
-        forceStretch: false
-      });
-      const { totalWidth: with400 } = layoutFor(
-        `<table style="min-width: 400px">${body}</table>`,
-        { contentWidth: 600, forceStretch: false }
-      );
-      expect(with400).toBeGreaterThanOrEqual(without);
-    });
+    it.each([
+      [300, [240, 11.1]],
+      [580, [232, 20]]
+    ] as const)(
+      'should keep or grow the measured width when min-width is %spx and column caps are relative',
+      (minWidth, expectedWidths) => {
+        // The percentage cap falls from 240px to 120px in the 300px pass.
+        // Its result (120 + 20) must not replace the wider initial layout.
+        // At 580px the retry grows to 232 + 20, so ignoring min-width fails too.
+        const body = `<colgroup>
+          <col style="width:40%;max-width:40%" />
+          <col style="max-width:20px" />
+        </colgroup><tr><td>A</td><td>B</td></tr>`;
+        const settings = {
+          contentWidth: 600,
+          forceStretch: false,
+          baseFontCoeff: 0.65
+        };
+        const without = layoutFor(`<table>${body}</table>`, settings);
+        const raised = layoutFor(
+          `<table style="min-width:${minWidth}px">${body}</table>`,
+          settings
+        );
+        expect(without.columnWidths).toEqual([240, 11.1]);
+        raised.columnWidths.forEach((width, index) => {
+          expect(width).toBeCloseTo(expectedWidths[index]!);
+        });
+        expect(raised.columnWidths).toHaveLength(2);
+        expect(raised.totalWidth).toBeGreaterThanOrEqual(without.totalWidth);
+      }
+    );
 
-    it('reports the column overflow beyond the table max-width', () => {
+    it('should report the column overflow beyond the table max-width', () => {
       // The cells demand 600px inside a table that paints only 300px, so the
       // surplus belongs to a horizontal scroller rather than spilling out.
       const { totalWidth, assignableWidth } = layoutFor(
@@ -505,7 +591,7 @@ describe('TableLayout', () => {
       expect(shouldScrollTable(totalWidth, assignableWidth)).toBe(true);
     });
 
-    it('caps usedWidth at the containing width when padding overflows', () => {
+    it('should cap usedWidth at the containing width when padding overflows', () => {
       // The insets were added back after the assignable width had been
       // floored at zero, so a table whose padding alone overflows its
       // container painted a box wider than the room it was given.
@@ -519,7 +605,7 @@ describe('TableLayout', () => {
       expect(usedWidth).toBe(30);
     });
 
-    it('caps usedWidth at max-width when padding overflows', () => {
+    it('should cap usedWidth at max-width when padding overflows', () => {
       const { usedWidth } = layoutFor(
         '<table style="max-width: 10px; padding: 20px"><tr><td>A</td></tr></table>',
         { contentWidth: 400, forceStretch: true }

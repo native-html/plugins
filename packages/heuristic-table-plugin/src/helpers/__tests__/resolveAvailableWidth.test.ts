@@ -111,6 +111,37 @@ describe('resolveAvailableWidth', () => {
     ).toBe(400);
   });
 
+  it('should raise a narrow ancestor up to its min-width', () => {
+    expect(
+      availableWidthFor(
+        `<div style="width: 50px; min-width: 100px">
+          <table><tr><td>A</td></tr></table>
+        </div>`,
+        400
+      )
+    ).toBe(100);
+  });
+
+  // Legacy markup sizes a cell with a `width` attribute rather than CSS. It is
+  // the lowest-priority width hint, but it is still a width: ignoring it handed
+  // the nested table the whole 400px. Both spellings resolve to the same 200px
+  // box here, less the user-agent pixel of cell padding per side.
+  it.each([
+    ['50%', 'as a fraction of the containing block'],
+    ['200', 'as an absolute length']
+  ])(
+    'should resolve a presentational width attribute %s (%s)',
+    (declaration) => {
+      expect(
+        availableWidthFor(
+          `<table><tr><td width="${declaration}"><table><tr><td>A</td></tr></table></td></tr></table>`,
+          400,
+          1
+        )
+      ).toBe(198);
+    }
+  );
+
   describe('table cell ancestors', () => {
     // The user-agent `td, th { padding: 1px }` never reaches `nativeBlockRet`,
     // so a cell which declares nothing looks bare here while the renderer
@@ -159,20 +190,10 @@ describe('resolveAvailableWidth', () => {
     });
 
     it('should not give the default padding to a non-cell ancestor', () => {
-      expect(
-        availableWidthFor(`<div>${NESTED_TABLE}</div>`, 400)
-      ).toBe(400);
+      // The counterpart of the cases above: the user-agent padding belongs to
+      // `td`/`th` alone, so a plain wrapper must hand on everything it was
+      // given. Widening `isTableCell` would silently shrink every nested block.
+      expect(availableWidthFor(`<div>${NESTED_TABLE}</div>`, 400)).toBe(400);
     });
-  });
-
-  it('should raise a narrow ancestor up to its min-width', () => {
-    expect(
-      availableWidthFor(
-        `<div style="width: 50px; min-width: 100px">
-          <table><tr><td>A</td></tr></table>
-        </div>`,
-        400
-      )
-    ).toBe(100);
   });
 });

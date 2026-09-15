@@ -1,4 +1,4 @@
-import { ViewStyle } from 'react-native';
+import { I18nManager, ViewStyle } from 'react-native';
 import { TNode } from '@native-html/render';
 import { Display, DisplayCell, TableCell } from '../shared-types';
 
@@ -281,14 +281,32 @@ function borderCandidate(
   side: BorderSide,
   fromCell: boolean
 ): BorderCandidate {
+  const rtl =
+    style.direction === 'rtl' ||
+    (style.direction !== 'ltr' && I18nManager.isRTL);
+  const logicalSide =
+    side === 'Left'
+      ? rtl
+        ? 'End'
+        : 'Start'
+      : side === 'Right'
+        ? rtl
+          ? 'Start'
+          : 'End'
+        : null;
   // The CSS processor always expands `border` per side, but
   // `getStyleForCell` is hand-written and the shorthand is the natural way to
   // reach for a border there, so fall back to it. An explicit per-side `0`
   // still wins, as it does in React Native.
-  const width = (style[`border${side}Width`] ?? style.borderWidth) as
-    | number
-    | undefined;
-  const color = (style[`border${side}Color`] ??
+  const width = ((logicalSide
+    ? style[`border${logicalSide}Width`]
+    : undefined) ??
+    style[`border${side}Width`] ??
+    style.borderWidth) as number | undefined;
+  const color = ((logicalSide
+    ? style[`border${logicalSide}Color`]
+    : undefined) ??
+    style[`border${side}Color`] ??
     style.borderColor) as ViewStyle['borderColor'];
   return {
     color: color ?? 'black',
@@ -296,6 +314,20 @@ function borderCandidate(
     style: style.borderStyle ?? 'solid',
     width: typeof width === 'number' ? width : 0
   };
+}
+
+/** Prevent logical edges from overriding the resolved physical borders. */
+function clearLogicalBorders(style: ViewStyle): ViewStyle {
+  const cleared: ViewStyle = {};
+  for (const key of [
+    'borderStartWidth',
+    'borderEndWidth',
+    'borderStartColor',
+    'borderEndColor'
+  ] as const) {
+    if (style[key] != null) Object.assign(cleared, { [key]: undefined });
+  }
+  return cleared;
 }
 
 function resolveBorderConflict(
@@ -376,7 +408,7 @@ export function getCollapsedTableBorderStyle<C extends CollapsibleCell>(
   tableStyle: ViewStyle,
   getCellStyle: (cell: C) => ViewStyle = sourceCellStyle
 ): ViewStyle {
-  const resolvedStyle: ViewStyle = {};
+  const resolvedStyle: ViewStyle = clearLogicalBorders(tableStyle);
   let strongestStyle: BorderCandidate['style'] | null = null;
   for (const side of ['Top', 'Right', 'Bottom', 'Left'] as const) {
     const winner = cellsAtOuterEdge(matrix, side).reduce(
@@ -449,7 +481,7 @@ export function getCollapsedCellBorderStyle(
     getCellStyle = sourceCellStyle
   }: CollapsedCellEdges
 ): ViewStyle {
-  const resolvedStyle: ViewStyle = {};
+  const resolvedStyle: ViewStyle = clearLogicalBorders(cellStyle);
   // A span that overruns the matrix is clipped to it rather than growing the
   // table, so it sits at the edge it overran.
   const isOuterEdge: Record<BorderSide, boolean> = {

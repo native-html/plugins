@@ -19,7 +19,7 @@ function makeDisplay(
 }
 
 describe('computeColumnWidths', () => {
-  it('preserves a fixed-width column beside a column with more content', () => {
+  it('should preserve a fixed-width column beside a column with more content', () => {
     // An icon column: a single wide glyph (`width: 40px` plus 11px of padding
     // and borders) whose one character makes for a very low content density.
     // CSS 2.1 §17.5.2.2 raises both the column minimum and maximum by the

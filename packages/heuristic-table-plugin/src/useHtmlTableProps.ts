@@ -1,4 +1,7 @@
-import { useMemo } from 'react';
+import { useContext, useMemo } from 'react';
+import CellContentWidthContext, {
+  CellContentBox
+} from './CellContentWidthContext';
 import {
   CustomRendererProps,
   TBlock,
@@ -11,14 +14,16 @@ import TableLayout from './TableLayout';
 
 function useTableLayout({
   tnode,
-  settings
+  settings,
+  cellContentBox
 }: {
   tnode: TNode;
   settings: Settings;
+  cellContentBox?: CellContentBox;
 }) {
   return useMemo(() => {
-    return new TableLayout(tnode, settings);
-  }, [tnode, settings]);
+    return new TableLayout(tnode, settings, cellContentBox);
+  }, [tnode, settings, cellContentBox]);
 }
 
 /**
@@ -47,6 +52,7 @@ export default function useHtmlTableProps(
   const borderCollapse = table?.borderCollapse;
   const getStyleForCell = table?.getStyleForCell;
   const sharedContentWidth = useContentWidth();
+  const cellContentBox = useContext(CellContentWidthContext);
   const contentWidth =
     typeof options.overrideContentWidth === 'number'
       ? options.overrideContentWidth
@@ -69,7 +75,14 @@ export default function useHtmlTableProps(
       getStyleForCell
     ]
   );
-  const layout = useTableLayout({ tnode, settings });
+  const layout = useTableLayout({
+    tnode,
+    settings,
+    cellContentBox:
+      typeof options.overrideContentWidth === 'number'
+        ? undefined
+        : cellContentBox
+  });
   return {
     layout,
     settings,

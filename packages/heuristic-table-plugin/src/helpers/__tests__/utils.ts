@@ -34,3 +34,33 @@ export function createTableTNode(html: string, nth = 0) {
   expect(table?.tagName).toBe('table');
   return table as TNode;
 }
+
+/**
+ * Every `td`/`th` of `tnode`, in document order.
+ *
+ * @remarks
+ * A cell is not descended into, so a table nested inside one contributes none
+ * of its own cells to the result.
+ */
+function collectCells(tnode: TNode, found: TNode[] = []): TNode[] {
+  if (tnode.tagName === 'td' || tnode.tagName === 'th') {
+    found.push(tnode);
+  } else {
+    for (const child of tnode.children) {
+      collectCells(child, found);
+    }
+  }
+  return found;
+}
+
+/**
+ * Build a transient render tree from `html` and return one of the cells of its
+ * outermost table.
+ *
+ * @param nth - Which cell to return, in document order. Defaults to the first.
+ */
+export function createCellTNode(html: string, nth = 0): TNode {
+  const cell = collectCells(createTableTNode(html))[nth];
+  expect(cell?.tagName).toMatch(/^t[dh]$/);
+  return cell as TNode;
+}
