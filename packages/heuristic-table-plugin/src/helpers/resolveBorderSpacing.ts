@@ -1,5 +1,5 @@
 import { TNode } from '@native-html/render';
-import { getInlineStyleValue } from './tableStyles';
+import { getInlineStyleValue } from './inlineStyle';
 import { resolveAttributeLength } from './resolveWidth';
 
 export interface BorderSpacing {

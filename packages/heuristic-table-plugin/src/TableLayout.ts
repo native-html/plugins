@@ -1,34 +1,45 @@
 import sum from './helpers/sum';
+import { totalHorizontalSpacing } from './helpers/borderSpacingGeometry';
 import resolveBorderSpacing, {
   BorderSpacing
 } from './helpers/resolveBorderSpacing';
 import type { CellContentBox } from './CellContentWidthContext';
 import { ViewStyle } from 'react-native';
 import { TNode } from '@native-html/render';
-import computeColumnWidths from './helpers/computeColumnWidths';
 import createRenderTree, { makeTableCells } from './helpers/createRenderTree';
 import buildTableGrid from './helpers/buildTableGrid';
 import TCellConstraintsComputer from './helpers/TCellConstraintsComputer';
 import indexCellNeighbours from './helpers/indexCellNeighbours';
 import { Settings, TableCell, TableGrid, TableRoot } from './shared-types';
 import extractColumnWidths from './helpers/extractColumnWidths';
-import { clampWidth, resolveWidthConstraints } from './helpers/resolveWidth';
-import resolveAvailableWidth from './helpers/resolveAvailableWidth';
-import { getHorizontalInsets, getHorizontalMargins } from './helpers/measure';
-import {
-  getSourceBlockStyle,
-  resolveBorderCollapse
-} from './helpers/tableStyles';
-import resolveTableStyles, {
-  ResolvedCellStyle
-} from './helpers/resolveTableStyles';
+import { resolveBorderCollapse } from './helpers/borderModel';
+import { getSourceBlockStyle } from './helpers/cellPadding';
+import type { ResolvedCellStyle } from './helpers/resolveTableStyles';
+import measureTable from './helpers/measureTable';
+import resolveTableWidths from './helpers/resolveTableWidths';
+
+/** No cell style callback has run yet. */
+const NO_CONFIG_STYLES: ReadonlyMap<TNode, ViewStyle | null> = new Map();
 
 /**
- * Tables fill the width their containing block leaves them unless the config
- * opts out, so that a table reads as part of the surrounding document rather
- * than as a shrink-wrapped island.
+ * Ask the config for a style per cell, against provisional widths.
+ *
+ * @remarks
+ * Results are copied rather than stored by reference, so that a callback
+ * handing back a shared mutable object cannot have it changed underneath the
+ * second measurement pass.
  */
-const DEFAULT_FORCE_STRETCH = true;
+function collectConfigStyles(
+  cells: readonly TableCell[],
+  getStyleForCell: NonNullable<Settings['getStyleForCell']>
+): ReadonlyMap<TNode, ViewStyle | null> {
+  const configStyles = new Map<TNode, ViewStyle | null>();
+  for (const cell of cells) {
+    const configured = getStyleForCell(cell);
+    configStyles.set(cell.tnode, configured ? { ...configured } : null);
+  }
+  return configStyles;
+}
 
 export default class TableLayout {
   public readonly display: TableGrid;
@@ -75,136 +86,64 @@ export default class TableLayout {
     const style = getSourceBlockStyle(tnode);
     this.borderCollapse = resolveBorderCollapse(tnode, config.borderCollapse);
     this.borderSpacing = resolveBorderSpacing(tnode, this.borderCollapse);
-    const containingWidth = resolveAvailableWidth(
-      tnode,
-      config.contentWidth,
-      cellContentBox
-    );
-    const availableWidth = Math.max(
-      0,
-      containingWidth - getHorizontalMargins(style)
-    );
-    // Percentages resolve against the width the table may actually occupy,
-    // margins already deducted, rather than against the whole containing
-    // block. Resolving `width:100%` against the latter would hand the columns
-    // more width than the table box is allowed — by exactly the margins — and
-    // the surplus would then be shown through a horizontal scroller the same
-    // table without a declared width never gets. An absolute width is
-    // untouched by this and still overflows into that scroller when it does
-    // not fit, as it should.
-    const { width, minWidth, maxWidth } = resolveWidthConstraints(
-      tnode,
-      availableWidth
-    );
-    const declaredTableWidth =
-      width === null ? null : clampWidth(width, minWidth, maxWidth);
-    // `min-width` and `max-width` bound the table width whether it is declared
-    // or filled. A table that merely asks for *at least* 200px still fills the
-    // width it was offered; one capped at 300px stops there rather than
-    // stretching past its own ceiling.
-    const usedTableWidth = clampWidth(
-      declaredTableWidth ?? availableWidth,
-      minWidth,
-      maxWidth
-    );
-    const forceStretch =
-      (config.forceStretch ?? DEFAULT_FORCE_STRETCH) ||
-      declaredTableWidth !== null;
-    // Build the grid once; styles may require a second measurement pass.
-    const display = buildTableGrid(tnode);
+    const widths = resolveTableWidths(tnode, style, config, cellContentBox);
+    // Build the grid once: coordinates and spans do not depend on any width,
+    // and neighbours follow from coordinates alone.
+    const grid = buildTableGrid(tnode);
     const neighbours = this.borderCollapse
-      ? indexCellNeighbours(display.cells)
+      ? indexCellNeighbours(grid.cells)
       : undefined;
-    const spacingWidth = display.cells.length
-      ? (display.maxX + 2) * this.borderSpacing.horizontal
+    const spacingWidth = grid.cells.length
+      ? totalHorizontalSpacing(grid.maxX, this.borderSpacing.horizontal)
       : 0;
-    const declaredColumnWidths = extractColumnWidths(tnode);
-    const configStyles = new Map<TNode, ViewStyle | null>();
+    // Built once and shared between passes: its cache of per-cell intrinsic
+    // constraints is what keeps the second pass from re-walking every text
+    // node, so constructing it per pass would silently undo that.
     const computer = new TCellConstraintsComputer({
       baseFontCoeff: config.baseFontCoeff,
       fontWeightCoeffs: config.fontWeightCoeffs
     });
-    const measure = () => {
-      const resolved = resolveTableStyles(
-        display,
-        style,
-        this.borderCollapse,
+    const declaredColumnWidths = extractColumnWidths(tnode);
+    const pass = (configStyles: ReadonlyMap<TNode, ViewStyle | null>) =>
+      measureTable({
+        grid,
+        tableStyle: style,
+        borderCollapse: this.borderCollapse,
+        neighbours,
         configStyles,
-        neighbours
-      );
-      const insets = getHorizontalInsets({
-        ...style,
-        ...resolved.tableBorderStyle
-      });
-      // The width left for the columns, once the table's own padding, border
-      // and border-spacing are taken out of the width it may occupy.
-      const assignableWidth = Math.max(
-        0,
-        usedTableWidth - insets - spacingWidth
-      );
-      for (const cell of display.cells) {
-        const constraints = computer.computeCellConstraints(
-          cell.tnode,
-          resolved.cellStyles.get(cell.tnode)!.style,
-          assignableWidth
-        );
-        // A spanning cell also occupies the gaps between its columns.
-        const internalSpacing = (cell.lenX - 1) * this.borderSpacing.horizontal;
-        cell.constraints = {
-          ...constraints,
-          minWidth: Math.max(0, constraints.minWidth - internalSpacing),
-          maxWidth: Math.max(0, constraints.maxWidth - internalSpacing)
-        };
-      }
-      let columnWidths = computeColumnWidths(
-        // A table with a specified width distributes that width over its
-        // columns; shrink-to-fit only applies when the table width is auto,
-        // and is opt-in.
-        { cells: display.cells, assignableWidth, forceStretch },
+        computer,
+        widths,
+        borderSpacing: this.borderSpacing,
+        spacingWidth,
         declaredColumnWidths
-      );
-      const minLayoutWidth = Math.max(
-        0,
-        (minWidth ?? 0) - insets - spacingWidth
-      );
-      if (sum(columnWidths) < minLayoutWidth) {
-        const raised = computeColumnWidths(
-          {
-            cells: display.cells,
-            assignableWidth: minLayoutWidth,
-            forceStretch: true
-          },
-          declaredColumnWidths
-        );
-        if (sum(raised) > sum(columnWidths)) columnWidths = raised;
-      }
-      return { ...resolved, insets, columnWidths };
-    };
-    let measured = measure();
+      });
+    let measured = pass(NO_CONFIG_STYLES);
     if (config.getStyleForCell) {
-      // Freeze callback results against provisional widths. Re-evaluating after
-      // each resize could oscillate for a callback that branches on width.
-      for (const cell of makeTableCells(
-        display,
-        measured.columnWidths,
-        this.borderSpacing.horizontal
-      )) {
-        const configured = config.getStyleForCell.call(null, cell);
-        configStyles.set(cell.tnode, configured ? { ...configured } : null);
-      }
-      measured = measure();
+      // The callback needs cells, which need widths, which need the styles the
+      // callback returns. The cycle is broken by freezing its results against
+      // the widths of a first pass: re-evaluating after each resize could
+      // oscillate for a callback that branches on width.
+      measured = pass(
+        collectConfigStyles(
+          makeTableCells(grid, measured.columnWidths, this.borderSpacing.horizontal),
+          config.getStyleForCell
+        )
+      );
     }
     this.tableBorderStyle = measured.tableBorderStyle;
     this.cellStyles = measured.cellStyles;
     this.horizontalInsets = measured.insets;
-    this.availableWidth = availableWidth;
-    this.usedWidth = Math.max(0, Math.min(usedTableWidth, availableWidth));
+    this.availableWidth = widths.availableWidth;
+    this.usedWidth = Math.max(
+      0,
+      Math.min(widths.usedTableWidth, widths.availableWidth)
+    );
     this.viewportWidth = Math.max(0, this.usedWidth - measured.insets);
-    this.display = display;
+    this.display = grid;
     this.columnWidths = measured.columnWidths;
     this.totalWidth = sum(this.columnWidths) + spacingWidth;
     this.cells = makeTableCells(
-      display,
+      grid,
       this.columnWidths,
       this.borderSpacing.horizontal
     );

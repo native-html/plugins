@@ -2,7 +2,7 @@ import { ViewStyle } from 'react-native';
 import { TNode } from '@native-html/render';
 import { TCellConstraints } from '../shared-types';
 import { getHorizontalInsets, getHorizontalMargins } from './measure';
-import { getPaintedBlockStyle } from './tableStyles';
+import { getPaintedBlockStyle } from './cellPadding';
 import {
   clampWidth,
   resolveCssSize,
@@ -88,20 +88,30 @@ export const DEFAULT_FONT_WEIGHT_COEFFS: FontWeightCoefficients = {
   normal: 1
 };
 
+/**
+ * Stands in for the containing width where percentages are deliberately not
+ * resolved, so that no caller has to invent one.
+ *
+ * @remarks
+ * `resolveWidthConstraints` reads its containing width only to turn a
+ * percentage into pixels. With `resolvePercentages: false` it never does, so
+ * this value is never read — naming it says so, where a bare `0` looked like a
+ * width that had been forgotten.
+ */
+const UNUSED_CONTAINING_WIDTH = 0;
+
 export default class TCellConstraintsComputer {
   // A computer belongs to one layout. Cell styles and available width can
   // change between its passes; descendant content and font coefficients cannot.
   private intrinsicConstraints = new WeakMap<TNode, IntrinsicCellConstraints>();
   private baseFontCoeff: number;
   private fallbackFontSize: number;
-  private contentWidth: number;
   private fontWeightCoeffs: FontWeightCoefficients;
 
   constructor({
     baseFontCoeff,
     fallbackFontSize,
-    fontWeightCoeffs,
-    contentWidth
+    fontWeightCoeffs
   }: {
     baseFontCoeff?: number;
     fallbackFontSize?: number;
@@ -110,18 +120,12 @@ export default class TCellConstraintsComputer {
      * {@link DEFAULT_FONT_WEIGHT_COEFFS}.
      */
     fontWeightCoeffs?: FontWeightCoefficients;
-    /**
-     * The width of the table's containing block, against which percentage
-     * widths are resolved.
-     */
-    contentWidth?: number;
   }) {
     this.baseFontCoeff = baseFontCoeff ?? 0.65;
     this.fallbackFontSize = fallbackFontSize ?? 14;
     this.fontWeightCoeffs = fontWeightCoeffs
       ? { ...DEFAULT_FONT_WEIGHT_COEFFS, ...fontWeightCoeffs }
       : DEFAULT_FONT_WEIGHT_COEFFS;
-    this.contentWidth = contentWidth ?? 0;
   }
 
   private getTextCoeff(ch: TextChunkStats): number {
@@ -183,9 +187,11 @@ export default class TCellConstraintsComputer {
    * lowest priority.
    */
   private resolveBlockWidth(tnode: TNode, style?: ViewStyle): number | null {
-    return resolveImposedWidth(tnode, this.contentWidth, {
-      // Cell percentages are preferences reconciled during column distribution.
-      // Descendant percentages depend on the as-yet unknown cell content box.
+    return resolveImposedWidth(tnode, UNUSED_CONTAINING_WIDTH, {
+      // Cell percentages are preferences reconciled during column
+      // distribution; descendant percentages depend on the as-yet unknown cell
+      // content box. Neither is resolved here, which is why no containing
+      // width is needed.
       resolvePercentages: false,
       style
     });
@@ -248,10 +254,15 @@ export default class TCellConstraintsComputer {
     return constraints;
   }
 
+  /**
+   * @param contentWidth - The width the table offers its columns, which the
+   * cell's own percentage and `max-width` resolve against. Required: it
+   * changes between measurement passes, so there is no sensible default.
+   */
   computeCellConstraints(
     tnode: TNode,
     style: ViewStyle = getPaintedBlockStyle(tnode),
-    contentWidth = this.contentWidth
+    contentWidth = 0
   ): TCellConstraints {
     const intrinsic = this.measureIntrinsicConstraints(tnode);
     const { blockWidth } = intrinsic;

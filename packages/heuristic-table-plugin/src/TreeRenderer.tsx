@@ -7,7 +7,13 @@ import {
 } from './shared-types';
 import CellContentWidthContext from './CellContentWidthContext';
 import TableRenderContext from './TableRenderContext';
+import type { ResolvedCellStyle } from './helpers/resolveTableStyles';
 import { getHorizontalInsets } from './helpers/measure';
+
+/** The horizontal padding and border a resolved cell style carries, if any. */
+function getCellInsets(resolved: ResolvedCellStyle | undefined): number {
+  return resolved ? getHorizontalInsets(resolved.style) : 0;
+}
 
 const styles = StyleSheet.create({
   colContainer: { flexDirection: 'column', flexGrow: 1 },
@@ -62,10 +68,12 @@ export default function TreeRenderer({
       node.type === 'cell'
         ? {
             tnode: node.tnode,
+            // A cell rendered without a resolved style has no insets to
+            // subtract — the same absent-layout case `resolvedCellStyle`
+            // below is typed for, rather than one to assert away here.
             contentWidth: Math.max(
               0,
-              node.width -
-                getHorizontalInsets(cellStyles.get(node.tnode)!.style)
+              node.width - getCellInsets(cellStyles.get(node.tnode))
             )
           }
         : undefined,
@@ -113,7 +121,7 @@ export default function TreeRenderer({
             }
         ]}
       >
-        <TreeRendererChildren children={node.children} />
+        <TreeRendererChildren nodes={node.children} />
       </View>
     );
   }
@@ -121,7 +129,7 @@ export default function TreeRenderer({
     const minHeight = getRowMinHeight(node.children);
     return (
       <View style={[styles.rowContainer, minHeight > 0 && { minHeight }]}>
-        <TreeRendererChildren children={node.children} />
+        <TreeRendererChildren nodes={node.children} />
       </View>
     );
   }
@@ -130,18 +138,18 @@ export default function TreeRenderer({
 
 /** Render every child of a container, each told where it sits among them. */
 function TreeRendererChildren({
-  children
+  nodes
 }: {
-  children: readonly TableRenderNode[];
+  nodes: readonly TableRenderNode[];
 }) {
   return (
     <>
-      {children.map((child, index) => (
+      {nodes.map((child, index) => (
         <TreeRenderer
           key={index}
           node={child}
           renderIndex={index}
-          renderLength={children.length}
+          renderLength={nodes.length}
         />
       ))}
     </>

@@ -12,7 +12,7 @@ function makeRenderTree(html: string, columnWidths: number[]) {
   const tnode = createTableTNode(html);
   // The render tree is built from coordinates and widths alone, so the grid
   // needs no measurement pass to produce one.
-  return createRenderTree(makeTableCells(buildTableGrid(tnode), columnWidths));
+  return createRenderTree(makeTableCells(buildTableGrid(tnode), columnWidths, 0));
 }
 
 function rowContainer(

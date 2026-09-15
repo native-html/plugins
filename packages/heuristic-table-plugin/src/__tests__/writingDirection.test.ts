@@ -1,6 +1,6 @@
 import { createTableTNode } from './utils';
 import TableLayout from '../TableLayout';
-import { getSourceBlockStyle } from '../helpers/tableStyles';
+import { getSourceBlockStyle } from '../helpers/cellPadding';
 
 describe('authored writing direction', () => {
   it('is recovered from the flow styles, where the processor files it', () => {

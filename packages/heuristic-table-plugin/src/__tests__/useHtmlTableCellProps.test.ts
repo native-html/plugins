@@ -70,34 +70,22 @@ function cellStyleFor(
 }
 
 describe('useHtmlTableCellProps', () => {
-  it.each(['td', 'th'])(
-    'uses an explicit %s height as a minimum by default',
-    (tag) => {
-      const style = cellStyleFor(`<${tag} style="height:48px">A</${tag}>`);
-      expect(style.minHeight).toBe(48);
-      expect(style).not.toHaveProperty('height');
-    }
-  );
+  // A cell height is always a minimum, whatever `growBeyondHeight` says: that
+  // option governs the *table* box, which is why the hook never reads it. The
+  // two cases below used to pass it either way and assert the same thing.
+  it.each(['td', 'th'])('uses an explicit %s height as a minimum', (tag) => {
+    const style = cellStyleFor(`<${tag} style="height:48px">A</${tag}>`);
+    expect(style.minHeight).toBe(48);
+    expect(style).not.toHaveProperty('height');
+  });
 
   it('allows content to outgrow a configured cell height', () => {
     const style = cellStyleFor('<td>Wrapping content</td>', {
-      growBeyondHeight: false,
       getStyleForCell: () => ({ height: 24 })
     });
     expect(style.minHeight).toBe(24);
     expect(style).not.toHaveProperty('height');
   });
-
-  it.each(['td', 'th'])(
-    'passes an explicit %s height as minHeight when growBeyondHeight is set',
-    (tag) => {
-      const style = cellStyleFor(`<${tag} style="height:48px">A</${tag}>`, {
-        growBeyondHeight: true
-      });
-      expect(style.minHeight).toBe(48);
-      expect(style).not.toHaveProperty('height');
-    }
-  );
 
   it.each([
     ['top', 'flex-start'],

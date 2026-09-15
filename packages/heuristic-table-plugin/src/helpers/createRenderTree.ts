@@ -7,6 +7,7 @@ import {
   TableRoot
 } from '../shared-types';
 import makeRows from './makeRows';
+import { spanInternalSpacing } from './borderSpacingGeometry';
 
 function getRowGroupHeight(cells: TableCell[]): number {
   return cells.reduce((maxLen, cell) => Math.max(maxLen, cell.lenY), 0);
@@ -14,11 +15,12 @@ function getRowGroupHeight(cells: TableCell[]): number {
 
 function groupCellsByVGroup(cellsByRow: TableCell[][]): TableCell[][][] {
   const cellsByVGroup: TableCell[][][] = [];
-  let rowHeight = 1;
-  for (let i = 0; i < cellsByRow.length; i += Math.max(rowHeight, 1)) {
-    const row = cellsByRow[i];
-    rowHeight = getRowGroupHeight(row);
+  // A group is as tall as the tallest cell starting in its first row, and the
+  // next group starts where it ends.
+  for (let i = 0; i < cellsByRow.length; ) {
+    const rowHeight = Math.max(1, getRowGroupHeight(cellsByRow[i]!));
     cellsByVGroup.push(cellsByRow.slice(i, i + rowHeight));
+    i += rowHeight;
   }
   return cellsByVGroup;
 }
@@ -99,7 +101,7 @@ function makeCell(
   return {
     ...cell,
     type: 'cell',
-    width: width + Math.max(0, cell.lenX - 1) * spacing
+    width: width + spanInternalSpacing(cell.lenX, spacing)
   };
 }
 
@@ -114,7 +116,11 @@ function makeCell(
 export function makeTableCells(
   grid: Pick<TableGrid, 'cells'>,
   columnWidths: number[],
-  spacing = 0
+  /**
+   * The table's horizontal `border-spacing`. Required: a default would let a
+   * caller silently drop the gaps a spanning cell absorbs from every width.
+   */
+  spacing: number
 ): TableCell[] {
   return grid.cells.map((cell) => makeCell(columnWidths, cell, spacing));
 }

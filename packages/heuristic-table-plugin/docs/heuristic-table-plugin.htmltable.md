@@ -2,12 +2,69 @@
 
 [Home](./index.md) &gt; [@native-html/heuristic-table-plugin](./heuristic-table-plugin.md) &gt; [HTMLTable](./heuristic-table-plugin.htmltable.md)
 
-## HTMLTable variable
+## HTMLTable() function
 
 A component to render tables.
 
 **Signature:**
 
 ```typescript
-HTMLTable: React.NamedExoticComponent<HTMLTableProps>
+declare function HTMLTable(input: HTMLTableProps): React.JSX.Element;
 ```
+
+## Parameters
+
+<table><thead><tr><th>
+
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+{ layout, TDefaultRenderer, config, ...props }
+
+
+</td><td>
+
+(not declared)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+input
+
+
+</td><td>
+
+[HTMLTableProps](./heuristic-table-plugin.htmltableprops.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
+
+**Returns:**
+
+React.JSX.Element
+
+## Remarks
+
+Deliberately not wrapped in `memo`<!-- -->. The render engine rebuilds `style`<!-- -->, `propsForChildren` and the container props on every render, so a shallow prop comparison can never hold and the wrapper only ever costs a compare. The expensive half — building the table layout — is memoized inside [useHtmlTableProps()](./heuristic-table-plugin.usehtmltableprops.md) instead, where the inputs are stable.
+

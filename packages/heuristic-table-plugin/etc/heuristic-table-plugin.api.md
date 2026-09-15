@@ -60,7 +60,7 @@ export interface HeuristicTablePluginConfig {
 }
 
 // @public
-export const HTMLTable: React_2.NamedExoticComponent<HTMLTableProps>;
+export function HTMLTable(input: HTMLTableProps): React_2.JSX.Element;
 
 // @public
 export interface HTMLTableProps extends CustomRendererProps<TBlock> {
@@ -70,8 +70,6 @@ export interface HTMLTableProps extends CustomRendererProps<TBlock> {
     //
     // (undocumented)
     layout: TableLayout;
-    // (undocumented)
-    settings: Settings;
 }
 
 // @public

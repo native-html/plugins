@@ -2,9 +2,7 @@ import linkPressTargetToOnDOMLinkPressArgs from '../linkPressTargetToOnDOMLinkPr
 
 describe('linkPressTargetToOnDOMLinkPressArgs', () => {
   it('should transform all attributes', () => {
-    const expectedOutput: ReturnType<
-      typeof linkPressTargetToOnDOMLinkPressArgs
-    > = [
+    const expectedOutput = [
       { nativeEvent: {} } as any,
       'https://google.com/',
       {

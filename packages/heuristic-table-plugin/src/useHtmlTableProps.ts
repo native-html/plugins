@@ -50,7 +50,12 @@ export default function useHtmlTableProps(
   { sharedProps, tnode, ...props }: CustomRendererProps<TBlock>,
   options: {
     /**
-     * If present, overrides contentWidth from shared props.
+     * Lay the table out against this width instead of the document's.
+     *
+     * @remarks
+     * Also detaches the table from the cell it sits in, if any: an explicit
+     * width is taken as the whole story, so the content box of an enclosing
+     * cell is not subtracted from it as well.
      */
     overrideContentWidth?: number;
   } = {}
@@ -69,10 +74,11 @@ export default function useHtmlTableProps(
   const getStyleForCell = table?.getStyleForCell;
   const sharedContentWidth = useContentWidth();
   const cellContentBox = useContext(CellContentWidthContext);
-  const contentWidth =
+  const override =
     typeof options.overrideContentWidth === 'number'
       ? options.overrideContentWidth
-      : sharedContentWidth;
+      : undefined;
+  const contentWidth = override ?? sharedContentWidth;
   const settings = useMemo(
     () => ({
       contentWidth,
@@ -94,14 +100,10 @@ export default function useHtmlTableProps(
   const layout = useTableLayout({
     tnode,
     settings,
-    cellContentBox:
-      typeof options.overrideContentWidth === 'number'
-        ? undefined
-        : cellContentBox
+    cellContentBox: override === undefined ? cellContentBox : undefined
   });
   return {
     layout,
-    settings,
     config: table ?? EMPTY_CONFIG,
     sharedProps,
     tnode,

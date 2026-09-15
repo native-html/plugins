@@ -1,13 +1,9 @@
 import { TNode } from '@native-html/render';
 import { ViewStyle } from 'react-native';
 import { TableGrid } from '../shared-types';
-import {
-  getCollapsedCellBorderStyle,
-  getCollapsedTableBorderStyle,
-  resolveConfiguredCellStyle,
-  getSourceBlockStyle
-} from './tableStyles';
-import composeCellStyle from './composeCellStyle';
+import { getSourceBlockStyle, resolveConfiguredCellStyle } from './cellPadding';
+import { getCollapsedCellBorderStyle, getCollapsedTableBorderStyle } from './collapseBorders';
+import composeCellStyle from './cellPadding';
 import indexCellNeighbours from './indexCellNeighbours';
 
 /** One saved style resolution shared by measurement and rendering. */

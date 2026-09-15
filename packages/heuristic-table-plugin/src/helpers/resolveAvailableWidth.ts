@@ -1,7 +1,7 @@
 import { TNode } from '@native-html/render';
 import { getHorizontalInsets, getHorizontalMargins } from './measure';
 import { clampWidth, resolveWidthConstraints } from './resolveWidth';
-import { getPaintedBlockStyle } from './tableStyles';
+import { getPaintedBlockStyle } from './cellPadding';
 import type { CellContentBox } from '../CellContentWidthContext';
 
 /**
@@ -13,9 +13,13 @@ function reduceToContentBox(tnode: TNode, containingWidth: number): number {
   // user-agent padding it is about to spend, and a table nested in it would
   // overflow by that much once per level of nesting.
   const style = getPaintedBlockStyle(tnode);
+  // Measured against the same style the insets come from, rather than the
+  // declared one: identical today, since the painted style only adds padding,
+  // but stating it keeps the two from drifting apart.
   const { width, minWidth, maxWidth } = resolveWidthConstraints(
     tnode,
-    containingWidth
+    containingWidth,
+    { style }
   );
   // A declared width is a border box in React Native, so it already accounts
   // for padding and border; an auto width fills the containing block, minus

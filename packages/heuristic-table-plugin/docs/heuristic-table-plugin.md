@@ -19,6 +19,17 @@ Description
 </th></tr></thead>
 <tbody><tr><td>
 
+[HTMLTable({ layout, TDefaultRenderer, config, ...props }, input)](./heuristic-table-plugin.htmltable.md)
+
+
+</td><td>
+
+A component to render tables.
+
+
+</td></tr>
+<tr><td>
+
 [useHtmlTableCellProps({ propsFromParent, ...props }, input)](./heuristic-table-plugin.usehtmltablecellprops.md)
 
 
@@ -102,7 +113,7 @@ Options to customize this plugin renderers.
 
 </td><td>
 
-Props for the [HTMLTable](./heuristic-table-plugin.htmltable.md) component.
+Props for the [HTMLTable()](./heuristic-table-plugin.htmltable.md) component.
 
 
 </td></tr>
@@ -207,17 +218,6 @@ Element model required for colgroup children to be available to the table layout
 </td><td>
 
 The coefficients used when the config supplies none.
-
-
-</td></tr>
-<tr><td>
-
-[HTMLTable](./heuristic-table-plugin.htmltable.md)
-
-
-</td><td>
-
-A component to render tables.
 
 
 </td></tr>

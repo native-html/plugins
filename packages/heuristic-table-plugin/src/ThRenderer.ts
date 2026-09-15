@@ -1,18 +1,10 @@
-import React from 'react';
-import { CustomBlockRenderer } from '@native-html/render';
-import useHtmlTableCellProps from './useHtmlTableCellProps';
+import createCellRenderer from './createCellRenderer';
 
 /**
  * The renderer component for `th` tag.
  *
- * @param props - Component props.
  * @public
  */
-const ThRenderer: CustomBlockRenderer = function ThRenderer(props) {
-  return React.createElement(
-    props.TDefaultRenderer,
-    useHtmlTableCellProps(props)
-  );
-};
+const ThRenderer = createCellRenderer('th');
 
 export default ThRenderer;

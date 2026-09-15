@@ -15,7 +15,7 @@
   "scripts": {
     "test": "yarn test:ts && yarn test:lint && yarn test:jest",
     "test:jest": "jest src/",
-    "test:ts": "tsc --noEmit",
+    "test:ts": "tsc --noEmit && tsc -p src/__tests__/tsconfig.json",
     "test:lint": "eslint src/",
     "build": "yarn build:source && yarn build:defs",
     "build:source": "bob build",

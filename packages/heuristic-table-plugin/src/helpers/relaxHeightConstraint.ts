@@ -17,6 +17,11 @@ type HeightConstraints = Pick<ViewStyle, 'height' | 'minHeight'>;
  * @param style - Native styles of a `table`, `tr`, `th` or `td` element.
  *
  * @returns The same styles, with `height` removed and merged into `minHeight`.
+ *
+ * When the two are declared in different units — a numeric `height` beside a
+ * percentage `minHeight`, say — they cannot be compared, so the declared
+ * `minHeight` is kept and the `height` is dropped rather than guessing which
+ * resolves larger.
  */
 export default function relaxHeightConstraint<T extends HeightConstraints>(
   style: T

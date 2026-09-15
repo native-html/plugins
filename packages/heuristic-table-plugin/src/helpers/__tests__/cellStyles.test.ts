@@ -1,11 +1,8 @@
 import { I18nManager } from 'react-native';
-import {
-  getCollapsedCellBorderStyle,
-  getCollapsedTableBorderStyle,
-  getDefaultCellPaddingStyle,
-  resolveBorderCollapse,
-  resolveCellVerticalAlign
-} from '../tableStyles';
+import { resolveBorderCollapse } from '../borderModel';
+import { getDefaultCellPaddingStyle } from '../cellPadding';
+import { resolveCellVerticalAlign } from '../cellVerticalAlign';
+import { getCollapsedCellBorderStyle, getCollapsedTableBorderStyle } from '../collapseBorders';
 import buildTableGrid from '../buildTableGrid';
 import { createCellTNode, createTableTNode } from '../../__tests__/utils';
 
@@ -23,7 +20,7 @@ function displayFor(html: string) {
   return { display, table };
 }
 
-describe('table styles', () => {
+describe('cell styles', () => {
   describe('vertical alignment', () => {
     it('declares nothing when the cell inherits the HTML default', () => {
       expect(

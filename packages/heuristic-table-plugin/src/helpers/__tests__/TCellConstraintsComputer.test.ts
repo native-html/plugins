@@ -3,7 +3,7 @@ import TCellConstraintsComputer, {
   FontWeightCoefficients
 } from '../TCellConstraintsComputer';
 import { TCellConstraints } from '../../shared-types';
-import { DEFAULT_CELL_PADDING } from '../tableStyles';
+import { DEFAULT_CELL_PADDING } from '../cellPadding';
 import { createCellTNode } from '../../__tests__/utils';
 import { ViewStyle } from 'react-native';
 
@@ -27,11 +27,12 @@ function constraintsFor(
   fontWeightCoeffs?: FontWeightCoefficients
 ): TCellConstraints {
   return new TCellConstraintsComputer({
-    contentWidth,
     baseFontCoeff: BASE_FONT_COEFF,
     fontWeightCoeffs
   }).computeCellConstraints(
-    createCellTNode(`<table><tr>${cellMarkup}</tr></table>`)
+    createCellTNode(`<table><tr>${cellMarkup}</tr></table>`),
+    undefined,
+    contentWidth
   );
 }
 
@@ -56,9 +57,8 @@ describe('TCellConstraintsComputer', () => {
     cases.forEach(([style, width], i) => {
       expect(results[i]).toEqual(
         new TCellConstraintsComputer({
-          baseFontCoeff: 0.5,
-          contentWidth: width
-        }).computeCellConstraints(cell, style)
+          baseFontCoeff: 0.5
+        }).computeCellConstraints(cell, style, width)
       );
     });
     expect(results[0]!.percentWidth).toBe(0.4);

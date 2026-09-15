@@ -5,7 +5,7 @@ import {
   TBlock,
   TNode
 } from '@native-html/render';
-import TableLayout from './TableLayout';
+import type TableLayout from './TableLayout';
 import type { ResolvedCellStyle } from './helpers/resolveTableStyles';
 import type { FontWeightCoefficients } from './helpers/TCellConstraintsComputer';
 
@@ -312,7 +312,6 @@ export interface HeuristicTablePluginConfig {
 export interface HTMLTableProps extends CustomRendererProps<TBlock> {
   layout: TableLayout;
   config: HeuristicTablePluginConfig;
-  settings: Settings;
 }
 
 /**
@@ -337,10 +336,30 @@ export interface TableCellPropsFromParent extends PropsFromParent {
  * here is optional or has a defined absent state.
  */
 export interface InternalTableCellPropsFromParent
-  extends TableCellPropsFromParent {
+  extends TableCellPropsFromParent,
+    TableGeometry {
   resolvedCellStyle?: ResolvedCellStyle;
+}
+
+/**
+ * What every cell of one table shares: where the matrix ends, and how its
+ * borders were collapsed.
+ *
+ * @remarks
+ * Composed by both the render context and the props a cell receives, so the
+ * two cannot state it differently.
+ */
+export interface TableGeometry {
   borderCollapse: boolean;
   maxX: number;
   maxY: number;
+  /**
+   * The wrapper edge the collapsing model resolved.
+   *
+   * @remarks
+   * Cells need this, not just their position in the matrix: an outer boundary
+   * the wrapper leaves bare is still theirs to paint.
+   */
   tableBorderStyle: ViewStyle | null;
+  config?: HeuristicTablePluginConfig;
 }

@@ -1,4 +1,4 @@
-import React, { memo, PropsWithChildren, useMemo } from 'react';
+import React, { PropsWithChildren, useMemo } from 'react';
 import { ScrollView, View } from 'react-native';
 import TreeRenderer from './TreeRenderer';
 import TableRenderContext, {
@@ -64,20 +64,26 @@ function Container({
  *
  * @param props - Props from {@link useHtmlTableProps} hook.
  *
+ * @remarks
+ * Deliberately not wrapped in `memo`. The render engine rebuilds `style`,
+ * `propsForChildren` and the container props on every render, so a shallow
+ * prop comparison can never hold and the wrapper only ever costs a compare.
+ * The expensive half — building the table layout — is memoized inside
+ * {@link useHtmlTableProps} instead, where the inputs are stable.
+ *
  * @public
  */
-const HTMLTable = memo(function HTMLTable({
+function HTMLTable({
   layout,
   TDefaultRenderer,
-  settings,
   config,
   ...props
 }: HTMLTableProps) {
   const tableWidth = layout.totalWidth;
   // `layout` measures against the width the table's ancestors actually leave
   // it, which is what `contentWidth` would be if it were narrowed on the way
-  // down the tree. Sizing the container off `settings.contentWidth` instead
-  // would spill the table out of every padded ancestor it sits in.
+  // down the tree. Sizing the container off the document `contentWidth`
+  // instead would spill the table out of every padded ancestor it sits in.
   const insets = layout.horizontalInsets;
   const tableBorderStyle = layout.tableBorderStyle;
   const renderContext = useMemo<TableRenderContextValue>(
@@ -136,6 +142,6 @@ const HTMLTable = memo(function HTMLTable({
       </Container>
     </TDefaultRenderer>
   );
-});
+}
 
 export default HTMLTable;

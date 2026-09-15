@@ -6,15 +6,10 @@ import {
 } from '@native-html/render';
 import { InternalTableCellPropsFromParent } from './shared-types';
 import relaxHeightConstraint from './helpers/relaxHeightConstraint';
-import composeCellStyle from './helpers/composeCellStyle';
-import {
-  CellVerticalAlign,
-  getCollapsedCellBorderStyle,
-  resolveConfiguredCellStyle,
-  resolveCellVerticalAlign,
-  getSourceBlockStyle,
-  DEFAULT_CELL_VERTICAL_ALIGN
-} from './helpers/tableStyles';
+import composeCellStyle from './helpers/cellPadding';
+import { getSourceBlockStyle, resolveConfiguredCellStyle } from './helpers/cellPadding';
+import { CellVerticalAlign, DEFAULT_CELL_VERTICAL_ALIGN, resolveCellVerticalAlign } from './helpers/cellVerticalAlign';
+import { getCollapsedCellBorderStyle } from './helpers/collapseBorders';
 
 /**
  * How a table cell emulates `vertical-align` in a column flex container.
@@ -78,7 +73,7 @@ export default function useHtmlTableCellProps({
   } = propsFromParent;
   const styleFromConfig = resolvedCellStyle
     ? resolvedCellStyle.configStyle
-    : resolveConfiguredCellStyle(config?.getStyleForCell?.call(null, cell));
+    : resolveConfiguredCellStyle(config?.getStyleForCell?.(cell));
   const verticalAlign = resolveCellVerticalAlign(props.tnode);
   // Vertical table-cell alignment and horizontal colspan centering are
   // independent, so keep both declarations in the same style contribution.

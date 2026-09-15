@@ -7,14 +7,6 @@ import sum from './sum';
 /** Below this many pixels a leftover is not worth another distribution pass. */
 const EPSILON = 1e-6;
 
-function mapMinWidths(constraints: TColumnConstraints[]): number[] {
-  return constraints.map((c) => c.minWidth);
-}
-
-function mapSpreads(constraints: TColumnConstraints[]): number[] {
-  return constraints.map((c) => c.spread);
-}
-
 /**
  * Share `total` across `weights`, proportionally. Falls back to an even share
  * when every weight is zero, so that no space is ever silently dropped.
@@ -45,7 +37,7 @@ function interpolateWidths(
     Math.min(1, (targetWidth - lowerTotal) / (upperTotal - lowerTotal))
   );
   return lower.map(
-    (width, i) => width + ((upper[i] ?? width) - width) * progress
+    (width, i) => width + (upper[i]! - width) * progress
   );
 }
 
@@ -94,7 +86,7 @@ function addDistributedWidth(
   total: number,
   indexes: number[],
   caps: Array<number | null>,
-  insets: number[] = []
+  insets: number[]
 ): number[] {
   if (indexes.length === 0 || total <= 0) {
     return widths;
@@ -102,7 +94,7 @@ function addDistributedWidth(
   const result = [...widths];
   const hasRoom = (i: number) => {
     const cap = caps[i];
-    return cap == null || (result[i] ?? 0) < cap;
+    return cap == null || result[i]! < cap;
   };
   let candidates = indexes.filter(hasRoom);
   let remaining = total;
@@ -113,13 +105,13 @@ function addDistributedWidth(
       // waits while the columns with content grow. It is not stranded: once
       // they have all reached their caps it is the only candidate left, and
       // `distribute` shares evenly when every weight is zero.
-      candidates.map((i) => Math.max(0, (result[i] ?? 0) - (insets[i] ?? 0)))
+      candidates.map((i) => Math.max(0, result[i]! - insets[i]!))
     );
     let consumed = 0;
     candidates.forEach((i, k) => {
       const cap = caps[i];
-      const current = result[i] ?? 0;
-      const grown = current + (shares[k] ?? 0);
+      const current = result[i]!;
+      const grown = current + shares[k]!;
       const used = cap == null ? grown : Math.min(grown, cap);
       result[i] = used;
       consumed += used - current;
@@ -151,24 +143,15 @@ export interface ColumnLayoutInput {
   forceStretch?: boolean;
 }
 
-export default function computeColumnWidths(
-  { cells, assignableWidth, forceStretch }: ColumnLayoutInput,
-  declaredWidths: Array<DeclaredColumnWidth | null> = []
-): number[] {
-  const contentWidth = assignableWidth;
-  const shouldStretch = !!forceStretch;
-  // The cell grid alone decides how many columns a table has. `col` and
-  // `colgroup` declarations past its last column describe columns that do not
-  // exist — honouring them would widen the table by the sum of widths nothing
-  // is ever rendered into, and hand it a scroll view to hold the surplus.
-  const columnConstraints = reduceColumnConstraints([...cells]);
-  if (columnConstraints.length === 0) {
-    return [];
-  }
-  // Cell percentages use the same sizing class as col/colgroup percentages,
-  // and `reduceColumnConstraints` has already spread each spanning cell's
-  // preference over the columns it covers.
-  const declarations = columnConstraints.map((constraints, i) => {
+/**
+ * Fold each column's own percentage preference into the `col`/`colgroup`
+ * declarations, which share its sizing class.
+ */
+function mergeDeclarations(
+  columnConstraints: readonly TColumnConstraints[],
+  declaredWidths: Array<DeclaredColumnWidth | null>
+): Array<DeclaredColumnWidth | null> {
+  return columnConstraints.map((constraints, i) => {
     const declared = declaredWidths[i];
     const percent = constraints.percentWidth;
     if (percent == null) {
@@ -183,67 +166,86 @@ export default function computeColumnWidths(
       percent: Math.max(declared?.percent ?? 0, percent)
     };
   });
-  // A `max-width` may be declared in either unit, and caps the column in
-  // whichever sizing class it ends up in. Percentage bounds travel unresolved
-  // so that the same declarations can be reused against another table width,
-  // and are turned into pixels here, once that width is known.
-  const caps = columnConstraints.map((_, i) => {
+}
+
+/**
+ * Resolve each column's upper bound to pixels.
+ *
+ * @remarks
+ * A `max-width` may be declared in either unit and caps the column in
+ * whichever sizing class it ends up in. Percentage bounds travel unresolved so
+ * that the same declarations can be reused against another table width, and
+ * become pixels here, once that width is known.
+ */
+function resolveCaps(
+  declarations: Array<DeclaredColumnWidth | null>,
+  contentWidth: number
+): Array<number | null> {
+  return declarations.map((declared) =>
+    declared
+      ? lesserBound(
+          declared.maxWidth,
+          declared.maxPercent === null
+            ? null
+            : declared.maxPercent * contentWidth
+        )
+      : null
+  );
+}
+
+/**
+ * Apply declared widths and bounds to the intrinsic column constraints.
+ *
+ * @returns Fresh constraints; the input is left alone, so the same reduction
+ * may be reused for another candidate table width.
+ */
+function applyDeclaredBounds(
+  columnConstraints: readonly TColumnConstraints[],
+  declarations: Array<DeclaredColumnWidth | null>,
+  caps: Array<number | null>
+): TColumnConstraints[] {
+  return columnConstraints.map((constraints, i) => {
     const declared = declarations[i];
     if (!declared) {
-      return null;
+      return { ...constraints };
     }
-    return lesserBound(
-      declared.maxWidth,
-      declared.maxPercent === null ? null : declared.maxPercent * contentWidth
-    );
-  });
-  for (const [i, constraints] of columnConstraints.entries()) {
-    const declared = declarations[i];
-    if (!declared) {
-      continue;
-    }
-    const cap = caps[i] ?? null;
+    const cap = caps[i]!;
     // Absolute column widths contribute to intrinsic minimum and preferred
-    // widths. Percentage widths remain unresolved until distribution below,
-    // and contribute only the absolute floor they were given.
+    // widths. Percentage widths remain unresolved until distribution, and
+    // contribute only the absolute floor they were given.
     const floor = clampWidth(
       declared.width ?? declared.minWidth,
       declared.minWidth,
       cap
     );
-    if (floor > 0) {
-      constraints.minWidth = Math.max(constraints.minWidth, floor);
-      constraints.spread = Math.max(constraints.spread, floor);
-    }
-    // A `max-width` caps how far a column may grow, but never below the
-    // width its own content needs to be legible at all.
-    constraints.spread = clampWidth(constraints.spread, constraints.minWidth, cap);
-  }
-  const minWidths = mapMinWidths(columnConstraints);
-  const spreads = mapSpreads(columnConstraints);
-  const sumOfMinWidths = sum(minWidths);
-  if (contentWidth < sumOfMinWidths) {
-    // The table cannot fit: no column may go below the width it needs to hold
-    // its longest word, so the table overflows and `HTMLTable` scrolls it.
-    return minWidths;
-  }
+    const minWidth =
+      floor > 0 ? Math.max(constraints.minWidth, floor) : constraints.minWidth;
+    const spread =
+      floor > 0 ? Math.max(constraints.spread, floor) : constraints.spread;
+    return {
+      ...constraints,
+      minWidth,
+      // A `max-width` caps how far a column may grow, but never below the
+      // width its own content needs to be legible at all.
+      spread: clampWidth(spread, minWidth, cap)
+    };
+  });
+}
 
-  // Keep percentage columns as a separate sizing class. This is the critical
-  // difference from resolving percentages to hard pixel minima up front: when
-  // the full percentage guess does not fit, browsers interpolate back toward
-  // the min-content guess while keeping the total at the assignable width.
-  const percentages = normalizePercentages(
-    declarations,
-    columnConstraints.length
-  );
-  const percentageGuess = minWidths.map((minWidth, i) => {
+/**
+ * The width each column would take if every percentage were honoured in full.
+ */
+function percentageGuessOf(
+  minWidths: number[],
+  percentages: Array<number | null>,
+  caps: Array<number | null>,
+  contentWidth: number
+): number[] {
+  return minWidths.map((minWidth, i) => {
     const percent = percentages[i];
-    if (percent === null || percent === undefined) {
+    if (percent == null) {
       return minWidth;
     }
-    // The fraction is resolved here rather than at extraction, so that the
-    // same declarations can be reused whenever the table is laid out again
-    // against another width. A `max-width` caps the share in the same pass.
     const cap = caps[i];
     const preferred = percent * contentWidth;
     return Math.max(
@@ -251,31 +253,26 @@ export default function computeColumnWidths(
       cap == null ? preferred : Math.min(preferred, cap)
     );
   });
-  const percentageGuessTotal = sum(percentageGuess);
-  if (contentWidth <= percentageGuessTotal) {
-    return interpolateWidths(minWidths, percentageGuess, contentWidth);
-  }
+}
 
-  // Next move non-percentage columns from min-content toward max-content. A
-  // percentage column keeps the width assigned by the percentage sizing guess.
-  const maxContentGuess = percentageGuess.map((width, i) =>
-    percentages[i] == null ? Math.max(width, spreads[i] ?? 0) : width
-  );
-  const maxContentGuessTotal = sum(maxContentGuess);
-  if (contentWidth <= maxContentGuessTotal) {
-    return interpolateWidths(percentageGuess, maxContentGuess, contentWidth);
-  }
-
-  // An auto-width table can shrink to its max-content size. An explicitly
-  // sized table (or forceStretch) must distribute the remaining assignable
-  // width so that the columns add up to the table width.
-  if (!shouldStretch) {
-    return maxContentGuess;
-  }
-  // The spacing each column carries, so that the surplus below is shared over
-  // content alone; `reduceColumnConstraints` reduced it the same way it
-  // reduced `minWidth`, which is the figure the spacing is held out of.
-  const columnInsets = columnConstraints.map((c) => c.horizontalSpace);
+/**
+ * Share the width left over once every column sits at its max-content size.
+ *
+ * @remarks
+ * Each class of column is offered the surplus in turn, so that what one cannot
+ * take — every column in it held at its own `max-width` — falls through to the
+ * next rather than being dropped and leaving the table short of the width it
+ * was told to fill. Only when no column anywhere has room left does the table
+ * stay narrower than its assignable width.
+ */
+function distributeSurplus(
+  maxContentGuess: number[],
+  declarations: Array<DeclaredColumnWidth | null>,
+  percentages: Array<number | null>,
+  caps: Array<number | null>,
+  columnInsets: number[],
+  contentWidth: number
+): number[] {
   const allColumns = maxContentGuess.map((_, i) => i);
   // A column that declared a width of its own already has the width it asked
   // for; the surplus belongs to the ones that left it to the table to decide.
@@ -284,11 +281,6 @@ export default function computeColumnWidths(
     return !declared || (declared.width === null && declared.percent === null);
   });
   const percentColumns = allColumns.filter((i) => percentages[i] != null);
-  // Each class of column is offered the surplus in turn, so that what one
-  // cannot take — every column in it held at its own `max-width` — falls
-  // through to the next rather than being dropped and leaving the table short
-  // of the width it was told to fill. Only when no column anywhere has room
-  // left does the table stay narrower than its assignable width.
   let widths = maxContentGuess;
   for (const group of [autoColumns, percentColumns, allColumns]) {
     const leftover = contentWidth - sum(widths);
@@ -298,4 +290,75 @@ export default function computeColumnWidths(
     widths = addDistributedWidth(widths, leftover, group, caps, columnInsets);
   }
   return widths;
+}
+
+/**
+ * Size the columns of a table, following the decision ladder of
+ * {@link https://www.w3.org/TR/CSS21/tables.html#auto-table-layout | CSS 2.1 §17.5.2.2}.
+ */
+export default function computeColumnWidths(
+  { cells, assignableWidth: contentWidth, forceStretch }: ColumnLayoutInput,
+  declaredWidths: Array<DeclaredColumnWidth | null> = []
+): number[] {
+  // The cell grid alone decides how many columns a table has. `col` and
+  // `colgroup` declarations past its last column describe columns that do not
+  // exist — honouring them would widen the table by the sum of widths nothing
+  // is ever rendered into, and hand it a scroll view to hold the surplus.
+  const intrinsic = reduceColumnConstraints([...cells]);
+  if (intrinsic.length === 0) {
+    return [];
+  }
+  const declarations = mergeDeclarations(intrinsic, declaredWidths);
+  const caps = resolveCaps(declarations, contentWidth);
+  const columnConstraints = applyDeclaredBounds(intrinsic, declarations, caps);
+  const minWidths = columnConstraints.map((c) => c.minWidth);
+
+  // 1. Below its min-content width the table cannot fit: no column may go
+  //    under the width it needs for its longest word, so it overflows and
+  //    `HTMLTable` scrolls it.
+  if (contentWidth < sum(minWidths)) {
+    return minWidths;
+  }
+
+  // 2. Percentage columns are their own sizing class. This is the critical
+  //    difference from resolving percentages to hard pixel minima up front:
+  //    when the full percentage guess does not fit, browsers interpolate back
+  //    toward the min-content guess while keeping the total at the width.
+  const percentages = normalizePercentages(declarations, intrinsic.length);
+  const percentageGuess = percentageGuessOf(
+    minWidths,
+    percentages,
+    caps,
+    contentWidth
+  );
+  if (contentWidth <= sum(percentageGuess)) {
+    return interpolateWidths(minWidths, percentageGuess, contentWidth);
+  }
+
+  // 3. Then move non-percentage columns toward max-content. A percentage
+  //    column keeps the width its own sizing guess assigned.
+  const spreads = columnConstraints.map((c) => c.spread);
+  const maxContentGuess = percentageGuess.map((width, i) =>
+    percentages[i] == null ? Math.max(width, spreads[i]!) : width
+  );
+  if (contentWidth <= sum(maxContentGuess)) {
+    return interpolateWidths(percentageGuess, maxContentGuess, contentWidth);
+  }
+
+  // 4. An auto-width table shrinks to its max-content size. An explicitly
+  //    sized table — or `forceStretch` — must fill the width instead.
+  if (!forceStretch) {
+    return maxContentGuess;
+  }
+  return distributeSurplus(
+    maxContentGuess,
+    declarations,
+    percentages,
+    caps,
+    // The spacing each column carries, so the surplus is shared over content
+    // alone; `reduceColumnConstraints` reduced it the same way it reduced
+    // `minWidth`, which is the figure the spacing is held out of.
+    columnConstraints.map((c) => c.horizontalSpace),
+    contentWidth
+  );
 }

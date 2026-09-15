@@ -1,5 +1,6 @@
 import { ViewStyle } from 'react-native';
-import { isRTL } from './tableStyles';
+import { isRTL } from './boxSides';
+import { paddingSourcesFor } from './cellPadding';
 
 type NativeBlockRetStyle = ViewStyle;
 type SpacingFields = Extract<
@@ -40,12 +41,14 @@ export function getHorizontalMargins(style: NativeBlockRetStyle): number {
  */
 export function getHorizontalInsets(style: NativeBlockRetStyle): number {
   const rtl = isRTL(style);
-  const start = style.paddingInlineStart ?? style.paddingStart;
-  const end = style.paddingInlineEnd ?? style.paddingEnd;
-  const horizontal =
-    style.paddingInline ?? style.paddingHorizontal ?? style.padding;
-  const left = (rtl ? end : start) ?? style.paddingLeft ?? horizontal;
-  const right = (rtl ? start : end) ?? style.paddingRight ?? horizontal;
+  // The first declared property of the side's precedence list is the padding
+  // that side takes — the same list `getDefaultCellPaddingStyle` consults.
+  const paddingOn = (side: 'Left' | 'Right') =>
+    paddingSourcesFor(side, rtl)
+      .map((property) => style[property])
+      .find((value) => value != null);
+  const left = paddingOn('Left');
+  const right = paddingOn('Right');
   const borderStart = style.borderStartWidth;
   const borderEnd = style.borderEndWidth;
   return [
