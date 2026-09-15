@@ -494,6 +494,32 @@ describe('TableLayout', () => {
       expect(totalWidth).toBeCloseTo(378);
     });
 
+    it('should resolve a percentage table width inside its own margins', () => {
+      // A percentage may not resolve against width the margins have already
+      // spent: `width:100%` would then hand the columns the whole containing
+      // block while the table box is allowed only what is left of it, and the
+      // difference would surface as a scroller the very same table without a
+      // declared width never gets.
+      const { totalWidth, assignableWidth } = layoutFor(
+        `<table style="width: 100%; margin: 0 10px">${rows}</table>`,
+        { contentWidth: 400, forceStretch: true }
+      );
+      expect(assignableWidth).toBe(380);
+      expect(totalWidth).toBeCloseTo(380);
+      expect(shouldScrollTable(totalWidth, assignableWidth)).toBe(false);
+    });
+
+    it('should still scroll an absolute width wider than the container', () => {
+      // Clamping the columns to the available width instead would silently
+      // drop the width the table asked for.
+      const { totalWidth, assignableWidth } = layoutFor(
+        `<table style="width: 800px">${rows}</table>`,
+        { contentWidth: 400 }
+      );
+      expect(totalWidth).toBeCloseTo(800);
+      expect(shouldScrollTable(totalWidth, assignableWidth)).toBe(true);
+    });
+
     it('should take the table own margins out of the width it may occupy', () => {
       const { assignableWidth, availableWidth } = layoutFor(
         `<table style="margin: 25px">${rows}</table>`,

@@ -13,8 +13,8 @@ import TCellConstraintsComputer from './TCellConstraintsComputer';
  * @remarks
  * {@link fillTableDisplay} may be called without a computer, to lay the grid
  * out before the width its cells must be measured against is known. Every cell
- * of such a display carries this placeholder until {@link measureDisplay}
- * replaces it.
+ * of such a display carries this placeholder until the caller's measurement
+ * pass replaces it.
  */
 const UNMEASURED_CONSTRAINTS: TCellConstraints = Object.freeze({
   contentDensity: 0,
@@ -86,8 +86,10 @@ function findFreeSlotX(display: Display, fromX: number, y: number): number {
  * @param computer - Measures each cell as it is laid down. Omit it to build
  * the grid alone — coordinates and spans do not depend on the width the table
  * resolves to, whereas constraints do, and measuring text is the costly half
- * of a layout pass. Pass the display to {@link measureDisplay} once that width
- * is known.
+ * of a layout pass. Measure the cells once that width is known, as
+ * {@link TableLayout} does: the collapsing border model has to resolve the
+ * table's own borders — from cell coordinates alone — before the width those
+ * cells are measured against exists.
  */
 export default function fillTableDisplay(
   tnode: TNode,
@@ -136,23 +138,5 @@ export default function fillTableDisplay(
     tnode.children.forEach((child) =>
       fillTableDisplay(child, display, computer)
     );
-  }
-}
-
-/**
- * Measure every cell of an already laid out display.
- *
- * @remarks
- * The counterpart to calling {@link fillTableDisplay} without a computer: the
- * collapsing border model has to resolve the table's own borders — from cell
- * coordinates alone — before the width those cells are measured against
- * exists. Splitting the two keeps the grid walked once either way.
- */
-export function measureDisplay(
-  display: Display,
-  computer: TCellConstraintsComputer
-) {
-  for (const cell of display.cells) {
-    cell.constraints = computer.computeCellConstraints(cell.tnode);
   }
 }

@@ -80,12 +80,24 @@ function normalizePercentages(
  * of them can take is left unassigned: a table whose every column is capped
  * ends up narrower than the width it was given, as it would in CSS, rather
  * than pushing a column past the ceiling it declared.
+ *
+ * The surplus is shared in proportion to how much *content* each column
+ * already holds, not to its whole border box, so that spacing a column
+ * happens to carry cannot earn it content width. It matters under the
+ * collapsing border model, where each cell owns a different subset of the
+ * boundaries around it — the cell in the last column has its trailing border
+ * painted by the table wrapper rather than by itself — and weighting by the
+ * border box would compound that difference instead of preserving it.
+ *
+ * @param insets - Each column's horizontal padding and border, which is held
+ * out of the weighting. Defaults to none.
  */
 function addDistributedWidth(
   widths: number[],
   total: number,
   indexes: number[],
-  caps: Array<number | null>
+  caps: Array<number | null>,
+  insets: number[] = []
 ): number[] {
   if (indexes.length === 0 || total <= 0) {
     return widths;
@@ -100,7 +112,11 @@ function addDistributedWidth(
   while (remaining > EPSILON && candidates.length > 0) {
     const shares = distribute(
       remaining,
-      candidates.map((i) => result[i] ?? 0)
+      // A column holding nothing but its own spacing weighs nothing, and so
+      // waits while the columns with content grow. It is not stranded: once
+      // they have all reached their caps it is the only candidate left, and
+      // `distribute` shares evenly when every weight is zero.
+      candidates.map((i) => Math.max(0, (result[i] ?? 0) - (insets[i] ?? 0)))
     );
     let consumed = 0;
     candidates.forEach((i, k) => {
@@ -247,6 +263,22 @@ export default function computeColumnWidths(
   if (!shouldStretch) {
     return maxContentGuess;
   }
+  // The spacing each column carries, so that the surplus below is shared over
+  // content alone. A `colspan` spreads its own spacing across the columns it
+  // covers, as it does its intrinsic constraints, and where cells disagree the
+  // widest wins — the same reduction `minWidth` gets, which is the figure the
+  // spacing is being held out of.
+  const columnInsets = columnConstraints.map(() => 0);
+  for (const cell of display.cells) {
+    const share = (cell.constraints.horizontalSpace ?? 0) / cell.lenX;
+    const lastColumn = Math.min(
+      cell.x + cell.lenX - 1,
+      columnInsets.length - 1
+    );
+    for (let i = cell.x; i <= lastColumn; i++) {
+      columnInsets[i] = Math.max(columnInsets[i] ?? 0, share);
+    }
+  }
   const allColumns = maxContentGuess.map((_, i) => i);
   // A column that declared a width of its own already has the width it asked
   // for; the surplus belongs to the ones that left it to the table to decide.
@@ -266,7 +298,7 @@ export default function computeColumnWidths(
     if (leftover <= EPSILON) {
       break;
     }
-    widths = addDistributedWidth(widths, leftover, group, caps);
+    widths = addDistributedWidth(widths, leftover, group, caps, columnInsets);
   }
   return widths;
 }

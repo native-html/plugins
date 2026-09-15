@@ -111,6 +111,25 @@ _(Optional)_ When true, the table stretches to fill the width its containing blo
 
 
 </td></tr>
+<tr><td>
+
+[growBeyondHeight?](./heuristic-table-plugin.heuristictablepluginconfig.growbeyondheight.md)
+
+
+</td><td>
+
+
+</td><td>
+
+boolean
+
+
+</td><td>
+
+_(Optional)_ When true, an explicit `height` on the table, or on any of its cells, is treated as a minimum: the box still grows to fit content taller than it. When false, that `height` is enforced as written and taller content overflows it.
+
+
+</td></tr>
 </tbody></table>
 
 ## Methods

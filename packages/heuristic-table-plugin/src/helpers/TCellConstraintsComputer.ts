@@ -297,6 +297,7 @@ export default class TCellConstraintsComputer {
           );
     return {
       ...(percentWidth === null ? {} : { percentWidth }),
+      horizontalSpace: stats.horizontalSpace,
       minWidth,
       // `max-width` caps the width the cell would *like*, but never takes it
       // below the width it needs to hold its longest word: min-content is a

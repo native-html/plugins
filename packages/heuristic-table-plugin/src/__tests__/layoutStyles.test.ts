@@ -253,9 +253,31 @@ describe('layout and resolved renderer styles', () => {
     expect(layout.totalWidth).toBeCloseTo(29.1);
   });
 
+  it('gives identical collapsed cells identical content width', () => {
+    // Each cell draws its own trailing boundary while the wrapper draws the
+    // outer ones, so the cell in the last column carries one border fewer than
+    // its neighbours and its column is narrower by exactly that border. Never
+    // by more: the surplus is shared over content, so a bookkeeping difference
+    // in who paints a boundary cannot become a difference in content width.
+    const td = '<td style="border:2px solid black;padding:0">A</td>';
+    const layout = layoutFor(
+      `<table style="border-collapse:collapse"><tr>${td}${td}${td}${td}</tr></table>`,
+      { contentWidth: 100, forceStretch: true }
+    );
+    const [first, second, third, last] = layout.columnWidths;
+    expect(layout.horizontalInsets).toBe(4);
+    expect(second).toBeCloseTo(first!);
+    expect(third).toBeCloseTo(first!);
+    expect(last).toBeCloseTo(first! - 2);
+    expect(layout.totalWidth).toBeCloseTo(96);
+  });
+
   it.each([
     [{ padding: 8 }, 16],
     [{ paddingHorizontal: 8 }, 16],
+    [{ paddingInline: 8 }, 16],
+    // Vertical padding leaves the horizontal sides to the user-agent default.
+    [{ paddingBlock: 8 }, 2],
     [{ paddingLeft: 8 }, 9],
     [{ padding: 0 }, 0],
     [{ paddingStart: 8 }, 8],
@@ -285,6 +307,23 @@ describe('layout and resolved renderer styles', () => {
     expect(renderedCellStyle(layout, 0)).toMatchObject({
       paddingLeft: 8,
       padding: 8
+    });
+  });
+
+  it('lets a callback logical padding shorthand override source longhands', () => {
+    // Yoga resolves `paddingInline` after the per-side edges, so a source
+    // `padding-left` would otherwise hold that one side and leave the callback
+    // shorthand painting only the other three.
+    const layout = layoutFor(
+      '<table><tr><td style="padding-left:4px">A</td></tr></table>',
+      {
+        getStyleForCell: () => ({ paddingInline: 8 })
+      }
+    );
+    expect(layout.totalWidth).toBeCloseTo(9.1 + 8 + 8);
+    expect(renderedCellStyle(layout, 0)).toMatchObject({
+      paddingLeft: 8,
+      paddingRight: 8
     });
   });
 

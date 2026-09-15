@@ -72,11 +72,17 @@ export default class TableLayout {
       0,
       containingWidth - getHorizontalMargins(style)
     );
-    // A percentage table width resolves against the containing block, whereas
-    // the columns are laid out inside the table's own padding and border.
+    // Percentages resolve against the width the table may actually occupy,
+    // margins already deducted, rather than against the whole containing
+    // block. Resolving `width:100%` against the latter would hand the columns
+    // more width than the table box is allowed — by exactly the margins — and
+    // the surplus would then be shown through a horizontal scroller the same
+    // table without a declared width never gets. An absolute width is
+    // untouched by this and still overflows into that scroller when it does
+    // not fit, as it should.
     const { width, minWidth, maxWidth } = resolveWidthConstraints(
       tnode,
-      containingWidth
+      availableWidth
     );
     const declaredTableWidth =
       width === null ? null : clampWidth(width, minWidth, maxWidth);

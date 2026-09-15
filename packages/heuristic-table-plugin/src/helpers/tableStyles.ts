@@ -191,13 +191,28 @@ export function getDefaultCellPaddingStyle(
   return resolvedStyle;
 }
 
-/** Expand callback shorthands so resolved source longhands cannot mask them. */
+/**
+ * Expand callback shorthands so resolved source longhands cannot mask them.
+ *
+ * @remarks
+ * Every shorthand Yoga resolves *after* a per-side edge has to be expanded
+ * here, the logical `paddingInline` / `paddingBlock` pair included: a cell
+ * declaring `padding-left` in its source CSS reaches the merge as a longhand,
+ * which would otherwise win on that one side and leave the callback's
+ * shorthand painting the other three — the opposite of the documented rule
+ * that callback padding replaces source padding outright.
+ *
+ * The per-side logical properties (`paddingStart`, `paddingInlineEnd` and
+ * friends) need no expansion: Yoga already resolves them ahead of the physical
+ * longhands, so they mask the source rather than being masked by it.
+ */
 export function resolveConfiguredCellStyle(
   style: ViewStyle | null | undefined
 ): ViewStyle | null {
   if (!style) return null;
-  const horizontal = style.paddingHorizontal ?? style.padding;
-  const vertical = style.paddingVertical ?? style.padding;
+  const horizontal =
+    style.paddingInline ?? style.paddingHorizontal ?? style.padding;
+  const vertical = style.paddingBlock ?? style.paddingVertical ?? style.padding;
   return {
     ...(horizontal != null
       ? { paddingLeft: horizontal, paddingRight: horizontal }

@@ -58,6 +58,22 @@ export interface TCellConstraints extends TConstraintsBase {
   /** Preferred fraction of the table width, resolved during distribution. */
   percentWidth?: number;
   /**
+   * The cell's own horizontal padding and border, already included in
+   * {@link TConstraintsBase.minWidth} and {@link TCellConstraints.maxWidth}.
+   *
+   * @remarks
+   * Reported separately so that distribution can tell a column's content
+   * apart from the spacing wrapped around it. Surplus width is shared over
+   * content alone: under the collapsing border model each cell owns a
+   * different set of the boundaries it touches, and weighting the share by the
+   * whole border box would turn that bookkeeping difference into a visible
+   * one, dealing a column that merely paints one more border edge more content
+   * width than its neighbours.
+   *
+   * @defaultValue 0, when a caller builds constraints by hand.
+   */
+  horizontalSpace?: number;
+  /**
    * The width at which this cell would stop benefiting from more space — the
    * *maximum cell width* of {@link https://www.w3.org/TR/CSS21/tables.html#auto-table-layout | CSS 2.1 §17.5.2.2},
    * including horizontal spacing.
