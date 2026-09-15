@@ -162,6 +162,27 @@ const paddingSideKeys: Record<PaddingSide, readonly (keyof ViewStyle)[]> = {
 };
 
 /**
+ * The source block style of a node, with its writing direction folded in.
+ *
+ * @remarks
+ * `direction` is a flow property, not a retained box one: the CSS processor
+ * files it under `nativeBlockFlow` (`makePropertiesValidators`, the sole
+ * member of the block-flow model), and unlike `nativeBlockRet` that bag is
+ * inherited — a cell of a `<table style="direction:rtl">` carries `rtl`
+ * without declaring it.
+ *
+ * Every pass which resolves a *logical* edge has to see it: {@link isRTL}
+ * here, and `getHorizontalInsets` in `measure`. Reading `nativeBlockRet` alone
+ * makes an authored `direction` invisible, so an RTL table resolves its
+ * logical borders and padding onto the wrong physical side.
+ */
+export function getSourceBlockStyle(tnode: TNode): ViewStyle {
+  const style = tnode.styles.nativeBlockRet;
+  const direction = tnode.styles.nativeBlockFlow?.direction;
+  return direction == null ? style : { ...style, direction };
+}
+
+/**
  * Whether a node is a table cell, and so subject to the cell rules of the
  * user-agent stylesheet.
  */
@@ -181,7 +202,7 @@ export function isTableCell(tnode: TNode): boolean {
 export function getPaintedBlockStyle(
   tnode: TNode
 ): TNode['styles']['nativeBlockRet'] {
-  const style = tnode.styles.nativeBlockRet;
+  const style = getSourceBlockStyle(tnode);
   if (!isTableCell(tnode)) {
     return style;
   }
@@ -451,7 +472,7 @@ function cellsAtOuterEdge<C extends CollapsibleCell>(
 }
 
 function sourceCellStyle(cell: CollapsibleCell): ViewStyle {
-  return cell.tnode.styles.nativeBlockRet;
+  return getSourceBlockStyle(cell.tnode);
 }
 
 /**

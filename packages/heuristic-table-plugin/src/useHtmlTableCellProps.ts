@@ -1,5 +1,9 @@
 import { ViewStyle } from 'react-native';
-import { TBlock, CustomRendererProps } from '@native-html/render';
+import {
+  TBlock,
+  CustomRendererProps,
+  PropsFromParent
+} from '@native-html/render';
 import { InternalTableCellPropsFromParent } from './shared-types';
 import relaxHeightConstraint from './helpers/relaxHeightConstraint';
 import composeCellStyle from './helpers/composeCellStyle';
@@ -7,7 +11,8 @@ import {
   CellVerticalAlign,
   getCollapsedCellBorderStyle,
   resolveConfiguredCellStyle,
-  resolveCellVerticalAlign
+  resolveCellVerticalAlign,
+  getSourceBlockStyle
 } from './helpers/tableStyles';
 
 /**
@@ -28,6 +33,23 @@ const justifyContentForVerticalAlign: Record<
 };
 
 /**
+ * Whether a cell renderer was reached through this plugin's own table.
+ *
+ * @remarks
+ * `PropsFromParent` extends `Record<string, any>`, so the props a `td` or `th`
+ * renderer receives type-check whatever produced them. A cell rendered outside
+ * a {@link TableRenderer} — a stray `td` in a fragment, or a document that
+ * registered this plugin's `td` renderer without its `table` renderer — gets
+ * none of the layout below, and every field this hook reads is absent.
+ */
+function isTableCellPropsFromParent(
+  propsFromParent: PropsFromParent | undefined
+): propsFromParent is InternalTableCellPropsFromParent {
+  return typeof (propsFromParent as Partial<InternalTableCellPropsFromParent>)
+    ?.cell?.lenX === 'number';
+}
+
+/**
  * Customize `td` and `th` renderers while reusing default cell renderer logic.
  *
  * @param props - Props from custom renderer.
@@ -38,6 +60,12 @@ export default function useHtmlTableCellProps({
   propsFromParent,
   ...props
 }: CustomRendererProps<TBlock>): CustomRendererProps<TBlock> {
+  if (!isTableCellPropsFromParent(propsFromParent)) {
+    // Nothing laid this cell out, so there is no width, no matrix position and
+    // no resolved style to apply. Render it as the plain block it is rather
+    // than reaching into a layout that was never built.
+    return { ...props, propsFromParent };
+  }
   const {
     borderCollapse,
     config,
@@ -46,7 +74,7 @@ export default function useHtmlTableCellProps({
     maxY,
     tableBorderStyle,
     resolvedCellStyle
-  } = propsFromParent as InternalTableCellPropsFromParent;
+  } = propsFromParent;
   const styleFromConfig = resolvedCellStyle
     ? resolvedCellStyle.configStyle
     : resolveConfiguredCellStyle(config?.getStyleForCell?.call(null, cell));
@@ -72,7 +100,7 @@ export default function useHtmlTableCellProps({
     : borderCollapse
       ? getCollapsedCellBorderStyle(
           cell,
-          composeCellStyle(props.tnode.styles.nativeBlockRet, styleFromConfig),
+          composeCellStyle(getSourceBlockStyle(props.tnode), styleFromConfig),
           { maxX, maxY, tableBorderStyle }
         )
       : null;
@@ -84,7 +112,7 @@ export default function useHtmlTableCellProps({
       {
         border: collapsedBorderStyle,
         rendererDefaults: { flexGrow: 1, flexShrink: 0, ...alignmentStyles },
-        paddingSource: props.tnode.styles.nativeBlockRet
+        paddingSource: getSourceBlockStyle(props.tnode)
       }
     ),
     width: cell.width,

@@ -4,7 +4,8 @@ import { Display } from '../shared-types';
 import {
   getCollapsedCellBorderStyle,
   getCollapsedTableBorderStyle,
-  resolveConfiguredCellStyle
+  resolveConfiguredCellStyle,
+  getSourceBlockStyle
 } from './tableStyles';
 import composeCellStyle from './composeCellStyle';
 import indexCellNeighbours from './indexCellNeighbours';
@@ -26,7 +27,7 @@ export default function resolveTableStyles(
   const styles = new Map<TNode, ViewStyle>();
   const configuredStyles = new Map<TNode, ViewStyle | null>();
   for (const { tnode } of display.cells) {
-    const source = tnode.styles.nativeBlockRet;
+    const source = getSourceBlockStyle(tnode);
     const configured = resolveConfiguredCellStyle(configStyles.get(tnode));
     configuredStyles.set(tnode, configured);
     styles.set(tnode, composeCellStyle(source, configured));

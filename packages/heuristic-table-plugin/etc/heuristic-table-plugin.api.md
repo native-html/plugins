@@ -79,7 +79,7 @@ const renderers: Record<'th' | 'td' | 'table', CustomBlockRenderer>;
 export default renderers;
 
 // @public
-export interface Settings extends HeuristicTablePluginConfig {
+export interface Settings extends Omit<HeuristicTablePluginConfig, 'growBeyondHeight'> {
     contentWidth: number;
 }
 

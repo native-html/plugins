@@ -170,9 +170,17 @@ export type TableRenderNode =
  * {@link HeuristicTablePluginConfig}, which carries no
  * {@link Settings.contentWidth}.
  *
+ * {@link HeuristicTablePluginConfig.growBeyondHeight} is deliberately absent:
+ * it decides whether a declared table `height` becomes a viewport or a
+ * minimum, which is a rendering choice {@link HTMLTable} reads from the config
+ * directly. Excluding it here keeps `useHtmlTableProps` from having to copy a
+ * field no layout pass reads — and makes that a compile error rather than a
+ * silent omission if it ever does.
+ *
  * @public
  */
-export interface Settings extends HeuristicTablePluginConfig {
+export interface Settings
+  extends Omit<HeuristicTablePluginConfig, 'growBeyondHeight'> {
   /**
    * Available width at the root of the render tree, prior to scrolling.
    *

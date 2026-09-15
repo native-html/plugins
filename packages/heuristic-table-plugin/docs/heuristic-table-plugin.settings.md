@@ -9,13 +9,15 @@ Everything the table layout engine needs to lay a table out: the author configur
 **Signature:**
 
 ```typescript
-export interface Settings extends HeuristicTablePluginConfig 
+export interface Settings extends Omit<HeuristicTablePluginConfig, 'growBeyondHeight'> 
 ```
-**Extends:** [HeuristicTablePluginConfig](./heuristic-table-plugin.heuristictablepluginconfig.md)
+**Extends:** Omit&lt;[HeuristicTablePluginConfig](./heuristic-table-plugin.heuristictablepluginconfig.md)<!-- -->, 'growBeyondHeight'&gt;
 
 ## Remarks
 
 This is resolved by [useHtmlTableProps()](./heuristic-table-plugin.usehtmltableprops.md) and handed to [HTMLTable](./heuristic-table-plugin.htmltable.md)<!-- -->; it is not the shape a consumer writes. Author configuration goes to `renderersProps.table` as a [HeuristicTablePluginConfig](./heuristic-table-plugin.heuristictablepluginconfig.md)<!-- -->, which carries no [Settings.contentWidth](./heuristic-table-plugin.settings.contentwidth.md)<!-- -->.
+
+[HeuristicTablePluginConfig.growBeyondHeight](./heuristic-table-plugin.heuristictablepluginconfig.growbeyondheight.md) is deliberately absent: it decides whether a declared table `height` becomes a viewport or a minimum, which is a rendering choice [HTMLTable](./heuristic-table-plugin.htmltable.md) reads from the config directly. Excluding it here keeps `useHtmlTableProps` from having to copy a field no layout pass reads — and makes that a compile error rather than a silent omission if it ever does.
 
 ## Properties
 

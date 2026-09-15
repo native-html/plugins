@@ -17,7 +17,10 @@ import extractColumnWidths from './helpers/extractColumnWidths';
 import { clampWidth, resolveWidthConstraints } from './helpers/resolveWidth';
 import resolveAvailableWidth from './helpers/resolveAvailableWidth';
 import { getHorizontalInsets, getHorizontalMargins } from './helpers/measure';
-import { resolveBorderCollapse } from './helpers/tableStyles';
+import {
+  getSourceBlockStyle,
+  resolveBorderCollapse
+} from './helpers/tableStyles';
 import resolveTableStyles, {
   ResolvedCellStyle
 } from './helpers/resolveTableStyles';
@@ -66,7 +69,7 @@ export default class TableLayout {
   public readonly cells: TableCell[];
   public readonly renderTree: TableRoot;
   constructor(tnode: TNode, config: Settings, cellContentBox?: CellContentBox) {
-    const style = tnode.styles.nativeBlockRet;
+    const style = getSourceBlockStyle(tnode);
     this.borderCollapse = resolveBorderCollapse(tnode, config.borderCollapse);
     this.borderSpacing = resolveBorderSpacing(tnode, this.borderCollapse);
     const containingWidth = resolveAvailableWidth(
