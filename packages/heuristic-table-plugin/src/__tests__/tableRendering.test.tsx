@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react-native';
-import { StyleSheet, ViewStyle } from 'react-native';
+import { StyleSheet, View, ViewStyle } from 'react-native';
 import RenderHTML, { CustomBlockRenderer } from '@native-html/render';
 import renderers from '../index';
 import { TableCell } from '../shared-types';
@@ -248,5 +248,32 @@ describe('measured styles across rerenders', () => {
     expectCellStyles([12, 12], [10 + 12 + 12, 10 + 12 + 12]);
     expect(second).toHaveBeenCalledTimes(2);
     expect(first).toHaveBeenCalledTimes(2);
+  });
+});
+
+describe('row height constraints', () => {
+  it.each([
+    ['height:90px', 90],
+    ['height:90px;min-height:120px', 120],
+    ['min-height:80px', 80]
+  ])('preserves %s on the native row', (rowStyle, minHeight) => {
+    const rendered = render(
+      <RenderHTML
+        contentWidth={300}
+        source={{
+          html: `<table><tr style="${rowStyle}"><td>A</td><td>B</td></tr></table>`
+        }}
+        renderers={renderers}
+      />
+    );
+    const rows = rendered.UNSAFE_getAllByType(View).filter(
+      (view) => StyleSheet.flatten(view.props.style)?.flexDirection === 'row'
+    );
+    expect(rows).toHaveLength(1);
+    expect(StyleSheet.flatten(rows[0].props.style)).toMatchObject({
+      minHeight,
+      flexGrow: 1
+    });
+    expect(StyleSheet.flatten(rows[0].props.style).height).toBeUndefined();
   });
 });

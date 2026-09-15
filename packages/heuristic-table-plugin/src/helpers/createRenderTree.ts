@@ -87,7 +87,11 @@ function translateVGroups(
   return flattenRows;
 }
 
-function makeCell(columnWidths: number[], cell: DisplayCell): TableCell {
+function makeCell(
+  columnWidths: number[],
+  cell: DisplayCell,
+  spacing: number
+): TableCell {
   let width = 0;
   for (let i = cell.x; i < cell.x + cell.lenX; i++) {
     width += columnWidths[i] ?? 0;
@@ -95,7 +99,7 @@ function makeCell(columnWidths: number[], cell: DisplayCell): TableCell {
   return {
     ...cell,
     type: 'cell',
-    width
+    width: width + Math.max(0, cell.lenX - 1) * spacing
   };
 }
 
@@ -109,9 +113,10 @@ function makeCell(columnWidths: number[], cell: DisplayCell): TableCell {
  */
 export function makeTableCells(
   display: Pick<Display, 'cells'>,
-  columnWidths: number[]
+  columnWidths: number[],
+  spacing = 0
 ): TableCell[] {
-  return display.cells.map((cell) => makeCell(columnWidths, cell));
+  return display.cells.map((cell) => makeCell(columnWidths, cell, spacing));
 }
 
 export default function createRenderTree(cells: TableCell[]): TableRoot {

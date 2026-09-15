@@ -6,7 +6,7 @@ export type BorderCollapse = 'collapse' | 'separate';
 
 export type CellVerticalAlign = 'baseline' | 'bottom' | 'middle' | 'top';
 
-function getInlineStyleValue(
+export function getInlineStyleValue(
   tnode: TNode,
   propertyName: string
 ): string | null {

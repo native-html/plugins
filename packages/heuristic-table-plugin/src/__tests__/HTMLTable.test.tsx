@@ -65,6 +65,23 @@ describe('HTMLTable containers', () => {
     );
   });
 
+  it.each([100, 600])(
+    'lets the inner container fill the table height with %spx content',
+    (width) => {
+      const rendered = renderTable(
+        `<table style="height:260px"><tr><td style="width:${width}px">A</td></tr></table>`,
+        400
+      );
+      const wrapper = rendered.getByTestId('table-wrapper');
+      const scroll = rendered.UNSAFE_queryByType(ScrollView);
+      const container = scroll ?? wrapper.findAllByType(View)[0];
+      expect(StyleSheet.flatten(container.props.style)).toMatchObject({
+        flexGrow: 1,
+        flexShrink: 0
+      });
+    }
+  );
+
   it('uses the capped table width for the wrapper and overflow viewport', () => {
     const rendered = renderTable(
       '<table style="max-width:300px"><tr><td style="width:300px">A</td><td style="width:300px">B</td></tr></table>',
@@ -73,7 +90,7 @@ describe('HTMLTable containers', () => {
     expect(rendered.getByTestId('table-wrapper')).toHaveStyle({ width: 300 });
     const scroll = rendered.UNSAFE_getByType(ScrollView);
     expect(scroll.props.horizontal).toBe(true);
-    expect(scroll.props.style).toEqual({ width: 300 });
+    expect(scroll.props.style).toMatchObject({ width: 300 });
     expect(scroll.props.contentContainerStyle).toEqual({ width: 600 });
   });
 
@@ -91,7 +108,7 @@ describe('HTMLTable containers', () => {
     (html, width) => {
       const rendered = renderTable(html, 400);
       expect(rendered.getByTestId('table-wrapper')).toHaveStyle({ width });
-      expect(rendered.UNSAFE_getByType(ScrollView).props.style).toEqual({
+      expect(rendered.UNSAFE_getByType(ScrollView).props.style).toMatchObject({
         width: 0
       });
     }

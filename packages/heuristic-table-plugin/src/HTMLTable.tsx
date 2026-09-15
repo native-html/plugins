@@ -23,17 +23,23 @@ function Container({
   availableWidth: number;
 }>) {
   const scroll = shouldScrollTable(tableWidth, availableWidth);
+  // Carry the wrapper's spare height through to the rows, including when
+  // horizontal overflow requires a ScrollView. Keep the content's height floor.
   return scroll
     ? React.createElement(
         ScrollView,
         {
           contentContainerStyle: { width: tableWidth },
-          style: { width: availableWidth },
+          style: { width: availableWidth, flexGrow: 1, flexShrink: 0 },
           horizontal: true
         },
         children
       )
-    : React.createElement(View, { style: { width: tableWidth } }, children);
+    : React.createElement(
+        View,
+        { style: { width: tableWidth, flexGrow: 1, flexShrink: 0 } },
+        children
+      );
 }
 
 /**
@@ -85,6 +91,7 @@ const HTMLTable = memo(function HTMLTable({
       >
         {React.createElement(TreeRenderer, {
           node: layout.renderTree,
+          borderSpacing: layout.borderSpacing,
           config,
           cellStyles: layout.cellStyles,
           borderCollapse: layout.borderCollapse,

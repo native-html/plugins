@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import { BorderSpacing } from './helpers/resolveBorderSpacing';
 import { StyleSheet, View, ViewStyle } from 'react-native';
 import { TNode, TNodeRenderer } from '@native-html/render';
 import { ResolvedCellStyle } from './helpers/resolveTableStyles';
@@ -13,6 +14,7 @@ const styles = StyleSheet.create({
 
 export default function TreeRenderer({
   node,
+  borderSpacing = { horizontal: 0, vertical: 0 },
   config,
   cellStyles,
   borderCollapse,
@@ -23,6 +25,7 @@ export default function TreeRenderer({
   renderLength
 }: {
   node: TableRenderNode;
+  borderSpacing?: BorderSpacing;
   renderIndex: number;
   renderLength: number;
   config?: HeuristicTablePluginConfig;
@@ -48,7 +51,13 @@ export default function TreeRenderer({
   );
   if (node.type === 'cell') {
     return (
-      <View style={{ width: node.width }}>
+      <View
+        style={{
+          width: node.width,
+          marginEnd: node.x + node.lenX <= maxX ? borderSpacing.horizontal : 0,
+          marginBottom: node.y + node.lenY <= maxY ? borderSpacing.vertical : 0
+        }}
+      >
         <CellContentWidthContext.Provider value={cellContentBox}>
           <TNodeRenderer
             renderIndex={renderIndex}
@@ -77,6 +86,7 @@ export default function TreeRenderer({
         node: v,
         key: i,
         config,
+        borderSpacing,
         cellStyles,
         borderCollapse,
         tableBorderStyle,
@@ -86,16 +96,45 @@ export default function TreeRenderer({
         renderLength: node.children.length
       })
     );
-    return <View style={styles.colContainer}>{children}</View>;
+    return (
+      <View
+        style={[
+          styles.colContainer,
+          node.type === 'root' &&
+            node.children.length > 0 && {
+              paddingHorizontal: borderSpacing.horizontal,
+              paddingVertical: borderSpacing.vertical
+            }
+        ]}
+      >
+        {children}
+      </View>
+    );
   }
   if (node.type === 'row-container') {
+    // The render tree replaces source rows with flex containers. Preserve
+    // their height floor here; a row must still grow when its content is taller.
+    // A spanning cell does not impose its starting row's height on its whole
+    // synthetic row group.
+    const minHeight = node.children.reduce((height, child) => {
+      if (child.type !== 'cell' || child.lenY !== 1) return height;
+      const row = child.tnode.parent;
+      if (row?.tagName !== 'tr') return height;
+      const style = row.styles.nativeBlockRet;
+      return Math.max(
+        height,
+        typeof style.height === 'number' ? style.height : 0,
+        typeof style.minHeight === 'number' ? style.minHeight : 0
+      );
+    }, 0);
     return (
-      <View style={styles.rowContainer}>
+      <View style={[styles.rowContainer, minHeight > 0 && { minHeight }]}>
         {node.children.map((v, i) =>
           React.createElement(TreeRenderer, {
             node: v,
             key: i,
             config,
+            borderSpacing,
             cellStyles,
             borderCollapse,
             tableBorderStyle,

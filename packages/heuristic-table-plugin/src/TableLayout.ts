@@ -1,4 +1,7 @@
 import { sum } from 'ramda';
+import resolveBorderSpacing, {
+  BorderSpacing
+} from './helpers/resolveBorderSpacing';
 import type { CellContentBox } from './CellContentWidthContext';
 import { ViewStyle } from 'react-native';
 import { TNode } from '@native-html/render';
@@ -27,6 +30,7 @@ const DEFAULT_FORCE_STRETCH = true;
 
 export default class TableLayout {
   public readonly display: Display;
+  public readonly borderSpacing: BorderSpacing;
   public readonly columnWidths: number[];
   public readonly totalWidth: number;
   public readonly borderCollapse: boolean;
@@ -63,6 +67,7 @@ export default class TableLayout {
   constructor(tnode: TNode, config: Settings, cellContentBox?: CellContentBox) {
     const style = tnode.styles.nativeBlockRet;
     this.borderCollapse = resolveBorderCollapse(tnode, config.borderCollapse);
+    this.borderSpacing = resolveBorderSpacing(tnode, this.borderCollapse);
     const containingWidth = resolveAvailableWidth(
       tnode,
       config.contentWidth,
@@ -107,6 +112,9 @@ export default class TableLayout {
       forceStretch
     });
     fillTableDisplay(tnode, display);
+    const spacingWidth = display.cells.length
+      ? (display.maxX + 2) * this.borderSpacing.horizontal
+      : 0;
     const declaredColumnWidths = extractColumnWidths(tnode);
     const configStyles = new Map<TNode, ViewStyle | null>();
     const measure = () => {
@@ -120,20 +128,33 @@ export default class TableLayout {
         ...style,
         ...resolved.tableBorderStyle
       });
-      display.contentWidth = Math.max(0, usedTableWidth - insets);
+      display.contentWidth = Math.max(
+        0,
+        usedTableWidth - insets - spacingWidth
+      );
       const computer = new TCellConstraintsComputer({
         contentWidth: display.contentWidth,
         baseFontCoeff: config.baseFontCoeff,
         fontWeightCoeffs: config.fontWeightCoeffs
       });
       for (const cell of display.cells) {
-        cell.constraints = computer.computeCellConstraints(
+        const constraints = computer.computeCellConstraints(
           cell.tnode,
           resolved.cellStyles.get(cell.tnode)!.style
         );
+        // A spanning cell also occupies the gaps between its columns.
+        const internalSpacing = (cell.lenX - 1) * this.borderSpacing.horizontal;
+        cell.constraints = {
+          ...constraints,
+          minWidth: Math.max(0, constraints.minWidth - internalSpacing),
+          maxWidth: Math.max(0, constraints.maxWidth - internalSpacing)
+        };
       }
       let columnWidths = computeColumnWidths(display, declaredColumnWidths);
-      const minLayoutWidth = Math.max(0, (minWidth ?? 0) - insets);
+      const minLayoutWidth = Math.max(
+        0,
+        (minWidth ?? 0) - insets - spacingWidth
+      );
       if (sum(columnWidths) < minLayoutWidth) {
         const raised = computeColumnWidths(
           { ...display, contentWidth: minLayoutWidth, forceStretch: true },
@@ -147,7 +168,11 @@ export default class TableLayout {
     if (config.getStyleForCell) {
       // Freeze callback results against provisional widths. Re-evaluating after
       // each resize could oscillate for a callback that branches on width.
-      for (const cell of makeTableCells(display, measured.columnWidths)) {
+      for (const cell of makeTableCells(
+        display,
+        measured.columnWidths,
+        this.borderSpacing.horizontal
+      )) {
         const configured = config.getStyleForCell.call(null, cell);
         configStyles.set(cell.tnode, configured ? { ...configured } : null);
       }
@@ -161,8 +186,12 @@ export default class TableLayout {
     this.assignableWidth = Math.max(0, this.usedWidth - measured.insets);
     this.display = display;
     this.columnWidths = measured.columnWidths;
-    this.totalWidth = sum(this.columnWidths);
-    this.cells = makeTableCells(display, this.columnWidths);
+    this.totalWidth = sum(this.columnWidths) + spacingWidth;
+    this.cells = makeTableCells(
+      display,
+      this.columnWidths,
+      this.borderSpacing.horizontal
+    );
     this.renderTree = createRenderTree(this.cells);
   }
 }
