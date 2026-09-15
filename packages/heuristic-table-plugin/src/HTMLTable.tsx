@@ -17,15 +17,17 @@ export function shouldScrollTable(
 function Container({
   children,
   tableWidth,
-  availableWidth
+  availableWidth,
+  scrollVertically
 }: PropsWithChildren<{
   tableWidth: number;
   availableWidth: number;
+  scrollVertically: boolean;
 }>) {
   const scroll = shouldScrollTable(tableWidth, availableWidth);
   // Carry the wrapper's spare height through to the rows, including when
   // horizontal overflow requires a ScrollView. Keep the content's height floor.
-  return scroll
+  const content = scroll
     ? React.createElement(
         ScrollView,
         {
@@ -40,6 +42,15 @@ function Container({
         { style: { width: tableWidth, flexGrow: 1, flexShrink: 0 } },
         children
       );
+  // Measure rows without the viewport's height constraint. Keep the vertical
+  // scroller outside the horizontal one so both axes can overflow independently.
+  return scrollVertically ? (
+    <ScrollView style={{ flexGrow: 1, flexShrink: 1 }} nestedScrollEnabled>
+      {content}
+    </ScrollView>
+  ) : (
+    content
+  );
 }
 
 /**
@@ -67,9 +78,8 @@ const HTMLTable = memo(function HTMLTable({
     <TDefaultRenderer
       {...props}
       style={{
-        // An explicit height on a table is a minimum height in HTML, but only
-        // `growBeyondHeight` opts into letting the table grow past it; by
-        // default the declared height is enforced as written.
+        // A fixed height bounds the scroll viewport; rows keep their natural
+        // height. Growing tables instead use the declared height as a minimum.
         ...(config.growBeyondHeight
           ? relaxHeightConstraint(props.style)
           : props.style),
@@ -88,6 +98,11 @@ const HTMLTable = memo(function HTMLTable({
       <Container
         tableWidth={tableWidth}
         availableWidth={layout.assignableWidth}
+        scrollVertically={
+          !config.growBeyondHeight &&
+          props.style?.height != null &&
+          props.style.height !== 'auto'
+        }
       >
         {React.createElement(TreeRenderer, {
           node: layout.renderTree,

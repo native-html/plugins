@@ -50,6 +50,9 @@ describe('HTMLTable containers', () => {
     expect(StyleSheet.flatten(wrapper.props.style)).not.toHaveProperty(
       'minHeight'
     );
+    expect(rendered.UNSAFE_getByType(ScrollView).props.horizontal).not.toBe(
+      true
+    );
   });
 
   it('passes an explicit table height as minHeight when growBeyondHeight is set', () => {
@@ -63,6 +66,7 @@ describe('HTMLTable containers', () => {
     expect(StyleSheet.flatten(wrapper.props.style)).not.toHaveProperty(
       'height'
     );
+    expect(rendered.UNSAFE_queryByType(ScrollView)).toBeNull();
   });
 
   it.each([100, 600])(
@@ -70,7 +74,8 @@ describe('HTMLTable containers', () => {
     (width) => {
       const rendered = renderTable(
         `<table style="height:260px"><tr><td style="width:${width}px">A</td></tr></table>`,
-        400
+        400,
+        { growBeyondHeight: true }
       );
       const wrapper = rendered.getByTestId('table-wrapper');
       const scroll = rendered.UNSAFE_queryByType(ScrollView);
@@ -79,6 +84,25 @@ describe('HTMLTable containers', () => {
         flexGrow: 1,
         flexShrink: 0
       });
+    }
+  );
+
+  it.each([100, 600])(
+    'keeps natural %spx-wide content inside a bounded vertical viewport',
+    (width) => {
+      const rendered = renderTable(
+        `<table style="height:48px"><tr><td style="width:${width}px">A</td></tr></table>`,
+        400,
+        { growBeyondHeight: false }
+      );
+      const scrollers = rendered.UNSAFE_getAllByType(ScrollView);
+      const vertical = scrollers.find((view) => !view.props.horizontal)!;
+      expect(vertical.props.style).toMatchObject({ flexShrink: 1 });
+      expect(vertical.props.contentContainerStyle).toBeUndefined();
+      expect(scrollers.filter((view) => view.props.horizontal)).toHaveLength(
+        width > 400 ? 1 : 0
+      );
+      expect(rendered.getByTestId('table-wrapper')).toHaveStyle({ height: 48 });
     }
   );
 

@@ -70,10 +70,22 @@ function cellStyleFor(
 }
 
 describe('useHtmlTableCellProps', () => {
-  it.each(['td', 'th'])('enforces an explicit %s height by default', (tag) => {
-    const style = cellStyleFor(`<${tag} style="height:48px">A</${tag}>`);
-    expect(style.height).toBe(48);
-    expect(style).not.toHaveProperty('minHeight');
+  it.each(['td', 'th'])(
+    'uses an explicit %s height as a minimum by default',
+    (tag) => {
+      const style = cellStyleFor(`<${tag} style="height:48px">A</${tag}>`);
+      expect(style.minHeight).toBe(48);
+      expect(style).not.toHaveProperty('height');
+    }
+  );
+
+  it('allows content to outgrow a configured cell height', () => {
+    const style = cellStyleFor('<td>Wrapping content</td>', {
+      growBeyondHeight: false,
+      getStyleForCell: () => ({ height: 24 })
+    });
+    expect(style.minHeight).toBe(24);
+    expect(style).not.toHaveProperty('height');
   });
 
   it.each(['td', 'th'])(

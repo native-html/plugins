@@ -96,16 +96,12 @@ export default function useHtmlTableCellProps({
     // The user-agent stylesheet is the weakest declaration of the three, and
     // only covers the sides no author declaration reached.
     ...defaultPaddingStyle,
-    // An explicit height on a cell is a minimum height in HTML, but only
-    // `growBeyondHeight` opts into letting the cell grow past it; by default
-    // the declared height is enforced as written.
-    ...(config?.growBeyondHeight
-      ? relaxHeightConstraint(props.style)
-      : props.style),
+    // Cells must fit their content even inside a fixed-height table viewport.
+    ...relaxHeightConstraint(props.style),
     flexGrow: 1,
     flexShrink: 0,
     ...alignmentStyles,
-    ...styleFromConfig,
+    ...relaxHeightConstraint(styleFromConfig ?? {}),
     ...collapsedBorderStyle,
     width: cell.width,
     marginLeft: 0,

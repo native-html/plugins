@@ -263,18 +263,17 @@ export interface HeuristicTablePluginConfig {
    */
   borderCollapse?: 'collapse' | 'separate';
   /**
-   * When true, an explicit `height` on the table, or on any of its cells, is
-   * treated as a minimum: the box still grows to fit content taller than it.
-   * When false, that `height` is enforced as written and taller content
-   * overflows it.
+   * When true, an explicit table `height` is treated as a minimum and the
+   * table grows to fit taller content. When false, the table keeps that height
+   * and scrolls vertically. Rows and cells always grow to fit their content;
+   * their declared heights are minimums in either mode.
    *
    * @remarks
    * Per {@link https://www.w3.org/TR/CSS21/tables.html#height-layout | CSS 2.1
    * §17.5.3}, `height` on a `table`, `tr`, `th` or `td` box is only a minimum,
    * so `true` is the faithful reading of the HTML. It is off by default
-   * because React Native has no table layout algorithm to shrink a row back
-   * down, and a document whose markup sizes its tables is better served by a
-   * box that stays the size it asked for.
+   * to preserve the requested table viewport size while keeping all content
+   * accessible by scrolling.
    *
    * @defaultValue false
    */
