@@ -1,16 +1,13 @@
 import React, { PropsWithChildren } from 'react';
 import { render } from '@testing-library/react-native';
 import { ScrollView, StyleSheet, View, ViewStyle } from 'react-native';
-import HTMLTable from '../../HTMLTable';
-import TableLayout from '../../TableLayout';
-import {
-  HeuristicTablePluginConfig,
-  HTMLTableProps
-} from '../../shared-types';
+import HTMLTable from '../HTMLTable';
+import TableLayout from '../TableLayout';
+import { HeuristicTablePluginConfig, HTMLTableProps } from '../shared-types';
 import { createTableTNode } from './utils';
 
 // Inspect the real table wrapper and scroll container independently of cell rendering.
-jest.mock('../../TreeRenderer', () => () => null);
+jest.mock('../TreeRenderer', () => () => null);
 
 function DefaultRenderer({
   children,

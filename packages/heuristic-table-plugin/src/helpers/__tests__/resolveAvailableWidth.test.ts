@@ -1,5 +1,5 @@
 import resolveAvailableWidth from '../resolveAvailableWidth';
-import { createTableTNode } from './utils';
+import { createTableTNode } from '../../__tests__/utils';
 
 function availableWidthFor(html: string, contentWidth: number, nth = 0) {
   return resolveAvailableWidth(createTableTNode(html, nth), contentWidth);

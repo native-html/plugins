@@ -1,7 +1,7 @@
 import { TNode } from '@native-html/render';
 import fillTableDisplay, { createEmptyDisplay } from '../fillTableDisplay';
 import TCellConstraintsComputer from '../TCellConstraintsComputer';
-import { createTableTNode } from './utils';
+import { createTableTNode } from '../../__tests__/utils';
 
 function createDisplay(tnode: TNode) {
   const display = createEmptyDisplay({ contentWidth: 1000 });

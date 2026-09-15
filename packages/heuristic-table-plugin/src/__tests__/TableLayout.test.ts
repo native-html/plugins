@@ -1,7 +1,7 @@
-import TableLayout from '../../TableLayout';
-import { shouldScrollTable } from '../../HTMLTable';
-import { Settings } from '../../shared-types';
-import reduceColumnConstraints from '../reduceColumnConstraints';
+import TableLayout from '../TableLayout';
+import { shouldScrollTable } from '../HTMLTable';
+import { Settings } from '../shared-types';
+import reduceColumnConstraints from '../helpers/reduceColumnConstraints';
 import { createTableTNode } from './utils';
 
 function layoutFor(html: string, settings: Settings): TableLayout {

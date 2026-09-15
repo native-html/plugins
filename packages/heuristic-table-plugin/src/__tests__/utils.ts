@@ -1,6 +1,6 @@
 import { TRenderEngine } from '@native-html/transient-render-engine';
 import { TNode } from '@native-html/render';
-import colgroupModel from '../../ColgroupModel';
+import colgroupModel from '../ColgroupModel';
 
 const engine = new TRenderEngine({
   // Unit fixtures isolate plugin defaults. Public-renderer tests retain the

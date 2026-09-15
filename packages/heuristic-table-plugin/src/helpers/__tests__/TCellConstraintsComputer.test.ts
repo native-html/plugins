@@ -4,7 +4,7 @@ import TCellConstraintsComputer, {
 } from '../TCellConstraintsComputer';
 import { TCellConstraints } from '../../shared-types';
 import { DEFAULT_CELL_PADDING } from '../tableStyles';
-import { createCellTNode } from './utils';
+import { createCellTNode } from '../../__tests__/utils';
 
 /**
  * Pinned here so that the break-opportunity assertions below test the segment

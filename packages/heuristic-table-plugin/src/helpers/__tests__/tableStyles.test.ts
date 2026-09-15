@@ -7,7 +7,7 @@ import {
   resolveCellVerticalAlign
 } from '../tableStyles';
 import fillTableDisplay, { createEmptyDisplay } from '../fillTableDisplay';
-import { createCellTNode, createTableTNode } from './utils';
+import { createCellTNode, createTableTNode } from '../../__tests__/utils';
 
 /** A wrapper that paints all four of its resolved outer edges. */
 const FRAMED = {
@@ -494,19 +494,23 @@ describe('table styles', () => {
     const LOGICAL_START = { borderStartWidth: 7, borderStartColor: 'red' };
 
     it.each([
-      [false, 'borderLeftWidth'],
-      [true, 'borderRightWidth']
+      [false, 'borderLeftWidth', 'borderRightWidth'],
+      [true, 'borderRightWidth', 'borderLeftWidth']
     ] as const)(
       'resolves a logical start edge with isRTL %s',
-      (isRTL, physicalSide) => {
+      (isRTL, physicalSide, oppositeSide) => {
         jest.replaceProperty(I18nManager, 'isRTL', isRTL);
-        expect(
-          getCollapsedCellBorderStyle(
-            { x: 0, y: 0, lenX: 1, lenY: 1 },
-            LOGICAL_START,
-            { maxX: 0, maxY: 0, tableBorderStyle: null }
-          )
-        ).toMatchObject({ [physicalSide]: 7 });
+        const style = getCollapsedCellBorderStyle(
+          { x: 0, y: 0, lenX: 1, lenY: 1 },
+          LOGICAL_START,
+          { maxX: 0, maxY: 0, tableBorderStyle: null }
+        );
+        // The opposite side is asserted too: a logical edge resolved onto both
+        // physical ones would otherwise satisfy the winning side alone.
+        expect(style).toMatchObject({
+          [physicalSide]: 7,
+          [oppositeSide]: 0
+        });
       }
     );
 

@@ -1,5 +1,5 @@
 import fillTableDisplay, { createEmptyDisplay } from '../fillTableDisplay';
-import { createTableTNode } from './utils';
+import { createTableTNode } from '../../__tests__/utils';
 import createRenderTree, { makeTableCells } from '../createRenderTree';
 import TCellConstraintsComputer from '../TCellConstraintsComputer';
 import {

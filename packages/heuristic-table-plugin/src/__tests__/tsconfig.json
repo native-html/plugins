@@ -1,0 +1,9 @@
+{
+  "extends": "../../../../tsconfig-base.json",
+  "compilerOptions": {
+    "types": ["jest"],
+    "noEmit": true,
+    "ignoreDeprecations": "6.0"
+  },
+  "exclude": ["../../node_modules", "../../lib"]
+}

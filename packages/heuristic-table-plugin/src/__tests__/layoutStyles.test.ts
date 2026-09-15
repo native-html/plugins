@@ -1,9 +1,9 @@
 import { CustomRendererProps, TBlock } from '@native-html/render';
 import { ViewStyle } from 'react-native';
-import TableLayout from '../../TableLayout';
-import useHtmlTableCellProps from '../../useHtmlTableCellProps';
-import { shouldScrollTable } from '../../HTMLTable';
-import { Settings } from '../../shared-types';
+import TableLayout from '../TableLayout';
+import useHtmlTableCellProps from '../useHtmlTableCellProps';
+import { shouldScrollTable } from '../HTMLTable';
+import { Settings } from '../shared-types';
 import { createTableTNode } from './utils';
 
 /**
