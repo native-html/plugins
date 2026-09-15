@@ -373,15 +373,18 @@ describe('table styles', () => {
             maxX: 3,
             maxY: 3,
             tableBorderStyle: FRAMED,
-            cells: [
-              {
-                x: 2,
-                y: 1,
-                lenX: 1,
-                lenY: 1,
-                tnode: createCellTNode('<table><tr><td>A</td></tr></table>')
-              }
-            ],
+            neighbours: {
+              Right: [
+                {
+                  x: 2,
+                  y: 1,
+                  lenX: 1,
+                  lenY: 1,
+                  tnode: createCellTNode('<table><tr><td>A</td></tr></table>')
+                }
+              ],
+              Bottom: []
+            },
             getCellStyle: () => ({ borderLeftWidth: 4, borderLeftColor: 'red' })
           }
         )

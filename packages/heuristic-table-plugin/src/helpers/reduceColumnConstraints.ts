@@ -1,5 +1,3 @@
-import flatten from 'ramda/src/flatten';
-
 import {
   CellProperties,
   TCellConstraints,
@@ -52,7 +50,7 @@ function splitColspanCells(cell: CellProperties): CellProperties | CellPropertie
 export default function reduceColumnConstraints(
   cells: CellProperties[]
 ): TColumnConstraints[] {
-  const flatCells = flatten(cells.map(splitColspanCells)) as CellProperties[];
+  const flatCells = cells.flatMap(splitColspanCells);
   if (flatCells.length === 0) {
     return [];
   }

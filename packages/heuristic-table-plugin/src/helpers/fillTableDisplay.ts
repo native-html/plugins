@@ -6,6 +6,7 @@ import {
   TCellConstraints
 } from '../shared-types';
 import TCellConstraintsComputer from './TCellConstraintsComputer';
+import parseSpan, { MAX_COLSPAN, MAX_ROWSPAN } from './parseSpan';
 
 /**
  * The constraints of a cell no computer has measured yet.
@@ -31,30 +32,6 @@ export function createEmptyDisplay(config: Settings): Display {
     cells: [],
     ...config
   };
-}
-
-const MAX_COLSPAN = 1000;
-const MAX_ROWSPAN = 65534;
-
-/**
- * Parse a `colspan` / `rowspan` attribute the way HTML requires.
- *
- * @remarks
- * The attribute is a non-negative integer, clamped to a maximum; anything
- * invalid — a missing value, a negative, a fraction, `0`, or plain nonsense —
- * falls back to `1`. Letting a raw `Number()` through instead lets `0` and
- * negatives corrupt the grid cursor.
- *
- * Note that `rowspan="0"` means "span to the end of the row group" in HTML.
- * Row groups are not modelled here, so it degrades to `1` rather than
- * silently spanning nothing.
- */
-function parseSpan(value: unknown, max: number): number {
-  const parsed = typeof value === 'string' ? Number(value.trim()) : NaN;
-  if (!Number.isFinite(parsed)) {
-    return 1;
-  }
-  return Math.min(Math.max(Math.floor(parsed), 1), max);
 }
 
 function isOccupied(display: Display, x: number, y: number): boolean {

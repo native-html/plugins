@@ -1,4 +1,4 @@
-import { sum } from 'ramda';
+import sum from './helpers/sum';
 import resolveBorderSpacing, {
   BorderSpacing
 } from './helpers/resolveBorderSpacing';
@@ -11,6 +11,7 @@ import fillTableDisplay, {
   createEmptyDisplay
 } from './helpers/fillTableDisplay';
 import TCellConstraintsComputer from './helpers/TCellConstraintsComputer';
+import indexCellNeighbours from './helpers/indexCellNeighbours';
 import { Display, Settings, TableCell, TableRoot } from './shared-types';
 import extractColumnWidths from './helpers/extractColumnWidths';
 import { clampWidth, resolveWidthConstraints } from './helpers/resolveWidth';
@@ -112,17 +113,25 @@ export default class TableLayout {
       forceStretch
     });
     fillTableDisplay(tnode, display);
+    const neighbours = this.borderCollapse
+      ? indexCellNeighbours(display.cells)
+      : undefined;
     const spacingWidth = display.cells.length
       ? (display.maxX + 2) * this.borderSpacing.horizontal
       : 0;
     const declaredColumnWidths = extractColumnWidths(tnode);
     const configStyles = new Map<TNode, ViewStyle | null>();
+    const computer = new TCellConstraintsComputer({
+      baseFontCoeff: config.baseFontCoeff,
+      fontWeightCoeffs: config.fontWeightCoeffs
+    });
     const measure = () => {
       const resolved = resolveTableStyles(
         display,
         style,
         this.borderCollapse,
-        configStyles
+        configStyles,
+        neighbours
       );
       const insets = getHorizontalInsets({
         ...style,
@@ -132,15 +141,11 @@ export default class TableLayout {
         0,
         usedTableWidth - insets - spacingWidth
       );
-      const computer = new TCellConstraintsComputer({
-        contentWidth: display.contentWidth,
-        baseFontCoeff: config.baseFontCoeff,
-        fontWeightCoeffs: config.fontWeightCoeffs
-      });
       for (const cell of display.cells) {
         const constraints = computer.computeCellConstraints(
           cell.tnode,
-          resolved.cellStyles.get(cell.tnode)!.style
+          resolved.cellStyles.get(cell.tnode)!.style,
+          display.contentWidth
         );
         // A spanning cell also occupies the gaps between its columns.
         const internalSpacing = (cell.lenX - 1) * this.borderSpacing.horizontal;

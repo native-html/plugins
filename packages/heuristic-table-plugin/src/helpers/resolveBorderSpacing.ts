@@ -9,31 +9,47 @@ export interface BorderSpacing {
 
 const ZERO: BorderSpacing = { horizontal: 0, vertical: 0 };
 
+const LENGTH_REGEX = /^(\d*\.?\d+)(px|em|rem|pt|pc|in|cm|mm)?$/;
+
+/** CSS absolute units, in px. */
+const ABSOLUTE_SCALES: Record<string, number> = {
+  px: 1,
+  pt: 96 / 72,
+  pc: 16,
+  in: 96,
+  cm: 96 / 2.54,
+  mm: 96 / 25.4
+};
+
+const DEFAULT_FONT_SIZE = 16;
+
+function rootOf(node: TNode): TNode {
+  let root = node;
+  while (root.parent) root = root.parent;
+  return root;
+}
+
 function parseSpacing(value: string, node: TNode): BorderSpacing | null {
   const parts = value.split(/\s+/);
   if (parts.length < 1 || parts.length > 2) return null;
+  // The font-relative units resolve against this node, so the scales are the
+  // same for both parts and are built once rather than per part.
+  const scales: Record<string, number> = {
+    ...ABSOLUTE_SCALES,
+    em: node.styles.nativeTextFlow.fontSize ?? DEFAULT_FONT_SIZE,
+    rem: rootOf(node).styles.nativeTextFlow.fontSize ?? DEFAULT_FONT_SIZE
+  };
   const lengths = parts.map((part) => {
-    const match = /^(\d*\.?\d+)(px|em|rem|pt|pc|in|cm|mm)?$/.exec(part);
+    const match = LENGTH_REGEX.exec(part);
     if (!match) return NaN;
     const number = Number(match[1]);
     const unit = match[2];
-    if (!unit && number !== 0) return NaN;
-    let root = node;
-    while (root.parent) root = root.parent;
-    const scales: Record<string, number> = {
-      px: 1,
-      em: node.styles.nativeTextFlow.fontSize ?? 16,
-      rem: root.styles.nativeTextFlow.fontSize ?? 16,
-      pt: 96 / 72,
-      pc: 16,
-      in: 96,
-      cm: 96 / 2.54,
-      mm: 96 / 25.4
-    };
-    return number * (unit ? scales[unit] : 1);
+    // Only zero may go unitless; every other bare number is invalid CSS.
+    if (!unit) return number === 0 ? 0 : NaN;
+    return number * scales[unit]!;
   });
   if (lengths.some((length) => !Number.isFinite(length))) return null;
-  return { horizontal: lengths[0], vertical: lengths[1] ?? lengths[0] };
+  return { horizontal: lengths[0]!, vertical: lengths[1] ?? lengths[0]! };
 }
 
 /** Unsupported web-only CSS survives on the source attributes, not native styles. */

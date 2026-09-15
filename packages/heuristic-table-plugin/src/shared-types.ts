@@ -6,6 +6,7 @@ import {
   TNode
 } from '@native-html/render';
 import TableLayout from './TableLayout';
+import type { ResolvedCellStyle } from './helpers/resolveTableStyles';
 import type { FontWeightCoefficients } from './helpers/TCellConstraintsComputer';
 
 /**
@@ -171,43 +172,7 @@ export type TableRenderNode =
  *
  * @public
  */
-export interface Settings {
-  getStyleForCell?: HeuristicTablePluginConfig['getStyleForCell'];
-  /**
-   * When true, force the table to stretch to the available width.
-   */
-  forceStretch?: boolean;
-  /**
-   * The average advance width of one character, as a fraction of the font
-   * size, used to estimate how wide a cell's text is.
-   *
-   * @remarks
-   * Text is never measured, only estimated: a cell's bounds are its character
-   * count times this coefficient times the font size. Raise it when tables
-   * come out too narrow and their text wraps more than it should, lower it
-   * when cells claim more width than their content occupies.
-   *
-   * @defaultValue 0.65
-   */
-  baseFontCoeff?: number;
-  /**
-   * How much wider text renders at a given font weight than at a regular one,
-   * keyed by the stringified `fontWeight`.
-   *
-   * @remarks
-   * Merged over the defaults rather than replacing them, so `{ bold: 1.05 }`
-   * retunes bold text alone and leaves the numeric weights as they were. A
-   * weight with no entry, before or after merging, costs nothing. Pass a
-   * referentially stable object — a fresh literal on every render relays out
-   * every table using it.
-   *
-   * @defaultValue \{ normal: 1, bold: 1.3, '100': 0.8 … '900': 1.5 \}
-   */
-  fontWeightCoeffs?: FontWeightCoefficients;
-  /**
-   * Override the table's `border-collapse` mode.
-   */
-  borderCollapse?: 'collapse' | 'separate';
+export interface Settings extends HeuristicTablePluginConfig {
   /**
    * Available width at the root of the render tree, prior to scrolling.
    *
@@ -324,4 +289,23 @@ export interface HTMLTableProps extends CustomRendererProps<TBlock> {
 export interface TableCellPropsFromParent extends PropsFromParent {
   config?: HeuristicTablePluginConfig;
   cell: TableCell;
+}
+
+/**
+ * What {@link TreeRenderer} hands a cell renderer on top of
+ * {@link TableCellPropsFromParent}.
+ *
+ * @remarks
+ * Internal: these are the values the table already resolved, passed down so a
+ * cell need not recompute them. A custom `td`/`th` renderer reached outside
+ * this plugin's table sees only the public fields, which is why every addition
+ * here is optional or has a defined absent state.
+ */
+export interface InternalTableCellPropsFromParent
+  extends TableCellPropsFromParent {
+  resolvedCellStyle?: ResolvedCellStyle;
+  borderCollapse: boolean;
+  maxX: number;
+  maxY: number;
+  tableBorderStyle: ViewStyle | null;
 }

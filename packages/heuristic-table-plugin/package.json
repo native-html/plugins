@@ -59,9 +59,7 @@
   },
   "dependencies": {
     "@types/prop-types": "^15.7.15",
-    "@types/ramda": "^0.31.1",
-    "prop-types": "^15.8.1",
-    "ramda": "^0.32.0"
+    "prop-types": "^15.8.1"
   },
   "peerDependencies": {
     "@native-html/render": ">=1.0.0-alpha.0",

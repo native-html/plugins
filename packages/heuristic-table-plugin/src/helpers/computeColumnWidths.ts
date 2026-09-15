@@ -2,6 +2,7 @@ import { Display, TColumnConstraints } from '../shared-types';
 import reduceColumnConstraints from './reduceColumnConstraints';
 import type { DeclaredColumnWidth } from './extractColumnWidths';
 import { clampWidth, lesserBound } from './resolveWidth';
+import sum from './sum';
 
 /** Below this many pixels a leftover is not worth another distribution pass. */
 const EPSILON = 1e-6;
@@ -14,10 +15,6 @@ function mapSpreads(constraints: TColumnConstraints[]): number[] {
   return constraints.map((c) => c.spread);
 }
 
-function sumOf(values: number[]): number {
-  return values.reduce((acc, x) => acc + x, 0);
-}
-
 /**
  * Share `total` across `weights`, proportionally. Falls back to an even share
  * when every weight is zero, so that no space is ever silently dropped.
@@ -26,7 +23,7 @@ function distribute(total: number, weights: number[]): number[] {
   if (weights.length === 0) {
     return [];
   }
-  const totalWeight = sumOf(weights);
+  const totalWeight = sum(weights);
   if (totalWeight === 0) {
     return weights.map(() => total / weights.length);
   }
@@ -38,8 +35,8 @@ function interpolateWidths(
   upper: number[],
   targetWidth: number
 ): number[] {
-  const lowerTotal = sumOf(lower);
-  const upperTotal = sumOf(upper);
+  const lowerTotal = sum(lower);
+  const upperTotal = sum(upper);
   if (upperTotal <= lowerTotal) {
     return lower;
   }
@@ -212,7 +209,7 @@ export default function computeColumnWidths(
   }
   const minWidths = mapMinWidths(columnConstraints);
   const spreads = mapSpreads(columnConstraints);
-  const sumOfMinWidths = sumOf(minWidths);
+  const sumOfMinWidths = sum(minWidths);
   if (contentWidth < sumOfMinWidths) {
     // The table cannot fit: no column may go below the width it needs to hold
     // its longest word, so the table overflows and `HTMLTable` scrolls it.
@@ -242,7 +239,7 @@ export default function computeColumnWidths(
       cap == null ? preferred : Math.min(preferred, cap)
     );
   });
-  const percentageGuessTotal = sumOf(percentageGuess);
+  const percentageGuessTotal = sum(percentageGuess);
   if (contentWidth <= percentageGuessTotal) {
     return interpolateWidths(minWidths, percentageGuess, contentWidth);
   }
@@ -252,7 +249,7 @@ export default function computeColumnWidths(
   const maxContentGuess = percentageGuess.map((width, i) =>
     percentages[i] == null ? Math.max(width, spreads[i] ?? 0) : width
   );
-  const maxContentGuessTotal = sumOf(maxContentGuess);
+  const maxContentGuessTotal = sum(maxContentGuess);
   if (contentWidth <= maxContentGuessTotal) {
     return interpolateWidths(percentageGuess, maxContentGuess, contentWidth);
   }
@@ -294,7 +291,7 @@ export default function computeColumnWidths(
   // left does the table stay narrower than its assignable width.
   let widths = maxContentGuess;
   for (const group of [autoColumns, percentColumns, allColumns]) {
-    const leftover = contentWidth - sumOf(widths);
+    const leftover = contentWidth - sum(widths);
     if (leftover <= EPSILON) {
       break;
     }

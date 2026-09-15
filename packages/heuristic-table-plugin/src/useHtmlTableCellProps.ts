@@ -1,12 +1,11 @@
 import { ViewStyle } from 'react-native';
 import { TBlock, CustomRendererProps } from '@native-html/render';
-import { TableCellPropsFromParent } from './shared-types';
-import { ResolvedCellStyle } from './helpers/resolveTableStyles';
+import { InternalTableCellPropsFromParent } from './shared-types';
 import relaxHeightConstraint from './helpers/relaxHeightConstraint';
+import composeCellStyle from './helpers/composeCellStyle';
 import {
   CellVerticalAlign,
   getCollapsedCellBorderStyle,
-  getDefaultCellPaddingStyle,
   resolveConfiguredCellStyle,
   resolveCellVerticalAlign
 } from './helpers/tableStyles';
@@ -27,14 +26,6 @@ const justifyContentForVerticalAlign: Record<
   middle: 'center',
   top: 'flex-start'
 };
-
-interface InternalTableCellPropsFromParent extends TableCellPropsFromParent {
-  resolvedCellStyle?: ResolvedCellStyle;
-  borderCollapse: boolean;
-  maxX: number;
-  maxY: number;
-  tableBorderStyle: ViewStyle | null;
-}
 
 /**
  * Customize `td` and `th` renderers while reusing default cell renderer logic.
@@ -81,28 +72,21 @@ export default function useHtmlTableCellProps({
     : borderCollapse
       ? getCollapsedCellBorderStyle(
           cell,
-          { ...props.tnode.styles.nativeBlockRet, ...styleFromConfig },
+          composeCellStyle(props.tnode.styles.nativeBlockRet, styleFromConfig),
           { maxX, maxY, tableBorderStyle }
         )
       : null;
-  // The user-agent padding is resolved against the config styles too, since a
-  // shorthand `padding` there cannot outrank a longhand default whatever the
-  // merge order: Yoga resolves each side against its own edge first.
-  const defaultPaddingStyle = getDefaultCellPaddingStyle(
-    props.tnode.styles.nativeBlockRet,
-    styleFromConfig
-  );
   const style = {
-    // The user-agent stylesheet is the weakest declaration of the three, and
-    // only covers the sides no author declaration reached.
-    ...defaultPaddingStyle,
     // Cells must fit their content even inside a fixed-height table viewport.
-    ...relaxHeightConstraint(props.style),
-    flexGrow: 1,
-    flexShrink: 0,
-    ...alignmentStyles,
-    ...relaxHeightConstraint(styleFromConfig ?? {}),
-    ...collapsedBorderStyle,
+    ...composeCellStyle(
+      relaxHeightConstraint(props.style),
+      styleFromConfig ? relaxHeightConstraint(styleFromConfig) : null,
+      {
+        border: collapsedBorderStyle,
+        rendererDefaults: { flexGrow: 1, flexShrink: 0, ...alignmentStyles },
+        paddingSource: props.tnode.styles.nativeBlockRet
+      }
+    ),
     width: cell.width,
     marginLeft: 0,
     marginRight: 0,

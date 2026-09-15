@@ -4,6 +4,7 @@ import {
   resolveAttributeLength,
   resolvePercentage
 } from './resolveWidth';
+import parseSpan from './parseSpan';
 
 /**
  * The width declarations a `col` or its `colgroup` contributes to one column.
@@ -37,16 +38,6 @@ export interface DeclaredColumnWidth {
    * assignable table width; `null` when there is none.
    */
   maxPercent: number | null;
-}
-
-const MAX_SPAN = 1000;
-
-function parseSpan(value: unknown): number {
-  const parsed = typeof value === 'string' ? Number(value.trim()) : NaN;
-  if (!Number.isFinite(parsed)) {
-    return 1;
-  }
-  return Math.min(Math.max(Math.floor(parsed), 1), MAX_SPAN);
 }
 
 function appendWidth(

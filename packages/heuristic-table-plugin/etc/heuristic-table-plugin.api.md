@@ -79,14 +79,8 @@ const renderers: Record<'th' | 'td' | 'table', CustomBlockRenderer>;
 export default renderers;
 
 // @public
-export interface Settings {
-    baseFontCoeff?: number;
-    borderCollapse?: 'collapse' | 'separate';
+export interface Settings extends HeuristicTablePluginConfig {
     contentWidth: number;
-    fontWeightCoeffs?: FontWeightCoefficients;
-    forceStretch?: boolean;
-    // (undocumented)
-    getStyleForCell?: HeuristicTablePluginConfig['getStyleForCell'];
 }
 
 // @public

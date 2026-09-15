@@ -5,6 +5,7 @@ import TCellConstraintsComputer, {
 import { TCellConstraints } from '../../shared-types';
 import { DEFAULT_CELL_PADDING } from '../tableStyles';
 import { createCellTNode } from '../../__tests__/utils';
+import { ViewStyle } from 'react-native';
 
 /**
  * Pinned here so that the break-opportunity assertions below test the segment
@@ -35,6 +36,41 @@ function constraintsFor(
 }
 
 describe('TCellConstraintsComputer', () => {
+  it('reuses descendant measurements while recomputing style and width constraints', () => {
+    const cell = createCellTNode(
+      '<table><tr><td><div style="width:30px">some <b>bold</b> text</div></td></tr></table>'
+    );
+    const children = cell.children;
+    const readChildren = jest.fn(() => children);
+    Object.defineProperty(cell, 'children', { get: readChildren });
+    const computer = new TCellConstraintsComputer({ baseFontCoeff: 0.5 });
+    const cases: [ViewStyle, number][] = [
+      [{ padding: 2, width: '50%', maxWidth: 80 }, 200],
+      [{ padding: 10, borderWidth: 3, width: '50%', maxWidth: 80 }, 400],
+      [{ padding: 0, width: 100, minWidth: 120 }, 300]
+    ];
+    const results = cases.map(([style, width]) =>
+      computer.computeCellConstraints(cell, style, width)
+    );
+    expect(readChildren).toHaveBeenCalledTimes(1);
+    cases.forEach(([style, width], i) => {
+      expect(results[i]).toEqual(
+        new TCellConstraintsComputer({
+          baseFontCoeff: 0.5,
+          contentWidth: width
+        }).computeCellConstraints(cell, style)
+      );
+    });
+    expect(results[0]!.percentWidth).toBe(0.4);
+    expect(results[1]!.percentWidth).toBe(0.2);
+    expect(results[1]!.horizontalSpace).toBe(26);
+    expect(results[2]!.minWidth).toBeGreaterThanOrEqual(120);
+    const retuned = new TCellConstraintsComputer({
+      baseFontCoeff: 1
+    }).computeCellConstraints(cell, cases[0]![0], 200);
+    expect(retuned.contentDensity).toBe(results[0]!.contentDensity * 2);
+  });
+
   describe('font weight coefficients', () => {
     it('should widen bold text by the default coefficient', () => {
       const { minWidth } = constraintsFor(

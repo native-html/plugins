@@ -17,36 +17,16 @@ interface TextChunkStats {
 }
 
 interface TCellStats {
-  /**
-   * The cell's own horizontal insets: its padding and border. Margins are
-   * excluded because the cell renderer zeroes them, so reserving column width
-   * for one would leave a gap nothing ever paints.
-   */
-  horizontalSpace: number;
-  /**
-   * The maximum of explicit widths or min-widths of the block elements *inside*
-   * this cell, including margins. Content-box against the cell, so the cell's
-   * own horizontal spacing still has to be added on top.
-   */
+  /** Absolute widths imposed by descendants, including their margins. */
   blockWidth: number;
-  /**
-   * The border-box width the cell itself declares, or `null` when it declares
-   * none. Already holds the cell's padding and border.
-   */
-  cellBoxWidth: number | null;
-  /**
-   * Text stats in this cell.
-   */
   textStats: TextChunkStats[][];
 }
 
-function getInitCellStats(style: ViewStyle): TCellStats {
-  return {
-    blockWidth: 0,
-    cellBoxWidth: null,
-    horizontalSpace: getHorizontalInsets(style),
-    textStats: [[]]
-  };
+interface IntrinsicCellConstraints {
+  blockWidth: number;
+  minWidth: number;
+  maxWidth: number;
+  contentDensity: number;
 }
 
 /**
@@ -108,6 +88,9 @@ export const DEFAULT_FONT_WEIGHT_COEFFS: FontWeightCoefficients = {
 };
 
 export default class TCellConstraintsComputer {
+  // A computer belongs to one layout. Cell styles and available width can
+  // change between its passes; descendant content and font coefficients cannot.
+  private intrinsicConstraints = new WeakMap<TNode, IntrinsicCellConstraints>();
   private baseFontCoeff: number;
   private fallbackFontSize: number;
   private contentWidth: number;
@@ -149,7 +132,7 @@ export default class TCellConstraintsComputer {
   private assembleCellStats(
     tnode: TNode,
     stats: TCellStats,
-    cellStyle?: ViewStyle
+    isCell = false
   ): TCellStats {
     if (tnode.tagName === 'br') {
       stats.textStats.push([]);
@@ -171,22 +154,11 @@ export default class TCellConstraintsComputer {
       if (separatesText) {
         stats.textStats.push([]);
       }
-      if (tnode.type === 'block') {
-        const width = this.resolveBlockWidth(tnode, cellStyle);
+      if (tnode.type === 'block' && !isCell) {
+        const width = this.resolveBlockWidth(tnode);
         if (width !== null) {
-          if (cellStyle) {
-            // React Native lays out with `box-sizing: border-box`, and CSS
-            // gives a table cell that same box model, so the width a cell
-            // declares already holds its padding and border. It is kept apart
-            // from the descendant widths below, which are content-box against
-            // the cell and so do have to grow by its spacing. Margins play no
-            // part either: a table cell has none, and the cell renderer zeroes
-            // whatever a stylesheet asked for.
-            stats.cellBoxWidth = width;
-          } else {
-            const margins = getHorizontalMargins(tnode.styles.nativeBlockRet);
-            stats.blockWidth = Math.max(stats.blockWidth, width + margins);
-          }
+          const margins = getHorizontalMargins(tnode.styles.nativeBlockRet);
+          stats.blockWidth = Math.max(stats.blockWidth, width + margins);
         }
       }
       tnode.children.forEach((n) => this.assembleCellStats(n, stats));
@@ -259,29 +231,47 @@ export default class TCellConstraintsComputer {
     return { minWidth, maxWidth, contentDensity };
   }
 
+  private measureIntrinsicConstraints(tnode: TNode): IntrinsicCellConstraints {
+    const cached = this.intrinsicConstraints.get(tnode);
+    if (cached) return cached;
+    const stats = this.assembleCellStats(
+      tnode,
+      { blockWidth: 0, textStats: [[]] },
+      true
+    );
+    const constraints = {
+      blockWidth: stats.blockWidth,
+      ...this.computeTextConstraints(stats.textStats)
+    };
+    this.intrinsicConstraints.set(tnode, constraints);
+    return constraints;
+  }
+
   computeCellConstraints(
     tnode: TNode,
-    style: ViewStyle = getPaintedBlockStyle(tnode)
+    style: ViewStyle = getPaintedBlockStyle(tnode),
+    contentWidth = this.contentWidth
   ): TCellConstraints {
-    const stats = this.assembleCellStats(tnode, getInitCellStats(style), style);
-    const blockWidth = stats.blockWidth;
-    const textConstrains = this.computeTextConstraints(stats.textStats);
+    const intrinsic = this.measureIntrinsicConstraints(tnode);
+    const { blockWidth } = intrinsic;
+    const horizontalSpace = getHorizontalInsets(style);
     // A `max-width` on the cell itself caps the whole cell box. A descendant's
     // `max-width` must not, since it only bounds that descendant.
-    const cellMaxWidth = resolveCssSize(style.maxWidth, this.contentWidth);
+    const cellMaxWidth = resolveCssSize(style.maxWidth, contentWidth);
     // Per CSS 2.1 §17.5.2.2, "if the specified 'width' (W) of the cell is
     // greater than MCW, W is the minimum cell width", and the maximum cell
     // width is likewise raised by the column 'width'. So an explicit width
     // lifts *both* bounds — never just one, or the cell would end up
     // narrower than the width it asked for. Being a border-box width, it
     // bounds the spaced total rather than joining the content it holds.
-    const cellBoxWidth = stats.cellBoxWidth ?? 0;
+    const cellBoxWidth =
+      tnode.type === 'block' ? (this.resolveBlockWidth(tnode, style) ?? 0) : 0;
     const minWidth = Math.max(
-      Math.max(blockWidth, textConstrains.minWidth) + stats.horizontalSpace,
+      Math.max(blockWidth, intrinsic.minWidth) + horizontalSpace,
       cellBoxWidth
     );
     const maxWidth = Math.max(
-      Math.max(blockWidth, textConstrains.maxWidth) + stats.horizontalSpace,
+      Math.max(blockWidth, intrinsic.maxWidth) + horizontalSpace,
       cellBoxWidth
     );
     const percentage = resolvePercentage(style.width ?? tnode.attributes.width);
@@ -291,13 +281,13 @@ export default class TCellConstraintsComputer {
         : Math.min(
             percentage,
             resolvePercentage(style.maxWidth) ?? percentage,
-            cellMaxWidth === null || this.contentWidth === 0
+            cellMaxWidth === null || contentWidth === 0
               ? percentage
-              : cellMaxWidth / this.contentWidth
+              : cellMaxWidth / contentWidth
           );
     return {
       ...(percentWidth === null ? {} : { percentWidth }),
-      horizontalSpace: stats.horizontalSpace,
+      horizontalSpace,
       minWidth,
       // `max-width` caps the width the cell would *like*, but never takes it
       // below the width it needs to hold its longest word: min-content is a
@@ -306,7 +296,7 @@ export default class TCellConstraintsComputer {
         cellMaxWidth === null
           ? maxWidth
           : Math.max(minWidth, Math.min(maxWidth, cellMaxWidth)),
-      contentDensity: textConstrains.contentDensity
+      contentDensity: intrinsic.contentDensity
     };
   }
 }

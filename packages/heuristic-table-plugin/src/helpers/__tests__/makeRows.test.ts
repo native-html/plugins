@@ -1,5 +1,4 @@
 import { TNode } from '@native-html/render';
-import R from 'ramda';
 import { TableCell } from '../../shared-types';
 import makeRows from '../makeRows';
 
@@ -22,7 +21,7 @@ function cell(y: number, x: number = 0): TableCell {
 
 describe('makeRows', () => {
   it('should preserve order of rows', () => {
-    const cells = R.map(cell, R.range(0, 100));
-    expect(R.flatten(makeRows(cells))).toMatchObject(cells);
+    const cells = Array.from({ length: 100 }, (_, y) => cell(y));
+    expect(makeRows(cells).flat()).toMatchObject(cells);
   });
 });

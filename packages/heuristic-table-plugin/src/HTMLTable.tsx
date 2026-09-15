@@ -1,6 +1,9 @@
-import React, { memo, PropsWithChildren } from 'react';
+import React, { memo, PropsWithChildren, useMemo } from 'react';
 import { ScrollView, View } from 'react-native';
 import TreeRenderer from './TreeRenderer';
+import TableRenderContext, {
+  TableRenderContextValue
+} from './TableRenderContext';
 import { HTMLTableProps } from './shared-types';
 import relaxHeightConstraint from './helpers/relaxHeightConstraint';
 
@@ -77,6 +80,18 @@ const HTMLTable = memo(function HTMLTable({
   // would spill the table out of every padded ancestor it sits in.
   const insets = layout.horizontalInsets;
   const tableBorderStyle = layout.tableBorderStyle;
+  const renderContext = useMemo<TableRenderContextValue>(
+    () => ({
+      borderSpacing: layout.borderSpacing,
+      cellStyles: layout.cellStyles,
+      borderCollapse: layout.borderCollapse,
+      tableBorderStyle,
+      maxX: layout.display.maxX,
+      maxY: layout.display.maxY,
+      config
+    }),
+    [layout, tableBorderStyle, config]
+  );
   return (
     <TDefaultRenderer
       {...props}
@@ -111,20 +126,13 @@ const HTMLTable = memo(function HTMLTable({
           props.style.height !== 'auto'
         }
       >
-        {React.createElement(TreeRenderer, {
-          node: layout.renderTree,
-          borderSpacing: layout.borderSpacing,
-          config,
-          cellStyles: layout.cellStyles,
-          borderCollapse: layout.borderCollapse,
-          // Cells need the edge the wrapper resolved, not just their position
-          // in the matrix: an outer boundary it leaves bare is still theirs.
-          tableBorderStyle,
-          maxX: layout.display.maxX,
-          maxY: layout.display.maxY,
-          renderIndex: props.renderIndex,
-          renderLength: props.renderLength
-        })}
+        <TableRenderContext.Provider value={renderContext}>
+          <TreeRenderer
+            node={layout.renderTree}
+            renderIndex={props.renderIndex}
+            renderLength={props.renderLength}
+          />
+        </TableRenderContext.Provider>
       </Container>
     </TDefaultRenderer>
   );

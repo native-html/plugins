@@ -9,8 +9,18 @@ import {
   useContentWidth,
   useRendererProps
 } from '@native-html/render';
-import { Settings, HTMLTableProps } from './shared-types';
+import { HeuristicTablePluginConfig, Settings, HTMLTableProps } from './shared-types';
 import TableLayout from './TableLayout';
+
+/**
+ * Stands in for an absent `renderersProps.table`.
+ *
+ * @remarks
+ * Shared rather than built per render, so that a document configuring no
+ * table options still hands `HTMLTable` a stable `config` and lets its
+ * `memo` hold.
+ */
+const EMPTY_CONFIG: HeuristicTablePluginConfig = {};
 
 function useTableLayout({
   tnode,
@@ -86,7 +96,7 @@ export default function useHtmlTableProps(
   return {
     layout,
     settings,
-    config: table || {},
+    config: table ?? EMPTY_CONFIG,
     sharedProps,
     tnode,
     ...props

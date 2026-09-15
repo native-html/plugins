@@ -1,6 +1,7 @@
 import { I18nManager, ViewStyle } from 'react-native';
 import { TNode } from '@native-html/render';
 import { Display, DisplayCell, TableCell } from '../shared-types';
+import type { CellNeighbours } from './indexCellNeighbours';
 
 export type BorderCollapse = 'collapse' | 'separate';
 
@@ -79,7 +80,33 @@ export const DEFAULT_CELL_VERTICAL_ALIGN: CellVerticalAlign = 'middle';
  */
 export const DEFAULT_CELL_PADDING = 1;
 
-type PaddingSide = 'Bottom' | 'Left' | 'Right' | 'Top';
+/** The four physical edges of a box, spelled as React Native style suffixes. */
+export type BoxSide = 'Bottom' | 'Left' | 'Right' | 'Top';
+
+export const BOX_SIDES: readonly BoxSide[] = ['Top', 'Right', 'Bottom', 'Left'];
+
+/**
+ * Whether a style resolves its logical edges right-to-left.
+ *
+ * @remarks
+ * An explicit `direction` wins; otherwise the app-wide setting decides, which
+ * is what Yoga itself does with an unset direction.
+ */
+export function isRTL(style: ViewStyle): boolean {
+  return (
+    style.direction === 'rtl' ||
+    (style.direction !== 'ltr' && I18nManager.isRTL)
+  );
+}
+
+/** The logical edge a physical horizontal side maps to, or `null` vertically. */
+function logicalSideOf(side: BoxSide, rtl: boolean): 'End' | 'Start' | null {
+  if (side === 'Left') return rtl ? 'End' : 'Start';
+  if (side === 'Right') return rtl ? 'Start' : 'End';
+  return null;
+}
+
+type PaddingSide = BoxSide;
 
 /**
  * Every style property which declares padding on a given side.
@@ -294,7 +321,7 @@ export function resolveBorderCollapse(
   return false;
 }
 
-type BorderSide = 'Bottom' | 'Left' | 'Right' | 'Top';
+type BorderSide = BoxSide;
 
 interface BorderCandidate {
   color: ViewStyle['borderColor'];
@@ -314,19 +341,7 @@ function borderCandidate(
   side: BorderSide,
   fromCell: boolean
 ): BorderCandidate {
-  const rtl =
-    style.direction === 'rtl' ||
-    (style.direction !== 'ltr' && I18nManager.isRTL);
-  const logicalSide =
-    side === 'Left'
-      ? rtl
-        ? 'End'
-        : 'Start'
-      : side === 'Right'
-        ? rtl
-          ? 'Start'
-          : 'End'
-        : null;
+  const logicalSide = logicalSideOf(side, isRTL(style));
   // The CSS processor always expands `border` per side, but
   // `getStyleForCell` is hand-written and the shorthand is the natural way to
   // reach for a border there, so fall back to it. An explicit per-side `0`
@@ -399,22 +414,40 @@ type CollapsibleMatrix<C extends CollapsibleCell> = {
   cells: readonly C[];
 } & Pick<Display, 'maxX' | 'maxY'>;
 
+/**
+ * Whether a cell sits against one of the table's own edges.
+ *
+ * @remarks
+ * Shared by both collapsing passes on purpose. The wrapper resolves an outer
+ * border from the cells at an edge, and each cell then decides whether that
+ * same edge is its own; the two must agree, or a boundary is painted twice or
+ * not at all.
+ *
+ * A span that overruns the matrix is clipped to it rather than growing the
+ * table, so it sits at the edge it overran — hence `>=` rather than `===`.
+ */
+function isAtOuterEdge(
+  cell: Pick<CollapsibleCell, 'lenX' | 'lenY' | 'x' | 'y'>,
+  side: BorderSide,
+  { maxX, maxY }: Pick<Display, 'maxX' | 'maxY'>
+): boolean {
+  switch (side) {
+    case 'Top':
+      return cell.y === 0;
+    case 'Right':
+      return cell.x + cell.lenX - 1 >= maxX;
+    case 'Bottom':
+      return cell.y + cell.lenY - 1 >= maxY;
+    case 'Left':
+      return cell.x === 0;
+  }
+}
+
 function cellsAtOuterEdge<C extends CollapsibleCell>(
   { cells, maxX, maxY }: CollapsibleMatrix<C>,
   side: BorderSide
 ): readonly C[] {
-  return cells.filter((cell) => {
-    switch (side) {
-      case 'Top':
-        return cell.y === 0;
-      case 'Right':
-        return cell.x + cell.lenX - 1 >= maxX;
-      case 'Bottom':
-        return cell.y + cell.lenY - 1 >= maxY;
-      case 'Left':
-        return cell.x === 0;
-    }
-  });
+  return cells.filter((cell) => isAtOuterEdge(cell, side, { maxX, maxY }));
 }
 
 function sourceCellStyle(cell: CollapsibleCell): ViewStyle {
@@ -480,8 +513,16 @@ export interface CollapsedCellEdges {
   maxX: number;
   maxY: number;
   tableBorderStyle: ViewStyle | null;
-  /** All cells and their uncollapsed styles, for shared-edge conflicts. */
-  cells?: readonly CollapsibleCell[];
+  /**
+   * The cells sharing this cell's trailing and bottom boundary, from
+   * {@link indexCellNeighbours}.
+   *
+   * @remarks
+   * Absent when the caller has no matrix to index — a `td` renderer reached
+   * outside this plugin's table — in which case the cell keeps its own
+   * borders rather than resolving them against neighbours it cannot see.
+   */
+  neighbours?: CellNeighbours;
   getCellStyle?: (cell: CollapsibleCell) => ViewStyle;
 }
 
@@ -510,19 +551,13 @@ export function getCollapsedCellBorderStyle(
     maxX,
     maxY,
     tableBorderStyle,
-    cells = [],
+    neighbours,
     getCellStyle = sourceCellStyle
   }: CollapsedCellEdges
 ): ViewStyle {
   const resolvedStyle: ViewStyle = clearLogicalBorders(cellStyle);
-  // A span that overruns the matrix is clipped to it rather than growing the
-  // table, so it sits at the edge it overran.
-  const isOuterEdge: Record<BorderSide, boolean> = {
-    Top: cell.y === 0,
-    Right: cell.x + cell.lenX - 1 >= maxX,
-    Bottom: cell.y + cell.lenY - 1 >= maxY,
-    Left: cell.x === 0
-  };
+  const isOuterEdge = (side: BorderSide) =>
+    isAtOuterEdge(cell, side, { maxX, maxY });
   const isPaintedByTable = (side: BorderSide) => {
     const width = tableBorderStyle?.[`border${side}Width`];
     return typeof width === 'number' && width > 0;
@@ -550,34 +585,24 @@ export function getCollapsedCellBorderStyle(
     isPaintedByTable(side) ? null : ownBorder(side);
   // A leading boundary is always drawn by the neighbour that precedes it,
   // except on the outside where there is no neighbour to draw it.
-  paint('Top', isOuterEdge.Top ? keepOuterBorder('Top') : null);
-  paint('Left', isOuterEdge.Left ? keepOuterBorder('Left') : null);
+  paint('Top', isOuterEdge('Top') ? keepOuterBorder('Top') : null);
+  paint('Left', isOuterEdge('Left') ? keepOuterBorder('Left') : null);
   for (const [side, opposite] of [
     ['Right', 'Left'],
     ['Bottom', 'Top']
   ] as const) {
     paint(
       side,
-      isOuterEdge[side]
+      isOuterEdge(side)
         ? keepOuterBorder(side)
-        : cells
-            .filter((neighbour) =>
-              side === 'Right'
-                ? neighbour.x === cell.x + cell.lenX &&
-                  neighbour.y < cell.y + cell.lenY &&
-                  neighbour.y + neighbour.lenY > cell.y
-                : neighbour.y === cell.y + cell.lenY &&
-                  neighbour.x < cell.x + cell.lenX &&
-                  neighbour.x + neighbour.lenX > cell.x
-            )
-            .reduce(
-              (winner, neighbour) =>
-                resolveBorderConflict(
-                  winner,
-                  borderCandidate(getCellStyle(neighbour), opposite, true)
-                ),
-              ownBorder(side)
-            )
+        : (neighbours?.[side] ?? []).reduce(
+            (winner, neighbour) =>
+              resolveBorderConflict(
+                winner,
+                borderCandidate(getCellStyle(neighbour), opposite, true)
+              ),
+            ownBorder(side)
+          )
     );
   }
   if (strongestStyle !== null) resolvedStyle.borderStyle = strongestStyle;

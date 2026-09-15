@@ -9,8 +9,9 @@ Everything the table layout engine needs to lay a table out: the author configur
 **Signature:**
 
 ```typescript
-export interface Settings 
+export interface Settings extends HeuristicTablePluginConfig 
 ```
+**Extends:** [HeuristicTablePluginConfig](./heuristic-table-plugin.heuristictablepluginconfig.md)
 
 ## Remarks
 
@@ -41,44 +42,6 @@ Description
 </th></tr></thead>
 <tbody><tr><td>
 
-[baseFontCoeff?](./heuristic-table-plugin.settings.basefontcoeff.md)
-
-
-</td><td>
-
-
-</td><td>
-
-number
-
-
-</td><td>
-
-_(Optional)_ The average advance width of one character, as a fraction of the font size, used to estimate how wide a cell's text is.
-
-
-</td></tr>
-<tr><td>
-
-[borderCollapse?](./heuristic-table-plugin.settings.bordercollapse.md)
-
-
-</td><td>
-
-
-</td><td>
-
-'collapse' \| 'separate'
-
-
-</td><td>
-
-_(Optional)_ Override the table's `border-collapse` mode.
-
-
-</td></tr>
-<tr><td>
-
 [contentWidth](./heuristic-table-plugin.settings.contentwidth.md)
 
 
@@ -93,63 +56,6 @@ number
 </td><td>
 
 Available width at the root of the render tree, prior to scrolling.
-
-
-</td></tr>
-<tr><td>
-
-[fontWeightCoeffs?](./heuristic-table-plugin.settings.fontweightcoeffs.md)
-
-
-</td><td>
-
-
-</td><td>
-
-[FontWeightCoefficients](./heuristic-table-plugin.fontweightcoefficients.md)
-
-
-</td><td>
-
-_(Optional)_ How much wider text renders at a given font weight than at a regular one, keyed by the stringified `fontWeight`<!-- -->.
-
-
-</td></tr>
-<tr><td>
-
-[forceStretch?](./heuristic-table-plugin.settings.forcestretch.md)
-
-
-</td><td>
-
-
-</td><td>
-
-boolean
-
-
-</td><td>
-
-_(Optional)_ When true, force the table to stretch to the available width.
-
-
-</td></tr>
-<tr><td>
-
-[getStyleForCell?](./heuristic-table-plugin.settings.getstyleforcell.md)
-
-
-</td><td>
-
-
-</td><td>
-
-[HeuristicTablePluginConfig](./heuristic-table-plugin.heuristictablepluginconfig.md)<!-- -->\['getStyleForCell'\]
-
-
-</td><td>
-
-_(Optional)_
 
 
 </td></tr>
