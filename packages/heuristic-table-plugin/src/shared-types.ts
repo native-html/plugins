@@ -158,6 +158,19 @@ export type TableRenderNode =
   | TableFlexRowContainer
   | TableRoot;
 
+/**
+ * Everything the table layout engine needs to lay a table out: the author
+ * configuration, plus the width the document offers it.
+ *
+ * @remarks
+ * This is resolved by {@link useHtmlTableProps} and handed to
+ * {@link HTMLTable}; it is not the shape a consumer writes. Author
+ * configuration goes to `renderersProps.table` as a
+ * {@link HeuristicTablePluginConfig}, which carries no
+ * {@link Settings.contentWidth}.
+ *
+ * @public
+ */
 export interface Settings {
   getStyleForCell?: HeuristicTablePluginConfig['getStyleForCell'];
   /**
@@ -201,7 +214,7 @@ export interface Settings {
    * @remarks
    * This is the width offered to the document as a whole. The horizontal
    * spacing of the table's ancestors, and of the table itself, is subtracted
-   * from it by {@link TableLayout}.
+   * from it by the table layout engine.
    */
   contentWidth: number;
 }

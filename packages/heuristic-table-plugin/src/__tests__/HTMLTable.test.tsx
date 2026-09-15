@@ -98,11 +98,35 @@ describe('HTMLTable containers', () => {
       const scrollers = rendered.UNSAFE_getAllByType(ScrollView);
       const vertical = scrollers.find((view) => !view.props.horizontal)!;
       expect(vertical.props.style).toMatchObject({ flexShrink: 1 });
-      expect(vertical.props.contentContainerStyle).toBeUndefined();
+      expect(vertical.props.contentContainerStyle).toEqual({ flexGrow: 1 });
       expect(scrollers.filter((view) => view.props.horizontal)).toHaveLength(
         width > 400 ? 1 : 0
       );
       expect(rendered.getByTestId('table-wrapper')).toHaveStyle({ height: 48 });
+    }
+  );
+
+  it.each([
+    'min-width:600px',
+    'min-width:200%',
+    'min-width:600px;max-width:200px'
+  ])(
+    'keeps %s on the content without widening or narrowing the viewport',
+    (style) => {
+      const rendered = renderTable(
+        `<table style="${style}"><tr><td>A</td></tr></table>`,
+        300
+      );
+      const wrapperStyle = StyleSheet.flatten(
+        rendered.getByTestId('table-wrapper').props.style
+      );
+      expect(wrapperStyle.width).toBe(300);
+      expect(wrapperStyle.minWidth).toBeUndefined();
+      expect(wrapperStyle.maxWidth).toBeUndefined();
+      const scroll = rendered.UNSAFE_getByType(ScrollView);
+      expect(scroll.props.horizontal).toBe(true);
+      expect(scroll.props.style).toMatchObject({ width: 300 });
+      expect(scroll.props.contentContainerStyle).toEqual({ width: 600 });
     }
   );
 

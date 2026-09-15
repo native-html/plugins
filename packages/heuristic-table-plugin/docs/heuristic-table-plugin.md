@@ -108,6 +108,17 @@ Props for the [HTMLTable](./heuristic-table-plugin.htmltable.md) component.
 </td></tr>
 <tr><td>
 
+[Settings](./heuristic-table-plugin.settings.md)
+
+
+</td><td>
+
+Everything the table layout engine needs to lay a table out: the author configuration, plus the width the document offers it.
+
+
+</td></tr>
+<tr><td>
+
 [TableCell](./heuristic-table-plugin.tablecell.md)
 
 

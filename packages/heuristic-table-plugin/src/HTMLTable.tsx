@@ -45,7 +45,10 @@ function Container({
   // Measure rows without the viewport's height constraint. Keep the vertical
   // scroller outside the horizontal one so both axes can overflow independently.
   return scrollVertically ? (
-    <ScrollView style={{ flexGrow: 1, flexShrink: 1 }} nestedScrollEnabled>
+    <ScrollView
+      style={{ flexGrow: 1, flexShrink: 1 }}
+      contentContainerStyle={{ flexGrow: 1 }}
+      nestedScrollEnabled>
       {content}
     </ScrollView>
   ) : (
@@ -92,7 +95,11 @@ const HTMLTable = memo(function HTMLTable({
         // whichever of the two comes first and the overflow goes to the
         // scroller inside. A table narrower than that keeps its own size,
         // insets included.
-        width: Math.min(tableWidth + insets, layout.usedWidth)
+        width: Math.min(tableWidth + insets, layout.usedWidth),
+        // Layout already applied these bounds to the table content. Reapplying
+        // them in Yoga would override the capped viewport width above.
+        minWidth: undefined,
+        maxWidth: undefined
       }}
     >
       <Container

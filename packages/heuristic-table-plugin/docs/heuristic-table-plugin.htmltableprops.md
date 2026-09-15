@@ -80,7 +80,7 @@ TableLayout
 
 </td><td>
 
-Settings
+[Settings](./heuristic-table-plugin.settings.md)
 
 
 </td><td>

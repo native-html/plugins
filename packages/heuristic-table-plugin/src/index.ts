@@ -1,5 +1,5 @@
 import { CustomBlockRenderer } from '@native-html/render';
-import { HeuristicTablePluginConfig, Settings } from './shared-types';
+import { HeuristicTablePluginConfig } from './shared-types';
 import TableRenderer from './TableRenderer';
 import TdRenderer from './TdRenderer';
 import ThRenderer from './ThRenderer';
@@ -11,6 +11,7 @@ export {
   DisplayCell,
   HeuristicTablePluginConfig,
   HTMLTableProps,
+  Settings,
   TableCell,
   TableFlexColumnContainer,
   TableFlexRowContainer,
@@ -45,7 +46,7 @@ declare module '@native-html/render' {
     /**
      * Configuration for `@native-html/heuristic-table-plugin` table renderer.
      */
-    table?: Settings & HeuristicTablePluginConfig;
+    table?: HeuristicTablePluginConfig;
   }
 }
 

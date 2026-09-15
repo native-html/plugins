@@ -11,7 +11,8 @@ function cell(y: number, x: number = 0): TableCell {
     type: 'cell',
     constraints: {
       contentDensity: 0,
-      minWidth: 0
+      minWidth: 0,
+      maxWidth: 0
     },
     width: 10,
     x,

@@ -70,8 +70,6 @@ export interface HTMLTableProps extends CustomRendererProps<TBlock> {
     //
     // (undocumented)
     layout: TableLayout;
-    // Warning: (ae-forgotten-export) The symbol "Settings" needs to be exported by the entry point index.d.ts
-    //
     // (undocumented)
     settings: Settings;
 }
@@ -79,6 +77,17 @@ export interface HTMLTableProps extends CustomRendererProps<TBlock> {
 // @public
 const renderers: Record<'th' | 'td' | 'table', CustomBlockRenderer>;
 export default renderers;
+
+// @public
+export interface Settings {
+    baseFontCoeff?: number;
+    borderCollapse?: 'collapse' | 'separate';
+    contentWidth: number;
+    fontWeightCoeffs?: FontWeightCoefficients;
+    forceStretch?: boolean;
+    // (undocumented)
+    getStyleForCell?: HeuristicTablePluginConfig['getStyleForCell'];
+}
 
 // @public
 export interface TableCell extends DisplayCell {
