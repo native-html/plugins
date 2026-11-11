@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import React, { useCallback, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import * as WebBrowser from 'expo-web-browser';
@@ -7,7 +6,6 @@ import {
   Text,
   View,
   ScrollView,
-  UIManager,
   Platform,
   Button,
   useWindowDimensions
@@ -23,6 +21,7 @@ import SimpleExample from './SimpleExample';
 import CustomExample from './CustomExample';
 import YoutubeExample from './YoutubeExample';
 import HeuristicTableExample from './HeuristicTableExample';
+import ComparisonExample from './ComparisonExample';
 
 const Stack = createStackNavigator();
 
@@ -147,6 +146,30 @@ function HeuristicTableScreen({ availableWidth, onLinkPress }) {
   );
 }
 
+function ComparisonScreen({ availableWidth, onLinkPress }) {
+  const [instance, setInstance] = useState(0);
+  return (
+    <ScrollView
+      contentContainerStyle={styles.contentStyle}
+      style={styles.scrollViewStyle}>
+      <Text style={styles.welcome}>
+        The same HTML source rendered twice: once with{' '}
+        <Monospace>@native-html/table-plugin</Monospace> (WebView based) and
+        once with <Monospace>@native-html/heuristic-table-plugin</Monospace>{' '}
+        (pure native).
+      </Text>
+      <Button title="reload" onPress={() => setInstance((i) => i + 1)} />
+      <View style={styles.example}>
+        <ComparisonExample
+          availableWidth={availableWidth}
+          onLinkPress={onLinkPress}
+          instance={instance}
+        />
+      </View>
+    </ScrollView>
+  );
+}
+
 function HomeScreen() {
   const navigation = useNavigation();
   return (
@@ -182,13 +205,14 @@ function HomeScreen() {
           onPress={() => navigation.navigate('HeuristicTable')}
         />
       </View>
+      <View style={styles.button}>
+        <Button
+          title="renderers comparison"
+          onPress={() => navigation.navigate('Comparison')}
+        />
+      </View>
     </View>
   );
-}
-
-if (Platform.OS === 'android') {
-  UIManager.setLayoutAnimationEnabledExperimental &&
-    UIManager.setLayoutAnimationEnabledExperimental(true);
 }
 
 export default function App() {
@@ -200,7 +224,7 @@ export default function App() {
     setUrl(href);
   }, []);
   React.useEffect(() => {
-    url && setIsSnackVisible(true);
+    if (url) setIsSnackVisible(true);
   }, [url]);
   return (
     <PaperProvider>
@@ -263,6 +287,16 @@ export default function App() {
               options={{ title: 'Heuristic Table' }}>
               {() => (
                 <HeuristicTableScreen
+                  onLinkPress={onLinkPress}
+                  availableWidth={availableWidth}
+                />
+              )}
+            </Stack.Screen>
+            <Stack.Screen
+              name="Comparison"
+              options={{ title: 'Renderers Comparison' }}>
+              {() => (
+                <ComparisonScreen
                   onLinkPress={onLinkPress}
                   availableWidth={availableWidth}
                 />

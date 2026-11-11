@@ -1,12 +1,13 @@
 import {
   TableCell,
-  Display,
+  TableGrid,
   DisplayCell,
   TableFlexColumnContainer,
   TableFlexRowContainer,
   TableRoot
 } from '../shared-types';
 import makeRows from './makeRows';
+import { spanInternalSpacing } from './borderSpacingGeometry';
 
 function getRowGroupHeight(cells: TableCell[]): number {
   return cells.reduce((maxLen, cell) => Math.max(maxLen, cell.lenY), 0);
@@ -14,11 +15,12 @@ function getRowGroupHeight(cells: TableCell[]): number {
 
 function groupCellsByVGroup(cellsByRow: TableCell[][]): TableCell[][][] {
   const cellsByVGroup: TableCell[][][] = [];
-  let rowHeight = 1;
-  for (let i = 0; i < cellsByRow.length; i += Math.max(rowHeight, 1)) {
-    const row = cellsByRow[i];
-    rowHeight = getRowGroupHeight(row);
+  // A group is as tall as the tallest cell starting in its first row, and the
+  // next group starts where it ends.
+  for (let i = 0; i < cellsByRow.length; ) {
+    const rowHeight = Math.max(1, getRowGroupHeight(cellsByRow[i]!));
     cellsByVGroup.push(cellsByRow.slice(i, i + rowHeight));
+    i += rowHeight;
   }
   return cellsByVGroup;
 }
@@ -87,7 +89,11 @@ function translateVGroups(
   return flattenRows;
 }
 
-function makeCell(columnWidths: number[], cell: DisplayCell): TableCell {
+function makeCell(
+  columnWidths: number[],
+  cell: DisplayCell,
+  spacing: number
+): TableCell {
   let width = 0;
   for (let i = cell.x; i < cell.x + cell.lenX; i++) {
     width += columnWidths[i] ?? 0;
@@ -95,15 +101,31 @@ function makeCell(columnWidths: number[], cell: DisplayCell): TableCell {
   return {
     ...cell,
     type: 'cell',
-    width
+    width: width + spanInternalSpacing(cell.lenX, spacing)
   };
 }
 
-export default function createRenderTree(
-  display: Display,
-  columnWidths: number[]
-): TableRoot {
-  const cells = display.cells.map((cell) => makeCell(columnWidths, cell));
+/**
+ * Resolve the width of every cell of `display` from the column widths.
+ *
+ * @remarks
+ * Kept apart from {@link createRenderTree} because the flat list is also what
+ * {@link HeuristicTablePluginConfig.getStyleForCell} is called with: a cell
+ * only becomes a {@link TableCell} once its width exists.
+ */
+export function makeTableCells(
+  grid: Pick<TableGrid, 'cells'>,
+  columnWidths: number[],
+  /**
+   * The table's horizontal `border-spacing`. Required: a default would let a
+   * caller silently drop the gaps a spanning cell absorbs from every width.
+   */
+  spacing: number
+): TableCell[] {
+  return grid.cells.map((cell) => makeCell(columnWidths, cell, spacing));
+}
+
+export default function createRenderTree(cells: TableCell[]): TableRoot {
   const rows = makeRows(cells);
   const vGroups = groupCellsByVGroup(rows);
   const children = translateVGroups(vGroups);

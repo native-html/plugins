@@ -2,8 +2,7 @@
   "extends": "../../../../tsconfig-base.json",
   "compilerOptions": {
     "types": ["jest"],
-    "noEmit": true,
-    "ignoreDeprecations": "6.0"
+    "noEmit": true
   },
   "exclude": ["../../node_modules", "../../lib"]
 }

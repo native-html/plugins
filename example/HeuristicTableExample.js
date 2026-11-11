@@ -1,6 +1,9 @@
 import React from 'react';
 import RenderHTML from '@native-html/render';
-import tableRenderers from '@native-html/heuristic-table-plugin';
+import tableRenderers, {
+  colgroupModel
+} from '@native-html/heuristic-table-plugin';
+import { realTable } from './ComparisonExample';
 
 const table1 = `
 
@@ -338,9 +341,11 @@ const wideTable = `
   </tbody>
 </table>
 `;
-
 const htmlConfig = {
   renderers: tableRenderers,
+  customHTMLElementModels: {
+    colgroup: colgroupModel
+  },
   renderersProps: {
     table: {
       forceStretch: false,
@@ -383,7 +388,7 @@ const htmlConfig = {
   }
 };
 
-const html = `${table1}${wideTable}${tableSpan}`;
+const html = `${table1}${wideTable}${tableSpan}${realTable}`;
 
 export default function HeuristicTable({
   instance,

@@ -84,7 +84,6 @@ function findHeight({
   computeHeuristicContentHeight: (tableStats: HTMLTableStats) => number;
   contentHeight: number | null;
 } & HTMLTableStats) {
-  console.log('findHeight');
   if (typeof contentHeight === 'number') {
     return computeContainerHeight({
       type: 'accurate',
@@ -138,15 +137,6 @@ function useAnimatedAutoheight<WVP extends MinimalWebViewProps>({
       webshellProps: webViewProps as any,
       resetHeightOnViewportWidthChange: false
     });
-  console.log({
-    computeContainerHeight,
-    computeHeuristicContentHeight,
-    'contentSize.height': contentSize.height,
-    syncState,
-    numOfChars,
-    numOfColumns,
-    numOfRows
-  });
   const containerHeight = useMemo(
     () =>
       findHeight({

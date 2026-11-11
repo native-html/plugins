@@ -5,7 +5,9 @@ import {
   TBlock,
   TNode
 } from '@native-html/render';
-import TableLayout from './TableLayout';
+import type TableLayout from './TableLayout';
+import type { ResolvedCellStyle } from './helpers/resolveTableStyles';
+import type { FontWeightCoefficients } from './helpers/TCellConstraintsComputer';
 
 /**
  * @public
@@ -34,21 +36,71 @@ export interface TConstraintsBase {
  */
 export interface TColumnConstraints extends TConstraintsBase {
   /**
-   * The minimum number for the text in one column to hold in one line.
+   * The width beyond which this column would gain nothing — the *maximum
+   * column width* of {@link https://www.w3.org/TR/CSS21/tables.html#auto-table-layout | CSS 2.1 §17.5.2.2}.
    *
-   * @remarks spread and contentDensity only differ when applied to a
-   * whole column. Spread width will be the maximum of cell content densities,
-   * while the column content density will be the sum of the cell content
-   * densities.
+   * @remarks
+   * This is the greatest {@link TCellConstraints.maxWidth} among the cells of
+   * the column, and is always at least {@link TConstraintsBase.minWidth}:
+   * per the spec, both bounds are raised by the column `width`, so a maximum
+   * can never sit below its own minimum.
+   *
+   * Note that spread and contentDensity only differ when applied to a whole
+   * column: the column content density is the *sum* of the cell content
+   * densities, whereas spread is a maximum.
    */
   spread: number;
+  /**
+   * The horizontal padding and border the column carries, already included in
+   * {@link TConstraintsBase.minWidth} and {@link TColumnConstraints.spread}.
+   *
+   * @remarks
+   * The widest of its cells' insets, a `colspan` contributing its share to
+   * each column it covers — the same reduction `minWidth` gets, which is the
+   * figure this is held out of when surplus width is shared over content.
+   */
+  horizontalSpace: number;
+  /**
+   * The fraction of the table width the column's cells prefer, or `null` when
+   * none declares one. A `colspan` contributes its share to each column it
+   * covers; where cells disagree the largest wins, as it does for `minWidth`.
+   */
+  percentWidth: number | null;
 }
 
 /**
  * @public
  */
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface TCellConstraints extends TConstraintsBase {}
+export interface TCellConstraints extends TConstraintsBase {
+  /** Preferred fraction of the table width, resolved during distribution. */
+  percentWidth?: number;
+  /**
+   * The cell's own horizontal padding and border, already included in
+   * {@link TConstraintsBase.minWidth} and {@link TCellConstraints.maxWidth}.
+   *
+   * @remarks
+   * Reported separately so that distribution can tell a column's content
+   * apart from the spacing wrapped around it. Surplus width is shared over
+   * content alone: under the collapsing border model each cell owns a
+   * different set of the boundaries it touches, and weighting the share by the
+   * whole border box would turn that bookkeeping difference into a visible
+   * one, dealing a column that merely paints one more border edge more content
+   * width than its neighbours.
+   *
+   * @defaultValue 0, when a caller builds constraints by hand.
+   */
+  horizontalSpace?: number;
+  /**
+   * The width at which this cell would stop benefiting from more space — the
+   * *maximum cell width* of {@link https://www.w3.org/TR/CSS21/tables.html#auto-table-layout | CSS 2.1 §17.5.2.2},
+   * including horizontal spacing.
+   *
+   * @remarks
+   * Like {@link TConstraintsBase.minWidth}, this is raised by an explicit
+   * `width` on the cell, so it is never below `minWidth`.
+   */
+  maxWidth: number;
+}
 
 /**
  * @public
@@ -123,23 +175,56 @@ export type TableRenderNode =
   | TableFlexRowContainer
   | TableRoot;
 
-export interface Settings {
+/**
+ * Everything the table layout engine needs to lay a table out: the author
+ * configuration, plus the width the document offers it.
+ *
+ * @remarks
+ * This is resolved by {@link useHtmlTableProps} and handed to
+ * {@link HTMLTable}; it is not the shape a consumer writes. Author
+ * configuration goes to `renderersProps.table` as a
+ * {@link HeuristicTablePluginConfig}, which carries no
+ * {@link Settings.contentWidth}.
+ *
+ * {@link HeuristicTablePluginConfig.growBeyondHeight} is deliberately absent:
+ * it decides whether a declared table `height` becomes a viewport or a
+ * minimum, which is a rendering choice {@link HTMLTable} reads from the config
+ * directly. Excluding it here keeps `useHtmlTableProps` from having to copy a
+ * field no layout pass reads — and makes that a compile error rather than a
+ * silent omission if it ever does.
+ *
+ * @public
+ */
+export interface Settings
+  extends Omit<HeuristicTablePluginConfig, 'growBeyondHeight'> {
   /**
-   * When true, force the table to stretch to the available width.
-   */
-  forceStretch?: boolean;
-  /**
-   * Available width prior to scrolling.
+   * Available width at the root of the render tree, prior to scrolling.
+   *
+   * @remarks
+   * This is the width offered to the document as a whole. The horizontal
+   * spacing of the table's ancestors, and of the table itself, is subtracted
+   * from it by the table layout engine.
    */
   contentWidth: number;
 }
 
-export interface Display extends Settings {
-  maxY: number;
-  maxX: number;
-  occupiedCoordinates: Array<Coordinates>;
-  offsetX: number;
+/**
+ * Where every cell of a table sits, and how far the matrix extends.
+ *
+ * @remarks
+ * The durable result of laying a table out, and the only part of it anything
+ * downstream reads. `maxX`/`maxY` are the last occupied column and row, so a
+ * span overrunning them is clipped rather than growing the table.
+ *
+ * Deliberately holds neither configuration nor build-time scratch: it used to
+ * extend {@link Settings} and carry the grid-filling cursor, which meant
+ * `contentWidth` changed meaning halfway through a layout and every consumer
+ * had to narrow the type back down to the three fields it wanted.
+ */
+export interface TableGrid {
   cells: DisplayCell[];
+  maxX: number;
+  maxY: number;
 }
 
 /**
@@ -149,13 +234,72 @@ export interface Display extends Settings {
  */
 export interface HeuristicTablePluginConfig {
   /**
-   * When true, force the table to stretch to the available width.
+   * When true, the table stretches to fill the width its containing block
+   * offers — `contentWidth`, less the horizontal spacing of every ancestor.
+   * When false, a table with an auto width shrinks to fit its content.
+   *
+   * @defaultValue true
    */
   forceStretch?: boolean;
   /**
+   * The average advance width of one character, as a fraction of the font
+   * size, used to estimate how wide a cell's text is.
+   *
+   * @remarks
+   * Text is never measured, only estimated: a cell's bounds are its character
+   * count times this coefficient times the font size. Raise it when tables
+   * come out too narrow and their text wraps more than it should, lower it
+   * when cells claim more width than their content occupies.
+   *
+   * @defaultValue 0.65
+   */
+  baseFontCoeff?: number;
+  /**
+   * How much wider text renders at a given font weight than at a regular one,
+   * keyed by the stringified `fontWeight`.
+   *
+   * @remarks
+   * Merged over the defaults rather than replacing them, so `{ bold: 1.05 }`
+   * retunes bold text alone and leaves the numeric weights as they were. A
+   * weight with no entry, before or after merging, costs nothing. Pass a
+   * referentially stable object — a fresh literal on every render relays out
+   * every table using it.
+   *
+   * @defaultValue \{ normal: 1, bold: 1.3, '100': 0.8 … '900': 1.5 \}
+   */
+  fontWeightCoeffs?: FontWeightCoefficients;
+  /**
+   * Override the table's border model. When omitted, an inline
+   * `border-collapse` declaration from the table is used.
+   *
+   * @defaultValue `separate`
+   */
+  borderCollapse?: 'collapse' | 'separate';
+  /**
+   * When true, an explicit table `height` is treated as a minimum and the
+   * table grows to fit taller content. When false, the table keeps that height
+   * and scrolls vertically. Rows and cells always grow to fit their content;
+   * their declared heights are minimums in either mode.
+   *
+   * @remarks
+   * Per {@link https://www.w3.org/TR/CSS21/tables.html#height-layout | CSS 2.1
+   * §17.5.3}, `height` on a `table`, `tr`, `th` or `td` box is only a minimum,
+   * so `true` is the faithful reading of the HTML. It is off by default
+   * to preserve the requested table viewport size while keeping all content
+   * accessible by scrolling.
+   *
+   * @defaultValue false
+   */
+  growBeyondHeight?: boolean;
+  /**
    * Customize cells appearance with this function.
    *
-   * @param cell - The cell for which styles should be provided.
+   * Called once per cell per layout, with provisional widths measured from
+   * source styles. Returned styles are saved, included in the final layout,
+   * and reused for rendering. Width-dependent callbacks are not iterated.
+   * Keep this function referentially stable to avoid unnecessary layouts.
+   *
+   * @param cell - The cell with its provisional width and constraints.
    */
   getStyleForCell?(cell: TableCell): ViewStyle | null;
 }
@@ -168,7 +312,6 @@ export interface HeuristicTablePluginConfig {
 export interface HTMLTableProps extends CustomRendererProps<TBlock> {
   layout: TableLayout;
   config: HeuristicTablePluginConfig;
-  settings: Settings;
 }
 
 /**
@@ -180,4 +323,43 @@ export interface HTMLTableProps extends CustomRendererProps<TBlock> {
 export interface TableCellPropsFromParent extends PropsFromParent {
   config?: HeuristicTablePluginConfig;
   cell: TableCell;
+}
+
+/**
+ * What {@link TreeRenderer} hands a cell renderer on top of
+ * {@link TableCellPropsFromParent}.
+ *
+ * @remarks
+ * Internal: these are the values the table already resolved, passed down so a
+ * cell need not recompute them. A custom `td`/`th` renderer reached outside
+ * this plugin's table sees only the public fields, which is why every addition
+ * here is optional or has a defined absent state.
+ */
+export interface InternalTableCellPropsFromParent
+  extends TableCellPropsFromParent,
+    TableGeometry {
+  resolvedCellStyle?: ResolvedCellStyle;
+}
+
+/**
+ * What every cell of one table shares: where the matrix ends, and how its
+ * borders were collapsed.
+ *
+ * @remarks
+ * Composed by both the render context and the props a cell receives, so the
+ * two cannot state it differently.
+ */
+export interface TableGeometry {
+  borderCollapse: boolean;
+  maxX: number;
+  maxY: number;
+  /**
+   * The wrapper edge the collapsing model resolved.
+   *
+   * @remarks
+   * Cells need this, not just their position in the matrix: an outer boundary
+   * the wrapper leaves bare is still theirs to paint.
+   */
+  tableBorderStyle: ViewStyle | null;
+  config?: HeuristicTablePluginConfig;
 }

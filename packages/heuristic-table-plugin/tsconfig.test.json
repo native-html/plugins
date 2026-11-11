@@ -1,0 +1,8 @@
+{
+  "extends": "../../tsconfig-base.json",
+  "compilerOptions": {
+    "types": ["jest", "node", "@testing-library/react-native"],
+    "noEmit": true
+  },
+  "include": ["src/**/__tests__/**/*.ts", "src/**/__tests__/**/*.tsx"]
+}

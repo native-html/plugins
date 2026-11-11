@@ -37,6 +37,63 @@ Description
 </th></tr></thead>
 <tbody><tr><td>
 
+[baseFontCoeff?](./heuristic-table-plugin.heuristictablepluginconfig.basefontcoeff.md)
+
+
+</td><td>
+
+
+</td><td>
+
+number
+
+
+</td><td>
+
+_(Optional)_ The average advance width of one character, as a fraction of the font size, used to estimate how wide a cell's text is.
+
+
+</td></tr>
+<tr><td>
+
+[borderCollapse?](./heuristic-table-plugin.heuristictablepluginconfig.bordercollapse.md)
+
+
+</td><td>
+
+
+</td><td>
+
+'collapse' \| 'separate'
+
+
+</td><td>
+
+_(Optional)_ Override the table's border model. When omitted, an inline `border-collapse` declaration from the table is used.
+
+
+</td></tr>
+<tr><td>
+
+[fontWeightCoeffs?](./heuristic-table-plugin.heuristictablepluginconfig.fontweightcoeffs.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[FontWeightCoefficients](./heuristic-table-plugin.fontweightcoefficients.md)
+
+
+</td><td>
+
+_(Optional)_ How much wider text renders at a given font weight than at a regular one, keyed by the stringified `fontWeight`<!-- -->.
+
+
+</td></tr>
+<tr><td>
+
 [forceStretch?](./heuristic-table-plugin.heuristictablepluginconfig.forcestretch.md)
 
 
@@ -50,7 +107,26 @@ boolean
 
 </td><td>
 
-_(Optional)_ When true, force the table to stretch to the available width.
+_(Optional)_ When true, the table stretches to fill the width its containing block offers — `contentWidth`<!-- -->, less the horizontal spacing of every ancestor. When false, a table with an auto width shrinks to fit its content.
+
+
+</td></tr>
+<tr><td>
+
+[growBeyondHeight?](./heuristic-table-plugin.heuristictablepluginconfig.growbeyondheight.md)
+
+
+</td><td>
+
+
+</td><td>
+
+boolean
+
+
+</td><td>
+
+_(Optional)_ When true, an explicit table `height` is treated as a minimum and the table grows to fit taller content. When false, the table keeps that height and scrolls vertically. Rows and cells always grow to fit their content; their declared heights are minimums in either mode.
 
 
 </td></tr>
@@ -77,6 +153,8 @@ Description
 </td><td>
 
 _(Optional)_ Customize cells appearance with this function.
+
+Called once per cell per layout, with provisional widths measured from source styles. Returned styles are saved, included in the final layout, and reused for rendering. Width-dependent callbacks are not iterated. Keep this function referentially stable to avoid unnecessary layouts.
 
 
 </td></tr>
