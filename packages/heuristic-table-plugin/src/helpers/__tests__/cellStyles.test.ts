@@ -7,7 +7,7 @@ import buildTableGrid from '../buildTableGrid';
 import { createCellTNode, createTableTNode } from '../../__tests__/utils';
 
 /** A wrapper that paints all four of its resolved outer edges. */
-const FRAMED = {
+const framed = {
   borderTopWidth: 1,
   borderRightWidth: 1,
   borderBottomWidth: 1,
@@ -161,7 +161,7 @@ describe('cell styles', () => {
   });
 
   describe('default padding', () => {
-    const ONE_PIXEL_EVERY_SIDE = {
+    const onePixelEverySide = {
       paddingTop: 1,
       paddingRight: 1,
       paddingBottom: 1,
@@ -174,7 +174,7 @@ describe('cell styles', () => {
           createCellTNode('<table><tr><td>A</td></tr></table>').styles
             .nativeBlockRet
         )
-      ).toEqual(ONE_PIXEL_EVERY_SIDE);
+      ).toEqual(onePixelEverySide);
     });
 
     it('leaves the sides an author declared alone', () => {
@@ -296,7 +296,7 @@ describe('cell styles', () => {
         getCollapsedCellBorderStyle(
           { x: 1, y: 1, lenX: 1, lenY: 1 },
           { borderWidth: 1, borderColor: 'black' },
-          { maxX: 2, maxY: 2, tableBorderStyle: FRAMED }
+          { maxX: 2, maxY: 2, tableBorderStyle: framed }
         )
       ).toEqual({
         borderLeftWidth: 0,
@@ -314,7 +314,7 @@ describe('cell styles', () => {
         getCollapsedCellBorderStyle(
           { x: 0, y: 0, lenX: 1, lenY: 1 },
           { borderWidth: 1, borderColor: 'black' },
-          { maxX: 0, maxY: 0, tableBorderStyle: FRAMED }
+          { maxX: 0, maxY: 0, tableBorderStyle: framed }
         )
       ).toEqual({
         borderTopWidth: 0,
@@ -368,7 +368,7 @@ describe('cell styles', () => {
           {
             maxX: 3,
             maxY: 3,
-            tableBorderStyle: FRAMED,
+            tableBorderStyle: framed,
             neighbours: {
               End: [
                 {
@@ -415,7 +415,7 @@ describe('cell styles', () => {
         getCollapsedCellBorderStyle(
           { x: 0, y: 0, lenX: 1, lenY: 5 },
           { borderBottomWidth: 3, borderBottomColor: 'red' },
-          { maxX: 1, maxY: 1, tableBorderStyle: FRAMED }
+          { maxX: 1, maxY: 1, tableBorderStyle: framed }
         )
       ).toMatchObject({ borderBottomWidth: 0 });
     });
@@ -490,7 +490,7 @@ describe('cell styles', () => {
     // `direction` one covered elsewhere never reaches it.
     afterEach(() => jest.restoreAllMocks());
 
-    const LOGICAL_START = { borderStartWidth: 7, borderStartColor: 'red' };
+    const logicalStart = { borderStartWidth: 7, borderStartColor: 'red' };
 
     it.each([
       [false, 'borderLeftWidth', 'borderRightWidth'],
@@ -501,7 +501,7 @@ describe('cell styles', () => {
         jest.replaceProperty(I18nManager, 'isRTL', isRTL);
         const style = getCollapsedCellBorderStyle(
           { x: 0, y: 0, lenX: 1, lenY: 1 },
-          LOGICAL_START,
+          logicalStart,
           { maxX: 0, maxY: 0, tableBorderStyle: null }
         );
         // The opposite side is asserted too: a logical edge resolved onto both
@@ -518,7 +518,7 @@ describe('cell styles', () => {
       expect(
         getCollapsedCellBorderStyle(
           { x: 0, y: 0, lenX: 1, lenY: 1 },
-          { ...LOGICAL_START, direction: 'ltr' },
+          { ...logicalStart, direction: 'ltr' },
           { maxX: 0, maxY: 0, tableBorderStyle: null }
         )
       ).toMatchObject({ borderLeftWidth: 7, borderRightWidth: 0 });

@@ -74,7 +74,7 @@ export type FontWeightCoefficients = Record<string, number>;
  *
  * @public
  */
-export const DEFAULT_FONT_WEIGHT_COEFFS: FontWeightCoefficients = {
+export const defaultFontWeightCoeffs: FontWeightCoefficients = {
   '100': 0.8,
   '200': 0.85,
   '300': 0.9,
@@ -117,15 +117,15 @@ export default class TCellConstraintsComputer {
     fallbackFontSize?: number;
     /**
      * Per-weight width coefficients, merged over
-     * {@link DEFAULT_FONT_WEIGHT_COEFFS}.
+     * {@link defaultFontWeightCoeffs}.
      */
     fontWeightCoeffs?: FontWeightCoefficients;
   }) {
     this.baseFontCoeff = baseFontCoeff ?? 0.65;
     this.fallbackFontSize = fallbackFontSize ?? 14;
     this.fontWeightCoeffs = fontWeightCoeffs
-      ? { ...DEFAULT_FONT_WEIGHT_COEFFS, ...fontWeightCoeffs }
-      : DEFAULT_FONT_WEIGHT_COEFFS;
+      ? { ...defaultFontWeightCoeffs, ...fontWeightCoeffs }
+      : defaultFontWeightCoeffs;
   }
 
   private getTextCoeff(ch: TextChunkStats): number {

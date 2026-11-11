@@ -14,7 +14,7 @@ describe('border spacing', () => {
     ['border-spacing:0', 0, 0],
     ['border-spacing:-1px', 0, 0],
     ['border-spacing:10%', 0, 0],
-    ['border-spacing:1px 2px 3px', 0, 0],
+    ['border-spacing:1px 2px 3px', 1, 2],
     ['font-size:20px;border-spacing:0.5em 1em', 10, 20]
   ])('resolves %s', (style, horizontal, vertical) => {
     const table = createTableTNode(

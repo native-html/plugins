@@ -19,7 +19,7 @@ import measureTable from './helpers/measureTable';
 import resolveTableWidths from './helpers/resolveTableWidths';
 
 /** No cell style callback has run yet. */
-const NO_CONFIG_STYLES: ReadonlyMap<TNode, ViewStyle | null> = new Map();
+const noConfigStyles: ReadonlyMap<TNode, ViewStyle | null> = new Map();
 
 /**
  * Ask the config for a style per cell, against provisional widths.
@@ -117,7 +117,7 @@ export default class TableLayout {
         spacingWidth,
         declaredColumnWidths
       });
-    let measured = pass(NO_CONFIG_STYLES);
+    let measured = pass(noConfigStyles);
     if (config.getStyleForCell) {
       // The callback needs cells, which need widths, which need the styles the
       // callback returns. The cycle is broken by freezing its results against

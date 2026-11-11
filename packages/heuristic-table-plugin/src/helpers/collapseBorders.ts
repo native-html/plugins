@@ -1,7 +1,7 @@
 import { ViewStyle } from 'react-native';
 import { DisplayCell, TableCell, TableGrid } from '../shared-types';
 import type { CellNeighbours } from './indexCellNeighbours';
-import { BOX_SIDES, BoxSide, isRTL, logicalSideOf } from './boxSides';
+import { boxSides, BoxSide, isRTL, logicalSideOf } from './boxSides';
 import { getSourceBlockStyle } from './cellPadding';
 
 type BorderSide = BoxSide;
@@ -161,7 +161,7 @@ export function getCollapsedTableBorderStyle<C extends CollapsibleCell>(
 ): ViewStyle {
   const resolvedStyle: ViewStyle = clearLogicalBorders(tableStyle);
   let strongestStyle: BorderCandidate['style'] | null = null;
-  for (const side of BOX_SIDES) {
+  for (const side of boxSides) {
     const winner = cellsAtOuterEdge(matrix, side, isRTL(tableStyle)).reduce(
       (currentWinner, cell) =>
         resolveBorderConflict(

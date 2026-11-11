@@ -3,7 +3,7 @@ import { I18nManager, ViewStyle } from 'react-native';
 /** The four physical edges of a box, spelled as React Native style suffixes. */
 export type BoxSide = 'Bottom' | 'Left' | 'Right' | 'Top';
 
-export const BOX_SIDES = ['Top', 'Right', 'Bottom', 'Left'] as const;
+export const boxSides = ['Top', 'Right', 'Bottom', 'Left'] as const;
 
 /**
  * Whether a style resolves its logical edges right-to-left.

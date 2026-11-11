@@ -1,5 +1,5 @@
 import { TNode } from '@native-html/render';
-import { getInlineStyleValue } from './inlineStyle';
+import { getPropertyValue } from './inlineStyle';
 import { resolveAttributeLength } from './resolveWidth';
 
 export interface BorderSpacing {
@@ -7,12 +7,12 @@ export interface BorderSpacing {
   vertical: number;
 }
 
-const ZERO: BorderSpacing = { horizontal: 0, vertical: 0 };
+const zeroBorderSpacing: BorderSpacing = { horizontal: 0, vertical: 0 };
 
 const LENGTH_REGEX = /^(\d*\.?\d+)(px|em|rem|pt|pc|in|cm|mm)?$/;
 
 /** CSS absolute units, in px. */
-const ABSOLUTE_SCALES: Record<string, number> = {
+const absoluteScales: Record<string, number> = {
   px: 1,
   pt: 96 / 72,
   pc: 16,
@@ -29,13 +29,15 @@ function rootOf(node: TNode): TNode {
   return root;
 }
 
-function parseSpacing(value: string, node: TNode): BorderSpacing | null {
-  const parts = value.split(/\s+/);
-  if (parts.length < 1 || parts.length > 2) return null;
+function parseSpacing(
+  inlineStyleValue: string,
+  node: TNode
+): BorderSpacing | null {
+  const parts = inlineStyleValue.split(/\s+/);
   // The font-relative units resolve against this node, so the scales are the
   // same for both parts and are built once rather than per part.
   const scales: Record<string, number> = {
-    ...ABSOLUTE_SCALES,
+    ...absoluteScales,
     em: node.styles.nativeTextFlow.fontSize ?? DEFAULT_FONT_SIZE,
     rem: rootOf(node).styles.nativeTextFlow.fontSize ?? DEFAULT_FONT_SIZE
   };
@@ -57,10 +59,10 @@ export default function resolveBorderSpacing(
   tnode: TNode,
   collapse: boolean
 ): BorderSpacing {
-  if (collapse) return ZERO;
+  if (collapse) return zeroBorderSpacing;
   for (let node: TNode | null = tnode; node; node = node.parent) {
-    const value = getInlineStyleValue(node, 'border-spacing');
-    if (value === 'initial') return ZERO;
+    const value = getPropertyValue(node.attributes.style, 'border-spacing');
+    if (value === 'initial') return zeroBorderSpacing;
     if (value) {
       const spacing = parseSpacing(value, node);
       if (spacing) return spacing;
@@ -71,5 +73,5 @@ export default function resolveBorderSpacing(
       if (spacing !== null) return { horizontal: spacing, vertical: spacing };
     }
   }
-  return ZERO;
+  return zeroBorderSpacing;
 }

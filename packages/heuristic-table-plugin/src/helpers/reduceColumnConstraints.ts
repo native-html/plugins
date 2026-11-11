@@ -5,7 +5,7 @@ import {
   TColumnConstraints
 } from '../shared-types';
 
-const EMPTY_COLUMN: TColumnConstraints = {
+const emptyColumn: TColumnConstraints = {
   minWidth: 0,
   spread: 0,
   contentDensity: 0,
@@ -43,7 +43,7 @@ function getColumnMetrics(cells: CellProperties[]): TColumnConstraints {
           cellConstraints.percentWidth ?? null
         )
       }),
-      EMPTY_COLUMN
+      emptyColumn
     );
   // CSS 2.1 §17.5.2.2 derives the column minimum and maximum from the same
   // cells, each floored by the column 'width' — so a maximum below its own

@@ -20,7 +20,7 @@ import TableLayout from './TableLayout';
  * table options still hands `HTMLTable` a stable `config` and lets its
  * `memo` hold.
  */
-const EMPTY_CONFIG: HeuristicTablePluginConfig = {};
+const emptyConfig: HeuristicTablePluginConfig = {};
 
 function useTableLayout({
   tnode,
@@ -104,7 +104,7 @@ export default function useHtmlTableProps(
   });
   return {
     layout,
-    config: table ?? EMPTY_CONFIG,
+    config: table ?? emptyConfig,
     sharedProps,
     tnode,
     ...props

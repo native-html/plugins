@@ -20,7 +20,7 @@ export {
 } from './shared-types';
 
 export {
-  DEFAULT_FONT_WEIGHT_COEFFS,
+  defaultFontWeightCoeffs,
   FontWeightCoefficients
 } from './helpers/TCellConstraintsComputer';
 

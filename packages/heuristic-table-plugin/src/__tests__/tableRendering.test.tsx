@@ -7,7 +7,7 @@ import { TableCell } from '../shared-types';
 import HTMLTable from '../HTMLTable';
 import TableLayout from '../TableLayout';
 import { getHorizontalInsets } from '../helpers/measure';
-import { DEFAULT_FONT_WEIGHT_COEFFS } from '../helpers/TCellConstraintsComputer';
+import { defaultFontWeightCoeffs } from '../helpers/TCellConstraintsComputer';
 import useHtmlTableProps from '../useHtmlTableProps';
 
 afterEach(() => jest.restoreAllMocks());
@@ -99,7 +99,7 @@ describe('user-agent cell styles', () => {
       expect(th).toMatchObject({ paddingLeft: 2, paddingRight: 2 });
       expect(td.width).toBeCloseTo(TEXT_WIDTH + 4);
       expect(th.width).toBeCloseTo(
-        TEXT_WIDTH * DEFAULT_FONT_WEIGHT_COEFFS.bold! + 4
+        TEXT_WIDTH * defaultFontWeightCoeffs.bold! + 4
       );
       expect(th.width).toBeGreaterThan(td.width);
     }

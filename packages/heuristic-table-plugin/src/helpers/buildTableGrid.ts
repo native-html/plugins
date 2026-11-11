@@ -11,7 +11,7 @@ import parseSpan, { MAX_COLSPAN, MAX_ROWSPAN } from './parseSpan';
  * and measuring text is the costly half of a layout pass. Every cell carries
  * this placeholder until {@link TableLayout}'s measurement pass replaces it.
  */
-const UNMEASURED_CONSTRAINTS: TCellConstraints = Object.freeze({
+const unmeasuredConstraints: TCellConstraints = Object.freeze({
   contentDensity: 0,
   maxWidth: 0,
   minWidth: 0
@@ -85,7 +85,7 @@ function fill(tnode: TNode, grid: TableGrid, cursor: GridCursor) {
     x: startX,
     y: startY,
     tnode,
-    constraints: UNMEASURED_CONSTRAINTS
+    constraints: unmeasuredConstraints
   };
   grid.cells.push(cell);
   cursor.offsetX = startX + lenX;
@@ -106,7 +106,7 @@ function fill(tnode: TNode, grid: TableGrid, cursor: GridCursor) {
  * Lay every `th` and `td` of a table out on its matrix.
  *
  * @returns Where each cell sits and how far the matrix extends. Cell
- * constraints are left {@link UNMEASURED_CONSTRAINTS} — measuring them needs
+ * constraints are left {@link unmeasuredConstraints} — measuring them needs
  * the resolved cell styles and the table's content width, neither of which
  * exists yet.
  */

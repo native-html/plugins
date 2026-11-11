@@ -1,6 +1,6 @@
 import { ViewStyle } from 'react-native';
 import { TNode } from '@native-html/render';
-import { BoxSide, BOX_SIDES, logicalSideOf } from './boxSides';
+import { BoxSide, boxSides, logicalSideOf } from './boxSides';
 
 /**
  * The padding HTML's user-agent stylesheet gives a table cell.
@@ -29,7 +29,7 @@ export const DEFAULT_CELL_PADDING = 1;
  *
  * This is the single statement of that precedence. `getHorizontalInsets`
  * reads it in order to find the value a side takes;
- * {@link getDefaultCellPaddingStyle} reads {@link PADDING_DECLARERS}, the
+ * {@link getDefaultCellPaddingStyle} reads {@link paddingDeclarers}, the
  * direction-agnostic union of it, to ask merely whether a side was declared.
  */
 export function paddingSourcesFor(
@@ -66,7 +66,7 @@ export function paddingSourcesFor(
  * an author declared a side, and reserving both is the harmless choice: it
  * withholds a user-agent default rather than fighting an author declaration.
  */
-const PADDING_DECLARERS = BOX_SIDES.reduce(
+const paddingDeclarers = boxSides.reduce(
   (declarers, side) => {
     declarers[side] = [
       ...new Set([
@@ -141,10 +141,10 @@ export function getDefaultCellPaddingStyle(
   ...declaredStyles: (ViewStyle | null | undefined)[]
 ): ViewStyle {
   const resolvedStyle: ViewStyle = {};
-  for (const side of BOX_SIDES) {
+  for (const side of boxSides) {
     const isDeclared = declaredStyles.some((style) =>
       style
-        ? PADDING_DECLARERS[side].some((property) => style[property] != null)
+        ? paddingDeclarers[side].some((property) => style[property] != null)
         : false
     );
     if (!isDeclared) {

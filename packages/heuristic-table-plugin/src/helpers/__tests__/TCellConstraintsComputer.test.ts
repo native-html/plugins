@@ -1,5 +1,5 @@
 import TCellConstraintsComputer, {
-  DEFAULT_FONT_WEIGHT_COEFFS,
+  defaultFontWeightCoeffs,
   FontWeightCoefficients
 } from '../TCellConstraintsComputer';
 import { TCellConstraints } from '../../shared-types';
@@ -79,7 +79,7 @@ describe('TCellConstraintsComputer', () => {
 
       expect(minWidth).toBeCloseTo(
         DEFAULT_HORIZONTAL_PADDING +
-          6 * 14 * BASE_FONT_COEFF * (DEFAULT_FONT_WEIGHT_COEFFS.bold as number)
+          6 * 14 * BASE_FONT_COEFF * (defaultFontWeightCoeffs.bold as number)
       );
     });
 
@@ -110,7 +110,7 @@ describe('TCellConstraintsComputer', () => {
           6 *
             14 *
             BASE_FONT_COEFF *
-            (DEFAULT_FONT_WEIGHT_COEFFS['300'] as number)
+            (defaultFontWeightCoeffs['300'] as number)
       );
     });
   });
@@ -189,7 +189,7 @@ describe('TCellConstraintsComputer', () => {
       );
       const width =
         DEFAULT_HORIZONTAL_PADDING +
-        4 * BASE_FONT_COEFF * (14 + 20 * DEFAULT_FONT_WEIGHT_COEFFS.bold!);
+        4 * BASE_FONT_COEFF * (14 + 20 * defaultFontWeightCoeffs.bold!);
       expect(minWidth).toBeCloseTo(width);
       expect(maxWidth).toBeCloseTo(width);
     });

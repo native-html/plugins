@@ -19,7 +19,7 @@ export interface TableRenderContextValue extends TableGeometry {
   cellStyles: ReadonlyMap<TNode, ResolvedCellStyle>;
 }
 
-const DEFAULT_CONTEXT: TableRenderContextValue = {
+const defaultTableRenderContext: TableRenderContextValue = {
   borderSpacing: { horizontal: 0, vertical: 0 },
   cellStyles: new Map(),
   borderCollapse: false,
@@ -28,4 +28,4 @@ const DEFAULT_CONTEXT: TableRenderContextValue = {
   maxY: -1
 };
 
-export default createContext<TableRenderContextValue>(DEFAULT_CONTEXT);
+export default createContext<TableRenderContextValue>(defaultTableRenderContext);

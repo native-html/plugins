@@ -1,6 +1,6 @@
 import { ViewStyle } from 'react-native';
 import { TNode } from '@native-html/render';
-import { getInlineStyleValue } from './inlineStyle';
+import { getPropertyValue } from './inlineStyle';
 
 export type CellVerticalAlign = 'baseline' | 'bottom' | 'middle' | 'top';
 
@@ -57,7 +57,10 @@ export function resolveCellVerticalAlign(
     current && current.tagName !== 'table';
     current = current.parent
   ) {
-    const inlineValue = getInlineStyleValue(current, 'vertical-align');
+    const inlineValue = getPropertyValue(
+      current.attributes.style,
+      'vertical-align'
+    );
     if (inlineValue) {
       const normalized = normalizeVerticalAlign(inlineValue);
       if (normalized) {
