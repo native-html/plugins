@@ -5,7 +5,7 @@ import {
   StyleSheet,
   Dimensions,
   LayoutAnimation,
-  Animated
+  Animated,ScrollView
 } from 'react-native';
 import {
   useAutoheight,
@@ -228,7 +228,9 @@ function useSource({
     <title>Table</title>
     <style>${tableCssStyle}</style>
   </head>
-  <body>${html}</body>
+  <body>
+    ${html}
+  </body>
   </html>
         `;
   }, [tableStyleSpecs, cssRules, html, maxScale]);
@@ -302,11 +304,14 @@ export const HTMLTable = function HTMLTable({
     props: autoheightWebshellProps
   });
   return (
-    <Animated.View
-      testID="html-table-container"
-      style={[containerStyle, styles.container, style]}>
-      {React.createElement(WebView, webViewProps)}
-    </Animated.View>
+  <ScrollView  showsHorizontalScrollIndicator={true} horizontal={true} > 
+        <Animated.View
+          testID="html-table-container"
+          style={[containerStyle, styles.container, style]}>
+              {React.createElement(WebView, webViewProps)}
+        </Animated.View>
+  </ScrollView>
+
   );
 };
 
